@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Description</key>
+	<string>This is a template for Lua.</string>
+	<key>Identifier</key>
+	<string>com.stokedsoftware.lualib</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+
+	<key>Definitions</key>
+	<dict>
+		<% @paths.each do |path| %>
+		<key><%= path %></key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<% if !path.nil? %><% @path_arry = path.split("/") %><% @path_arry.delete_at(-1) %><% @path_arry.each do |path_comp| %><string><%= path_comp %></string>
+				<% end %><% end %>
+			</array>
+			<key>Path</key>
+			<string><%= path %></string>
+			<% if path.end_with?('.h') || path.end_with?('.hh') %>
+			<key>TargetIndices</key>
+			<array/>
+			<% end %>
+		</dict>
+		<% end %>
+	</dict>	
+	<key>Nodes</key>
+	<array>
+		<% @paths.each do |path| %><string><%= path %></string>
+		<% end %>
+	</array>
+</dict>
+</plist>
+
