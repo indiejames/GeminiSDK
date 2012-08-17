@@ -170,7 +170,6 @@
 		765818DD15DC8F190015F12D /* mach_timing.c in Sources */ = {isa = PBXBuildFile; fileRef = 765818DC15DC8F190015F12D /* mach_timing.c */; };
 		765818E215DC8F190015F12D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 765818E115DC8F190015F12D /* main.m */; };
 		765818E515DC8F190015F12D /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 765818E415DC8F190015F12D /* AppDelegate.mm */; };
-		765818E815DC8F190015F12D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 765818E715DC8F190015F12D /* ViewController.m */; };
 		765818EA15DC8F190015F12D /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 765818E915DC8F190015F12D /* main.lua */; };
 		765818ED15DC8F190015F12D /* sprite_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 765818EC15DC8F190015F12D /* sprite_shader.fsh */; };
 		765818EF15DC8F190015F12D /* sprite_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 765818EE15DC8F190015F12D /* sprite_shader.vsh */; };
@@ -487,8 +486,6 @@
 		765818E115DC8F190015F12D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		765818E315DC8F190015F12D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		765818E415DC8F190015F12D /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		765818E615DC8F190015F12D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		765818E715DC8F190015F12D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		765818E915DC8F190015F12D /* main.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		765818EC15DC8F190015F12D /* sprite_shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = sprite_shader.fsh; sourceTree = "<group>"; };
 		765818EE15DC8F190015F12D /* sprite_shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = sprite_shader.vsh; sourceTree = "<group>"; };
@@ -556,8 +553,6 @@
 			children = (
 				765818E315DC8F190015F12D /* AppDelegate.h */,
 				765818E415DC8F190015F12D /* AppDelegate.mm */,
-				765818E615DC8F190015F12D /* ViewController.h */,
-				765818E715DC8F190015F12D /* ViewController.m */,
 				765818E915DC8F190015F12D /* main.lua */,
 				7658171015DC8F160015F12D /* Resources */,
 				7658172415DC8F160015F12D /* libs */,
@@ -1252,7 +1247,6 @@
 				765818DD15DC8F190015F12D /* mach_timing.c in Sources */,
 				765818E215DC8F190015F12D /* main.m in Sources */,
 				765818E515DC8F190015F12D /* AppDelegate.mm in Sources */,
-				765818E815DC8F190015F12D /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1302,6 +1296,7 @@
 				765818FA15DC8F190015F12D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

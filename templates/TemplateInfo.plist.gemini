@@ -107,19 +107,7 @@
 			<string>Supporting Files</string>
 			<key>Path</key>
 			<string>main.m</string>
-		</dict>	
-		<key>ViewController.h</key>
-		<dict>
-			<key>Path</key>
-			<string>ViewController.h</string>
-			<key>TargetIndices</key>
-			<array/>
 		</dict>
-		<key>ViewController.m</key>
-		<dict>
-			<key>Path</key>
-			<string>ViewController.m</string>
-		</dict>	
 		<key>AppDelegate.h</key>
 		<dict>
 			<key>Path</key>
@@ -144,8 +132,6 @@
 		<string>main.m</string>
 		<string>AppDelegate.h</string>
 		<string>AppDelegate.mm</string>
-		<string>ViewController.h</string>
-		<string>ViewController.m</string>
 		<string>main.lua</string>
 		<string>sprite_shader.fsh</string>
 		<string>sprite_shader.vsh</string>
