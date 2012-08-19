@@ -12,6 +12,7 @@
 #import "GemSpriteShaderManager.h"
 #import "GeminiRectangleShaderManager.h"
 #include "GeminiTypes.h"
+#import "GemScene.h"
 
 #define DEFAULT_STAGE_NAME @"DEFAULT_STAGE"
 #define LINE_SHADER_PROGRAM_KEY @"LINE_SHADER_PROGRAM_KEY"
@@ -22,10 +23,8 @@
 
 @interface GemRenderer : NSObject {
     
-    NSMutableDictionary *stages;
-    NSString *activeStage;
+    GemScene *activeScene;
     NSMutableDictionary *spriteBatches;
-    //lua_State *L;
     GLuint lineShaderProgram;
     GLuint spriteShaderProgram;
     GLuint vertexBuffer;
@@ -43,11 +42,6 @@
 
 -(void)render;
 
--(void)setActiveStage:(NSString *)stage;
--(void)addLayer:(GemLayer *)layer;
--(void)addObject:(GemDisplayObject *)obj;
--(void)addObject:(GemDisplayObject *)obj toLayer:(int)layer;
--(void)addCallback:(void (*)(void))callback forLayer:(int)layer;
 
 
 @end

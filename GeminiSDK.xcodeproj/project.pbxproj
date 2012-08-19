@@ -177,6 +177,9 @@
 		765818F315DC8F190015F12D /* rectangle_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 765818F215DC8F190015F12D /* rectangle_shader.vsh */; };
 		765818F515DC8F190015F12D /* line_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 765818F415DC8F190015F12D /* line_shader.fsh */; };
 		765818F715DC8F190015F12D /* line_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 765818F615DC8F190015F12D /* line_shader.vsh */; };
+		7658191015DEDAF70015F12D /* GemDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 7658190F15DEDAF70015F12D /* GemDirector.m */; };
+		7658191615DEE0160015F12D /* GemScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7658191515DEE0160015F12D /* GemScene.m */; };
+		7658191A15DEE5DF0015F12D /* GemSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7658191915DEE5DF0015F12D /* GemSceneTransition.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -493,6 +496,12 @@
 		765818F215DC8F190015F12D /* rectangle_shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = rectangle_shader.vsh; sourceTree = "<group>"; };
 		765818F415DC8F190015F12D /* line_shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = line_shader.fsh; sourceTree = "<group>"; };
 		765818F615DC8F190015F12D /* line_shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = line_shader.vsh; sourceTree = "<group>"; };
+		7658190E15DEDAF70015F12D /* GemDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemDirector.h; path = libs/Gemini/GemDirector.h; sourceTree = "<group>"; };
+		7658190F15DEDAF70015F12D /* GemDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemDirector.m; path = libs/Gemini/GemDirector.m; sourceTree = "<group>"; };
+		7658191415DEE0150015F12D /* GemScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemScene.h; path = libs/Gemini/GemScene.h; sourceTree = "<group>"; };
+		7658191515DEE0160015F12D /* GemScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemScene.m; path = libs/Gemini/GemScene.m; sourceTree = "<group>"; };
+		7658191815DEE5DF0015F12D /* GemSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSceneTransition.h; path = libs/Gemini/GemSceneTransition.h; sourceTree = "<group>"; };
+		7658191915DEE5DF0015F12D /* GemSceneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemSceneTransition.m; path = libs/Gemini/GemSceneTransition.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -732,6 +741,12 @@
 				765817EA15DC8F170015F12D /* LGeminiTimer.m */,
 				765817EC15DC8F170015F12D /* LGeminiTransition.h */,
 				765817ED15DC8F170015F12D /* LGeminiTransition.m */,
+				7658190E15DEDAF70015F12D /* GemDirector.h */,
+				7658190F15DEDAF70015F12D /* GemDirector.m */,
+				7658191415DEE0150015F12D /* GemScene.h */,
+				7658191515DEE0160015F12D /* GemScene.m */,
+				7658191815DEE5DF0015F12D /* GemSceneTransition.h */,
+				7658191915DEE5DF0015F12D /* GemSceneTransition.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1247,6 +1262,9 @@
 				765818DD15DC8F190015F12D /* mach_timing.c in Sources */,
 				765818E215DC8F190015F12D /* main.m in Sources */,
 				765818E515DC8F190015F12D /* AppDelegate.mm in Sources */,
+				7658191015DEDAF70015F12D /* GemDirector.m in Sources */,
+				7658191615DEE0160015F12D /* GemScene.m in Sources */,
+				7658191A15DEE5DF0015F12D /* GemSceneTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

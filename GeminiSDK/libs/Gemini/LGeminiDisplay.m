@@ -9,7 +9,8 @@
 #import "LGeminiDisplay.h"
 #import "Gemini.h"
 #import "GemDisplayGroup.h"
-
+#import "GemDirector.h"
+#import "GemScene.h"
 #import "GemLine.h"
 #import "GemRectangle.h"
 #import "GemGLKViewController.h"
@@ -27,7 +28,9 @@ static int newRectangle(lua_State *L){
     GLfloat height = luaL_checknumber(L, 4);
 
     GemRectangle *rect = [[GemRectangle alloc] initWithLuaState:L X:x Y:y Width:width Height:height];
-    [((GemGLKViewController *)([Gemini shared].viewController)).renderer addObject:rect];
+    //[((GemGLKViewController *)([Gemini shared].viewController)).renderer addObject:rect];
+    //[[[GemDirector shared] getCurrentScene] addObject:rect];
+    [[((GemGLKViewController *)([Gemini shared].viewController)).director getCurrentScene] addObject:rect];
     GemRectangle **lRect = (GemRectangle **)lua_newuserdata(L, sizeof(GemRectangle *));
     *lRect = rect;
     
@@ -164,7 +167,8 @@ static int newLine(lua_State *L){
     GLfloat y2 = luaL_checknumber(L, 4);
     
     GemLine *line = [[GemLine alloc] initWithLuaState:L X1:x1 Y1:y1 X2:x2 Y2:y2];
-    [((GemGLKViewController *)([Gemini shared].viewController)).renderer addObject:line];
+    [[((GemGLKViewController *)([Gemini shared].viewController)).director getCurrentScene] addObject:line];
+    //[[[GemDirector shared] getCurrentScene] addObject:line];
     GemLine **lLine = (GemLine **)lua_newuserdata(L, sizeof(GemLine *)); 
     *lLine = line;
     
@@ -250,8 +254,10 @@ static int newLayer(lua_State *L){
     layer.index = index;
     GemLayer **lLayer = (GemLayer **)lua_newuserdata(L, sizeof(GemLayer *));
     *lLayer = layer;
-    GemRenderer *renderer = ((GemGLKViewController *)([Gemini shared].viewController)).renderer;
-    [renderer addLayer:layer];
+    //GemRenderer *renderer = ((GemGLKViewController *)([Gemini shared].viewController)).renderer;
+    //[[[GemDirector shared] getCurrentScene] addLayer:layer];
+    [[((GemGLKViewController *)([Gemini shared].viewController)).director getCurrentScene] addLayer:layer];
+    //[renderer addLayer:layer];
 
     setupObject(L, GEMINI_LAYER_LUA_KEY, layer);
     
@@ -264,23 +270,6 @@ static int layerGC (lua_State *L){
     [*layer release];
     
     return 0;
-}
-
-GemLayer *createLayerZero(lua_State *L) {
-    GemLayer *layer = [[GemLayer alloc] initWithLuaState:L];
-    layer.index = 0;
-    GemLayer **lLayer = (GemLayer **)lua_newuserdata(L, sizeof(GemLayer *));
-    *lLayer = layer;
-    
-    //GeminiRenderer *renderer = ((GeminiGLKViewController *)([Gemini shared].viewController)).renderer;
-    //[renderer addLayer:layer];
-
-    setupObject(L, GEMINI_LAYER_LUA_KEY, layer);
-    
-    // add layer zero to the global vars for Lua
-    lua_setglobal(L, "GEMINI_LAYER0");
-    
-    return layer;
 }
 
 static int layerNewIndex (lua_State *L){
@@ -313,8 +302,9 @@ static int newDisplayGroup(lua_State *L){
     GemDisplayGroup *group = [[GemDisplayGroup alloc] initWithLuaState:L];
     GemDisplayGroup **lGroup = (GemDisplayGroup **)lua_newuserdata(L, sizeof(GemDisplayGroup *));
     *lGroup = group;
-   [((GemGLKViewController *)([Gemini shared].viewController)).renderer addObject:group];
-
+   //[((GemGLKViewController *)([Gemini shared].viewController)).renderer addObject:group];
+    //[[[GemDirector shared] getCurrentScene] addObject:group];
+    [[((GemGLKViewController *)([Gemini shared].viewController)).director getCurrentScene] addObject:group];
     setupObject(L, GEMINI_DISPLAY_GROUP_LUA_KEY, group);
     
     return 1;

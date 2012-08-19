@@ -11,10 +11,6 @@
 #import "GemRenderer.h"
 #import "LGeminiDisplay.h"
 
-//NSString *spriteFragmentShaderStr = @"uniform sampler2D texture; // texture sampler\nuniform highp float alpha; // alpha value for image\nvarying highp vec2 vTexCoord; // texture coordinates\nvoid main()\n{\nhighp vec4 texVal = texture2D(texture, vTexCoord);\ngl_FragColor = texVal;\n}";
-NSString *spriteFragmentShaderStr = @"void main(){\ngl_FragColor = vec4(1.0,1.0,1.0,1.0);\n}";
-NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 texCoord;\nvarying vec2 vTexCoord;\nuniform mat4 proj;\nuniform mat4 rot;\nvoid main()\n{\ngl_Position = proj * rot * position;\nvTexCoord = texCoord;\n}";
-
 
 @interface GemGLKViewController () {
     
@@ -52,6 +48,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
 @synthesize renderer;
 @synthesize spriteManager;
 @synthesize timerManager;
+@synthesize director;
 @synthesize updateTime;
 @synthesize L;
 
@@ -91,6 +88,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     [self setupGL];
     
     timerManager = [[GemTimerManager alloc] init];
+    director = [[GemDirector alloc] initWithLuaState:L];
 }
 
 - (void)viewDidUnload
@@ -118,7 +116,7 @@ NSString *spriteVertexShaderStr = @"attribute vec4 position;\nattribute vec2 tex
     
     // load the renderer
     renderer = [[GemRenderer alloc] initWithLuaState:L];
-    [renderer addLayer:createLayerZero(L)];
+    //[renderer addLayer:createLayerZero(L)];
     spriteManager = [[GemSpriteManager alloc] init];
 }
 

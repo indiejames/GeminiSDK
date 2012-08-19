@@ -15,6 +15,8 @@
 #import "LGeminiDisplay.h"
 #import "GemSpriteBatch.h"
 #import "GemGLKViewController.h"
+#import "GemDirector.h"
+#import "GemScene.h"
 
 #define LINE_BUFFER_CHUNK_SIZE (512)
 
@@ -84,7 +86,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     glDepthMask(GL_TRUE);
     NSMutableArray *blendedLayers = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
     
-    NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
+    GemDirector *director = ((GemGLKViewController *)([Gemini shared].viewController)).director;
+    GemScene *currentScene = [director getCurrentScene];
+    NSMutableDictionary *stage = [currentScene layers];
     NSMutableArray *layers = [NSMutableArray arrayWithArray:[stage allKeys]];
     // sort layers from front (highest number) to back (lowest number)
     [layers sortUsingComparator:(NSComparator)^(NSNumber *layer1, NSNumber *layer2) {
@@ -361,6 +365,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glDrawElements(GL_TRIANGLES,(line.numPoints - 1)*6,GL_UNSIGNED_SHORT, (void*)0);
     
+    free(finalVerts);
     free(newVerts);
 }
 
@@ -450,67 +455,6 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 }
 
-
-// add a new layer
--(void)addLayer:(GemLayer *)layer {
-    NSLog(@"GeminiRenderer adding layer with index %d", layer.index);
-    NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
-    [stage setObject:layer forKey:[NSNumber numberWithInt:layer.index]];
-}
-
-
-// add a display object to the default layer (layer 0)
--(void)addObject:(GemDisplayObject *)obj {
-    NSLog(@"GeminiRenderer adding object");
-    NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
-    // get the default layer on the stage
-    NSNumber *layerIndex = [NSNumber numberWithInt:0];
-    GemLayer *layerGroup = (GemLayer *)[stage objectForKey:layerIndex];
-    // remove from previous layer (if any) first
-    [obj.layer remove:obj];
-    obj.layer = layerGroup;
-    [layerGroup insert:obj];
-    
-}
-
-
-// add a display object to a given layer of the currently active stage.  create the layer
-// if it does not already exist
--(void)addObject:(GemDisplayObject *)obj toLayer:(int)layer {
-    NSLog(@"GeminiRenderer adding object");
-    NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
-    NSLog(@"GeminiRenderer found stage");
-    // sort the layers from front to back
-    GemLayer *layerGroup = (GemLayer *)[stage objectForKey:[NSNumber numberWithInt:layer]];
-    NSLog(@"GeminiRenderer found layer");
-    if (layerGroup == nil) {
-        NSLog(@"GeminiRenderer layer is nil");
-        layerGroup = [[[GemLayer alloc] initWithLuaState:((GemDisplayObject *)obj).L] autorelease];
-        layerGroup.index = layer;
-        NSLog(@"GeminiRenderer created new layer");
-        [stage setObject:layerGroup forKey:[NSNumber numberWithInt:layer]];
-    }
-    NSLog(@"Inserting object into layer %d", layer);
-    // remove from previous layer (if any) first
-    [obj.layer remove:obj];
-    obj.layer = layerGroup;
-    [layerGroup insert:obj];
-    
-}
-
-// allow the client to register a callback to render for a particular layer
--(void)addCallback:(void (*)(void))callback forLayer:(int)layer {
-     NSMutableDictionary *stage = (NSMutableDictionary *)[stages objectForKey:activeStage];
-    NSValue *sel = [NSValue valueWithPointer:callback];
-    [stage setObject:sel forKey:[NSNumber numberWithInt:layer]];
-}
-
--(void)setActiveStage:(NSString *)stage {
-    if (activeStage != nil) {
-        [activeStage release];
-    }
-    activeStage = [stage retain];
-}
 
 -(void)setupLineRendering {
     
@@ -687,13 +631,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 -(id) initWithLuaState:(lua_State *)luaState {
     self = [super init];
     if (self) {
-        //L = luaState;
-        stages = [[NSMutableDictionary alloc] initWithCapacity:1];
-        // add a default stage
-        NSMutableDictionary *defaultStage = [[NSMutableDictionary alloc] initWithCapacity:1];
-        [stages setObject:defaultStage forKey:DEFAULT_STAGE_NAME];
-        [self setActiveStage:DEFAULT_STAGE_NAME];
-        [defaultStage release];
+
         [self setupGL];
         
     }
@@ -702,14 +640,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 }
 
 -(void) dealloc {
-    // TODO - objects shouldn't be dealloc'ed here - they should be removed in Lua
-    NSArray *keys = [stages allKeys];
-    for (int i=0; i<[keys count]; i++) {
-        //NSString *stageKey = (NSString *)[keys objectAtIndex:i];
-        
-    }
-    
-    
+   
     [super dealloc];
     
 }
