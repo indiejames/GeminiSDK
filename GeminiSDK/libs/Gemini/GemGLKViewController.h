@@ -35,7 +35,6 @@ enum {
     SEL preRenderCallback;
     SEL postRenderCallback;
     GemShaderManager *lineShaderManager;
-    GemRenderer *renderer;
     GemSpriteManager *spriteManager;
     GemTimerManager *timerManager;
     GemDirector *director;
@@ -43,7 +42,6 @@ enum {
     double updateTime;
 }
 
-@property (readonly) GemRenderer *renderer;
 @property (readonly) GemSpriteManager *spriteManager;
 @property (readonly) GemTimerManager *timerManager;
 @property (readonly) GemDirector *director;

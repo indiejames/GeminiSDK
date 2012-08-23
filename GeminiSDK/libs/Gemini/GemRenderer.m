@@ -74,21 +74,19 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
 }
 
--(void)render {
-    NSArray *blendedLayers = [self renderUnblendedLayers];
+-(void)renderScene:(GemScene *)scene {
+    NSArray *blendedLayers = [self renderUnblendedLayersForScene:(GemScene *)scene];
     [self renderBlendedLayers:blendedLayers];
     glBindVertexArrayOES(0);
 }
 
 // render layers from front to back to minimize overdraw
--(NSArray *)renderUnblendedLayers {
+-(NSArray *)renderUnblendedLayersForScene:(GemScene *)scene {
     glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
     NSMutableArray *blendedLayers = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
     
-    GemDirector *director = ((GemGLKViewController *)([Gemini shared].viewController)).director;
-    GemScene *currentScene = [director getCurrentScene];
-    NSMutableDictionary *stage = [currentScene layers];
+    NSMutableDictionary *stage = [scene layers];
     NSMutableArray *layers = [NSMutableArray arrayWithArray:[stage allKeys]];
     // sort layers from front (highest number) to back (lowest number)
     [layers sortUsingComparator:(NSComparator)^(NSNumber *layer1, NSNumber *layer2) {

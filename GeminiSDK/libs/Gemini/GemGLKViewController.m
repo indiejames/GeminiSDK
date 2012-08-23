@@ -45,7 +45,6 @@
 
 @implementation GemGLKViewController
 @synthesize context;
-@synthesize renderer;
 @synthesize spriteManager;
 @synthesize timerManager;
 @synthesize director;
@@ -88,7 +87,7 @@
     [self setupGL];
     
     timerManager = [[GemTimerManager alloc] init];
-    director = [[GemDirector alloc] initWithLuaState:L];
+    
 }
 
 - (void)viewDidUnload
@@ -115,7 +114,8 @@
     [EAGLContext setCurrentContext:self.context];
     
     // load the renderer
-    renderer = [[GemRenderer alloc] initWithLuaState:L];
+    //renderer = [[GemRenderer alloc] initWithLuaState:L];
+    director = [[GemDirector alloc] initWithLuaState:L];
     //[renderer addLayer:createLayerZero(L)];
     spriteManager = [[GemSpriteManager alloc] init];
 }
@@ -190,8 +190,8 @@
     
     // do our thing
     
-    [renderer render];
-    
+    //[renderer render];
+    [director render:self.timeSinceLastDraw];
     
     //////////////////////////////
     

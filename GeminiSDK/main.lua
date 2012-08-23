@@ -4,6 +4,8 @@
 
 gemini = require('gemini')
 display = require('display')
+local director = require('director')
+
 
 -- create a blended layer in front of the default layer
 local layer1 = display.newLayer(2)
@@ -38,6 +40,9 @@ rectangle2:setFillColor(0,0,1.0,1.0)
 rectangle2:setStrokeColor(0,1.0,0,1.0)
 rectangle2.strokeWidth = 2.0
 rectangle2.rotation = -15
+
+director.loadScene('scene1')
+
 
 -- add an event listener that will fire every frame
 local myListener = function(event)

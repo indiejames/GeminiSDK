@@ -254,10 +254,9 @@ static int newLayer(lua_State *L){
     layer.index = index;
     GemLayer **lLayer = (GemLayer **)lua_newuserdata(L, sizeof(GemLayer *));
     *lLayer = layer;
-    //GemRenderer *renderer = ((GemGLKViewController *)([Gemini shared].viewController)).renderer;
-    //[[[GemDirector shared] getCurrentScene] addLayer:layer];
+    
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getCurrentScene] addLayer:layer];
-    //[renderer addLayer:layer];
+    
 
     setupObject(L, GEMINI_LAYER_LUA_KEY, layer);
     

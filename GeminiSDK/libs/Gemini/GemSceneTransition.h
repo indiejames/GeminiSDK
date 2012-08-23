@@ -12,16 +12,16 @@
 @interface GemSceneTransition : NSObject {
     GemScene *sceneA;
     GemScene *sceneB;
-    double startTime;
+    double elapsedTime;
     double duration;
 }
 
 @property (nonatomic, retain) GemScene *sceneA;
 @property (nonatomic, retain) GemScene *sceneB;
-@property (nonatomic) double startTime;
+@property (readonly) double elapsedTime;
 @property (nonatomic) double duration;
 
 -(id)init;
--(BOOL)transit:(double)currentTime;
+-(BOOL)transit:(double)timeSinceLastRender;
 
 @end

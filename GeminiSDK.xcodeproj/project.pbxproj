@@ -180,6 +180,11 @@
 		7658191015DEDAF70015F12D /* GemDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 7658190F15DEDAF70015F12D /* GemDirector.m */; };
 		7658191615DEE0160015F12D /* GemScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7658191515DEE0160015F12D /* GemScene.m */; };
 		7658191A15DEE5DF0015F12D /* GemSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 7658191915DEE5DF0015F12D /* GemSceneTransition.m */; };
+		7658192015E533850015F12D /* scene_template.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7658191F15E533830015F12D /* scene_template.lua */; };
+		7658192215E534320015F12D /* scene1.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7658192115E534310015F12D /* scene1.lua */; };
+		7658192515E53B3E0015F12D /* LGeminiScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7658192415E53B360015F12D /* LGeminiScene.m */; };
+		76581B3915E5B8A10015F12D /* LGeminiDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 76581B3815E5B89D0015F12D /* LGeminiDirector.m */; };
+		76581B3B15E6B98E0015F12D /* scene2.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76581B3A15E6B98C0015F12D /* scene2.lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -502,6 +507,13 @@
 		7658191515DEE0160015F12D /* GemScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemScene.m; path = libs/Gemini/GemScene.m; sourceTree = "<group>"; };
 		7658191815DEE5DF0015F12D /* GemSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSceneTransition.h; path = libs/Gemini/GemSceneTransition.h; sourceTree = "<group>"; };
 		7658191915DEE5DF0015F12D /* GemSceneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemSceneTransition.m; path = libs/Gemini/GemSceneTransition.m; sourceTree = "<group>"; };
+		7658191F15E533830015F12D /* scene_template.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene_template.lua; sourceTree = "<group>"; };
+		7658192115E534310015F12D /* scene1.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene1.lua; sourceTree = "<group>"; };
+		7658192315E53B330015F12D /* LGeminiScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGeminiScene.h; path = libs/Gemini/LGeminiScene.h; sourceTree = "<group>"; };
+		7658192415E53B360015F12D /* LGeminiScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiScene.m; path = libs/Gemini/LGeminiScene.m; sourceTree = "<group>"; };
+		76581B3715E5B8990015F12D /* LGeminiDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGeminiDirector.h; path = libs/Gemini/LGeminiDirector.h; sourceTree = "<group>"; };
+		76581B3815E5B89D0015F12D /* LGeminiDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiDirector.m; path = libs/Gemini/LGeminiDirector.m; sourceTree = "<group>"; };
+		76581B3A15E6B98C0015F12D /* scene2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene2.lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -563,6 +575,9 @@
 				765818E315DC8F190015F12D /* AppDelegate.h */,
 				765818E415DC8F190015F12D /* AppDelegate.mm */,
 				765818E915DC8F190015F12D /* main.lua */,
+				7658191F15E533830015F12D /* scene_template.lua */,
+				7658192115E534310015F12D /* scene1.lua */,
+				76581B3A15E6B98C0015F12D /* scene2.lua */,
 				7658171015DC8F160015F12D /* Resources */,
 				7658172415DC8F160015F12D /* libs */,
 				765818EB15DC8F190015F12D /* Shaders */,
@@ -747,6 +762,10 @@
 				7658191515DEE0160015F12D /* GemScene.m */,
 				7658191815DEE5DF0015F12D /* GemSceneTransition.h */,
 				7658191915DEE5DF0015F12D /* GemSceneTransition.m */,
+				7658192315E53B330015F12D /* LGeminiScene.h */,
+				7658192415E53B360015F12D /* LGeminiScene.m */,
+				76581B3715E5B8990015F12D /* LGeminiDirector.h */,
+				76581B3815E5B89D0015F12D /* LGeminiDirector.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1112,6 +1131,9 @@
 				765818F315DC8F190015F12D /* rectangle_shader.vsh in Resources */,
 				765818F515DC8F190015F12D /* line_shader.fsh in Resources */,
 				765818F715DC8F190015F12D /* line_shader.vsh in Resources */,
+				7658192015E533850015F12D /* scene_template.lua in Resources */,
+				7658192215E534320015F12D /* scene1.lua in Resources */,
+				76581B3B15E6B98E0015F12D /* scene2.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1265,6 +1287,8 @@
 				7658191015DEDAF70015F12D /* GemDirector.m in Sources */,
 				7658191615DEE0160015F12D /* GemScene.m in Sources */,
 				7658191A15DEE5DF0015F12D /* GemSceneTransition.m in Sources */,
+				7658192515E53B3E0015F12D /* LGeminiScene.m in Sources */,
+				76581B3915E5B8A10015F12D /* LGeminiDirector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 @synthesize sourceBlend;
 @synthesize destBlend;
 @synthesize isBLendingLayer;
+@synthesize scene;
 
 -(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];

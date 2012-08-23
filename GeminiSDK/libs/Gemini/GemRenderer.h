@@ -40,7 +40,7 @@
 
 -(id) initWithLuaState:(lua_State *)luaState;
 
--(void)render;
+-(void)renderScene:(GemScene *)scene;
 
 
 

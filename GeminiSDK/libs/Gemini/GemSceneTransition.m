@@ -7,19 +7,27 @@
 //
 
 #import "GemSceneTransition.h"
+#import "Gemini.h"
+#import "GemGLKViewController.h"
 
 @implementation GemSceneTransition
 
+@synthesize sceneA, sceneB, elapsedTime, duration;
+
 
 // must return YES if the transition is complete, NO otherwise
--(BOOL)transit:(double)currentTime {
+// overide this to create custom transitions
+-(BOOL)transit:(double)timeSinceLastRender {
     // default implementation just switches scenes at end of transition
     BOOL rval = NO;
-    if (currentTime > startTime + duration) {
+    elapsedTime += timeSinceLastRender;
+    if (elapsedTime > duration) {
         rval = YES;
         // render sceneB
+        [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneB];
     } else {
         // render sceneA
+        [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneA];
     }
     
     return rval;
@@ -29,7 +37,7 @@
 {
     self = [super init];
     if (self) {
-        
+        elapsedTime = 0;
     }
     return self;
 }
