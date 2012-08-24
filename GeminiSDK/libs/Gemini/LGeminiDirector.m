@@ -12,6 +12,7 @@
 #import "GemScene.h"
 #import "LGeminiLuaSupport.h"
 #import "LGeminiDisplay.h"
+#import "LGeminiObject.h"
 
 static int newScene(lua_State *L){
     NSLog(@"Creating new scene");
@@ -69,10 +70,20 @@ static int directorLoadScene(lua_State *L){
     return 0;
 }
 
+static int directorGotoScene(lua_State *L){
+    NSLog(@"Going to scene");
+    const char *sceneName = luaL_checkstring(L, 1);
+    NSString *sceneNameStr = [NSString stringWithUTF8String:sceneName];
+    [((GemGLKViewController *)[Gemini shared].viewController).director gotoScene:sceneNameStr withOptions:nil];
+    
+    return 0;
+}
+
 // the mappings for the library functions
 static const struct luaL_Reg directorLib_f [] = {
     {"newScene", newScene},
     {"loadScene", directorLoadScene},
+    {"gotoScene", directorGotoScene},
     {NULL, NULL}
 };
 
@@ -82,6 +93,7 @@ static const struct luaL_Reg scene_m [] = {
     {"__index", sceneIndex},
     {"__newindex", sceneNewIndex},
     {"addLayer", addLayerToScene},
+    {"addEventListener", addEventListener},
     {NULL, NULL}
 };
 

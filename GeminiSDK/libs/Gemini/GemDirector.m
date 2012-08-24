@@ -9,6 +9,7 @@
 #import "GemDirector.h"
 #import "Gemini.h"
 #import "LGeminiDirector.h"
+#import "GemEvent.h"
 
 @implementation GemDirector
 @synthesize renderer;
@@ -40,22 +41,35 @@ int render_count = 0;
         [self loadScene:scene];
     }
     
-    currentTransition = (GemSceneTransition *)[transitions objectForKey:(NSString *)[options objectForKey:@"transition"]]; // TODO replace this hard-coded string
+    GemScene *cScene = [scenes objectForKey:currentScene];
+    GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Source:cScene];
+    exitEvent.name = GEM_EXIT_SCENE_EVENT;
+    [cScene handleEvent:exitEvent];
+    
+    GemScene *gemScene = [scenes objectForKey:scene];
+
+    GemEvent *event = [[GemEvent alloc] initWithLuaState:L Source:gemScene];
+    event.name = GEM_ENTER_SCENE_EVENT;
+    
+    [gemScene handleEvent:event];
+    
+   /* currentTransition = (GemSceneTransition *)[transitions objectForKey:(NSString *)[options objectForKey:@"transition"]]; // TODO replace this hard-coded string
     currentTransition.sceneA = [self getCurrentScene];
     currentTransition.sceneA = (GemScene *)[scenes objectForKey:scene];
+    */
     
+    
+    [self setCurrentScene:scene];
+
 }
 
 -(void)loadScene:(NSString *)sceneName {
-    //[[Gemini shared] execute:sceneName];
     
     int err;
     
 	lua_settop(L, 0);
     
     NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:sceneName ofType:@"lua"];
-    
-    //setLuaPath(L, [luaFilePath stringByDeletingLastPathComponent]);
     
     err = luaL_loadfile(L, [luaFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]);
 	
@@ -79,8 +93,7 @@ int render_count = 0;
     scene.name = sceneName;
     [scenes setObject:scene forKey:sceneName];
     
-    [self setCurrentScene:sceneName];
-    
+        
     lua_getfield(L, -1, "createScene");
     
     // duplicate the scene on top of th stack since it is the first param of the createScene method
@@ -106,9 +119,9 @@ int render_count = 0;
 }
 
 -(void)render:(double)timeSinceLastRender {
-    if (render_count == 300) {
-        [self loadScene:@"scene2"];
-    }
+    /*if (render_count == 300) {
+        [self gotoScene:@"scene2" withOptions:nil];
+    }*/
 
     render_count++;
     

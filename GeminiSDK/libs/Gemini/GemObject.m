@@ -127,9 +127,11 @@
 
 
 -(BOOL)handleEvent:(GemEvent *)event {
-    
-    //NSLog(@"GemObject: handling event %@", event.name);
-    NSArray *callbacks = (NSMutableArray *)[eventHandlers objectForKey:event.name];
+    if ([event.name isEqualToString:@"GEM_TIMER_EVENT"]) {
+        NSLog(@"GemObject: handling event %@", event.name);
+
+    }
+        NSArray *callbacks = (NSMutableArray *)[eventHandlers objectForKey:event.name];
         
     if ([callbacks count] > 0) {
         for (int i=0; i<[callbacks count]; i++) {

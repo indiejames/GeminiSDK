@@ -17,7 +17,7 @@ static int performWithDelay(lua_State *L){
     double delay = luaL_checknumber(L, 1);
     
     // copy the listener to the top of the stack
-    lua_pushvalue(L, -2);
+    lua_pushvalue(L, 2);
     // get a reference to the listener
     int listener = luaL_ref(L, LUA_REGISTRYINDEX);
     
