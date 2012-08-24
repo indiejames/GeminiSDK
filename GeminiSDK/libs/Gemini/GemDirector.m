@@ -125,7 +125,7 @@ int render_count = 0;
         tempScene.name = @"TEMP_SCENE";
         [tempScene addScene:[scenes objectForKey:GEM_DEFAULT_SCENE]];
         if (![currentScene isEqualToString:GEM_DEFAULT_SCENE]) {
-            NSLog(@"current scene has %d layers", [[scenes objectForKey:currentScene] numLayers]);
+            //NSLog(@"current scene has %d layers", [[scenes objectForKey:currentScene] numLayers]);
             [tempScene addScene:[scenes objectForKey:currentScene]];
         }
         [renderer renderScene:tempScene];

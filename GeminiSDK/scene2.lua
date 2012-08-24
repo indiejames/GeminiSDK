@@ -27,18 +27,18 @@ function scene:createScene( event )
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
-    print("Lua: Adding layer1 to scene")
+    print("Lua: Adding layer1 to scene2")
 	self:addLayer(layer1)
-    print("Lua: Creating green rectangle")
+    print("Lua: Creating yellow rectangle")
 	-- draw a yellow rectangle with a white border
 	local rectangle = display.newRect(100,100,100,100)
-	rectangle:setFillColor(1.0,1,0,1.0)
+	rectangle:setFillColor(1.0,0,0,1.0)
 	rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
 	rectangle.strokeWidth = 5.0
 	rectangle.x = 450
 	rectangle.y = 250
 	rectangle.rotation = -30
-	
+	layer1:insert(rectangle)
 
 end
 

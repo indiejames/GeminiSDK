@@ -38,6 +38,7 @@ function scene:createScene( event )
 	rectangle.x = 750
 	rectangle.y = 450
 	rectangle.rotation = 30
+    layer1:insert(rectangle)
 	
 
 end

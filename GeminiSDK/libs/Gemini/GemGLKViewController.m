@@ -161,7 +161,7 @@
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
     glDepthMask(GL_TRUE);
     
-    glClearColor(0, 0, 0, 1.0f);
+    glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // compute frame rate
     if (frameCount > 0) {

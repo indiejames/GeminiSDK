@@ -14,7 +14,7 @@ layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 -- draw a star using a poly line
 star = display.newLine( 150,30, 177,115 )
 star:append( 255,115, 193,166, 215,240, 150,195, 85,240, 107,165, 45,115, 123,115, 150,30 )
-star:setColor( 1.0, 1.0, 0.5, 0.75 )
+star:setColor( 0, 0, 1.0, 0.5 )
 star.width = 10
 star.yReference = 120
 local group1 = display.newGroup()
@@ -47,7 +47,7 @@ director.loadScene('scene1')
 -- add an event listener that will fire every frame
 local myListener = function(event)
   -- rotate our star and rectangles about their centers (reference points)
-  star.rotation = star.rotation + 1.0
+  star.rotation = star.rotation + 0.2
   rectangle.rotation = rectangle.rotation - 1.0
   rectangle2.rotation = rectangle2.rotation - 3.0
 end 
