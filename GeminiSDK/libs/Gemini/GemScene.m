@@ -40,7 +40,7 @@
 
 // add a new layer
 -(void)addLayer:(GemLayer *)newLayer {
-    NSLog(@"GemScene adding layer with index %d", newLayer.index);
+    NSLog(@"GemScene %@ adding layer with index %d", self.name, newLayer.index);
     [newLayer.scene removeLayer:newLayer.index];
     newLayer.scene = self;
     [layers setObject:newLayer forKey:[NSNumber numberWithInt:newLayer.index]];

@@ -43,7 +43,8 @@ rectangle2.rotation = -15
 
 director.loadScene('scene1')
 director.gotoScene('scene1')
-director.loadScene('scene2')
+
+
 
 
 -- add an event listener that will fire every frame

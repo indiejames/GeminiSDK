@@ -54,6 +54,15 @@ function scene:enterScene( event )
 	-----------------------------------------------------------------------------
     
     print("Entering scene 2")
+    
+    director.loadScene('scene3')
+    
+    local function listener(event)
+    
+        director.gotoScene("scene3")
+    end
+    
+    timer.performWithDelay(3000, listener)
 
 end
 

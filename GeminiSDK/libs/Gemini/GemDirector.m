@@ -118,10 +118,21 @@ int render_count = 0;
     return (GemScene *)[scenes objectForKey:currentScene];
 }
 
+-(GemScene *)getDefaultScene {
+    return (GemScene *)[scenes objectForKey:GEM_DEFAULT_SCENE];
+}
+
 -(void)render:(double)timeSinceLastRender {
     /*if (render_count == 300) {
         [self gotoScene:@"scene2" withOptions:nil];
     }*/
+    
+    
+    if (render_count % 300 == 0) {
+        NSLog(@"Current scene is %@", ((GemScene *)[scenes objectForKey:currentScene]).name);
+        render_count = 0;
+    }
+    
 
     render_count++;
     

@@ -185,6 +185,7 @@
 		7658192515E53B3E0015F12D /* LGeminiScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7658192415E53B360015F12D /* LGeminiScene.m */; };
 		76581B3915E5B8A10015F12D /* LGeminiDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 76581B3815E5B89D0015F12D /* LGeminiDirector.m */; };
 		76581B3B15E6B98E0015F12D /* scene2.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76581B3A15E6B98C0015F12D /* scene2.lua */; };
+		76581B3D15E84C970015F12D /* scene3.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76581B3C15E84C930015F12D /* scene3.lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -514,6 +515,7 @@
 		76581B3715E5B8990015F12D /* LGeminiDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGeminiDirector.h; path = libs/Gemini/LGeminiDirector.h; sourceTree = "<group>"; };
 		76581B3815E5B89D0015F12D /* LGeminiDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiDirector.m; path = libs/Gemini/LGeminiDirector.m; sourceTree = "<group>"; };
 		76581B3A15E6B98C0015F12D /* scene2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene2.lua; sourceTree = "<group>"; };
+		76581B3C15E84C930015F12D /* scene3.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene3.lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -578,6 +580,7 @@
 				7658191F15E533830015F12D /* scene_template.lua */,
 				7658192115E534310015F12D /* scene1.lua */,
 				76581B3A15E6B98C0015F12D /* scene2.lua */,
+				76581B3C15E84C930015F12D /* scene3.lua */,
 				7658171015DC8F160015F12D /* Resources */,
 				7658172415DC8F160015F12D /* libs */,
 				765818EB15DC8F190015F12D /* Shaders */,
@@ -1134,6 +1137,7 @@
 				7658192015E533850015F12D /* scene_template.lua in Resources */,
 				7658192215E534320015F12D /* scene1.lua in Resources */,
 				76581B3B15E6B98E0015F12D /* scene2.lua in Resources */,
+				76581B3D15E84C970015F12D /* scene3.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -55,9 +55,9 @@ static int sceneNewIndex (lua_State *L){
 }
 
 static int addLayerToScene(lua_State *L){
-    NSLog(@"Adding layer to scene");
     GemScene  **scene = (GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     GemLayer **layer = (GemLayer **)luaL_checkudata(L, 2, GEMINI_LAYER_LUA_KEY);
+    NSLog(@"LGeminiDirector Adding layer %d to scene %@", (*layer).index, (*scene).name);
     [*scene addLayer:*layer];
 }
 

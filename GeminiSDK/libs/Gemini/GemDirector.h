@@ -30,6 +30,7 @@
 -(void)gotoScene:(NSString *)scene withOptions:(NSDictionary *)options;
 -(void)destroyScene:(NSString *)scene;
 -(GemScene *)getCurrentScene;
+-(GemScene *)getDefaultScene;
 -(void)setCurrentScene:(NSString *)scene;
 -(void)render:(double)timeSinceLastRender;
 
