@@ -56,11 +56,27 @@ int addEventListener(lua_State *L){
     int callback = luaL_ref(L, LUA_REGISTRYINDEX);
     [*go addEventListener:callback forEvent:name];
     
-    NSLog(@"Added event listener for %@ event for %@", name, (*go).name);
+    NSLog(@"LGeminiObject: Added event listener for %@ event for %@", name, (*go).name);
     
     [name release];
     
     return 0;
+}
+
+int removeEventListener(lua_State *L){
+    GemObject **go = (GemObject **)lua_touserdata(L, 1);
+    const char *eventName = luaL_checkstring(L, 2);
+    NSString *name = [[NSString stringWithFormat:@"%s", eventName] retain];
+    int callback = luaL_ref(L, LUA_REGISTRYINDEX);
+    [*go removeEventListener:callback forEvent:name];
+    
+    NSLog(@"LGeminiObject: Removed event listener for %@ event for %@", name, (*go).name);
+    
+    [name release];
+    
+    return 0;
+
+    
 }
 
 
@@ -132,6 +148,7 @@ static const struct luaL_Reg geminiObjectLib_f [] = {
 
 static const struct luaL_Reg geminiObjectLib_m [] = {
     {"addEventListener", addEventListener},
+    {"removeEventListener", removeEventListener},
     {"__gc", geminiObjectGC},
     {"__index", l_irc_index},
     {"__newindex", l_irc_newindex},

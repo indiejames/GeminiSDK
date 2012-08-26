@@ -131,6 +131,7 @@ int render_count = 0;
     if (render_count % 300 == 0) {
         NSLog(@"Current scene is %@", ((GemScene *)[scenes objectForKey:currentScene]).name);
         render_count = 0;
+        lua_gc(L, LUA_GCCOLLECT, 0);
     }
     
 

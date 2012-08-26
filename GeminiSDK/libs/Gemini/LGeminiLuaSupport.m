@@ -230,6 +230,27 @@ int removeSelf(lua_State *L){
     return 0;
 }
 
+int genericDelete(lua_State *L){
+    GemDisplayObject  **obj = (GemDisplayObject **)lua_touserdata(L, -1);
+    NSLog(@"LGeminiSupport: deleting display object %@", (*obj).name);
+    [(*obj).parent remove:*obj];
+    [*obj dealloc];
+    
+    return 0;
+}
+
+
+// this method is only here to allow checks to see if Lua is properly GC'ing objects
+// it doesn't actually do anything - all the action is in the various delete methods
+int genericGC (lua_State *L){
+    //GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    
+    NSLog(@"GARBAGE COLLECTED => LGeminiSupport: GC called for dipslay object");
+    
+    
+    return 0;
+}
+
 // used to set common defaults for all display objects
 // this function expects a table to be the top item on the stack
 void setDefaultValues(lua_State *L) {

@@ -37,6 +37,7 @@
 
 -(void)insert:(GemDisplayObject *)obj {
     [self insert:obj atIndex:[objects count]];
+    obj.parent = self;
 }
 
 -(void)insert:(GemDisplayObject *)obj atIndex:(int)indx {

@@ -7,6 +7,8 @@
 local director = require( "director" )
 local scene = director.newScene()
 
+local rectangle
+
 ----------------------------------------------------------------------------------
 -- 
 --	NOTE:
@@ -31,7 +33,7 @@ function scene:createScene( event )
 	self:addLayer(layer1)
     print("Lua: Creating yellow rectangle")
 	-- draw a yellow rectangle with a white border
-	local rectangle = display.newRect(100,100,100,100)
+    rectangle = display.newRect(100,100,100,100)
 	rectangle:setFillColor(1.0,1.0,0,1.0)
 	rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
 	rectangle.strokeWidth = 5.0
@@ -41,6 +43,12 @@ function scene:createScene( event )
 	layer1:insert(rectangle)
 
 end
+
+local myListener = function(event)
+  -- rotate our rectangle about its center (reference point)
+  rectangle.rotation = rectangle.rotation + 1.0
+  
+end 
 
 
 -- Called immediately after scene has moved onscreen:
@@ -54,6 +62,18 @@ function scene:enterScene( event )
 	-----------------------------------------------------------------------------
     
     print("Entering scene 3")
+    
+    
+-- add an event listener that will fire every frame
+
+-- the "enterFrame" event fires at the beginning of each render loop
+Runtime:addEventListener("enterFrame", myListener)
+    
+ local function listener(event)
+    director.gotoScene("scene1")
+  end
+    
+  timer.performWithDelay(3000, listener)
 
 end
 
@@ -69,6 +89,7 @@ function scene:exitScene( event )
 	-----------------------------------------------------------------------------
     
     print("Exiting scene 3")
+ --Runtime:removeEventListener("enterFrame", myListener)
 
 end
 

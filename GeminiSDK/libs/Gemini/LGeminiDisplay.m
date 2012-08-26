@@ -42,14 +42,16 @@ static int newRectangle(lua_State *L){
     return 1;
 }
 
-static int rectangleGC (lua_State *L){
-    //NSLog(@"rectangleGC called");
+static int rectangleDelete(lua_State *L){
     GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    NSLog(@"LGeminiDisplay: deleting rectangle %@", (*rect).name);
     [(*rect).parent remove:*rect];
-    //[*rect release];
-    
-    return 0;
+    [*rect dealloc];
+                                             
+                                             
 }
+
+
 
 static int rectangleIndex(lua_State *L){
     int rval = 0;
@@ -426,24 +428,26 @@ static const struct luaL_Reg displayGroup_m [] = {
 
 // mappings for the line methods
 static const struct luaL_Reg line_m [] = {
-    {"__gc", lineGC},
+    {"__gc", genericGC},
     {"__index", lineIndex},
     {"__newindex", lineNewIndex},
     {"removeSelf", removeSelf},
     {"setColor", lineSetColor},
     {"append", lineAppendPoints},
+    {"delete", genericDelete},
     {NULL, NULL}
 };
 
 // mappings for the rectangle methods
 static const struct luaL_Reg rectangle_m [] = {
-    {"__gc", rectangleGC},
+    {"__gc", genericGC},
     {"__index", rectangleIndex},
     {"__newindex", rectangleNewIndex},
     {"setFillColor", rectangleSetFillColor},
     {"setStrokeColor", rectangleSetStrokeColor},
     {"setStrokeWidth", rectangleSetStrokeWidth},
     {"removeSelf", removeSelf},
+    {"delete", genericDelete},
     {NULL, NULL}
 };
 

@@ -16,6 +16,8 @@
 @synthesize L;
 @synthesize name;
 
+
+
 -(id) initWithLuaState:(lua_State *)luaState {
     self = [super init];
     if (self) {
@@ -32,9 +34,12 @@
         NSArray *callbacks = (NSArray *)[eventHandlers objectForKey:key];
         [callbacks release];
     }*/
-    // release our property table
+    // release our property table so it can be GC by Lua
     luaL_unref(L, LUA_REGISTRYINDEX, propertyTableRef);
     [eventHandlers release];
+    
+    // release our reference to ourself so we can be GC by Lua
+    luaL_unref(L, LUA_REGISTRYINDEX, selfRef);
     
     [super dealloc];
 }
@@ -142,10 +147,22 @@
             
             if (lua_isfunction(L, -1)) {
                 //NSLog(@"Event handler is a function");
+                // load the stacktrace printer for our error function
+                lua_getglobal(L, "gemini_stacktrace_printer");
+                if (lua_isnil(L, -1)) {
+                    NSLog(@"Error loading stacktrace_printer function");
+                    
+                }
+               
+    
+                // copy our pointer to our function to top of stack
+                lua_copy(L, -2, -1);
+                // push the event object onto the top of the stack as the argument to the event handler
                 lua_rawgeti(L, LUA_REGISTRYINDEX, event.selfRef);
                 int err = lua_pcall(L, 1, 0, 0);
                 if (err != 0) {
-                    NSLog(@"Error executing event handler");
+                    const char *msg = lua_tostring(L, -1);
+                    NSLog(@"Error executing event handler: %s", msg);
                 }
                 
                 
@@ -174,7 +191,7 @@
 
 // add an event listener to this object
 -(void)addEventListener:(int)callback forEvent:(NSString *)event {
-    NSLog(@"GeminiObject adding event listener for %@", event);
+    NSLog(@"GemObject adding event listener for %@", event);
     NSMutableArray *handler = (NSMutableArray *)[eventHandlers objectForKey:event];
     if (handler == nil) {
         handler = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
@@ -186,9 +203,10 @@
 
 // remove an event listener for this object
 -(void)removeEventListener:(int)callback forEvent:(NSString *)event {
+    NSLog(@"GemObject: removing event listener for %@", event);
     NSMutableArray *handler = (NSMutableArray *)[eventHandlers objectForKey:event];
     if (handler != nil) {
-        [handler removeObjectIdenticalTo:[NSNumber numberWithInt:callback]];
+        [handler removeObject:[NSNumber numberWithInt:callback]];
     }
 }
 

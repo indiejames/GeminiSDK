@@ -26,6 +26,9 @@ group1.x = 480
 group1.y = 320
 
 -- draw a red rectangle with a white border
+local rectangle = display.newRect(10,10,100,100)
+rectangle:delete()
+collectgarbage("collect")
 rectangle = display.newRect(100,100,100,100)
 rectangle:setFillColor(1.0,0,0,1.0)
 rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
@@ -33,6 +36,7 @@ rectangle.strokeWidth = 5.0
 rectangle.x = 750
 rectangle.y = 450
 rectangle.rotation = 30
+
 
 -- draw a blue rectangle with a green border
 rectangle2 = display.newRect(200,200,50,50)
