@@ -39,5 +39,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 - Credit Gemini in any apps you build with it.
 - Add your app to the [app list](https://github.com/indiejames/GeminiSDK/wiki/List-of-Apps-Using-Gemini) in the Wiki so we can watch the community grow.
 
-1 - Physics support is planned but not yet implemented as of 2012-08-27.
-2 - Text Candy is a licensed Lua library that requires a license fee to be purchased.  Also, slight modifications must be made to the Text Candy Lua file to support working with Gemini.
+<sub>1 - Physics support is planned but not yet implemented as of 2012-08-27.</sub>
+
+<sub>2 - Text Candy is a licensed Lua library that requires a license fee to be purchased.  Also, slight modifications must be made to the Text Candy Lua file to support working with Gemini.</sub>
