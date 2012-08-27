@@ -41,4 +41,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 <sub>1 - Physics support is planned but not yet implemented as of 2012-08-27.</sub>
 
-<sub>2 - Text Candy is a licensed Lua library that requires a license fee to be purchased.  Also, slight modifications must be made to the Text Candy Lua file to support working with Gemini.</sub>
+<sub>2 - Text Candy is a licensed Lua library that requires a license to be purchased.  Also, slight modifications must be made to the Text Candy Lua file to support working with Gemini.</sub>
