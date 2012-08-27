@@ -186,6 +186,7 @@
 		76581B3915E5B8A10015F12D /* LGeminiDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 76581B3815E5B89D0015F12D /* LGeminiDirector.m */; };
 		76581B3B15E6B98E0015F12D /* scene2.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76581B3A15E6B98C0015F12D /* scene2.lua */; };
 		76581B3D15E84C970015F12D /* scene3.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76581B3C15E84C930015F12D /* scene3.lua */; };
+		76581B3F15EC1DD40015F12D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 76581B3E15EC1DD10015F12D /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -516,6 +517,7 @@
 		76581B3815E5B89D0015F12D /* LGeminiDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiDirector.m; path = libs/Gemini/LGeminiDirector.m; sourceTree = "<group>"; };
 		76581B3A15E6B98C0015F12D /* scene2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene2.lua; sourceTree = "<group>"; };
 		76581B3C15E84C930015F12D /* scene3.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene3.lua; sourceTree = "<group>"; };
+		76581B3E15EC1DD10015F12D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -541,6 +543,7 @@
 		765816EE15DC8F150015F12D = {
 			isa = PBXGroup;
 			children = (
+				76581B3E15EC1DD10015F12D /* README.md */,
 				7658170F15DC8F160015F12D /* GeminiSDK */,
 				765816FC15DC8F150015F12D /* Frameworks */,
 				765816FA15DC8F150015F12D /* Products */,
@@ -1138,6 +1141,7 @@
 				7658192215E534320015F12D /* scene1.lua in Resources */,
 				76581B3B15E6B98E0015F12D /* scene2.lua in Resources */,
 				76581B3D15E84C970015F12D /* scene3.lua in Resources */,
+				76581B3F15EC1DD40015F12D /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
