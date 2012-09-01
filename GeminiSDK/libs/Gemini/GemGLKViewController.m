@@ -172,16 +172,12 @@
         double frameRate = (double)frameCount / frameRenderTime;
         frameCount = 0;
         frameRenderTime = 0;
-        NSLog(@"frame rate = %f", frameRate);
+        GemLog(@"frame rate = %f", frameRate);
     }
     
     frameCount += 1;
     
-    //NSLog(@"Drawing");
-   // glClearColor(0, 0.0, 1.0, 1.0);
-    //glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-    
-     // call the pre render method
+    // call the pre render method
     if (preRenderCallback) {
         [self performSelector:preRenderCallback];
     }
