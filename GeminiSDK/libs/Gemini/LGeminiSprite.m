@@ -25,6 +25,7 @@ static int newSprite(lua_State *L){
     GemSpriteSet  **ss = (GemSpriteSet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SET_LUA_KEY);
     GemSprite *sprite = [[GemSprite alloc] initWithLuaState:L SpriteSet:*ss];
     [((GemGLKViewController *)([Gemini shared].viewController)).spriteManager addSprite:sprite];
+    [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:sprite];
     GemSprite **lSprite = (GemSprite **)lua_newuserdata(L, sizeof(GemSprite *));
     *lSprite = sprite;
     

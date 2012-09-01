@@ -4,10 +4,13 @@
 --
 ----------------------------------------------------------------------------------
 
-local timer = require("timer")
 local director = require( "director" )
 local scene = director.newScene()
+local display = require('display')
+local sprite = require('sprite')
+local horse = require('horse')
 
+local horseSprite
 
 ----------------------------------------------------------------------------------
 -- 
@@ -24,27 +27,27 @@ local scene = director.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-	print("Lua: Creating scene1")
+	print("Lua: Creating scene")
     
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
-    print("Lua: Adding layer1 to scene")
 	self:addLayer(layer1)
-    print("Lua: Creating green rectangle")
-	-- draw a green rectangle with a white border
-	local rectangle = display.newRect(100,100,100,100)
-	rectangle:setFillColor(0.0,1,0,1.0)
-	rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
-	rectangle.strokeWidth = 5.0
-	rectangle.x = 750
-	rectangle.y = 450
-	rectangle.rotation = 30
-    rectangle.name = "GREEN_RECTANGLE"
-    layer1:insert(rectangle)
-	
-
+    -- create our sprite for the running horse
+    local horseSpriteSheet = sprite.newSpriteSheetFromData("horses.png", horse.getSpriteSheetData())
+    local horseSpriteSet = sprite.newSpriteSet(horseSpriteSheet, 1, 8)
+    horseSprite = sprite.newSprite(horseSpriteSet)
+    horseSprite.x = 500
+    horseSprite.y = 350
+    layer1:insert(horseSprite)
+    
 end
+
+local myListener = function(event)
+  -- rotate our rectangle about its center (reference point)
+  rectangle.rotation = rectangle.rotation + 1.0
+  
+end 
 
 
 -- Called immediately after scene has moved onscreen:
@@ -57,16 +60,17 @@ function scene:enterScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Entering scene 1")
+    print("Entering scene 4")
     
-    director.loadScene('scene2')
     
-    local function listener(event)
+    horseSprite:prepare()
+    horseSprite:play()
     
-        director.gotoScene("scene2")
-    end
+ local function listener(event)
+    director.gotoScene("scene1")
+  end
     
-    timer.performWithDelay(3000, listener)
+  timer.performWithDelay(5000, listener)
 
 end
 
@@ -81,7 +85,8 @@ function scene:exitScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Exiting scene 1")
+    print("Exiting scene 4")
+ 
 
 end
 
@@ -102,7 +107,7 @@ end
 -- END OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
-scene.name = "scene1"
+scene.name = "scene4"
 
 -- "createScene" event is dispatched if scene's view does not exist
 scene:addEventListener( "createScene", scene )

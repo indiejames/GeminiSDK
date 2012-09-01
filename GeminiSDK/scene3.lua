@@ -70,7 +70,7 @@ function scene:enterScene( event )
 Runtime:addEventListener("enterFrame", myListener)
     
  local function listener(event)
-    director.gotoScene("scene1")
+    director.gotoScene("scene4")
   end
     
   timer.performWithDelay(3000, listener)

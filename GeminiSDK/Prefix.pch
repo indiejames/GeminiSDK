@@ -12,3 +12,9 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+
+#ifdef GEMINI_DEBUG
+#define GemLog(s, ...) NSLog(s, ##__VA_ARGS__)
+#else
+#define GemLog(s, ...)
+#endif

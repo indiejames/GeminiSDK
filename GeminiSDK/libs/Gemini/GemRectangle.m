@@ -40,6 +40,7 @@
 }
 
 -(void)dealloc {
+    NSLog(@"GemRectangle: calling dealloc for rectangle %@", self.name);
     free(verts);
     free(vertIndex);
     free(vertColor);

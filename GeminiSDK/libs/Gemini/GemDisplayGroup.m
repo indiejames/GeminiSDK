@@ -37,15 +37,14 @@
 
 -(void)insert:(GemDisplayObject *)obj {
     [self insert:obj atIndex:[objects count]];
-    obj.parent = self;
+    
 }
 
 -(void)insert:(GemDisplayObject *)obj atIndex:(int)indx {
     //NSLog(@"Calling insert for GeminiDisplayGroup");
-    if (obj.parent != nil) {
-        [(GemDisplayGroup *)(obj.parent) remove:obj];
-    }
+    
     [objects insertObject:obj atIndex:indx];
+    [(GemDisplayGroup *)(obj.parent) remove:obj];
     obj.parent = self;
     GemLayer *parentLayer;
     if (self.layer == nil) {
@@ -63,6 +62,9 @@
     [objects removeObject:obj];
     obj.parent = nil;
 }
+
+
+
 
 -(unsigned int) numChildren {
     return [objects count];

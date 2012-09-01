@@ -14,6 +14,7 @@
 #import "LGeminiDisplay.h"
 #import "LGeminiObject.h"
 
+
 static int newScene(lua_State *L){
     NSLog(@"Creating new scene");
     
@@ -62,21 +63,30 @@ static int addLayerToScene(lua_State *L){
 }
 
 static int directorLoadScene(lua_State *L){
-    NSLog(@"Loading scene");
+    
     const char *sceneName = luaL_checkstring(L, 1);
     NSString *sceneNameStr = [NSString stringWithUTF8String:sceneName];
+    NSLog(@"Loading scene");
     [((GemGLKViewController *)[Gemini shared].viewController).director loadScene:sceneNameStr];
     
     return 0;
 }
 
 static int directorGotoScene(lua_State *L){
-    NSLog(@"Going to scene");
+    
     const char *sceneName = luaL_checkstring(L, 1);
     NSString *sceneNameStr = [NSString stringWithUTF8String:sceneName];
+    NSLog(@"Going to scene %@", sceneNameStr);
     [((GemGLKViewController *)[Gemini shared].viewController).director gotoScene:sceneNameStr withOptions:nil];
     
     return 0;
+}
+
+static int deleteScene(lua_State *L){
+    const char *sceneName = luaL_checkstring(L, 1);
+    NSString *sceneNameStr = [NSString stringWithUTF8String:sceneName];
+    NSLog(@"LGeminiDirector deleting scene %@", sceneNameStr);
+    
 }
 
 // the mappings for the library functions

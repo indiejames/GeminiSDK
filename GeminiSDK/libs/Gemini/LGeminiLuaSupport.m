@@ -233,8 +233,8 @@ int removeSelf(lua_State *L){
 int genericDelete(lua_State *L){
     GemDisplayObject  **obj = (GemDisplayObject **)lua_touserdata(L, -1);
     NSLog(@"LGeminiSupport: deleting display object %@", (*obj).name);
+    
     [(*obj).parent remove:*obj];
-    [*obj dealloc];
     
     return 0;
 }

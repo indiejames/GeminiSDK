@@ -34,24 +34,13 @@ static int newRectangle(lua_State *L){
     
     setupObject(L, GEMINI_RECTANGLE_LUA_KEY, rect);
     
-    //rect.x = width / 2.0;
-    //rect.y = height / 2.0;
     rect.width = width;
     rect.height = height;
     
+    [rect release];
+    
     return 1;
 }
-
-static int rectangleDelete(lua_State *L){
-    GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
-    NSLog(@"LGeminiDisplay: deleting rectangle %@", (*rect).name);
-    [(*rect).parent remove:*rect];
-    [*rect dealloc];
-                                             
-                                             
-}
-
-
 
 static int rectangleIndex(lua_State *L){
     int rval = 0;
@@ -178,15 +167,6 @@ static int newLine(lua_State *L){
 
     
     return 1;
-}
-
-static int lineGC (lua_State *L){
-    //NSLog(@"lineGC called");
-    GemLine  **line = (GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
-    [(*line).parent remove:*line];
-    //[*line release];
-    
-    return 0;
 }
 
 
@@ -392,6 +372,10 @@ static int displayGroupRemove(lua_State *L){
     [*group remove:*displayObj];
     
     return 0;
+}
+
+static int displayGroupDelete(lua_State *L){
+    GemDisplayGroup **group = (GemDisplayGroup **)lua_touserdata(L,1);
 }
 
 

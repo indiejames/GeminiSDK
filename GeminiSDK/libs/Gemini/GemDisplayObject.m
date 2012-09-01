@@ -7,6 +7,7 @@
 //
 
 #import "GemDisplayObject.h"
+#import "GemDisplayGroup.h"
 
 
 @implementation GemDisplayObject
@@ -244,6 +245,16 @@
     
     return transform;
 }
+
+// remove this display object and any child objects it may have
+/*-(void)deleteObject {
+    GemDisplayObject  **obj = (GemDisplayObject **)lua_touserdata(L, -1);
+    NSLog(@"LGeminiSupport: deleting display object %@", (*obj).name);
+    [(*obj).parent remove:*obj];
+    [*obj release];
+    
+    return 0;
+}*/
 
 
 @end
