@@ -171,7 +171,6 @@
 		76D5707E15F1943600615891 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D5707D15F1943600615891 /* main.m */; };
 		76D5708015F1943600615891 /* Prefix.pch in Resources */ = {isa = PBXBuildFile; fileRef = 76D5707F15F1943600615891 /* Prefix.pch */; };
 		76D5708315F1943600615891 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 76D5708215F1943600615891 /* AppDelegate.mm */; };
-		76D5708615F1943600615891 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D5708515F1943600615891 /* ViewController.m */; };
 		76D5708815F1943600615891 /* main.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D5708715F1943600615891 /* main.lua */; };
 		76D5708B15F1943600615891 /* sprite_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 76D5708A15F1943600615891 /* sprite_shader.fsh */; };
 		76D5708D15F1943600615891 /* sprite_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 76D5708C15F1943600615891 /* sprite_shader.vsh */; };
@@ -179,6 +178,20 @@
 		76D5709115F1943600615891 /* rectangle_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 76D5709015F1943600615891 /* rectangle_shader.vsh */; };
 		76D5709315F1943600615891 /* line_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 76D5709215F1943600615891 /* line_shader.fsh */; };
 		76D5709515F1943600615891 /* line_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 76D5709415F1943600615891 /* line_shader.vsh */; };
+		76D570AA15F1A16B00615891 /* GemDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D570A115F1A16B00615891 /* GemDirector.m */; };
+		76D570AB15F1A16B00615891 /* GemScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D570A315F1A16B00615891 /* GemScene.m */; };
+		76D570AC15F1A16B00615891 /* GemSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D570A515F1A16B00615891 /* GemSceneTransition.m */; };
+		76D570AD15F1A16B00615891 /* LGeminiDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D570A715F1A16B00615891 /* LGeminiDirector.m */; };
+		76D570AE15F1A16B00615891 /* LGeminiScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D570A915F1A16B00615891 /* LGeminiScene.m */; };
+		76D570B315F1A19200615891 /* horse_and_rider.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570AF15F1A19200615891 /* horse_and_rider.lua */; };
+		76D570B415F1A19200615891 /* horse_and_rider.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B015F1A19200615891 /* horse_and_rider.png */; };
+		76D570B515F1A19200615891 /* horse.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B115F1A19200615891 /* horse.lua */; };
+		76D570B615F1A19200615891 /* horses.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B215F1A19200615891 /* horses.png */; };
+		76D570BC15F1A1AD00615891 /* scene_template.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B715F1A1AD00615891 /* scene_template.lua */; };
+		76D570BD15F1A1AD00615891 /* scene1.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B815F1A1AD00615891 /* scene1.lua */; };
+		76D570BE15F1A1AD00615891 /* scene2.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B915F1A1AD00615891 /* scene2.lua */; };
+		76D570BF15F1A1AD00615891 /* scene3.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570BA15F1A1AD00615891 /* scene3.lua */; };
+		76D570C015F1A1AD00615891 /* scene4.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570BB15F1A1AD00615891 /* scene4.lua */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -488,8 +501,6 @@
 		76D5707F15F1943600615891 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		76D5708115F1943600615891 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		76D5708215F1943600615891 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
-		76D5708415F1943600615891 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		76D5708515F1943600615891 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		76D5708715F1943600615891 /* main.lua */ = {isa = PBXFileReference; lastKnownFileType = text; path = main.lua; sourceTree = "<group>"; };
 		76D5708A15F1943600615891 /* sprite_shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = sprite_shader.fsh; sourceTree = "<group>"; };
 		76D5708C15F1943600615891 /* sprite_shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = sprite_shader.vsh; sourceTree = "<group>"; };
@@ -497,6 +508,25 @@
 		76D5709015F1943600615891 /* rectangle_shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = rectangle_shader.vsh; sourceTree = "<group>"; };
 		76D5709215F1943600615891 /* line_shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = line_shader.fsh; sourceTree = "<group>"; };
 		76D5709415F1943600615891 /* line_shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = line_shader.vsh; sourceTree = "<group>"; };
+		76D570A015F1A16B00615891 /* GemDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemDirector.h; path = libs/Gemini/GemDirector.h; sourceTree = "<group>"; };
+		76D570A115F1A16B00615891 /* GemDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemDirector.m; path = libs/Gemini/GemDirector.m; sourceTree = "<group>"; };
+		76D570A215F1A16B00615891 /* GemScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemScene.h; path = libs/Gemini/GemScene.h; sourceTree = "<group>"; };
+		76D570A315F1A16B00615891 /* GemScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemScene.m; path = libs/Gemini/GemScene.m; sourceTree = "<group>"; };
+		76D570A415F1A16B00615891 /* GemSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSceneTransition.h; path = libs/Gemini/GemSceneTransition.h; sourceTree = "<group>"; };
+		76D570A515F1A16B00615891 /* GemSceneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemSceneTransition.m; path = libs/Gemini/GemSceneTransition.m; sourceTree = "<group>"; };
+		76D570A615F1A16B00615891 /* LGeminiDirector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGeminiDirector.h; path = libs/Gemini/LGeminiDirector.h; sourceTree = "<group>"; };
+		76D570A715F1A16B00615891 /* LGeminiDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiDirector.m; path = libs/Gemini/LGeminiDirector.m; sourceTree = "<group>"; };
+		76D570A815F1A16B00615891 /* LGeminiScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGeminiScene.h; path = libs/Gemini/LGeminiScene.h; sourceTree = "<group>"; };
+		76D570A915F1A16B00615891 /* LGeminiScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiScene.m; path = libs/Gemini/LGeminiScene.m; sourceTree = "<group>"; };
+		76D570AF15F1A19200615891 /* horse_and_rider.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = horse_and_rider.lua; sourceTree = "<group>"; };
+		76D570B015F1A19200615891 /* horse_and_rider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = horse_and_rider.png; sourceTree = "<group>"; };
+		76D570B115F1A19200615891 /* horse.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = horse.lua; sourceTree = "<group>"; };
+		76D570B215F1A19200615891 /* horses.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = horses.png; sourceTree = "<group>"; };
+		76D570B715F1A1AD00615891 /* scene_template.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene_template.lua; sourceTree = "<group>"; };
+		76D570B815F1A1AD00615891 /* scene1.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene1.lua; sourceTree = "<group>"; };
+		76D570B915F1A1AD00615891 /* scene2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene2.lua; sourceTree = "<group>"; };
+		76D570BA15F1A1AD00615891 /* scene3.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene3.lua; sourceTree = "<group>"; };
+		76D570BB15F1A1AD00615891 /* scene4.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene4.lua; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -555,10 +585,17 @@
 		76D56EAC15F1943300615891 /* GeminiSDK */ = {
 			isa = PBXGroup;
 			children = (
+				76D570B715F1A1AD00615891 /* scene_template.lua */,
+				76D570B815F1A1AD00615891 /* scene1.lua */,
+				76D570B915F1A1AD00615891 /* scene2.lua */,
+				76D570BA15F1A1AD00615891 /* scene3.lua */,
+				76D570BB15F1A1AD00615891 /* scene4.lua */,
+				76D570AF15F1A19200615891 /* horse_and_rider.lua */,
+				76D570B015F1A19200615891 /* horse_and_rider.png */,
+				76D570B115F1A19200615891 /* horse.lua */,
+				76D570B215F1A19200615891 /* horses.png */,
 				76D5708115F1943600615891 /* AppDelegate.h */,
 				76D5708215F1943600615891 /* AppDelegate.mm */,
-				76D5708415F1943600615891 /* ViewController.h */,
-				76D5708515F1943600615891 /* ViewController.m */,
 				76D5708715F1943600615891 /* main.lua */,
 				76D56EAD15F1943300615891 /* Resources */,
 				76D56EC115F1943300615891 /* libs */,
@@ -666,6 +703,16 @@
 		76D56F1F15F1943400615891 /* Gemini */ = {
 			isa = PBXGroup;
 			children = (
+				76D570A015F1A16B00615891 /* GemDirector.h */,
+				76D570A115F1A16B00615891 /* GemDirector.m */,
+				76D570A215F1A16B00615891 /* GemScene.h */,
+				76D570A315F1A16B00615891 /* GemScene.m */,
+				76D570A415F1A16B00615891 /* GemSceneTransition.h */,
+				76D570A515F1A16B00615891 /* GemSceneTransition.m */,
+				76D570A615F1A16B00615891 /* LGeminiDirector.h */,
+				76D570A715F1A16B00615891 /* LGeminiDirector.m */,
+				76D570A815F1A16B00615891 /* LGeminiScene.h */,
+				76D570A915F1A16B00615891 /* LGeminiScene.m */,
 				76D56F2015F1943400615891 /* GemDisplayGroup.h */,
 				76D56F2115F1943400615891 /* GemDisplayGroup.m */,
 				76D56F2315F1943400615891 /* GemDisplayObject.h */,
@@ -1104,6 +1151,15 @@
 				76D5709115F1943600615891 /* rectangle_shader.vsh in Resources */,
 				76D5709315F1943600615891 /* line_shader.fsh in Resources */,
 				76D5709515F1943600615891 /* line_shader.vsh in Resources */,
+				76D570B315F1A19200615891 /* horse_and_rider.lua in Resources */,
+				76D570B415F1A19200615891 /* horse_and_rider.png in Resources */,
+				76D570B515F1A19200615891 /* horse.lua in Resources */,
+				76D570B615F1A19200615891 /* horses.png in Resources */,
+				76D570BC15F1A1AD00615891 /* scene_template.lua in Resources */,
+				76D570BD15F1A1AD00615891 /* scene1.lua in Resources */,
+				76D570BE15F1A1AD00615891 /* scene2.lua in Resources */,
+				76D570BF15F1A1AD00615891 /* scene3.lua in Resources */,
+				76D570C015F1A1AD00615891 /* scene4.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1254,7 +1310,11 @@
 				76D5707A15F1943600615891 /* mach_timing.c in Sources */,
 				76D5707E15F1943600615891 /* main.m in Sources */,
 				76D5708315F1943600615891 /* AppDelegate.mm in Sources */,
-				76D5708615F1943600615891 /* ViewController.m in Sources */,
+				76D570AA15F1A16B00615891 /* GemDirector.m in Sources */,
+				76D570AB15F1A16B00615891 /* GemScene.m in Sources */,
+				76D570AC15F1A16B00615891 /* GemSceneTransition.m in Sources */,
+				76D570AD15F1A16B00615891 /* LGeminiDirector.m in Sources */,
+				76D570AE15F1A16B00615891 /* LGeminiScene.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1359,6 +1419,7 @@
 				76D5709A15F1943600615891 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
