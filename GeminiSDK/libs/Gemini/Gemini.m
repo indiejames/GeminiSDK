@@ -20,7 +20,7 @@
 
 Gemini *singleton = nil;
 
-const char *errorFunc = "function gemini_stacktrace_printer(msg)\nreturn msg\nend\nprint('Lua: global error function set')";
+const char *errorFunc = "function gemini_stacktrace_printer()\nprint('My ERRO')\nend\nprint('Lua: global error function set')";
 
 @interface Gemini () {
 @private
@@ -49,7 +49,7 @@ int setLuaPath(lua_State *L, NSString* path );
     runtime = [[GemObject alloc] initWithLuaState:L];
     runtime.name = @"Runtime";
     
-    GemObject **lgo = (GemObject **)lua_newuserdata(L, sizeof(GemObject *));
+    __unsafe_unretained GemObject **lgo = (__unsafe_unretained GemObject **)lua_newuserdata(L, sizeof(GemObject *));
     *lgo = runtime;
     
     luaL_getmetatable(L, GEMINI_OBJECT_LUA_KEY);
@@ -63,6 +63,10 @@ int setLuaPath(lua_State *L, NSString* path );
     
     lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
     runtime.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
+    
+    // create a table for the event listeners
+    lua_newtable(L);
+    runtime.eventListenerTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
     
     // create an entry in the global table
     lua_setglobal(L, "Runtime");
@@ -92,9 +96,9 @@ int setLuaPath(lua_State *L, NSString* path );
     luaL_loadbuffer(L, errorFunc, strlen(errorFunc), "errorHandler");
     int err = lua_pcall(L, 0, 0, 0);
     if (err == 0) {
-        NSLog(@"Gemini: Global error function set");
+        GemLog(@"Gemini: Global error function set");
     } else {
-        NSLog(@"Gemini: error setting up global error function");
+        GemLog(@"Gemini: error setting up global error function");
     }
     lua_settop(L, 0);
 }
@@ -109,7 +113,7 @@ int setLuaPath(lua_State *L, NSString* path );
     dob.rotation = M_PI / 2.0;
     GLKVector4 vec = GLKVector4Make(dob.x, dob.y, 0, 1.0);
     GLKVector4 vec2 = GLKMatrix4MultiplyVector4(dob.transform, vec);
-    NSLog(@"vec2 = (%f,%f,%f)", vec2.x,vec2.y,vec2.z);*/
+    GemLog(@"vec2 = (%f,%f,%f)", vec2.x,vec2.y,vec2.z);*/
     
     self = [super init];
     if (self) {
@@ -150,8 +154,8 @@ int setLuaPath(lua_State *L, NSString* path );
     
     plist = [NSPropertyListSerialization propertyListFromData:plistData mutabilityOption:NSPropertyListImmutable format:&format errorDescription:&error];  
     if (!plist) {  
-        NSLog(@"Error reading plist from file '%s', error = '%s'", [localizedPath UTF8String], [error UTF8String]);  
-        [error release];  
+        GemLog(@"Error reading plist from file '%s', error = '%s'", [localizedPath UTF8String], [error UTF8String]);  
+         
     }  
     
     return plist;  
@@ -197,18 +201,17 @@ int setLuaPath(lua_State *L, NSString* path );
 }
 
 -(BOOL)handleEvent:(NSString *)event {
-    NSLog(@"Gemini handling event %@", event);
+    GemLog(@"Gemini handling event %@", event);
     GemEvent *ge = [[GemEvent alloc] initWithLuaState:L Source:nil];
     ge.name = event;
     
     for (id gemObj in geminiObjects) {
         if ([(GemObject *)gemObj handleEvent:ge]) {
-            [ge release];
+            
             return YES;
         }
     }
     
-    [ge release];
     
     return NO;
 }
@@ -216,6 +219,7 @@ int setLuaPath(lua_State *L, NSString* path );
 // the global update method - called from the GeminiGLKViewController update method
 // deltaT - time in seconds since last update
 -(void) update:(double)deltaT {
+    static int callCount = 0;
     
     // update transitions
     [[GemTransitionManager shared] processTransitions:deltaT];
@@ -223,8 +227,16 @@ int setLuaPath(lua_State *L, NSString* path );
     GemEvent *enterFrameEvent = [[GemEvent alloc] initWithLuaState:L Source:nil];
     enterFrameEvent.name = @"enterFrame";
     [runtime handleEvent:enterFrameEvent];
-    [enterFrameEvent release];
     
+    if (callCount % 120 == 0) {
+        callCount = 0;
+        int kByteCount = lua_gc(L, LUA_GCCOUNT, 0);
+        GemLog(@"Gemini: Lua is using %d Kb", kByteCount);
+        lua_gc(L, LUA_GCCOLLECT, 0);
+        lua_settop(L, 0);
+    }
+    
+    callCount++;
 }
 
 // makes it possible for Lua to load files on iOS

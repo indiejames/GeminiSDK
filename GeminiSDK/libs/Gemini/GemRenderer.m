@@ -84,7 +84,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 -(NSArray *)renderUnblendedLayersForScene:(GemScene *)scene {
     glDisable(GL_BLEND);
     glDepthMask(GL_TRUE);
-    NSMutableArray *blendedLayers = [[[NSMutableArray alloc] initWithCapacity:1] autorelease];
+    NSMutableArray *blendedLayers = [[NSMutableArray alloc] initWithCapacity:1];
     
     NSMutableDictionary *stage = [scene layers];
     NSMutableArray *layers = [NSMutableArray arrayWithArray:[stage allKeys]];
@@ -280,7 +280,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     GemSpriteBatch *sprites = (GemSpriteBatch *)[spriteBatches objectForKey:sprite.textureInfo];
     if (sprites == nil) {
-        sprites = [[[GemSpriteBatch alloc] initWithCapacity:SPRITE_BATCH_CHUNK_SIZE] autorelease];
+        sprites = [[GemSpriteBatch alloc] initWithCapacity:SPRITE_BATCH_CHUNK_SIZE];
         [spriteBatches setObject:sprites forKey:sprite.textureInfo];
         
     }
@@ -637,11 +637,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     return self;
 }
 
--(void) dealloc {
-   
-    [super dealloc];
-    
-}
+
 
 // vector functions
 

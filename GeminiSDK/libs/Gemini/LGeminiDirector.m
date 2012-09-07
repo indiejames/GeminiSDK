@@ -19,8 +19,8 @@ static int newScene(lua_State *L){
     NSLog(@"Creating new scene");
     
     GemScene *scene = [[GemScene alloc] initWithLuaState:L defaultLayerIndex:0];
-    
-    GemScene **lscene = (GemScene **)lua_newuserdata(L, sizeof(GemScene *));
+    [((GemGLKViewController *)[Gemini shared].viewController).director addScene:scene];
+    __unsafe_unretained GemScene **lscene = (__unsafe_unretained GemScene **)lua_newuserdata(L, sizeof(GemScene *));
     *lscene = scene;
     
     setupObject(L, GEMINI_SCENE_LUA_KEY, scene);
@@ -30,7 +30,7 @@ static int newScene(lua_State *L){
 
 static int sceneGC (lua_State *L){
     //NSLog(@"lineGC called");
-    GemScene  **scene = (GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
+   // __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     //[(*line).parent remove:*line];
    
     
@@ -40,7 +40,7 @@ static int sceneGC (lua_State *L){
 
 static int sceneIndex(lua_State *L){
     int rval = 0;
-    GemScene  **scene = (GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
+    __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     if (scene != NULL) {
         
         rval = genericGeminiDisplayObjectIndex(L, *scene);
@@ -51,15 +51,17 @@ static int sceneIndex(lua_State *L){
 }
 
 static int sceneNewIndex (lua_State *L){
-    GemScene  **scene = (GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
+    __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     return genericGemDisplayObjecNewIndex(L, scene);
 }
 
 static int addLayerToScene(lua_State *L){
-    GemScene  **scene = (GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
-    GemLayer **layer = (GemLayer **)luaL_checkudata(L, 2, GEMINI_LAYER_LUA_KEY);
+    __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
+    __unsafe_unretained GemLayer **layer = (__unsafe_unretained GemLayer **)luaL_checkudata(L, 2, GEMINI_LAYER_LUA_KEY);
     NSLog(@"LGeminiDirector Adding layer %d to scene %@", (*layer).index, (*scene).name);
     [*scene addLayer:*layer];
+    
+    return 0;
 }
 
 static int directorLoadScene(lua_State *L){
@@ -86,6 +88,9 @@ static int deleteScene(lua_State *L){
     const char *sceneName = luaL_checkstring(L, 1);
     NSString *sceneNameStr = [NSString stringWithUTF8String:sceneName];
     NSLog(@"LGeminiDirector deleting scene %@", sceneNameStr);
+    [((GemGLKViewController *)[Gemini shared].viewController).director destroyScene:sceneNameStr];
+    
+    return 0;
     
 }
 
@@ -94,6 +99,7 @@ static const struct luaL_Reg directorLib_f [] = {
     {"newScene", newScene},
     {"loadScene", directorLoadScene},
     {"gotoScene", directorGotoScene},
+    {"destroyScene", deleteScene},
     {NULL, NULL}
 };
 

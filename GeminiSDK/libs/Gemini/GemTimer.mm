@@ -10,6 +10,7 @@
 #import "GemGLKViewController.h"
 #import "Gemini.h"
 #import "GemEvent.h"
+#import "LGeminiTimer.h"
 
 @implementation GemTimer
 
@@ -23,16 +24,16 @@
 }
 
 -(id)initWithLuaState:(lua_State *)luaState Delay:(double)del Listener:(int)listener NumIterations:(int)numIters {
-    self = [super initWithLuaState:luaState];
+    self = [super initWithLuaState:luaState LuaKey:GEMINI_TIMER_LUA_KEY];
     
     if (self) {
-        NSLog(@"del = %f", del);
+        GemLog(@"del = %f", del);
         delay = del / 1000.0;
         numIterations = numIters;
         iteration = 0;
         accumulatedTime = 0;
         lastUpdateTime = ((GemGLKViewController *)([Gemini shared].viewController)).updateTime;
-        [self addEventListener:listener forEvent:GEM_TIMER_EVENT_NAME];
+        //[self addEventListener:listener forEvent:GEM_TIMER_EVENT_NAME];
     }
     
     return self;
@@ -77,8 +78,6 @@
             timeEvent.source = self;
             [self handleEvent:timeEvent];
             
-            [timeEvent release];
-            
             accumulatedTime = 0;
             
             iteration += 1;
@@ -98,7 +97,8 @@
 }
 
 -(void)dealloc {
-    [super dealloc];
+    GemLog(@"GemTimer: dealloc called");
 }
+
 
 @end

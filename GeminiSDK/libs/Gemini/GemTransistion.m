@@ -72,12 +72,7 @@
     return self;
 }
 
--(void)dealloc {
-    [initialParamValues release];
-    [finalParamValues release];
-    
-    [super dealloc];
-}
+
 
 -(void)update:(double)secondsSinceLastUpdate {
     if (elapsedTime) {

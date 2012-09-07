@@ -8,58 +8,53 @@
 
 #import "LGeminiSound.h"
 #import "ObjectAL.h"
+#import "GemSoundEffect.h"
 
 int luaopen_soundlib (lua_State *L);
 NSTimer *timer;
 
-typedef struct SoundEffect {
-    NSString *name;
-    int callback;
-} SoundEffect;
-
-SoundEffect gse;
 
 static int newSoundEffect(lua_State *L){
     const char *name = luaL_checkstring(L, 1);
     NSString *sname = [NSString stringWithFormat:@"%s",name];
     [[OALSimpleAudio sharedInstance] preloadEffect:[NSString stringWithFormat:@"%s",name]];
-    SoundEffect *se = (SoundEffect *)lua_newuserdata(L, sizeof(SoundEffect));
-    se->name = [sname retain];
-    
-    luaL_getmetatable(L, "Gemini.sound_effect");
+    __unsafe_unretained GemSoundEffect **lse = (__unsafe_unretained GemSoundEffect **)lua_newuserdata(L, sizeof(GemSoundEffect *));
+    luaL_getmetatable(L, GEMINI_SOUND_EFFECT_LUA_KEY);
     lua_setmetatable(L, -2);
+    GemSoundEffect *se = [[GemSoundEffect alloc] init];
+    se.name = sname;
+    *lse = se;
     
     return 1;
     
 }
 
 static int sound_effect_gc (lua_State *L){
-    SoundEffect *se = (SoundEffect *)luaL_checkudata(L, 1, "Gemini.sound_effect");
+   /* SoundEffect *se = (SoundEffect *)luaL_checkudata(L, 1, "Gemini.sound_effect");
     [[OALSimpleAudio sharedInstance] unloadEffect:se->name];
     NSLog(@"SoundEffect %@ released", se->name);
-    [se->name release];
+    [se->name release];*/
     
     return 0;
 }
 
 static int playSoundEffect(lua_State *L){
-    SoundEffect *se = (SoundEffect *)luaL_checkudata(L, 1, "Gemini.sound_effect");
-    [[OALSimpleAudio sharedInstance] playEffect:se->name];
+    __unsafe_unretained GemSoundEffect **se = (__unsafe_unretained GemSoundEffect **)luaL_checkudata(L, 1, GEMINI_SOUND_EFFECT_LUA_KEY);
+    [[OALSimpleAudio sharedInstance] playEffect:(*se).name];
     
     return 0;
 }
 
 static int setCallback(lua_State *L){
-    SoundEffect *se = (SoundEffect *)luaL_checkudata(L, 1, "Gemini.sound_effect");
-    se->callback = luaL_ref(L, LUA_REGISTRYINDEX);
-    gse = *se;
+    __unsafe_unretained GemSoundEffect **se = (__unsafe_unretained GemSoundEffect **)luaL_checkudata(L, 1, GEMINI_SOUND_EFFECT_LUA_KEY);
+    (*se).callback = luaL_ref(L, LUA_REGISTRYINDEX);
     
     return 0;
 }
 
 static int fireCallback(lua_State *L){
-    lua_rawgeti(L, LUA_REGISTRYINDEX, gse.callback);
-    lua_pcall(L, 0, 0, 0);
+    /*lua_rawgeti(L, LUA_REGISTRYINDEX, gse.callback);
+    lua_pcall(L, 0, 0, 0);*/
     
     return 0;
 }
@@ -76,7 +71,7 @@ static const struct luaL_Reg soundlib_m [] = {
 };
 
 int luaopen_soundlib (lua_State *L){
-    luaL_newmetatable(L, "Gemini.sound_effect");
+    luaL_newmetatable(L, GEMINI_SOUND_EFFECT_LUA_KEY);
     
     lua_pushvalue(L, -1); // duplicates the metatable
     
@@ -113,6 +108,8 @@ int luaopen_soundlib (lua_State *L){
         
         L = ls;
         
+        soundEffects = [[NSMutableArray alloc] initWithCapacity:1];
+        
         timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(runLoop:) userInfo:nil repeats:YES];
         
     }
@@ -128,7 +125,6 @@ int luaopen_soundlib (lua_State *L){
     // memory unnecessarily.
     [[OALSimpleAudio sharedInstance] unloadAllEffects];
     
-    [super dealloc];
 }
 
 @end

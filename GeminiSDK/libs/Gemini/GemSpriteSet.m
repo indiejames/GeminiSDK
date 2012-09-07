@@ -21,7 +21,7 @@
         frameCount = nFrames;
         animations = [[NSMutableDictionary alloc] initWithCapacity:1];
         // add a default animation
-        GemSpriteAnimation *animation = [[[GemSpriteAnimation alloc] init] autorelease];
+        GemSpriteAnimation *animation = [[GemSpriteAnimation alloc] init];
         animation.startFrame = start;
         animation.frameCount = nFrames;
         animation.frameDuration = 0.1; // 10 frames per sec
@@ -34,7 +34,7 @@
 }
 
 -(void) addAnimation:(NSString *)name WithStartFrame:(int)start NumFrames:(int)nFrames FrameDuration:(float)duration LoopCount:(int)loopCount {
-    GemSpriteAnimation *animation = [[[GemSpriteAnimation alloc] init] autorelease];
+    GemSpriteAnimation *animation = [[GemSpriteAnimation alloc] init];
     animation.startFrame = start;
     animation.frameCount = nFrames;
     animation.frameDuration = duration;

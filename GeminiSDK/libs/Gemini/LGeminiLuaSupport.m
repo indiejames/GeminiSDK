@@ -28,7 +28,7 @@ int genericIndex(lua_State *L){
     // first check the uservalue 
     lua_getuservalue( L, -2 );
     if(lua_isnil(L,-1)){
-        // NSLog(@"user value for user data is nil");
+        // GemLog(@"user value for user data is nil");
     }
     lua_pushvalue( L, -2 );
     
@@ -126,7 +126,7 @@ int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj){
 
 
 // generic new index method for userdata types
-int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject **obj){
+int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject __unsafe_unretained **obj){
     
     if (lua_isstring(L, 2)) {
         
@@ -198,7 +198,7 @@ int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject **obj){
             } else if (strcmp("name", key) == 0){
                 
                 const char *valCStr = lua_tostring(L, 3);
-                //NSLog(@"Setting object name to %s", valCStr);
+                //GemLog(@"Setting object name to %s", valCStr);
                 (*obj).name = [NSString stringWithUTF8String:valCStr];
             } else if (strcmp("isVisible", key) == 0){
                 BOOL visible = lua_toboolean(L, 3);
@@ -224,15 +224,15 @@ int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject **obj){
 }
 
 int removeSelf(lua_State *L){
-    GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, -1);
+    __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, -1);
     [(*displayObj).parent remove:*displayObj];
     
     return 0;
 }
 
 int genericDelete(lua_State *L){
-    GemDisplayObject  **obj = (GemDisplayObject **)lua_touserdata(L, -1);
-    NSLog(@"LGeminiSupport: deleting display object %@", (*obj).name);
+    __unsafe_unretained GemDisplayObject  **obj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, -1);
+    GemLog(@"LGeminiSupport: deleting display object %@", (*obj).name);
     
     [(*obj).parent remove:*obj];
     
@@ -245,7 +245,7 @@ int genericDelete(lua_State *L){
 int genericGC (lua_State *L){
     //GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     
-    NSLog(@"GARBAGE COLLECTED => LGeminiSupport: GC called for dipslay object");
+    GemLog(@"GARBAGE COLLECTED => LGeminiSupport: GC called for dipslay object");
     
     
     return 0;
@@ -298,9 +298,12 @@ void setupObject(lua_State *L, const char *luaKey, GemObject *obj){
         setDefaultValues(L);
     }
     
-    
     // set the table as the user value for the Lua object
     lua_setuservalue(L, -2);
+    
+    // create a table for the event listeners
+    lua_newtable(L);
+    obj.eventListenerTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
     
     lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
     obj.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);

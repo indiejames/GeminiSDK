@@ -24,7 +24,7 @@ local rectangle
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-	print("Lua: Creating scene")
+	print("Lua: Creating scene 3")
     
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -89,7 +89,7 @@ function scene:exitScene( event )
 	-----------------------------------------------------------------------------
     
     print("Exiting scene 3")
- --Runtime:removeEventListener("enterFrame", myListener)
+ Runtime:removeEventListener("enterFrame", myListener)
 
 end
 

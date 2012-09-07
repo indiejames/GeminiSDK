@@ -65,7 +65,6 @@
     free(verts);
     free(vertIndex);
     [parent remove:self];
-    [super dealloc];
 }
 
 // add points to this line - expect newPoints to hold 2 * count GLfloats

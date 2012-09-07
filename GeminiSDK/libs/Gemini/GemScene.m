@@ -29,7 +29,7 @@
         layers = [[NSMutableDictionary alloc] initWithCapacity:1];
         // create a default layer
         defaultLayerIndex = [NSNumber numberWithInt:index];
-        [defaultLayerIndex retain];
+        
         GemLayer *defaultLayer = [[GemLayer alloc] initWithLuaState:_L];
         [layers setObject:defaultLayer forKey:defaultLayerIndex];
         
@@ -73,7 +73,7 @@
     GemLayer *layerGroup = (GemLayer *)[layers objectForKey:[NSNumber numberWithInt:destLayer]];
     if (layerGroup == nil) {
         NSLog(@"GeminiRenderer layer is nil");
-        layerGroup = [[[GemLayer alloc] initWithLuaState:((GemDisplayObject *)obj).L] autorelease];
+        layerGroup = [[GemLayer alloc] initWithLuaState:((GemDisplayObject *)obj).L];
         layerGroup.index = destLayer;
         NSLog(@"GeminiRenderer created new layer");
         [layers setObject:layerGroup forKey:[NSNumber numberWithInt:destLayer]];

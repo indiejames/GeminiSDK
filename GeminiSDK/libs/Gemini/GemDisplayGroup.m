@@ -22,10 +22,10 @@
     return self;
 }
 
--(void)dealloc {
+/*-(void)dealloc {
     [objects release];
     [super dealloc];
-}
+}*/
 
 -(void)setLayer:(GemLayer *)_layer {
     layer = _layer;

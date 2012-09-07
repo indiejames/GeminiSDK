@@ -8,6 +8,7 @@
 
 #import "GemRectangle.h"
 #import "GemLayer.h"
+#import "LGeminiDisplay.h"
 
 @implementation GemRectangle
 
@@ -16,7 +17,7 @@
 
 
 -(id) initWithLuaState:(lua_State *)luaState X:(GLfloat)x0 Y:(GLfloat)y0 Width:(GLfloat)w Height:(GLfloat)h {
-    self = [super initWithLuaState:luaState];
+    self = [super initWithLuaState:luaState LuaKey:GEMINI_RECTANGLE_LUA_KEY];
     if (self) {
         self.width = w;
         self.height = h;
@@ -44,8 +45,6 @@
     free(verts);
     free(vertIndex);
     free(vertColor);
-    
-    [super dealloc];
 }
 
 -(GLuint) numTriangles {

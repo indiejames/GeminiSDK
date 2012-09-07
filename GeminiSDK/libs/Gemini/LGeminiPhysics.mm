@@ -14,7 +14,7 @@ static b2World *world;
 
 
 static int addBody(lua_State *L){
-    GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 1);
+    __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
     
     b2BodyDef bodyDef;
     

@@ -33,7 +33,7 @@
     BOOL needsTransformUpdate;
     BOOL needsUpdate;
     BOOL isVisible;
-    id *physicsBody;
+    id physicsBody;
 }
 
 @property (nonatomic) GLfloat alpha;
@@ -60,7 +60,7 @@
 @property (nonatomic) GLfloat yScale;
 @property (nonatomic) BOOL needsUpdate;
 @property (nonatomic) BOOL needsTransformUpdate;
-@property (nonatomic) id *physicsBody;
+@property (nonatomic) id physicsBody;
 
 -(GLKMatrix3) transform;
 

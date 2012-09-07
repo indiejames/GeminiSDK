@@ -10,6 +10,7 @@
 #import "Gemini.h"
 #import "LGeminiDirector.h"
 #import "GemEvent.h"
+#import "LGeminiLuaSupport.h"
 
 @implementation GemDirector
 @synthesize renderer;
@@ -21,16 +22,27 @@ int render_count = 0;
     
     if (self) {
         renderer = [[GemRenderer alloc] initWithLuaState:L];
-        GemScene *defaultScene = [[GemScene alloc] initWithLuaState:L defaultLayerIndex:GEM_DEFAULT_SCENE_DEFAULT_LAYER_INDEX];
-        defaultScene.name = @"DEFAULT_SCENE";
+        GemScene *defaultScene = createDefaultScene(L);
         scenes = [[NSMutableDictionary alloc] initWithCapacity:1];
         [scenes setValue:defaultScene forKey:GEM_DEFAULT_SCENE];
+        allScenes = [[NSMutableArray alloc] initWithCapacity:1];
         transitions = [[NSMutableDictionary alloc] initWithCapacity:1];
         currentScene = GEM_DEFAULT_SCENE;
-        [currentScene retain];
     }
     
     return self;
+}
+
+static GemScene * createDefaultScene(lua_State *L){
+    GemScene *defaultScene = [[GemScene alloc] initWithLuaState:L defaultLayerIndex:GEM_DEFAULT_SCENE_DEFAULT_LAYER_INDEX];
+    defaultScene.name = @"DEFAULT_SCENE";
+    
+    __unsafe_unretained GemScene **lScene = (__unsafe_unretained GemScene **)lua_newuserdata(L, sizeof(GemScene *));
+    *lScene = defaultScene;
+    
+    setupObject(L, GEMINI_SCENE_LUA_KEY, defaultScene);
+    
+    return defaultScene;
 }
 
 
@@ -63,55 +75,63 @@ int render_count = 0;
 
 }
 
+-(void)addScene:(GemScene *)scene {
+    [allScenes addObject:scene];
+}
+
 -(void)loadScene:(NSString *)sceneName {
-    
-    int err;
-    
-	lua_settop(L, 0);
-    
-    NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:sceneName ofType:@"lua"];
-    
-    err = luaL_loadfile(L, [luaFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]);
-	
-	if (0 != err) {
-        luaL_error(L, "cannot compile lua file: %s",
-                   lua_tostring(L, -1));
-		return;
-	}
-    
-	
-    err = lua_pcall(L, 0, 1, 0);
-	if (0 != err) {
-		luaL_error(L, "cannot run lua file: %s",
-                   lua_tostring(L, -1));
-		return;
-	}
-    
-    // The scene should now be on the top of the stack
-    GemScene **lscene = luaL_checkudata(L, -1, GEMINI_SCENE_LUA_KEY);
-    GemScene *scene = *lscene;
-    scene.name = sceneName;
-    [scenes setObject:scene forKey:sceneName];
-    
+    // don't load the scene if it is already in our cache
+    if ([scenes objectForKey:sceneName] == nil) {
+        int err;
         
-    lua_getfield(L, -1, "createScene");
-    
-    // duplicate the scene on top of th stack since it is the first param of the createScene method
-    lua_pushvalue(L, -2);
-    lua_pcall(L, 1, 0, 0);
-    
-    lua_settop(L, 0);
+        lua_settop(L, 0);
+        
+        NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:sceneName ofType:@"lua"];
+        
+        err = luaL_loadfile(L, [luaFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+        
+        if (0 != err) {
+            luaL_error(L, "cannot compile lua file: %s",
+                       lua_tostring(L, -1));
+            return;
+        }
+        
+        
+        err = lua_pcall(L, 0, 1, 0);
+        if (0 != err) {
+            luaL_error(L, "cannot run lua file: %s",
+                       lua_tostring(L, -1));
+            return;
+        }
+        
+        // The scene should now be on the top of the stack
+        __unsafe_unretained GemScene **lscene = (__unsafe_unretained GemScene **)luaL_checkudata(L, -1, GEMINI_SCENE_LUA_KEY);
+        GemScene *scene = *lscene;
+        scene.name = sceneName;
+        [scenes setObject:scene forKey:sceneName];
+        
+        // this gets a pointer to the "createScene" method on the new scene
+        lua_getfield(L, -1, "createScene");
+        
+        // duplicate the scene on top of th stack since it is the first param of the createScene method
+        lua_pushvalue(L, -2);
+        lua_pcall(L, 1, 0, 0);
+        
+        lua_settop(L, 0);
+    }
     
 }
 
--(void)destroyScene:(NSString *)scene {
+-(void)destroyScene:(NSString *)sceneName {
+    GemScene *scene = [scenes objectForKey:sceneName];
+    [allScenes removeObject:scene];
     
 }
 
 -(void)setCurrentScene:(NSString *)scene {
-    [currentScene release];
+    
     currentScene = scene;
-    [currentScene retain];
+  
 }
 
 -(GemScene *)getCurrentScene {
@@ -134,7 +154,6 @@ int render_count = 0;
         lua_gc(L, LUA_GCCOLLECT, 0);
     }
     
-
     render_count++;
     
     // handle transitions
@@ -155,7 +174,7 @@ int render_count = 0;
         }
         [renderer renderScene:tempScene];
         
-        [tempScene release];
+        
     }
 }
 

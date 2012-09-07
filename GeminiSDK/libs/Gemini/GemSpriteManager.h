@@ -11,10 +11,16 @@
 
 @interface GemSpriteManager : NSObject {
     NSMutableArray *sprites;
+    NSMutableArray *spriteSheets;
+    NSMutableArray *spriteSets;
 }
 
 -(void)update:(double)currentTime;
 -(void)addSprite:(GemSprite *)sprite;
+-(void)addSpriteSet:(GemSpriteSet *)spriteSet;
+-(void)addSpriteSheet:(GemSpriteSheet *)spriteSheet;
 -(void)removeSprite:(GemSprite *)sprite;
+-(void)removeSpriteSet:(GemSpriteSet *)spriteSet;
+-(void)removeSpriteSheet:(GemSpriteSheet *)spriteSheet;
 
 @end

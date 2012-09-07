@@ -45,7 +45,7 @@ void callOnCompleteForDisplayObject(lua_State *L, int methodRef, GemDisplayObjec
 
 
 static int createTransition(lua_State *L, BOOL to){
-    GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 1);
+    __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
     if (!lua_istable(L, 2)) {
         luaL_error(L, "transition.to/from expects second parameter to be a table");
         return 0;
@@ -77,7 +77,7 @@ static int createTransition(lua_State *L, BOOL to){
     }
     
     GemTransistion *transition = [[GemTransistion alloc] initWithLuaState:L Object:*displayObj Data:params To:to];
-    GemTransistion **ltrans = (GemTransistion **)lua_newuserdata(L, sizeof(GemTransistion *));
+    __unsafe_unretained GemTransistion **ltrans = (__unsafe_unretained GemTransistion **)lua_newuserdata(L, sizeof(GemTransistion *));
     *ltrans = transition;
     
     [[GemTransitionManager shared] addTransition:transition];
@@ -94,7 +94,7 @@ static int transitionFrom(lua_State *L){
 }
 
 static int transitionCancel(lua_State *L){
-    GemTransistion **trans = (GemTransistion **)luaL_checkudata(L, 1, GEMINI_TRANSITION_LUA_KEY);
+    __unsafe_unretained GemTransistion **trans = (__unsafe_unretained GemTransistion **)luaL_checkudata(L, 1, GEMINI_TRANSITION_LUA_KEY);
     [[GemTransitionManager shared] removeTransition:*trans];
     
     return 0;
@@ -105,8 +105,8 @@ static int transitionDissolve(lua_State *L){
 }
 
 static int gc(lua_State *L){
-    GemTransistion **trans = (GemTransistion **)luaL_checkudata(L, 1, GEMINI_TRANSITION_LUA_KEY);
-    [*trans release];
+    //__unsafe_unretained GemTransistion **trans = (__unsafe_unretained GemTransistion **)luaL_checkudata(L, 1, GEMINI_TRANSITION_LUA_KEY);
+    
     
     return 0;
 }

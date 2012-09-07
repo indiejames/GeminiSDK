@@ -18,8 +18,8 @@
     self = [super initWithLuaState:luaState];
     
     if (self) {
-        spriteSet = [spSet retain];
-        spriteSheet = [spriteSet.spriteSheet retain];
+        spriteSet = spSet;
+        spriteSheet = spriteSet.spriteSheet;
         frameCoords = spriteSheet.frameCoords;
         frames = spriteSheet.frames;
         currentAnimation = [spriteSet getAnimation:GEMINI_DEFAULT_ANIMATION];
@@ -127,11 +127,5 @@
     currentFrame = cframe;
 }
 
-- (void)dealloc
-{
-    [spriteSheet release];
-    [spriteSet release];
-    [super dealloc];
-}
 
 @end

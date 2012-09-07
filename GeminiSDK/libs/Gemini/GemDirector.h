@@ -18,6 +18,7 @@
 
 @interface GemDirector : GemObject {
     NSMutableDictionary *scenes;
+    NSMutableArray *allScenes;
     NSString *currentScene;  // the current scene used for rendering, etc.
     NSMutableDictionary *transitions;
     GemSceneTransition *currentTransition;
@@ -29,6 +30,7 @@
 -(void)loadScene:(NSString *)sceneName;
 -(void)gotoScene:(NSString *)scene withOptions:(NSDictionary *)options;
 -(void)destroyScene:(NSString *)scene;
+-(void)addScene:(GemScene *)scene;
 -(GemScene *)getCurrentScene;
 -(GemScene *)getDefaultScene;
 -(void)setCurrentScene:(NSString *)scene;

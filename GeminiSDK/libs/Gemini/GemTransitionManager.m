@@ -22,11 +22,6 @@ GemTransitionManager *geminiTransistionManagerSingleton = nil;
     return self;
 }
 
--(void) dealloc {
-    [transitions release];
-    
-    [super dealloc];
-}
 
 -(void) addTransition:(GemTransistion *)trans {
     [transitions addObject:trans];

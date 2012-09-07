@@ -22,7 +22,7 @@ local scene = director.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-	print("Lua: Creating scene")
+	print("Lua: Creating scene 2")
     
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -56,6 +56,8 @@ function scene:enterScene( event )
     print("Entering scene 2")
     
     director.loadScene('scene3')
+    
+    --director.destroyScene('scene1')
     
     local function listener(event)
     

@@ -38,6 +38,23 @@
     return self;
 }
 
+-(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey {
+    self = [super initWithLuaState:luaState LuaKey:luaKey];
+    
+    if (self) {
+        xScale = 1.0;
+        yScale = 1.0;
+        alpha = 1.0;
+        xReference = 0;
+        yReference = 0;
+        needsUpdate = YES;
+        needsTransformUpdate = YES;
+        isVisible = YES;
+    }
+    
+    return self;
+}
+
 -(GLfloat)height {
     return height;
 }

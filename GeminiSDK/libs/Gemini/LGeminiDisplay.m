@@ -29,22 +29,20 @@ static int newRectangle(lua_State *L){
 
     GemRectangle *rect = [[GemRectangle alloc] initWithLuaState:L X:x Y:y Width:width Height:height];
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:rect];
-    GemRectangle **lRect = (GemRectangle **)lua_newuserdata(L, sizeof(GemRectangle *));
-    *lRect = rect;
+    // __unsafe_unretained GemRectangle **lRect = (__unsafe_unretained GemRectangle **)lua_newuserdata(L, sizeof(GemRectangle *));
+    //*lRect = rect;
     
-    setupObject(L, GEMINI_RECTANGLE_LUA_KEY, rect);
+    //setupObject(L, GEMINI_RECTANGLE_LUA_KEY, rect);
     
     rect.width = width;
     rect.height = height;
-    
-    [rect release];
     
     return 1;
 }
 
 static int rectangleIndex(lua_State *L){
     int rval = 0;
-    GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    __unsafe_unretained GemRectangle  **rect = (__unsafe_unretained GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     if (rect != NULL) {
         if (lua_isstring(L, -1)) {
             
@@ -68,7 +66,7 @@ static int rectangleIndex(lua_State *L){
 
 static int rectangleNewIndex (lua_State *L){
     int rval = 0;
-    GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    __unsafe_unretained GemRectangle  **rect = (__unsafe_unretained GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     
     if (rect != NULL) {
         if (lua_isstring(L, 2)) {
@@ -94,10 +92,10 @@ static int rectangleNewIndex (lua_State *L){
 }
 
 static int rectangleSetFillColor(lua_State *L){
-    //NSLog(@"Setting rectangle fill color");
+    GemLog(@"Setting rectangle fill color");
     int numargs = lua_gettop(L);
     
-    GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    __unsafe_unretained GemRectangle  **rect = (__unsafe_unretained GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     
     GLfloat red = luaL_checknumber(L, 2);
     GLfloat green = luaL_checknumber(L, 3);
@@ -117,7 +115,7 @@ static int rectangleSetStrokeColor(lua_State *L){
     //NSLog(@"Setting rectangle stroke color");
     int numargs = lua_gettop(L);
     
-    GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    __unsafe_unretained GemRectangle  **rect = (__unsafe_unretained GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     
     GLfloat red = luaL_checknumber(L, 2);
     GLfloat green = luaL_checknumber(L, 3);
@@ -136,7 +134,7 @@ static int rectangleSetStrokeColor(lua_State *L){
 static int rectangleSetStrokeWidth(lua_State *L){
     //NSLog(@"Setting rectangle stroke width");
    
-    GemRectangle  **rect = (GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    __unsafe_unretained GemRectangle  **rect = (__unsafe_unretained GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
     
     GLfloat w = luaL_checknumber(L, 2);
         
@@ -157,7 +155,7 @@ static int newLine(lua_State *L){
     
     GemLine *line = [[GemLine alloc] initWithLuaState:L X1:x1 Y1:y1 X2:x2 Y2:y2];
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:line];
-    GemLine **lLine = (GemLine **)lua_newuserdata(L, sizeof(GemLine *)); 
+    __unsafe_unretained GemLine **lLine = (__unsafe_unretained GemLine **)lua_newuserdata(L, sizeof(GemLine *));
     *lLine = line;
     
     setupObject(L, GEMINI_LINE_LUA_KEY, line);
@@ -172,7 +170,7 @@ static int newLine(lua_State *L){
 
 static int lineIndex(lua_State *L){
     int rval = 0;
-    GemLine  **line = (GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
+    __unsafe_unretained GemLine  **line = (__unsafe_unretained GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
     if (line != NULL) {
         
         rval = genericGeminiDisplayObjectIndex(L, *line);
@@ -183,7 +181,7 @@ static int lineIndex(lua_State *L){
 }
 
 static int lineNewIndex (lua_State *L){
-    GemLine  **line = (GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
+    __unsafe_unretained GemLine  **line = (__unsafe_unretained GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
     return genericGemDisplayObjecNewIndex(L, line);
 }
 
@@ -191,7 +189,7 @@ static int lineSetColor(lua_State *L){
     //NSLog(@"Setting line color");
     int numargs = lua_gettop(L);
     
-    GemLine  **line = (GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
+    __unsafe_unretained GemLine  **line = (__unsafe_unretained GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
     
     GLfloat red = luaL_checknumber(L, 2);
     GLfloat green = luaL_checknumber(L, 3);
@@ -209,7 +207,7 @@ static int lineAppendPoints(lua_State *L){
     //NSLog(@"Appending points to line");
     int numargs = lua_gettop(L);
     
-    GemLine  **line = (GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
+    __unsafe_unretained GemLine  **line = (__unsafe_unretained GemLine **)luaL_checkudata(L, 1, GEMINI_LINE_LUA_KEY);
     
     GLfloat *newPoints = (GLfloat *)malloc((numargs - 1)*sizeof(GLfloat));
     
@@ -231,7 +229,7 @@ static int newLayer(lua_State *L){
     
     GemLayer *layer = [[GemLayer alloc] initWithLuaState:L];
     layer.index = index;
-    GemLayer **lLayer = (GemLayer **)lua_newuserdata(L, sizeof(GemLayer *));
+    __unsafe_unretained GemLayer **lLayer = (__unsafe_unretained GemLayer **)lua_newuserdata(L, sizeof(GemLayer *));
     *lLayer = layer;
     
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addLayer:layer];
@@ -243,23 +241,24 @@ static int newLayer(lua_State *L){
 }
 
 static int layerGC (lua_State *L){
-    GemLayer  **layer = (GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
+    // This method currently does nothing and is simply here to make it easier to verify that the
+    // Lua system is properly collecting deleted objects
+    //__unsafe_unretained GemLayer  **layer = (__unsafe_unretained GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
     
-    [*layer release];
     
     return 0;
 }
 
 static int layerNewIndex (lua_State *L){
-    GemLayer  **layer = (GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
+    __unsafe_unretained GemLayer  **layer = (__unsafe_unretained GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
     return genericGemDisplayObjecNewIndex(L, layer);
 }
 
 
 static int layerInsert(lua_State *L){
     //NSLog(@"Calling layerInsert()");
-    GemLayer  **layer = (GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY); 
-    GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 2);
+    __unsafe_unretained GemLayer  **layer = (__unsafe_unretained GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
+    __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 2);
     [*layer insert:*displayObj];
     
     return 0;
@@ -267,7 +266,7 @@ static int layerInsert(lua_State *L){
 
 static int layerSetBlendFunc(lua_State *L){
     //NSLog(@"Calling layerSetBlendFunc()");
-    GemLayer  **layer = (GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY); 
+    __unsafe_unretained GemLayer  **layer = (__unsafe_unretained GemLayer **)luaL_checkudata(L, 1, GEMINI_LAYER_LUA_KEY);
     GLenum srcBlend = luaL_checkinteger(L, 2);
     GLenum destBlend = luaL_checkinteger(L, 3);
     [*layer setBlendFuncSource:srcBlend Dest:destBlend];
@@ -278,7 +277,7 @@ static int layerSetBlendFunc(lua_State *L){
 ///////////// display groups //////////////////
 static int newDisplayGroup(lua_State *L){
     GemDisplayGroup *group = [[GemDisplayGroup alloc] initWithLuaState:L];
-    GemDisplayGroup **lGroup = (GemDisplayGroup **)lua_newuserdata(L, sizeof(GemDisplayGroup *));
+    __unsafe_unretained GemDisplayGroup **lGroup = (__unsafe_unretained GemDisplayGroup **)lua_newuserdata(L, sizeof(GemDisplayGroup *));
     *lGroup = group;
    //[((GemGLKViewController *)([Gemini shared].viewController)).renderer addObject:group];
     //[[[GemDirector shared] getCurrentScene] addObject:group];
@@ -289,15 +288,12 @@ static int newDisplayGroup(lua_State *L){
 }
 
 static int displayGroupGC (lua_State *L){
-    GemDisplayGroup  **group = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
-    
-    [*group release];
-    
+    //__unsafe_unretained GemDisplayGroup  **group = (__unsafe_unretained GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
     return 0;
 }
 
 static int displayGroupIndex(lua_State *L){
-    GemDisplayGroup  **dgp = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
+    __unsafe_unretained GemDisplayGroup  **dgp = (__unsafe_unretained GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
     GemDisplayGroup *dg = *dgp;
     if (lua_isnumber(L, -1)) {
         // groups can be indexed using bracket [] notation to get contained display objects
@@ -338,7 +334,7 @@ static int displayGroupIndex(lua_State *L){
 
 
 static int displayGroupNewIndex (lua_State *L){
-    GemDisplayGroup  **dg = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
+    __unsafe_unretained GemDisplayGroup  **dg = (__unsafe_unretained GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
     return genericGemDisplayObjecNewIndex(L, dg);
 }
 
@@ -348,14 +344,14 @@ static int displayGroupInsert(lua_State *L){
     
     if (stackSize > 2) {
         
-        GemDisplayGroup  **group = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
+        __unsafe_unretained GemDisplayGroup  **group = (__unsafe_unretained GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
         int insertionIndex = luaL_checkint(L, 2) - 1;
-        GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 3);
+        __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 3);
         [*group insert:*displayObj atIndex:insertionIndex];
         
     } else {
-        GemDisplayGroup  **group = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
-        GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 2);
+        __unsafe_unretained GemDisplayGroup  **group = (__unsafe_unretained GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
+        __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 2);
         [*group insert:*displayObj];
         
     }
@@ -366,16 +362,18 @@ static int displayGroupInsert(lua_State *L){
 
 static int displayGroupRemove(lua_State *L){
     
-    GemDisplayGroup  **group = (GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY); 
+    __unsafe_unretained GemDisplayGroup  **group = (__unsafe_unretained GemDisplayGroup **)luaL_checkudata(L, 1, GEMINI_DISPLAY_GROUP_LUA_KEY);
     
-    GemDisplayObject **displayObj = (GemDisplayObject **)lua_touserdata(L, 2);
+    __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 2);
     [*group remove:*displayObj];
     
     return 0;
 }
 
 static int displayGroupDelete(lua_State *L){
-    GemDisplayGroup **group = (GemDisplayGroup **)lua_touserdata(L,1);
+    //GemDisplayGroup **group = (GemDisplayGroup **)lua_touserdata(L,1);
+    
+    return 0;
 }
 
 

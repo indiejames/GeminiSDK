@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76CBBDD315F3DD6F007880C2 /* GemSoundEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBBDD215F3DD6E007880C2 /* GemSoundEffect.m */; };
 		76D56E9B15F1943300615891 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56E9A15F1943300615891 /* QuartzCore.framework */; };
 		76D56E9D15F1943300615891 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56E9C15F1943300615891 /* OpenGLES.framework */; };
 		76D56E9F15F1943300615891 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56E9E15F1943300615891 /* GLKit.framework */; };
@@ -195,6 +196,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		76CBBDD115F3DD6D007880C2 /* GemSoundEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSoundEffect.h; sourceTree = "<group>"; };
+		76CBBDD215F3DD6E007880C2 /* GemSoundEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSoundEffect.m; sourceTree = "<group>"; };
 		76D56E9615F1943300615891 /* GeminiSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeminiSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D56E9A15F1943300615891 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		76D56E9C15F1943300615891 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -785,6 +788,8 @@
 				76D56F8715F1943400615891 /* LGeminiTimer.m */,
 				76D56F8915F1943400615891 /* LGeminiTransition.h */,
 				76D56F8A15F1943400615891 /* LGeminiTransition.m */,
+				76CBBDD115F3DD6D007880C2 /* GemSoundEffect.h */,
+				76CBBDD215F3DD6E007880C2 /* GemSoundEffect.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1315,6 +1320,7 @@
 				76D570AC15F1A16B00615891 /* GemSceneTransition.m in Sources */,
 				76D570AD15F1A16B00615891 /* LGeminiDirector.m in Sources */,
 				76D570AE15F1A16B00615891 /* LGeminiScene.m in Sources */,
+				76CBBDD315F3DD6F007880C2 /* GemSoundEffect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1326,6 +1332,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1345,6 +1352,7 @@
 				OTHER_LDFLAGS = "-lz";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "\"GeminiSDK/libs/**\"";
+				VALID_ARCHS = "armv6 armv7";
 			};
 			name = Debug;
 		};
@@ -1353,6 +1361,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

@@ -11,9 +11,11 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
+#define GEMINI_SOUND_EFFECT_LUA_KEY "GeminiLib.GEMINI_SOUND_EFFECT_KEY"
+
 @interface LuaSound : NSObject {
     lua_State *L;
-    int callback;
+    NSMutableArray *soundEffects;
 }
 
 -(id) init:(lua_State *)L;

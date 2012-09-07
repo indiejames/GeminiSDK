@@ -19,11 +19,6 @@
     return self;
 }
 
--(void)dealloc {
-    [timers release];
-    
-    [super dealloc];
-}
 
 -(void)update:(double)currentTime {
     NSMutableArray *expiredTimers = [NSMutableArray arrayWithCapacity:1];

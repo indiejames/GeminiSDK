@@ -69,7 +69,7 @@
 
 
 -(void) viewDidLoad {
-    self.context = [[[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2] autorelease];
+    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     if (!self.context) {
         NSLog(@"Failed to create ES context");

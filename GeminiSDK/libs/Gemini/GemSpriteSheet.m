@@ -42,7 +42,7 @@ static GLKTextureInfo *createTexture(NSString * imgFileName){
     if (self) {
         
         imageFileName = [[NSString alloc] initWithString:imgFileName];
-        textureInfo = [createTexture(imageFileName) retain];
+        textureInfo = createTexture(imageFileName);
         GLfloat imgWidth = textureInfo.width;
         GLfloat imgHeight = textureInfo.height;
         frames = (GLKVector4 *)malloc([data count] * sizeof(GLKVector4));
@@ -91,7 +91,7 @@ static GLKTextureInfo *createTexture(NSString * imgFileName){
     
     if (self) {
         imageFileName = [[NSString alloc] initWithString:imgFileName];
-        textureInfo = [createTexture(imageFileName) retain];
+        textureInfo = createTexture(imageFileName);
         frameWidth = width;
         frameHeight = height;
         GLfloat imgWidth = textureInfo.width;
@@ -150,9 +150,9 @@ static GLKTextureInfo *createTexture(NSString * imgFileName){
 
 
 -(void)dealloc {
-    [imageFileName release];
+
     free(frames);
-    [super dealloc];
+ 
 }
 
 @end

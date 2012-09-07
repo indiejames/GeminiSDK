@@ -18,7 +18,7 @@
         self.source = src;
         
         // create a lua object for this event
-        GemEvent **levent = (GemEvent **)lua_newuserdata(L, sizeof(GemEvent *));
+        __unsafe_unretained GemEvent **levent = (__unsafe_unretained GemEvent **)lua_newuserdata(L, sizeof(GemEvent *));
         *levent = self;
         
         luaL_getmetatable(L, GEMINI_EVENT_LUA_KEY);

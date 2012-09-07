@@ -104,8 +104,7 @@
         glDeleteProgram(program);
         program = 0;
     }
-    
-    [super dealloc];
+ 
 }
 
 

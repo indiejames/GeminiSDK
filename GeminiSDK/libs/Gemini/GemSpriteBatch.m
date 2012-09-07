@@ -29,7 +29,6 @@
     bufferOffset = 0;
     capacity = 0;
     free(vertexBuffer);
-    [super dealloc];
 }
 
 

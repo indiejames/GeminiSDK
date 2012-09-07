@@ -13,17 +13,14 @@
 -(id)init {
     self = [super init];
     if (self) {
-        sprites = [[NSMutableArray alloc] initWithCapacity:100];
+        sprites = [[NSMutableArray alloc] initWithCapacity:1];
+        spriteSets = [[NSMutableArray alloc] initWithCapacity:1];
+        spriteSheets = [[NSMutableArray alloc] initWithCapacity:1];
     }
     
     return self;
 }
 
--(void)dealloc {
-    [sprites release];
-    
-    [super dealloc];
-}
 
 -(void)update:(double)currentTime {
     for(int i=0;i<[sprites count]; i++){
@@ -38,8 +35,24 @@
     [sprites addObject:sprite];
 }
 
+-(void)addSpriteSet:(GemSpriteSet *)spriteSet {
+    [spriteSets addObject:spriteSet];
+}
+
+-(void)addSpriteSheet:(GemSpriteSheet *)spriteSheet {
+    [spriteSheets addObject:spriteSheet];
+}
+
 -(void)removeSprite:(GemSprite *)sprite {
     [sprites removeObject:sprite];
+}
+
+-(void)removeSpriteSet:(GemSpriteSet *)spriteSet {
+    [spriteSets removeObject:spriteSet];
+}
+
+-(void)removeSpriteSheet:(GemSpriteSheet *)spriteSheet {
+    [spriteSheets removeObject:spriteSheet];
 }
 
 @end

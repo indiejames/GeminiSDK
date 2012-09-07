@@ -18,15 +18,18 @@
     lua_State *L;
     int selfRef;
     int propertyTableRef;
+    int eventListenerTableRef;
     NSString *name;
 }
 
 @property (nonatomic) int selfRef;
 @property (nonatomic) int propertyTableRef;
+@property (nonatomic) int eventListenerTableRef;
 @property (readonly) lua_State *L;
 @property (nonatomic, retain) NSString *name;
 
 -(id)initWithLuaState:(lua_State *)luaState;
+-(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
 -(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt;
 -(double)getDoubleForKey:(const char*) key withDefault:(double)dflt;
 -(int)getIntForKey:(const char*) key withDefault:(int)dflt;
