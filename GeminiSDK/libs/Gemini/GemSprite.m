@@ -9,13 +9,14 @@
 #import "GemSprite.h"
 #import <GLKit/GLKit.h>
 #import "GemSpriteAnimation.h"
+#import "LGeminiSprite.h"
 
 
 @implementation GemSprite
 @synthesize paused;
 
 -(id)initWithLuaState:(lua_State *)luaState SpriteSet:(GemSpriteSet *)spSet {
-    self = [super initWithLuaState:luaState];
+    self = [super initWithLuaState:luaState LuaKey:GEMINI_SPRITE_LUA_KEY];
     
     if (self) {
         spriteSet = spSet;

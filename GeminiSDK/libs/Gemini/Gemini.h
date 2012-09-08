@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 
 
 @interface Gemini : NSObject
@@ -23,3 +26,6 @@
 +(Gemini *)shared;
 
 @end
+
+// global error function for Lua scripts
+int traceback (lua_State *L);

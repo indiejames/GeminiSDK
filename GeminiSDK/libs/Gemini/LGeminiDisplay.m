@@ -29,10 +29,7 @@ static int newRectangle(lua_State *L){
 
     GemRectangle *rect = [[GemRectangle alloc] initWithLuaState:L X:x Y:y Width:width Height:height];
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:rect];
-    // __unsafe_unretained GemRectangle **lRect = (__unsafe_unretained GemRectangle **)lua_newuserdata(L, sizeof(GemRectangle *));
-    //*lRect = rect;
     
-    //setupObject(L, GEMINI_RECTANGLE_LUA_KEY, rect);
     
     rect.width = width;
     rect.height = height;
@@ -155,10 +152,6 @@ static int newLine(lua_State *L){
     
     GemLine *line = [[GemLine alloc] initWithLuaState:L X1:x1 Y1:y1 X2:x2 Y2:y2];
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:line];
-    __unsafe_unretained GemLine **lLine = (__unsafe_unretained GemLine **)lua_newuserdata(L, sizeof(GemLine *));
-    *lLine = line;
-    
-    setupObject(L, GEMINI_LINE_LUA_KEY, line);
     
     line.xOrigin = x1;
     line.yOrigin = y1;
@@ -229,13 +222,13 @@ static int newLayer(lua_State *L){
     
     GemLayer *layer = [[GemLayer alloc] initWithLuaState:L];
     layer.index = index;
-    __unsafe_unretained GemLayer **lLayer = (__unsafe_unretained GemLayer **)lua_newuserdata(L, sizeof(GemLayer *));
-    *lLayer = layer;
+   /* __unsafe_unretained GemLayer **lLayer = (__unsafe_unretained GemLayer **)lua_newuserdata(L, sizeof(GemLayer *));
+    *lLayer = layer;*/
     
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addLayer:layer];
     
 
-    setupObject(L, GEMINI_LAYER_LUA_KEY, layer);
+    //setupObject(L, GEMINI_LAYER_LUA_KEY, layer);
     
     return 1;
 }
@@ -277,12 +270,10 @@ static int layerSetBlendFunc(lua_State *L){
 ///////////// display groups //////////////////
 static int newDisplayGroup(lua_State *L){
     GemDisplayGroup *group = [[GemDisplayGroup alloc] initWithLuaState:L];
-    __unsafe_unretained GemDisplayGroup **lGroup = (__unsafe_unretained GemDisplayGroup **)lua_newuserdata(L, sizeof(GemDisplayGroup *));
-    *lGroup = group;
-   //[((GemGLKViewController *)([Gemini shared].viewController)).renderer addObject:group];
-    //[[[GemDirector shared] getCurrentScene] addObject:group];
+   // __unsafe_unretained GemDisplayGroup **lGroup = (__unsafe_unretained GemDisplayGroup **)lua_newuserdata(L, sizeof(GemDisplayGroup *));
+   // *lGroup = group;
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getCurrentScene] addObject:group];
-    setupObject(L, GEMINI_DISPLAY_GROUP_LUA_KEY, group);
+   // setupObject(L, GEMINI_DISPLAY_GROUP_LUA_KEY, group);
     
     return 1;
 }

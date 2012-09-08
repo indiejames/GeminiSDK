@@ -20,10 +20,10 @@ static int newScene(lua_State *L){
     
     GemScene *scene = [[GemScene alloc] initWithLuaState:L defaultLayerIndex:0];
     [((GemGLKViewController *)[Gemini shared].viewController).director addScene:scene];
-    __unsafe_unretained GemScene **lscene = (__unsafe_unretained GemScene **)lua_newuserdata(L, sizeof(GemScene *));
-    *lscene = scene;
+    //__unsafe_unretained GemScene **lscene = (__unsafe_unretained GemScene **)lua_newuserdata(L, sizeof(GemScene *));
+    //*lscene = scene;
     
-    setupObject(L, GEMINI_SCENE_LUA_KEY, scene);
+    //setupObject(L, GEMINI_SCENE_LUA_KEY, scene);
     
     return 1;
 }

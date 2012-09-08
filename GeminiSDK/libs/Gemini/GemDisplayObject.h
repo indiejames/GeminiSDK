@@ -62,6 +62,7 @@
 @property (nonatomic) BOOL needsTransformUpdate;
 @property (nonatomic) id physicsBody;
 
+-(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
 -(GLKMatrix3) transform;
 
 @end

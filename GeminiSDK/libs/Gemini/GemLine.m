@@ -8,6 +8,7 @@
 
 #import "GemLine.h"
 #import "GemDisplayGroup.h"
+#import "LGeminiDisplay.h"
 
 @implementation GemLine
 
@@ -18,7 +19,7 @@
 @synthesize color;
 
 -(id)initWithLuaState:(lua_State *)luaState X1:(GLfloat)x1 Y1:(GLfloat)y1 X2:(GLfloat)x2 Y2:(GLfloat)y2 {
-    self = [super initWithLuaState:luaState];
+    self = [super initWithLuaState:luaState LuaKey:GEMINI_LINE_LUA_KEY];
     if (self) {
         points = (GLfloat *)malloc(4 * sizeof(GLfloat));
         points[0] = 0;
@@ -38,7 +39,7 @@
     
 }
 
--(id)initWithLuaState:(lua_State *)luaState Parent:(GemDisplayGroup *)prt X1:(GLfloat)x1 Y1:(GLfloat)y1 X2:(GLfloat)x2 Y2:(GLfloat)y2 {
+/*-(id)initWithLuaState:(lua_State *)luaState Parent:(GemDisplayGroup *)prt X1:(GLfloat)x1 Y1:(GLfloat)y1 X2:(GLfloat)x2 Y2:(GLfloat)y2 {
     self = [super initWithLuaState:luaState];
     
     if (self) {
@@ -58,7 +59,7 @@
     }
     
     return self;
-}
+}*/
 
 -(void)dealloc {
     free(points);

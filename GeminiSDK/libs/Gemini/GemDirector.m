@@ -37,10 +37,10 @@ static GemScene * createDefaultScene(lua_State *L){
     GemScene *defaultScene = [[GemScene alloc] initWithLuaState:L defaultLayerIndex:GEM_DEFAULT_SCENE_DEFAULT_LAYER_INDEX];
     defaultScene.name = @"DEFAULT_SCENE";
     
-    __unsafe_unretained GemScene **lScene = (__unsafe_unretained GemScene **)lua_newuserdata(L, sizeof(GemScene *));
-    *lScene = defaultScene;
+    //__unsafe_unretained GemScene **lScene = (__unsafe_unretained GemScene **)lua_newuserdata(L, sizeof(GemScene *));
+    //*lScene = defaultScene;
     
-    setupObject(L, GEMINI_SCENE_LUA_KEY, defaultScene);
+    //setupObject(L, GEMINI_SCENE_LUA_KEY, defaultScene);
     
     return defaultScene;
 }

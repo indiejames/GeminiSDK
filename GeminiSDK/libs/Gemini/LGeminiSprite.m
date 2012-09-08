@@ -26,11 +26,11 @@ static int newSprite(lua_State *L){
     GemSprite *sprite = [[GemSprite alloc] initWithLuaState:L SpriteSet:*ss];
     [((GemGLKViewController *)([Gemini shared].viewController)).spriteManager addSprite:sprite];
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:sprite];
-    __unsafe_unretained GemSprite **lSprite = (__unsafe_unretained GemSprite **)lua_newuserdata(L, sizeof(GemSprite *));
-    *lSprite = sprite;
+    //__unsafe_unretained GemSprite **lSprite = (__unsafe_unretained GemSprite **)lua_newuserdata(L, sizeof(GemSprite *));
+    //*lSprite = sprite;
     
     
-    luaL_getmetatable(L, GEMINI_SPRITE_LUA_KEY);
+    /*luaL_getmetatable(L, GEMINI_SPRITE_LUA_KEY);
     lua_setmetatable(L, -2);
     
     // append a lua table to this user data to allow the user to store values in it
@@ -43,7 +43,7 @@ static int newSprite(lua_State *L){
     
     lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
     sprite.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
-    
+    */
     return 1;
 }
 

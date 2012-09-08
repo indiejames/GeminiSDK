@@ -7,13 +7,26 @@
 //
 
 #import "GemDisplayGroup.h"
+#import "LGeminiDisplay.h"
 
 @implementation GemDisplayGroup
 
 @synthesize objects;
 
 -(id)initWithLuaState:(lua_State *)luaState {
-    self = [super initWithLuaState:luaState];
+    self = [super initWithLuaState:luaState LuaKey:GEMINI_DISPLAY_GROUP_LUA_KEY];
+    if (self) {
+        objects = [[NSMutableArray alloc] initWithCapacity:1];
+        
+    }
+    
+    return self;
+    
+}
+
+// this initializer is for objets that are from child classes of GemDisplayGroup (like GemLayer)
+-(id)initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey {
+    self = [super initWithLuaState:luaState LuaKey:luaKey];
     if (self) {
         objects = [[NSMutableArray alloc] initWithCapacity:1];
         

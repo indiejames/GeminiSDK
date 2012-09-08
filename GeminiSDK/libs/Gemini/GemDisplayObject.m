@@ -21,7 +21,7 @@
 @synthesize isVisible;
 @synthesize physicsBody;
 
--(id)initWithLuaState:(lua_State *)luaState {
+/*-(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];
     
     if (self) {
@@ -36,7 +36,7 @@
     }
     
     return self;
-}
+}*/
 
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey {
     self = [super initWithLuaState:luaState LuaKey:luaKey];

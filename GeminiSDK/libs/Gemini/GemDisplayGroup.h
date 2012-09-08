@@ -15,6 +15,8 @@
 @property (readonly) NSArray *objects;
 @property (readonly) unsigned int numChildren;
 
+-(id)initWithLuaState:(lua_State *)luaState;
+-(id)initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
 -(void)remove:(GemDisplayObject *) obj;
 -(void)recomputeWidthHeight;
 -(void)insert:(GemDisplayObject *) obj;

@@ -20,8 +20,6 @@
 
 Gemini *singleton = nil;
 
-const char *errorFunc = "function gemini_stacktrace_printer()\nprint('My ERRO')\nend\nprint('Lua: global error function set')";
-
 @interface Gemini () {
 @private
     lua_State *L;
@@ -91,7 +89,7 @@ int setLuaPath(lua_State *L, NSString* path );
 }
 
 // setup the global error function that will print a stack trace on errors
--(void)registerErrorFunc {
+/*-(void)registerErrorFunc {
 
     luaL_loadbuffer(L, errorFunc, strlen(errorFunc), "errorHandler");
     int err = lua_pcall(L, 0, 0, 0);
@@ -101,7 +99,7 @@ int setLuaPath(lua_State *L, NSString* path );
         GemLog(@"Gemini: error setting up global error function");
     }
     lua_settop(L, 0);
-}
+}*/
 
 
 - (id)init
@@ -136,7 +134,7 @@ int setLuaPath(lua_State *L, NSString* path );
         singleton = [[Gemini alloc] init];
         [singleton addRuntimeObject];
         [singleton setupGlobalConstants];
-        [singleton registerErrorFunc];
+        //[singleton registerErrorFunc];
     }
     
     return singleton;
@@ -174,7 +172,7 @@ int setLuaPath(lua_State *L, NSString* path );
     
 	lua_settop(L, 0);
     
-    lua_getglobal(L, "gemini_stacktrace_printer");
+    lua_pushcfunction(L, traceback);
     
     NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"lua"];
   
@@ -261,3 +259,23 @@ int setLuaPath(lua_State *L, NSString* path )
 
 
 @end
+
+// global error function for Lua scripts
+int traceback (lua_State *L) {
+    if (!lua_isstring(L, 1))  /* 'message' not a string? */
+        return 1;  /* keep it intact */
+    lua_getglobal(L, "debug");
+    if (!lua_istable(L, -1)) {
+        lua_pop(L, 1);
+        return 1;
+    }
+    lua_getfield(L, -1, "traceback");
+    if (!lua_isfunction(L, -1)) {
+        lua_pop(L, 2);
+        return 1;
+    }
+    lua_pushvalue(L, 1);  /* pass error message */
+    lua_pushinteger(L, 2);  /* skip this function and traceback */
+    lua_call(L, 2, 1);  /* call debug.traceback */
+    return 1;
+}

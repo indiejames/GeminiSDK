@@ -7,32 +7,68 @@
 //
 
 #import "GemScene.h"
+#import "LGeminiDirector.h"
 
 @implementation GemScene
 @synthesize layers;
 
 // create a scene with no default layer
 -(id)initWithLuaState:(lua_State *)_L {
-    self = [super initWithLuaState:_L];
+    self = [super initWithLuaState:_L LuaKey:GEMINI_SCENE_LUA_KEY];
     if (self) {
+        // preseve the stack
+        int top = lua_gettop(L);
         layers = [[NSMutableDictionary alloc] initWithCapacity:1];
-        
+        int pop = lua_gettop(L) - top;
+        lua_pop(L, pop);
     }
     
     return self;
 }
 
+//////////////////////////////////////////////////////////////
+///
+//  FIX THIS
+//
+//  There is an issue with creating a layer object in the scene
+//   after creating the scene object - the stack gets messed up
+//
+//////////////////////////////////////////////////////////////
+
 // create a scene with a default layer at the given index
 -(id)initWithLuaState:(lua_State *)_L defaultLayerIndex:(int)index {
-    self = [super initWithLuaState:_L];
+    self = [super initWithLuaState:_L LuaKey:GEMINI_SCENE_LUA_KEY];
     if (self) {
+        if (luaL_checkudata(L, -1, GEMINI_SCENE_LUA_KEY)) {
+            GemLog(@"Userdata is a GemScene");
+        } else {
+            GemLog(@"USerdata is not a GemScene!!!");
+        }
+        // preseve the stack
+        int top = lua_gettop(L);
+        
         layers = [[NSMutableDictionary alloc] initWithCapacity:1];
+        
         // create a default layer
         defaultLayerIndex = [NSNumber numberWithInt:index];
         
         GemLayer *defaultLayer = [[GemLayer alloc] initWithLuaState:_L];
+        
+        
+        int pop = lua_gettop(L) - top;
+        lua_pop(L, pop);
+        
         [layers setObject:defaultLayer forKey:defaultLayerIndex];
         
+    }
+    
+    int top = lua_gettop(L);
+    GemLog(@"top = %d", top);
+    
+    if (luaL_checkudata(L, -1, GEMINI_SCENE_LUA_KEY)) {
+        GemLog(@"Userdata is a GemScene");
+    } else {
+        GemLog(@"USerdata is not a GemScene!!!");
     }
     
     return self;

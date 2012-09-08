@@ -7,6 +7,7 @@
 //
 
 #import "GemLayer.h"
+#import "LGeminiDisplay.h"
 
 @implementation GemLayer
 @synthesize index;
@@ -16,7 +17,7 @@
 @synthesize scene;
 
 -(id)initWithLuaState:(lua_State *)luaState {
-    self = [super initWithLuaState:luaState];
+    self = [super initWithLuaState:luaState LuaKey:GEMINI_LAYER_LUA_KEY];
     if (self) {
         // default is no blending
         sourceBlend = GL_SRC_ALPHA;
