@@ -38,7 +38,7 @@
 -(void)setDouble:(double)val forKey:(const char*) key;
 -(void)setInt:(int)val forKey:(const char*) key;
 -(void)setString:(NSString *)val forKey:(const char*) key;
--(void)addEventListener:(int)callback forEvent:(NSString *)event;
--(void)removeEventListener:(int)callback forEvent:(NSString *)event;
+//-(void)addEventListener:(int)callback forEvent:(NSString *)event;
+//-(void)removeEventListener:(int)callback forEvent:(NSString *)event;
 -(BOOL)handleEvent:(GemEvent *)event;
 @end

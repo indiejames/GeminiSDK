@@ -89,7 +89,7 @@ function scene:exitScene( event )
 	-----------------------------------------------------------------------------
     
     print("Exiting scene 3")
- Runtime:removeEventListener("enterFrame", myListener)
+    Runtime:removeEventListener("enterFrame", myListener)
 
 end
 

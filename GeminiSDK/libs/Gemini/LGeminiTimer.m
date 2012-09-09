@@ -10,17 +10,14 @@
 #import "GemTimer.h"
 #import "GemGLKViewController.h"
 #import "Gemini.h"
+#import "LGeminiObject.h"
 
 static int performWithDelay(lua_State *L){
+    // stack : 1 - delay, 2 - callback (funciton or table/userdata), 3 - num iterations (optional)
     GemLog(@"LGeminiTimer:performWithDelay()");
     int numArgs = lua_gettop(L);
     
     double delay = luaL_checknumber(L, 1);
-    
-    // copy the listener to the top of the stack
-    //lua_pushvalue(L, 2);
-    // get a reference to the listener
-    //int listener = luaL_ref(L, LUA_REGISTRYINDEX);
     
     int numIterations = 1; // default
     
@@ -31,39 +28,36 @@ static int performWithDelay(lua_State *L){
     
     
     GemTimer *timer = [[GemTimer alloc] initWithLuaState:L Delay:delay Listener:-1 NumIterations:numIterations];
+    
+    
+    int timerIndex = lua_gettop(L);
+    
     [((GemGLKViewController *)([Gemini shared].viewController)).timerManager addTimer:timer];
     
-    __unsafe_unretained GemTimer **lTimer = (__unsafe_unretained GemTimer **)lua_newuserdata(L, sizeof(GemTimer *));
     
-    *lTimer = timer;
+   // __unsafe_unretained GemTimer **lTimer = (__unsafe_unretained GemTimer **)lua_newuserdata(L, sizeof(GemTimer *));
+    
+    //*lTimer = timer;
     
     const char *ename = [GEM_TIMER_EVENT_NAME UTF8String];
     
-    setupObject(L, GEMINI_TIMER_LUA_KEY, timer);
+    lua_pushstring(L, ename);
     
-    // add a timer event listener to the timer
-    // get the event handler table
-    lua_rawgeti(L, LUA_REGISTRYINDEX, timer.eventListenerTableRef);
-    // get the event handlers for this event
-    lua_getfield(L, -1, ename);
-    
-    if (lua_istable(L, -1)) {
-        int index = luaL_len(L, -1);
-        lua_pushinteger(L, index+1);
-        // copy listener to top of stack
-        lua_pushvalue(L, 2);
-        // add the listener to our table of event handlers
-        lua_settable(L, -4);
-    } else {
-        lua_pushstring(L, ename);
-        lua_newtable(L);
-        lua_settable(L, -4);
-        lua_getfield(L, -2, ename);
-        lua_pushinteger(L, 1);
-        lua_pushvalue(L, 2);
-        lua_settable(L, -3);
-    }
+    // copy the listener to the top of the stack
+    lua_pushvalue(L, 2);
 
+    // remove the bottom of the stack so the next call will work
+    lua_remove(L, 1);
+    lua_remove(L, 1);
+    if (numArgs == 3) {
+        lua_remove(L, 1);
+    }
+   
+    addEventListener(L);
+    
+    // put our new timer on top of the stack
+    lua_pushvalue(L, -1);
+    
     GemLog(@"LGeminiTimer:performWithDelay - done");
     
     return 1;

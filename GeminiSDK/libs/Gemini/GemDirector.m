@@ -11,6 +11,7 @@
 #import "LGeminiDirector.h"
 #import "GemEvent.h"
 #import "LGeminiLuaSupport.h"
+#import "Gemini.h"
 
 @implementation GemDirector
 @synthesize renderer;
@@ -86,6 +87,9 @@ static GemScene * createDefaultScene(lua_State *L){
         
         lua_settop(L, 0);
         
+        // set our error handler function
+        lua_pushcfunction(L, traceback);
+        
         NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:sceneName ofType:@"lua"];
         
         err = luaL_loadfile(L, [luaFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]);
@@ -97,7 +101,7 @@ static GemScene * createDefaultScene(lua_State *L){
         }
         
         
-        err = lua_pcall(L, 0, 1, 0);
+        err = lua_pcall(L, 0, 1, 1);
         if (0 != err) {
             luaL_error(L, "cannot run lua file: %s",
                        lua_tostring(L, -1));

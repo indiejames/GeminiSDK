@@ -27,13 +27,11 @@
     self = [super initWithLuaState:luaState LuaKey:GEMINI_TIMER_LUA_KEY];
     
     if (self) {
-        GemLog(@"del = %f", del);
         delay = del / 1000.0;
         numIterations = numIters;
         iteration = 0;
         accumulatedTime = 0;
         lastUpdateTime = ((GemGLKViewController *)([Gemini shared].viewController)).updateTime;
-        //[self addEventListener:listener forEvent:GEM_TIMER_EVENT_NAME];
     }
     
     return self;

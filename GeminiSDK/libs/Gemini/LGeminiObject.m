@@ -10,6 +10,7 @@
 #import "Gemini.h"
 #import "GemObject.h"
 #import "LGeminiObject.h"
+#import "GemTimer.h"
 
 
 static int newGeminiObject(lua_State *L){
@@ -51,15 +52,24 @@ static int geminiObjectGC (lua_State *L){
     return 0;
 }
 
+//
+// addEventListner - add an event listener/handler to an ojbect.  This handler will get called
+// when the objects is notified of the event.
+//  GemObjects have tables where the keys are event types and the values are other tables that
+// hold events listeners.  These sub tables have the listeners as their keys and the references
+// in LUA_REGISTRYINDEX as the values.  The references are used to make sure the listeners don't
+// go out of scope and get GC'ed.  This allows anonymous functions to be used for event listeners.
+// Listeners can be functions or tables/userdata.  If the listener is a table/userdata, it must
+// contain a function of the same name as the event.
 int addEventListener(lua_State *L){
+    // stack: 1 - object, 2 - event name, 3 - listener (function or table)
     __unsafe_unretained GemObject **go = (__unsafe_unretained GemObject **)lua_touserdata(L, 1);
     const char *eventName = luaL_checkstring(L, 2);
     NSString *name = [NSString stringWithFormat:@"%s", eventName];
     
-        
-    //int callback = luaL_ref(L, LUA_REGISTRYINDEX);
-
-    //[*go addEventListener:callback forEvent:name];
+    if ([name isEqualToString:GEM_TIMER_EVENT_NAME]) {
+        GemLog(@"Adding timer event");
+    }
     
     // get the event handler table
     lua_rawgeti(L, LUA_REGISTRYINDEX, (*go).eventListenerTableRef);
@@ -67,18 +77,33 @@ int addEventListener(lua_State *L){
     lua_getfield(L, -1, eventName);
     
     if (lua_istable(L, -1)) {
-        int index = luaL_len(L, -1);
-        lua_pushinteger(L, index+1);
+        // use the existing table that holds listeners for this event
+        
+        // push the listener to the top of the stack twice since the next operation will pop it
         lua_pushvalue(L, 3);
-        lua_settable(L, -3);
+        lua_pushvalue(L, -1);
+        // get a ref for this listener
+        int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+        lua_pushinteger(L, ref);
+        // use listener as key and ref as value for event listener table
+        lua_rawset(L, -3);
     } else {
         lua_pushstring(L, eventName);
+        // create a new table to hold listeners for this event
         lua_newtable(L);
+        // make the new table the event table for the given event name
         lua_settable(L, -4);
+        // pull our event table back out since it just popped of the stack
         lua_getfield(L, -2, eventName);
-        lua_pushinteger(L, 1);
+        
+        // push the listener to the top of the stack twice since the next operation will pop it
         lua_pushvalue(L, 3);
-        lua_settable(L, -3);
+        lua_pushvalue(L, -1);
+        int ref = luaL_ref(L, LUA_REGISTRYINDEX);
+        lua_pushinteger(L, ref);
+        // add the listener to the new table as the key with the ref as the value
+        lua_rawset(L, -3);
+        
     }
     
     GemLog(@"LGeminiObject: Added event listener for %@ event for %@", name, (*go).name);
@@ -87,11 +112,33 @@ int addEventListener(lua_State *L){
 }
 
 int removeEventListener(lua_State *L){
+    // stack: 1 - object, 2 - event name, 3 - listener
     __unsafe_unretained GemObject **go = (__unsafe_unretained GemObject **)lua_touserdata(L, 1);
     const char *eventName = luaL_checkstring(L, 2);
     NSString *name = [NSString stringWithFormat:@"%s", eventName];
-    int callback = luaL_ref(L, LUA_REGISTRYINDEX);
-    [*go removeEventListener:callback forEvent:name];
+    
+    // get the event handler table
+    lua_rawgeti(L, LUA_REGISTRYINDEX, (*go).eventListenerTableRef);
+    // get the event handlers for this event
+    lua_getfield(L, -1, eventName);
+    
+    if (lua_istable(L, -1)) {
+        // use the existing table that holds listeners for this event
+       // push the listener to the top of the stack
+        lua_pushvalue(L, 3);
+        lua_settable(L, -3);
+    } else {
+        lua_pushstring(L, eventName);
+        // create a new table to hold listeners for this event
+        lua_newtable(L);
+        lua_settable(L, -4);
+        lua_getfield(L, -2, eventName);
+        lua_pushinteger(L, 1);
+        // push the listener to the top of the stack
+        lua_pushvalue(L, 3);
+        lua_settable(L, -3);
+    }
+
     
     GemLog(@"LGeminiObject: Removed event listener for %@ event for %@", name, (*go).name);
     

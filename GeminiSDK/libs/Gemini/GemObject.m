@@ -192,7 +192,7 @@
     }
 
     
-    // get the event handler table
+    // get the full event handler table
     lua_rawgeti(L, LUA_REGISTRYINDEX, eventListenerTableRef);
     // get the event handlers for this event
     lua_getfield(L, -1, [event.name UTF8String]);
@@ -200,7 +200,11 @@
     if (!lua_isnil(L, -1)) {
         lua_pushnil(L); // start at first key in table
         while(lua_next(L, -2) != 0){
-            // key is at -2, value is at -1
+            // key is at -2, value (lua ref) is at -1
+            // get the function/table using the ref
+            int ref = lua_tointeger(L, -1);
+            lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
+            
             if (lua_isfunction(L, -1)) {
                 //NSLog(@"Event handler is a function");
                 // load the stacktrace printer for our error function
@@ -216,7 +220,8 @@
                     GemLog(@"Error executing event handler: %s", msg);
                 }
                 
-                lua_pop(L, 1);
+                // leave the key on the stack for the next iteration
+                lua_pop(L, 2);
                 
             } else { // table or user data
                 const char *ename = [event.name UTF8String];
@@ -228,11 +233,10 @@
                 }*/
                 
                 int top = lua_gettop(L);
-                GemLog(@"top = %d", top);
-                
+                                
                 int base = lua_gettop(L);  /* function index */
                 lua_pushcfunction(L, traceback);  /* push traceback function */
-                lua_insert(L, base);  /* put it under chunk and args */
+                lua_insert(L, base);  /* put it under handler */
                 
                 lua_getfield(L, -1, ename);
                 
@@ -252,8 +256,7 @@
                     GemLog(@"Error executing event handler: %s", msg);
                 }
                 
-                int pop = lua_gettop(L) - top + 1;
-                GemLog(@"pop = %d", pop);
+                int pop = lua_gettop(L) - top + 2;
                 
                 lua_pop(L, pop);
             }
@@ -318,15 +321,9 @@
 }
 
 // add an event listener to this object
--(void)addEventListener:(int)callback forEvent:(NSString *)event {
+/*-(void)addEventListener:(int)callback forEvent:(NSString *)event {
     NSLog(@"GemObject adding event listener for %@", event);
-    /*NSMutableArray *handler = (NSMutableArray *)[eventHandlers objectForKey:event];
-    if (handler == nil) {
-        handler = [[NSMutableArray alloc] initWithCapacity:1];
-        [eventHandlers setObject:handler forKey:event];
-    }
     
-    [handler addObject:[NSNumber numberWithInt:callback]];*/
     
     // get the event handler table
     lua_rawgeti(L, LUA_REGISTRYINDEX, eventListenerTableRef);
@@ -347,10 +344,10 @@
         lua_pushinteger(L, 1);
         lua_pushvalue(L, 3);
     }
-}
+}*/
 
 // remove an event listener for this object
--(void)removeEventListener:(int)callback forEvent:(NSString *)event {
+/*-(void)removeEventListener:(int)callback forEvent:(NSString *)event {
     GemLog(@"GemObject: removing event listener for %@", event);
     GemLog(@"GemObject: registered handlers:");
     
@@ -362,7 +359,7 @@
         }
         [handler removeObject:[NSNumber numberWithInt:callback]];
     }
-}
+}*/
 
 
 @end
