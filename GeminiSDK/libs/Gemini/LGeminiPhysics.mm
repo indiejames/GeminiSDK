@@ -7,41 +7,46 @@
 //
 
 #import "LGeminiPhysics.h"
+#import "Gemini.h"
 
-int luaopen_physics_lib(lua_State *L);
-
-static b2World *world;
 
 
 static int addBody(lua_State *L){
     __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
     
-    b2BodyDef bodyDef;
     
-     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:1];
-    NSString *type = @"dynamic";
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:1];
+    NSString *type = @"static";
     
     int numArgs = lua_gettop(L);
     
     for (int i=1; i<numArgs; i++) {
-        if (luaL_checkstring(L, i+1)) {
+        if (lua_isstring(L, i+1)) {
             // type attribute
             type = [NSString stringWithUTF8String:lua_tostring(L, i+1)];
             
         } else {
-            // argument is a table - need body element for it
-            
+            // argument is a table
             
             lua_pushnil(L);  /* first key */
-            while (lua_next(L, 2) != 0) {
-                // uses 'key' (at index -2) and 'value' (at index -1)
+            while (lua_next(L, i+1) != 0) {
+                // 'key' (at index -2) and 'value' (at index -1)
                 
                 const char *key = lua_tostring(L, -2);
                 if (strcmp(key, "shape") == 0) {
                     // value is a table
                     
-                    int ref = luaL_ref(L, LUA_REGISTRYINDEX);
-                    [params setObject:[NSNumber numberWithInt:ref] forKey:[NSString stringWithUTF8String:key]];
+                    NSMutableArray *shape = [NSMutableArray arrayWithCapacity:1];
+                    [params setObject:shape forKey:[NSString stringWithUTF8String:key]];
+                    
+                    // iterate over the table and copy its values
+                    lua_pushnil(L);
+                    while (lua_next(L, -2) != 0) {
+                        double value = lua_tonumber(L, -1);
+                        [shape addObject:[NSNumber numberWithDouble:value]];
+                        /* removes 'value'; keeps 'key' for next iteration */
+                        lua_pop(L, 1);
+                    }
                 } else {
                     
                     double val = lua_tonumber(L, -1);
@@ -59,10 +64,49 @@ static int addBody(lua_State *L){
 
     }
     
-        
+    [params setObject:type forKey:@"type"];
     
-    return 1;
+    GemDisplayObject *gdo = *displayObj;
+    
+    [[Gemini shared].physics addBodyForObject:gdo WithParams:params];
+    
+    
+    return 0;
 }
+
+static int setScale(lua_State *L){
+    double scale = lua_tonumber(L, 1);
+    [[Gemini shared].physics setScale:scale];
+    
+    return 0;
+}
+
+static int setDrawMode(lua_State *L){
+    int mode = lua_tointeger(L, 1);
+    [[Gemini shared].physics setDrawMode:(GemPhysicsDrawMode)mode];
+    
+    return 0;
+}
+
+static int setContinuous(lua_State *L){
+    bool cont = lua_toboolean(L, 1);
+    [[Gemini shared].physics setContinous:cont];
+    
+    return 0;
+}
+
+static int pause(lua_State *L){
+    [[Gemini shared].physics pause];
+    
+    return 0;
+}
+
+static int start(lua_State *L){
+    [[Gemini shared].physics start];
+    
+    return 0;
+}
+
 
 static int newIndex(lua_State *L){
     //return genericNewIndex(L);
@@ -72,6 +116,11 @@ static int newIndex(lua_State *L){
 // the mappings for the library functions
 static const struct luaL_Reg physicsLib_f [] = {
     {"addBody", addBody},
+    {"setScale", setScale},
+    {"setContinuous", setContinuous},
+    {"setDrawMode", setDrawMode},
+    {"pause", pause},
+    {"start", start},
     {NULL, NULL}
 };
 
@@ -83,27 +132,13 @@ static const struct luaL_Reg physics_m [] = {
 };
 
 
-int luaopen_physics_lib (lua_State *L){
+extern "C" int luaopen_physics_lib (lua_State *L){
     // create meta table for our physics type
-    createMetatable(L, GEMINI_PHYSICS_LUA_KEY, physics_m);
+    //createMetatable(L, GEMINI_PHYSICS_LUA_KEY, physics_m);
        
     // create the table for this library and popuplate it with our functions
     luaL_newlib(L, physicsLib_f);
     
-    b2Vec2 gravity(0.0f, -9.8f); 
-    bool doSleep = true;
-    world = new b2World(gravity);
-    world->SetAllowSleeping(doSleep);
-    
-    b2BodyDef groundBodyDef; 
-    groundBodyDef.position.Set(0.0f, -10.0f);
-    
-    b2Body* groundBody = world->CreateBody(&groundBodyDef);
-    
-    b2PolygonShape groundBox; 
-    groundBox.SetAsBox(50.0f, 10.0f);
-    
-    groundBody->CreateFixture(&groundBox, 0.0f);
     
     return 1;
 }

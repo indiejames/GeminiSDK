@@ -193,6 +193,7 @@
 		76D570BE15F1A1AD00615891 /* scene2.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B915F1A1AD00615891 /* scene2.lua */; };
 		76D570BF15F1A1AD00615891 /* scene3.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570BA15F1A1AD00615891 /* scene3.lua */; };
 		76D570C015F1A1AD00615891 /* scene4.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570BB15F1A1AD00615891 /* scene4.lua */; };
+		76F6448815FD80670007D29A /* GemPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 76F6448715FD80660007D29A /* GemPhysics.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -530,6 +531,8 @@
 		76D570B915F1A1AD00615891 /* scene2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene2.lua; sourceTree = "<group>"; };
 		76D570BA15F1A1AD00615891 /* scene3.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene3.lua; sourceTree = "<group>"; };
 		76D570BB15F1A1AD00615891 /* scene4.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene4.lua; sourceTree = "<group>"; };
+		76F6448615FD80650007D29A /* GemPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemPhysics.h; path = libs/Gemini/GemPhysics.h; sourceTree = "<group>"; };
+		76F6448715FD80660007D29A /* GemPhysics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GemPhysics.mm; path = libs/Gemini/GemPhysics.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -790,6 +793,8 @@
 				76D56F8A15F1943400615891 /* LGeminiTransition.m */,
 				76CBBDD115F3DD6D007880C2 /* GemSoundEffect.h */,
 				76CBBDD215F3DD6E007880C2 /* GemSoundEffect.m */,
+				76F6448615FD80650007D29A /* GemPhysics.h */,
+				76F6448715FD80660007D29A /* GemPhysics.mm */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1321,6 +1326,7 @@
 				76D570AD15F1A16B00615891 /* LGeminiDirector.m in Sources */,
 				76D570AE15F1A16B00615891 /* LGeminiScene.m in Sources */,
 				76CBBDD315F3DD6F007880C2 /* GemSoundEffect.m in Sources */,
+				76F6448815FD80670007D29A /* GemPhysics.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

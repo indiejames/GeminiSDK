@@ -4,6 +4,7 @@
 
 gemini = require('gemini')
 display = require('display')
+physics = require('physics')
 local director = require('director')
 
 
@@ -30,13 +31,34 @@ group1.y = 320
 --rectangle:delete()
 --collectgarbage("collect")
 rectangle = display.newRect(100,100,100,100)
-print("Lua: OK")
 rectangle:setFillColor(1.0,0,0,1.0)
 rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
 rectangle.strokeWidth = 5.0
 rectangle.x = 750
 rectangle.y = 450
 rectangle.rotation = 30
+
+rectangle3 = display.newRect(200,200,100,100)
+rectangle3:setFillColor(1.0,0.5,1.0,1.0)
+rectangle3:setStrokeColor(1.0,1.0,1.0,1.0)
+rectangle3.strokeWidth = 5.0
+rectangle3.x = 250
+rectangle3.y = 450
+rectangle3.rotation = 40
+
+physics.addBody(rectangle3, "dynamic", { density=3.0, friction=0.5, restitution=0.75 } )
+
+ground = display.newRect(480,0,960,30)
+ground:setFillColor(0,1.0,0,1.0)
+physics.addBody(ground)
+
+leftSide = display.newRect(0,320,30,640)
+leftSide:setFillColor(0,1.0,0,1.0)
+physics.addBody(leftSide)
+
+rightSide = display.newRect(960,320,30,640)
+rightSide:setFillColor(0,1.0,0,1.0)
+physics.addBody(rightSide)
 
 
 -- draw a blue rectangle with a green border
@@ -46,10 +68,8 @@ rectangle2:setStrokeColor(0,1.0,0,1.0)
 rectangle2.strokeWidth = 2.0
 rectangle2.rotation = -15
 
-director.loadScene('scene1')
-director.gotoScene('scene1')
-
-
+--director.loadScene('scene1')
+--director.gotoScene('scene1')
 
 
 -- add an event listener that will fire every frame

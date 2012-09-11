@@ -17,6 +17,7 @@
 #import "LGeminiObject.h"
 #import "LGeminiDisplay.h"
 #import "GemTransitionManager.h"
+#import "GemPhysics.h"
 
 Gemini *singleton = nil;
 
@@ -28,6 +29,7 @@ Gemini *singleton = nil;
     int x;
     double initTime;
     GemObject *runtime;
+    GemPhysics *physics;
 }
 @end
 
@@ -38,6 +40,7 @@ Gemini *singleton = nil;
 @synthesize geminiObjects;
 @synthesize viewController;
 @synthesize initTime;
+@synthesize physics;
 
 int setLuaPath(lua_State *L, NSString* path );
 
@@ -85,6 +88,14 @@ int setLuaPath(lua_State *L, NSString* path );
     lua_setglobal(L, "GL_ONE");
     lua_pushinteger(L, GL_ZERO);
     lua_setglobal(L, "GL_ZERO");
+    
+    // physics draw modes
+    lua_pushinteger(L, GEM_PHYSICS_DEBUG);
+    lua_setglobal(L, "REMDER_DEBUG");
+    lua_pushinteger(L, GEM_PHYSICS_NORMAL);
+    lua_setglobal(L, "RENDER_NORMAL");
+    lua_pushinteger(L, GEM_PHYSICS_HYBRID);
+    lua_setglobal(L, "RENDER_HYBRID");
     lua_settop(L, 0);
 }
 
@@ -122,7 +133,7 @@ int setLuaPath(lua_State *L, NSString* path );
         L = luaL_newstate();
         luaL_openlibs(L);
         viewController = [[GemGLKViewController alloc] initWithLuaState:L];
-        
+        physics = [[GemPhysics alloc] init];
     }
     
     return self;
@@ -219,12 +230,17 @@ int setLuaPath(lua_State *L, NSString* path );
 -(void) update:(double)deltaT {
     static int callCount = 0;
     
+    // do physics
+    [physics update:deltaT];
+    
     // update transitions
     [[GemTransitionManager shared] processTransitions:deltaT];
     
     GemEvent *enterFrameEvent = [[GemEvent alloc] initWithLuaState:L Source:nil];
     enterFrameEvent.name = @"enterFrame";
     [runtime handleEvent:enterFrameEvent];
+    
+#ifdef GEM_DEBUG
     
     if (callCount % 120 == 0) {
         callCount = 0;
@@ -235,6 +251,8 @@ int setLuaPath(lua_State *L, NSString* path );
     }
     
     callCount++;
+#endif
+    
 }
 
 // makes it possible for Lua to load files on iOS

@@ -21,8 +21,6 @@
 #include "lualib.h"
 #include "lauxlib.h"
 
-//extern int luaopen_mylib (lua_State *L);
-//extern int luaopen_soundlib (lua_State *L);
 extern int luaopen_geminiObjectLib (lua_State *L);
 extern int luaopen_soundlib (lua_State *L);
 extern int luaopen_spritelib (lua_State *L);
@@ -32,6 +30,7 @@ extern int luaopen_transition_lib (lua_State *L);
 extern int luaopen_timer_lib(lua_State *L);
 extern int luaopen_event_lib(lua_State *L);
 extern int luaopen_director_lib(lua_State *L);
+extern int luaopen_physics_lib(lua_State *L);
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua
@@ -66,6 +65,7 @@ static const luaL_Reg preloadedlibs[] = {
     {"sound", luaopen_soundlib},
     {"sprite", luaopen_spritelib},
     {"display", luaopen_display_lib},
+    {"physics", luaopen_physics_lib},
   {NULL, NULL}
 };
 

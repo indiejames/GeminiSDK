@@ -8,5 +8,6 @@
 
 #import "LGeminiLuaSupport.h"
 #include "Box2D.h"
+#import "GemPhysics.h"
 
 #define GEMINI_PHYSICS_LUA_KEY "GeminiLib.GEMINI_PHYSICS_LUA_KEY"

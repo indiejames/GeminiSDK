@@ -11,6 +11,7 @@
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
+#import "GemPhysics.h"
 
 
 @interface Gemini : NSObject
@@ -19,11 +20,13 @@
 @property (readonly) NSMutableArray *geminiObjects;
 @property (readonly) GLKViewController *viewController;
 @property (readonly) double initTime;
+@property (readonly) GemPhysics *physics;
 
 -(void)execute:(NSString *)filename;
 -(BOOL)handleEvent:(NSString *)event;
 -(void)update:(double)deltaT;
 +(Gemini *)shared;
+
 
 @end
 

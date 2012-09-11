@@ -33,7 +33,7 @@
     BOOL needsTransformUpdate;
     BOOL needsUpdate;
     BOOL isVisible;
-    id physicsBody;
+    void *physicsBody;
 }
 
 @property (nonatomic) GLfloat alpha;
@@ -60,7 +60,7 @@
 @property (nonatomic) GLfloat yScale;
 @property (nonatomic) BOOL needsUpdate;
 @property (nonatomic) BOOL needsTransformUpdate;
-@property (nonatomic) id physicsBody;
+@property (nonatomic) void *physicsBody;
 
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
 -(GLKMatrix3) transform;
