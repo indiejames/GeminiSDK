@@ -114,8 +114,8 @@
 
 -(void)update:(double)deltaT {
     
-    int velocityIterations = 6;
-    int positionIterations = 2;
+    int velocityIterations = 8;
+    int positionIterations = 3;
     
     int numIters = deltaT / timeStep;
     float remT = deltaT - numIters * timeStep;
@@ -124,7 +124,7 @@
         world->Step(timeStep, velocityIterations, positionIterations);
     }
     
-    if (remT > 0) {
+    if (remT > 0.5*timeStep) {
         world->Step(remT, velocityIterations, positionIterations);
     }
     
