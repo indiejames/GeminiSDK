@@ -13,5 +13,6 @@
 #define GEMINI_OBJECT_LUA_KEY "GeminiLib.GEMINI_OBJECT_LUA_KEY"
 
 int addEventListener(lua_State *L); // used everywhere
+int removeEventListener(lua_State *L);
 int luaopen_geminiObjectLib (lua_State *L);
 

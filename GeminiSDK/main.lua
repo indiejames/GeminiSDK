@@ -38,15 +38,42 @@ rectangle.x = 750
 rectangle.y = 450
 rectangle.rotation = 30
 
-rectangle3 = display.newRect(200,200,100,100)
-rectangle3:setFillColor(1.0,0.5,1.0,1.0)
+rectangle3 = display.newRect(200,300,100,100)
+rectangle3:setFillColor(0.5,0.25,0.75,1.0)
 rectangle3:setStrokeColor(1.0,1.0,1.0,1.0)
 rectangle3.strokeWidth = 5.0
 rectangle3.x = 250
 rectangle3.y = 450
 rectangle3.rotation = 40
+rectangle3.name = "rectangle3"
 
-physics.addBody(rectangle3, "dynamic", { density=3.0, friction=0.5, restitution=0.75 } )
+rectangle4 = display.newRect(600,400,100,100)
+rectangle4:setFillColor(0,0.5,0.5,1.0)
+rectangle4:setStrokeColor(1.0,1.0,1.0,1.0)
+rectangle4.strokeWidth = 5.0
+rectangle4.x = 550
+rectangle4.y = 500
+rectangle4.rotation = -20
+rectangle4.name = "rectangle4"
+
+
+local collisionPresolve = function(event)
+  local obj = event.source
+  print(string.format("Lua: %s - BANG!", obj.name))  
+end
+
+local collisionPostsolve = function(event)
+  local obj = event.source
+  print(string.format("Lua: %s - BANG!", obj.name))
+end
+
+physics.setScale(200)
+physics.setGravity(0, -9.8)
+physics.addBody(rectangle3, "dynamic", { density=3.0, friction=0.5, restitution=0.7 } )
+rectangle3:addEventListener("collision:postsolve", collisionPresolve)
+physics.addBody(rectangle4, "dynamic", { density=3.0, friction=0.5, restitution=0.7 } )
+rectangle4:addEventListener("collision:postsolve", collisionPresolve)
+
 
 ground = display.newRect(480,0,960,30)
 ground:setFillColor(0,1.0,0,1.0)

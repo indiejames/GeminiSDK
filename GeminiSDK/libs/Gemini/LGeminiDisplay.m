@@ -15,6 +15,7 @@
 #import "GemRectangle.h"
 #import "GemGLKViewController.h"
 #import "LGeminiLuaSupport.h"
+#import "LGeminiObject.h"
 
 
 
@@ -421,6 +422,8 @@ static const struct luaL_Reg rectangle_m [] = {
     {"setStrokeWidth", rectangleSetStrokeWidth},
     {"removeSelf", removeSelf},
     {"delete", genericDelete},
+    {"addEventListener", addEventListener},
+    {"removeEventListener", removeEventListener},
     {NULL, NULL}
 };
 

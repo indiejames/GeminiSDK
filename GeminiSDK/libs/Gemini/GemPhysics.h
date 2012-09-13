@@ -30,6 +30,7 @@ typedef struct {
 -(void)setScale:(double)s;
 -(void)setDrawMode:(GemPhysicsDrawMode)mode;
 -(void)setContinous:(bool) cont;
+-(void)setGravityGx:(float)gx Gy:(float)gy;
 -(void)pause;
 -(void)start;
 -(GemPoint)toPhysicsCoord:(GemPoint)point;

@@ -8,12 +8,57 @@
 
 #import "GemPhysics.h"
 #include "Box2D.h"
+#import "GemEvent.h"
+
+// handles collisions between objects
+class GemContactListener : public b2ContactListener {
+public:
+    void BeginContact(b2Contact* contact){
+        /* handle begin event */
+    }
+    void EndContact(b2Contact* contact) {
+        /* handle end event */
+    }
+    void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) {
+        /* handle pre-solve event */
+        const b2Body* bodyA = contact->GetFixtureA()->GetBody();
+        const b2Body* bodyB = contact->GetFixtureB()->GetBody();
+        GemDisplayObject *objA = (__bridge GemDisplayObject *)bodyA->GetUserData();
+        GemDisplayObject *objB = (__bridge GemDisplayObject *)bodyB->GetUserData();
+        
+        GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Source:objA];
+        event.name = @"collision:presolve";
+        [objA handleEvent:event];
+        
+        event = [[GemEvent alloc] initWithLuaState:objB.L Source:objB];
+        event.name = @"collision:presolve";
+        [objB handleEvent:event];
+        
+    }
+    
+    void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) {
+        /* handle post-solve event */
+        const b2Body* bodyA = contact->GetFixtureA()->GetBody();
+        const b2Body* bodyB = contact->GetFixtureB()->GetBody();
+        GemDisplayObject *objA = (__bridge GemDisplayObject *)bodyA->GetUserData();
+        GemDisplayObject *objB = (__bridge GemDisplayObject *)bodyB->GetUserData();
+        
+        GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Source:objA];
+        event.name = @"collision:postsolve";
+        [objA handleEvent:event];
+        
+        event = [[GemEvent alloc] initWithLuaState:objB.L Source:objB];
+        event.name = @"collision:postsolve";
+        [objB handleEvent:event];
+    }
+};
 
 
 @implementation GemPhysics {
     b2World *world;
     BOOL paused;
     float timeStep;
+    double accumulator;
 }
 
 -(id)init {
@@ -23,9 +68,12 @@
         bool doSleep = true;
         world = new b2World(gravity);
         world->SetAllowSleeping(doSleep);
+        GemContactListener *listener = new GemContactListener();
+        world->SetContactListener(listener);
         
         scale = 30.0; // meters per pixel
         timeStep = 1.0 / 60.0; // sec
+        accumulator = 0;
     }
     
     return self;
@@ -51,6 +99,9 @@
     }
     
     bodyDef.type = type;
+    
+    bodyDef.linearDamping = 0;
+    bodyDef.angularDamping = 0.1;
     
     b2Body* body = world->CreateBody(&bodyDef);
     b2FixtureDef fixtureDef;
@@ -101,8 +152,6 @@
         restitution = [(NSNumber *)[params objectForKey:@"restitution"] floatValue];
     }
     
-    
-    
     fixtureDef.density = density;
     fixtureDef.friction = friction;
     fixtureDef.restitution = restitution;
@@ -117,33 +166,51 @@
     int velocityIterations = 8;
     int positionIterations = 3;
     
-    int numIters = deltaT / timeStep;
-    float remT = deltaT - numIters * timeStep;
+
+    if (deltaT > 0.25) {
+        deltaT = 0.25;// note: max frame time to avoid spiral of death
+    }
     
-    for (int i=0; i<numIters; i++) {
+    accumulator += deltaT;
+    
+    while ( accumulator >= timeStep ) {
+        for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
+            //b->SetAwake(true);
+            b2Vec2 position = b->GetPosition();
+            GemPoint pPoint = {position.x, position.y};
+            GemPoint point = [self fromPhysicsCoord:pPoint];
+            float32 angle = b->GetAngle();
+            
+            GemDisplayObject *gdo = (__bridge GemDisplayObject *)b->GetUserData();
+            gdo.rotation = toDeg(angle);
+            gdo.x = point.x;
+            gdo.y = point.y;
+            
+            //GemLog(@"(x,y,theta) = (%4.2f, %4.2f, %4.2f)\n", position.x, position.y, angle);
+        }
+
         world->Step(timeStep, velocityIterations, positionIterations);
+        
+            
+        accumulator -= timeStep;
     }
     
-    if (remT > 0.5*timeStep) {
-        world->Step(remT, velocityIterations, positionIterations);
-    }
-    
+    const double alpha = accumulator / timeStep;
     
     for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
-        //b->SetAwake(true);
+        
         b2Vec2 position = b->GetPosition();
         GemPoint pPoint = {position.x, position.y};
         GemPoint point = [self fromPhysicsCoord:pPoint];
         float32 angle = b->GetAngle();
         
         GemDisplayObject *gdo = (__bridge GemDisplayObject *)b->GetUserData();
-        gdo.rotation = toDeg(angle);
-        gdo.x = point.x;
-        gdo.y = point.y;
+        gdo.rotation = alpha * toDeg(angle) + (1.0-alpha)*gdo.rotation;
+        gdo.x = alpha * point.x + (1.0 - alpha)*gdo.x;
+        gdo.y = alpha * point.y + (1.0-alpha)*gdo.y;
         
-        //GemLog(@"(x,y,theta) = (%4.2f, %4.2f, %4.2f)\n", position.x, position.y, angle);
     }
-    
+       
 }
 
 -(void)setScale:(double)s {
@@ -156,6 +223,12 @@
 
 -(void)setContinous:(bool) cont{
     world->SetContinuousPhysics(cont);
+}
+
+-(void)setGravityGx:(float)gx Gy:(float)gy {
+    b2Vec2 g(gx,gy);
+    
+    world->SetGravity(g);
 }
 
 -(void)pause {
@@ -191,3 +264,4 @@ float toDeg(float rad){
 }
 
 @end
+

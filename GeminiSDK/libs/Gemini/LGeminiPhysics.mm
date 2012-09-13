@@ -107,6 +107,15 @@ static int start(lua_State *L){
     return 0;
 }
 
+static int setGravity(lua_State *L){
+    
+    float gx = lua_tonumber(L, 1);
+    float gy = lua_tonumber(L, 2);
+    [[Gemini shared].physics setGravityGx:gx Gy:gy];
+    
+    return 0;
+}
+
 
 static int newIndex(lua_State *L){
     //return genericNewIndex(L);
@@ -119,6 +128,7 @@ static const struct luaL_Reg physicsLib_f [] = {
     {"setScale", setScale},
     {"setContinuous", setContinuous},
     {"setDrawMode", setDrawMode},
+    {"setGravity", setGravity},
     {"pause", pause},
     {"start", start},
     {NULL, NULL}
