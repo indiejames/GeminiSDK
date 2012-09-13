@@ -44,11 +44,13 @@ public:
         GemDisplayObject *objB = (__bridge GemDisplayObject *)bodyB->GetUserData();
         
         GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Source:objA];
-        event.name = @"collision:postsolve";
+        //event.name = @"collision:postsolve";
+        event.name = @"collision";
         [objA handleEvent:event];
         
         event = [[GemEvent alloc] initWithLuaState:objB.L Source:objB];
-        event.name = @"collision:postsolve";
+        //event.name = @"collision:postsolve";
+        event.name = @"collision";
         [objB handleEvent:event];
     }
 };
@@ -71,9 +73,10 @@ public:
         GemContactListener *listener = new GemContactListener();
         world->SetContactListener(listener);
         
-        scale = 30.0; // meters per pixel
+        scale = 100.0; // pixels per meter
         timeStep = 1.0 / 60.0; // sec
         accumulator = 0;
+        paused = NO;
     }
     
     return self;
@@ -163,6 +166,10 @@ public:
 
 -(void)update:(double)deltaT {
     
+    if (paused) {
+        return;
+    }
+    
     int velocityIterations = 8;
     int positionIterations = 3;
     
@@ -174,20 +181,24 @@ public:
     accumulator += deltaT;
     
     while ( accumulator >= timeStep ) {
-        for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
-            //b->SetAwake(true);
-            b2Vec2 position = b->GetPosition();
-            GemPoint pPoint = {position.x, position.y};
-            GemPoint point = [self fromPhysicsCoord:pPoint];
-            float32 angle = b->GetAngle();
-            
-            GemDisplayObject *gdo = (__bridge GemDisplayObject *)b->GetUserData();
-            gdo.rotation = toDeg(angle);
-            gdo.x = point.x;
-            gdo.y = point.y;
-            
-            //GemLog(@"(x,y,theta) = (%4.2f, %4.2f, %4.2f)\n", position.x, position.y, angle);
+        if (accumulator < timeStep * 2.0) {
+            // only update if on last simulation loop
+            for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
+                //b->SetAwake(true);
+                b2Vec2 position = b->GetPosition();
+                GemPoint pPoint = {position.x, position.y};
+                GemPoint point = [self fromPhysicsCoord:pPoint];
+                float32 angle = b->GetAngle();
+                
+                GemDisplayObject *gdo = (__bridge GemDisplayObject *)b->GetUserData();
+                gdo.rotation = toDeg(angle);
+                gdo.x = point.x;
+                gdo.y = point.y;
+                
+                //GemLog(@"(x,y,theta) = (%4.2f, %4.2f, %4.2f)\n", position.x, position.y, angle);
+            }
         }
+        
 
         world->Step(timeStep, velocityIterations, positionIterations);
         

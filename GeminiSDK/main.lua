@@ -67,12 +67,19 @@ local collisionPostsolve = function(event)
   print(string.format("Lua: %s - BANG!", obj.name))
 end
 
+function rectangle4:collision(event)
+  local obj = event.source
+  print(string.format("Lua: %s - BANG!", obj.name))
+end
+
+
 physics.setScale(200)
 physics.setGravity(0, -9.8)
 physics.addBody(rectangle3, "dynamic", { density=3.0, friction=0.5, restitution=0.7 } )
-rectangle3:addEventListener("collision:postsolve", collisionPresolve)
+--rectangle3:addEventListener("collision:postsolve", collisionPresolve)
 physics.addBody(rectangle4, "dynamic", { density=3.0, friction=0.5, restitution=0.7 } )
-rectangle4:addEventListener("collision:postsolve", collisionPresolve)
+--rectangle4:addEventListener("collision:postsolve", collisionPresolve)
+rectangle4:addEventListener("collision", rectangle4)
 
 
 ground = display.newRect(480,0,960,30)

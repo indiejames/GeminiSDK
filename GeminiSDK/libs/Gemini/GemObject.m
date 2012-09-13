@@ -224,33 +224,38 @@
                 lua_pop(L, 2);
                 
             } else { // table or user data
+                BOOL userData = NO;
+                if (lua_isuserdata(L, -1)) {
+                    // methods on a userdata expect the userdata to be the first argument
+                    userData = YES;
+                }
+                
                 const char *ename = [event.name UTF8String];
-                //NSLog(@"Event handler is a table");
-                /*lua_getglobal(L, "gemini_stacktrace_printer");
-                if (lua_isnil(L, -1)) {
-                    NSLog(@"Error loading stacktrace_printer function");
-                    
-                }*/
                 
                 int top = lua_gettop(L);
                                 
-                int base = lua_gettop(L);  /* function index */
+                int base = lua_gettop(L);  /* table index */
                 lua_pushcfunction(L, traceback);  /* push traceback function */
                 lua_insert(L, base);  /* put it under handler */
                 
                 lua_getfield(L, -1, ename);
                 
-                if (!lua_isfunction(L, -1)) {
-                    GemLog(@"callback is not a function!");
+                if (userData) {
+                    // need to push the userdata on the stack since the function will expect it as
+                    // the first argument
+                    lua_pushvalue(L, -2);
                 }
                 
-                if(lua_isnil(L, -1)){
-                    GemLog(@"lua_getfield for %s returned nil", ename);
-                }
                 //lua_insert(L, -2); // move callback below 1st parameter
                 lua_rawgeti(L, LUA_REGISTRYINDEX, event.selfRef); // add the event as the second param
                 
-                int err = lua_pcall(L, 1, 0, -4);
+                int err = 0;
+                if (userData) {
+                    err = lua_pcall(L, 2, 0, -5);
+                } else {
+                    err = lua_pcall(L, 1, 0, -4);
+                }
+                
                 if (err != 0) {
                     const char *msg = lua_tostring(L, -1);
                     GemLog(@"Error executing event handler: %s", msg);
