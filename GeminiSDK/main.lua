@@ -8,6 +8,8 @@ physics = require('physics')
 local director = require('director')
 
 
+print("Lua: using main")
+
 -- create a blended layer in front of the default layer
 local layer1 = display.newLayer(2)
 layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
@@ -56,19 +58,23 @@ rectangle4.name = "rectangle4"
 
 local collisionPresolve = function(event)
   local obj = event.source
-  print(string.format("Lua: %s - BANG!", obj.name))  
+  print(string.format("Lua: %s - BANGED!", obj.name))
+  print(string.format("Using main"))  
 end
 
 local collisionPostsolve = function(event)
   local obj = event.source
-  print(string.format("Lua: %s - BANG!", obj.name))
+  print(string.format("Lua: %s - BANGED!", obj.name))
+  print(string.format("Using main"))
 end
 
 function rectangle4:collision(event)
   local obj = event.source
-  print(string.format("Lua: %s - BANG!", obj.name))
+  print(string.format("Lua: %s - BANGED!", obj.name))
+  print(string.format("Using main"))
 end
 
+print(string.format("Using main"))
 
 physics.setScale(100)
 physics.setGravity(0, -9.8)

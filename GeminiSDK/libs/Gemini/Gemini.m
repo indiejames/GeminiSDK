@@ -162,30 +162,6 @@ int setLuaPath(lua_State *L, NSString* path );
 }
 
 
-- (id)readPlist:(NSString *)fileName {  
-    /*NSData *plistData;
-    NSString *error;  
-    NSPropertyListFormat format;  
-    NSDictionary *plist;  
-    
-    NSString *localizedPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];  
-    plistData = [NSData dataWithContentsOfFile:localizedPath];   
-    
-    plist = [NSPropertyListSerialization propertyListFromData:plistData mutabilityOption:NSPropertyListImmutable format:&format errorDescription:&error];  
-    if (!plist) {  
-        GemLog(@"Error reading plist from file '%s', error = '%s'", [localizedPath UTF8String], [error UTF8String]);  
-         
-    }  
-    
-    return plist;  */
-    
-    NSString *localizedPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];
-    NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:localizedPath];
-    
-    return plist;
-}  
-
-
 -(void)fireTimer {
     //GeminiEvent *event = [[GeminiEvent alloc] init];
     //event.name = @"timer";

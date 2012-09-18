@@ -11,6 +11,10 @@
 		76324FDD1607748800970D03 /* main@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FDC1607748700970D03 /* main@ipad.lua */; };
 		76324FDF1607846C00970D03 /* horses@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76324FDE1607846C00970D03 /* horses@2x.png */; };
 		76324FE11607B3F500970D03 /* horse@2x.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FE01607B3F500970D03 /* horse@2x.lua */; };
+		76324FF61608DFF900970D03 /* scene1@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF51608DFF900970D03 /* scene1@ipad.lua */; };
+		76324FF81608E13D00970D03 /* scene2@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF71608E13D00970D03 /* scene2@ipad.lua */; };
+		76324FFA1608E2DA00970D03 /* scene3@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF91608E2DA00970D03 /* scene3@ipad.lua */; };
+		76324FFC1608E4D600970D03 /* scene4@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FFB1608E4D500970D03 /* scene4@ipad.lua */; };
 		76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216516036E2C00832178 /* Default-Portrait~ipad.png */; };
 		76D2216816036EB200832178 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216716036EB200832178 /* Default.png */; };
 		76D2216A16036FF100832178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216916036FF100832178 /* Default@2x.png */; };
@@ -210,6 +214,10 @@
 		76324FDC1607748700970D03 /* main@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "main@ipad.lua"; sourceTree = "<group>"; };
 		76324FDE1607846C00970D03 /* horses@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "horses@2x.png"; sourceTree = "<group>"; };
 		76324FE01607B3F500970D03 /* horse@2x.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "horse@2x.lua"; sourceTree = "<group>"; };
+		76324FF51608DFF900970D03 /* scene1@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene1@ipad.lua"; sourceTree = "<group>"; };
+		76324FF71608E13D00970D03 /* scene2@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene2@ipad.lua"; sourceTree = "<group>"; };
+		76324FF91608E2DA00970D03 /* scene3@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene3@ipad.lua"; sourceTree = "<group>"; };
+		76324FFB1608E4D500970D03 /* scene4@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene4@ipad.lua"; sourceTree = "<group>"; };
 		76D2216516036E2C00832178 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		76D2216716036EB200832178 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		76D2216916036FF100832178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
@@ -613,9 +621,13 @@
 			children = (
 				76D570B715F1A1AD00615891 /* scene_template.lua */,
 				76D570B815F1A1AD00615891 /* scene1.lua */,
+				76324FF51608DFF900970D03 /* scene1@ipad.lua */,
 				76D570B915F1A1AD00615891 /* scene2.lua */,
+				76324FF71608E13D00970D03 /* scene2@ipad.lua */,
 				76D570BA15F1A1AD00615891 /* scene3.lua */,
+				76324FF91608E2DA00970D03 /* scene3@ipad.lua */,
 				76D570BB15F1A1AD00615891 /* scene4.lua */,
+				76324FFB1608E4D500970D03 /* scene4@ipad.lua */,
 				76D570AF15F1A19200615891 /* horse_and_rider.lua */,
 				76D570B015F1A19200615891 /* horse_and_rider.png */,
 				76D570B115F1A19200615891 /* horse.lua */,
@@ -1206,6 +1218,10 @@
 				76324FDD1607748800970D03 /* main@ipad.lua in Resources */,
 				76324FDF1607846C00970D03 /* horses@2x.png in Resources */,
 				76324FE11607B3F500970D03 /* horse@2x.lua in Resources */,
+				76324FF61608DFF900970D03 /* scene1@ipad.lua in Resources */,
+				76324FF81608E13D00970D03 /* scene2@ipad.lua in Resources */,
+				76324FFA1608E2DA00970D03 /* scene3@ipad.lua in Resources */,
+				76324FFC1608E4D600970D03 /* scene4@ipad.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

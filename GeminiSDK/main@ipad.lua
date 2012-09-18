@@ -7,6 +7,7 @@ display = require('display')
 physics = require('physics')
 local director = require('director')
 
+print("Lua: using main@ipad.lua")
 
 -- create a blended layer in front of the default layer
 local layer1 = display.newLayer(2)
@@ -59,17 +60,20 @@ rectangle4.name = "rectangle4"
 
 local collisionPresolve = function(event)
   local obj = event.source
-  print(string.format("Lua: %s - BANG!", obj.name))  
+  print(string.format("Lua: %s - BANGER!", obj.name))  
+  print(string.format("Using main"))
 end
 
 local collisionPostsolve = function(event)
   local obj = event.source
-  print(string.format("Lua: %s - BANG!", obj.name))
+  print(string.format("Lua: %s - BANGER!", obj.name))
+  print(string.format("Using main"))
 end
 
 function rectangle4:collision(event)
   local obj = event.source
-  print(string.format("Lua: %s - BANG!", obj.name))
+  print(string.format("Lua: %s - BANGER!", obj.name))
+  print(string.format("Using main"))
 end
 
 
@@ -101,6 +105,8 @@ rectangle2:setFillColor(0,0,1.0,1.0)
 rectangle2:setStrokeColor(0,1.0,0,1.0)
 rectangle2.strokeWidth = 2.0
 rectangle2.rotation = -15
+
+print("Lua: using main@ipad.lua")
 
 director.loadScene('scene1')
 director.gotoScene('scene1')

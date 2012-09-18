@@ -4,8 +4,10 @@
 --
 ----------------------------------------------------------------------------------
 
+local timer = require("timer")
 local director = require( "director" )
 local scene = director.newScene()
+
 
 ----------------------------------------------------------------------------------
 -- 
@@ -22,23 +24,25 @@ local scene = director.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-	print("Lua: Creating scene 2")
+	print("Lua: Creating scene1")
     
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
-    print("Lua: Adding layer1 to scene2")
+    print("Lua: Adding layer1 to scene")
 	self:addLayer(layer1)
-    print("Lua: Creating yellow rectangle")
-	-- draw a yellow rectangle with a white border
-	local rectangle = display.newRect(50,50,50,50)
-	rectangle:setFillColor(1.0,0,0,1.0)
+    print("Lua: Creating green rectangle")
+	-- draw a green rectangle with a white border
+	local rectangle = display.newRect(100,100,100,100)
+	rectangle:setFillColor(0.0,1,0,1.0)
 	rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
-	rectangle.strokeWidth = 2.5
-	rectangle.x = 225
-	rectangle.y = 125
-	rectangle.rotation = -30
-	layer1:insert(rectangle)
+	rectangle.strokeWidth = 5.0
+	rectangle.x = 750
+	rectangle.y = 450
+	rectangle.rotation = 30
+    rectangle.name = "GREEN_RECTANGLE"
+    layer1:insert(rectangle)
+	
 
 end
 
@@ -53,15 +57,13 @@ function scene:enterScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Entering scene 2")
+    print("Entering scene 1")
     
-    director.loadScene('scene3')
-    
-    --director.destroyScene('scene1')
+    director.loadScene('scene2')
     
     local function listener(event)
     
-        director.gotoScene("scene3")
+        director.gotoScene("scene2")
     end
     
     timer.performWithDelay(3000, listener)
@@ -79,7 +81,7 @@ function scene:exitScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Exiting scene 2")
+    print("Exiting scene 1")
 
 end
 
@@ -100,7 +102,7 @@ end
 -- END OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
-scene.name = "scene2"
+scene.name = "scene1"
 
 -- "createScene" event is dispatched if scene's view does not exist
 scene:addEventListener( "createScene", scene )

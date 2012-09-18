@@ -368,6 +368,14 @@ static int displayGroupDelete(lua_State *L){
     return 0;
 }
 
+// display library methods
+static int displayGetScaleFactor(lua_State *L){
+    float scale =  ((GLKView *)([Gemini shared].viewController.view)).contentScaleFactor;
+    lua_pushnumber(L, scale);
+    
+    return 1;
+}
+
 
 // the mappings for the library functions
 static const struct luaL_Reg displayLib_f [] = {
@@ -375,6 +383,7 @@ static const struct luaL_Reg displayLib_f [] = {
     {"newGroup", newDisplayGroup},
     {"newLine", newLine},
     {"newRect", newRectangle},
+    {"contentScaleFactor", displayGetScaleFactor},
     {NULL, NULL}
 };
 

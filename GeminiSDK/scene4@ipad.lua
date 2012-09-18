@@ -6,6 +6,11 @@
 
 local director = require( "director" )
 local scene = director.newScene()
+local display = require('display')
+local sprite = require('sprite')
+local horse = require('horse')
+
+local horseSprite
 
 ----------------------------------------------------------------------------------
 -- 
@@ -22,25 +27,27 @@ local scene = director.newScene()
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-	print("Lua: Creating scene 2")
+	print("Lua: Creating scene 4 using ipad file")
     
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
-    print("Lua: Adding layer1 to scene2")
 	self:addLayer(layer1)
-    print("Lua: Creating yellow rectangle")
-	-- draw a yellow rectangle with a white border
-	local rectangle = display.newRect(50,50,50,50)
-	rectangle:setFillColor(1.0,0,0,1.0)
-	rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
-	rectangle.strokeWidth = 2.5
-	rectangle.x = 225
-	rectangle.y = 125
-	rectangle.rotation = -30
-	layer1:insert(rectangle)
-
+    -- create our sprite for the running horse
+    local horseSpriteSheet = sprite.newSpriteSheetFromData("horses.png", horse.getSpriteSheetData())
+    local horseSpriteSet = sprite.newSpriteSet(horseSpriteSheet, 1, 8)
+    horseSprite = sprite.newSprite(horseSpriteSet)
+    horseSprite.x = 500
+    horseSprite.y = 350
+    layer1:insert(horseSprite)
+    
 end
+
+local myListener = function(event)
+  -- rotate our rectangle about its center (reference point)
+  rectangle.rotation = rectangle.rotation + 1.0
+  
+end 
 
 
 -- Called immediately after scene has moved onscreen:
@@ -53,18 +60,17 @@ function scene:enterScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Entering scene 2")
+    print("Entering scene 4")
     
-    director.loadScene('scene3')
     
-    --director.destroyScene('scene1')
+    horseSprite:prepare()
+    horseSprite:play()
     
-    local function listener(event)
+ local function listener(event)
+    director.gotoScene("scene1")
+  end
     
-        director.gotoScene("scene3")
-    end
-    
-    timer.performWithDelay(3000, listener)
+  timer.performWithDelay(5000, listener)
 
 end
 
@@ -79,7 +85,8 @@ function scene:exitScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Exiting scene 2")
+    print("Exiting scene 4")
+ 
 
 end
 
@@ -100,7 +107,7 @@ end
 -- END OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
-scene.name = "scene2"
+scene.name = "scene4"
 
 -- "createScene" event is dispatched if scene's view does not exist
 scene:addEventListener( "createScene", scene )

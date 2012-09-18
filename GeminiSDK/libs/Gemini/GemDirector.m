@@ -13,6 +13,7 @@
 #import "LGeminiLuaSupport.h"
 #import "Gemini.h"
 #import "GemGLKViewController.h"
+#import "GemFileNameResolver.h"
 
 @implementation GemDirector
 @synthesize renderer;
@@ -91,7 +92,11 @@ static GemScene * createDefaultScene(lua_State *L){
         // set our error handler function
         lua_pushcfunction(L, traceback);
         
-        NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:sceneName ofType:@"lua"];
+        GemFileNameResolver *resolver = [Gemini shared].fileNameResolver;
+        
+        NSString *resolvedFileName = [resolver resolveNameForFile:sceneName ofType:@"lua"];
+        
+        NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:resolvedFileName ofType:@"lua"];
         
         err = luaL_loadfile(L, [luaFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]);
         

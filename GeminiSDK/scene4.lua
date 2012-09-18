@@ -27,8 +27,7 @@ local horseSprite
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-	print("Lua: Creating scene")
-    
+    print("Lua: Creating scene 4")
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
@@ -37,8 +36,10 @@ function scene:createScene( event )
     local horseSpriteSheet = sprite.newSpriteSheetFromData("horses.png", horse.getSpriteSheetData())
     local horseSpriteSet = sprite.newSpriteSet(horseSpriteSheet, 1, 8)
     horseSprite = sprite.newSprite(horseSpriteSet)
-    horseSprite.x = 500
-    horseSprite.y = 350
+    horseSprite.x = 250
+    horseSprite.y = 175
+	horseSprite.xScale = 1.0 / display.contentScaleFactor()
+	horseSprite.yScale = 1.0 / display.contentScaleFactor()
     layer1:insert(horseSprite)
     
 end

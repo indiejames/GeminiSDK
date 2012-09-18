@@ -31,12 +31,12 @@ function scene:createScene( event )
 	self:addLayer(layer1)
     print("Lua: Creating yellow rectangle")
 	-- draw a yellow rectangle with a white border
-	local rectangle = display.newRect(50,50,50,50)
+	local rectangle = display.newRect(100,100,100,100)
 	rectangle:setFillColor(1.0,0,0,1.0)
 	rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
-	rectangle.strokeWidth = 2.5
-	rectangle.x = 225
-	rectangle.y = 125
+	rectangle.strokeWidth = 5.0
+	rectangle.x = 450
+	rectangle.y = 250
 	rectangle.rotation = -30
 	layer1:insert(rectangle)
 
