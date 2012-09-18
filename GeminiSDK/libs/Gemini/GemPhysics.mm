@@ -73,7 +73,7 @@ public:
         GemContactListener *listener = new GemContactListener();
         world->SetContactListener(listener);
         
-        scale = 100.0; // pixels per meter
+        scale = 50.0; // pixels per meter
         timeStep = 1.0 / 60.0; // sec
         accumulator = 0;
         paused = NO;

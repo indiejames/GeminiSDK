@@ -12,6 +12,7 @@
 #import "GemEvent.h"
 #import "LGeminiLuaSupport.h"
 #import "Gemini.h"
+#import "GemGLKViewController.h"
 
 @implementation GemDirector
 @synthesize renderer;
@@ -182,5 +183,34 @@ static GemScene * createDefaultScene(lua_State *L){
     }
 }
 
+// choose the best file based on name and device type
+NSString *resolveFileName(NSString *fileName){
+    NSArray *fileSuffixArray = [fileName componentsSeparatedByString:@"."];
+    NSString *base = [fileSuffixArray objectAtIndex:0];
+    NSString *suffix = [fileSuffixArray objectAtIndex:1];
+    
+    NSString *rval = nil;
+    
+    switch (((GemGLKViewController *)([Gemini shared].viewController)).displayType) {
+        case GEM_IPHONE:
+            rval = fileName;
+            break;
+        case GEM_IPHONE_RETINA:
+            rval = [[base stringByAppendingString:@"@retina"] stringByAppendingString:suffix];
+            break;
+        case GEM_IPHONE_5:
+            break;
+        case GEM_IPAD:
+            break;
+        case GEM_IPAD_RETINA:
+            break;
+        default:
+            rval = fileName;
+            break;
+    }
+    
+    
+    return rval;
+}
 
 @end

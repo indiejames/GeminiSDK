@@ -7,7 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		76CBBDD315F3DD6F007880C2 /* GemSoundEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBBDD215F3DD6E007880C2 /* GemSoundEffect.m */; };
+		76324FDA16069F2600970D03 /* GemFileNameResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76324FD916069F2600970D03 /* GemFileNameResolver.m */; };
+		76324FDD1607748800970D03 /* main@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FDC1607748700970D03 /* main@ipad.lua */; };
+		76324FDF1607846C00970D03 /* horses@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76324FDE1607846C00970D03 /* horses@2x.png */; };
+		76324FE11607B3F500970D03 /* horse@2x.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FE01607B3F500970D03 /* horse@2x.lua */; };
+		76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216516036E2C00832178 /* Default-Portrait~ipad.png */; };
+		76D2216816036EB200832178 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216716036EB200832178 /* Default.png */; };
+		76D2216A16036FF100832178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216916036FF100832178 /* Default@2x.png */; };
+		76D2216F1603961A00832178 /* GemSoundEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D2216E1603961A00832178 /* GemSoundEffect.m */; };
+		76D221721603964F00832178 /* GemEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D221711603964F00832178 /* GemEventManager.m */; };
+		76D221741603967F00832178 /* gemini.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76D221731603967F00832178 /* gemini.plist */; };
 		76D56E9B15F1943300615891 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56E9A15F1943300615891 /* QuartzCore.framework */; };
 		76D56E9D15F1943300615891 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56E9C15F1943300615891 /* OpenGLES.framework */; };
 		76D56E9F15F1943300615891 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56E9E15F1943300615891 /* GLKit.framework */; };
@@ -17,7 +26,6 @@
 		76D56EA715F1943300615891 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56EA615F1943300615891 /* UIKit.framework */; };
 		76D56EA915F1943300615891 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56EA815F1943300615891 /* Foundation.framework */; };
 		76D56EAB15F1943300615891 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56EAA15F1943300615891 /* CoreGraphics.framework */; };
-		76D56EAF15F1943300615891 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D56EAE15F1943300615891 /* Default.png */; };
 		76D56EB115F1943300615891 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D56EB015F1943300615891 /* fps_images.png */; };
 		76D56EB315F1943300615891 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D56EB215F1943300615891 /* Icon-72.png */; };
 		76D56EB515F1943300615891 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D56EB415F1943300615891 /* Icon-Small-50.png */; };
@@ -197,8 +205,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		76CBBDD115F3DD6D007880C2 /* GemSoundEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GemSoundEffect.h; sourceTree = "<group>"; };
-		76CBBDD215F3DD6E007880C2 /* GemSoundEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GemSoundEffect.m; sourceTree = "<group>"; };
+		76324FD816069F2600970D03 /* GemFileNameResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFileNameResolver.h; path = libs/Gemini/GemFileNameResolver.h; sourceTree = "<group>"; };
+		76324FD916069F2600970D03 /* GemFileNameResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFileNameResolver.m; path = libs/Gemini/GemFileNameResolver.m; sourceTree = "<group>"; };
+		76324FDC1607748700970D03 /* main@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "main@ipad.lua"; sourceTree = "<group>"; };
+		76324FDE1607846C00970D03 /* horses@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "horses@2x.png"; sourceTree = "<group>"; };
+		76324FE01607B3F500970D03 /* horse@2x.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "horse@2x.lua"; sourceTree = "<group>"; };
+		76D2216516036E2C00832178 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		76D2216716036EB200832178 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		76D2216916036FF100832178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
+		76D2216D1603961A00832178 /* GemSoundEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSoundEffect.h; path = libs/Gemini/GemSoundEffect.h; sourceTree = "<group>"; };
+		76D2216E1603961A00832178 /* GemSoundEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemSoundEffect.m; path = libs/Gemini/GemSoundEffect.m; sourceTree = "<group>"; };
+		76D221701603964F00832178 /* GemEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemEventManager.h; path = libs/Gemini/GemEventManager.h; sourceTree = "<group>"; };
+		76D221711603964F00832178 /* GemEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemEventManager.m; path = libs/Gemini/GemEventManager.m; sourceTree = "<group>"; };
+		76D221731603967F00832178 /* gemini.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = gemini.plist; path = Resources/gemini.plist; sourceTree = "<group>"; };
 		76D56E9615F1943300615891 /* GeminiSDK.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeminiSDK.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		76D56E9A15F1943300615891 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		76D56E9C15F1943300615891 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -558,6 +577,7 @@
 		76D56E8B15F1943300615891 = {
 			isa = PBXGroup;
 			children = (
+				76D2216716036EB200832178 /* Default.png */,
 				76D56EAC15F1943300615891 /* GeminiSDK */,
 				76D56E9915F1943300615891 /* Frameworks */,
 				76D56E9715F1943300615891 /* Products */,
@@ -600,9 +620,12 @@
 				76D570B015F1A19200615891 /* horse_and_rider.png */,
 				76D570B115F1A19200615891 /* horse.lua */,
 				76D570B215F1A19200615891 /* horses.png */,
+				76324FE01607B3F500970D03 /* horse@2x.lua */,
+				76324FDE1607846C00970D03 /* horses@2x.png */,
 				76D5708115F1943600615891 /* AppDelegate.h */,
 				76D5708215F1943600615891 /* AppDelegate.mm */,
 				76D5708715F1943600615891 /* main.lua */,
+				76324FDC1607748700970D03 /* main@ipad.lua */,
 				76D56EAD15F1943300615891 /* Resources */,
 				76D56EC115F1943300615891 /* libs */,
 				76D5708915F1943600615891 /* Shaders */,
@@ -614,6 +637,8 @@
 		76D56EAD15F1943300615891 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				76D2216916036FF100832178 /* Default@2x.png */,
+				76D2216516036E2C00832178 /* Default-Portrait~ipad.png */,
 				76D56EAE15F1943300615891 /* Default.png */,
 				76D56EB015F1943300615891 /* fps_images.png */,
 				76D56EB215F1943300615891 /* Icon-72.png */,
@@ -624,6 +649,7 @@
 				76D56EBC15F1943300615891 /* Icon@2x.png */,
 				76D56EBE15F1943300615891 /* Info.plist */,
 				76D56EBF15F1943300615891 /* iTunesArtwork */,
+				76D221731603967F00832178 /* gemini.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -791,10 +817,14 @@
 				76D56F8715F1943400615891 /* LGeminiTimer.m */,
 				76D56F8915F1943400615891 /* LGeminiTransition.h */,
 				76D56F8A15F1943400615891 /* LGeminiTransition.m */,
-				76CBBDD115F3DD6D007880C2 /* GemSoundEffect.h */,
-				76CBBDD215F3DD6E007880C2 /* GemSoundEffect.m */,
+				76D2216D1603961A00832178 /* GemSoundEffect.h */,
+				76D2216E1603961A00832178 /* GemSoundEffect.m */,
 				76F6448615FD80650007D29A /* GemPhysics.h */,
 				76F6448715FD80660007D29A /* GemPhysics.mm */,
+				76D221701603964F00832178 /* GemEventManager.h */,
+				76D221711603964F00832178 /* GemEventManager.m */,
+				76324FD816069F2600970D03 /* GemFileNameResolver.h */,
+				76324FD916069F2600970D03 /* GemFileNameResolver.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1139,7 +1169,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76D56EAF15F1943300615891 /* Default.png in Resources */,
 				76D56EB115F1943300615891 /* fps_images.png in Resources */,
 				76D56EB315F1943300615891 /* Icon-72.png in Resources */,
 				76D56EB515F1943300615891 /* Icon-Small-50.png in Resources */,
@@ -1170,6 +1199,13 @@
 				76D570BE15F1A1AD00615891 /* scene2.lua in Resources */,
 				76D570BF15F1A1AD00615891 /* scene3.lua in Resources */,
 				76D570C015F1A1AD00615891 /* scene4.lua in Resources */,
+				76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */,
+				76D2216816036EB200832178 /* Default.png in Resources */,
+				76D2216A16036FF100832178 /* Default@2x.png in Resources */,
+				76D221741603967F00832178 /* gemini.plist in Resources */,
+				76324FDD1607748800970D03 /* main@ipad.lua in Resources */,
+				76324FDF1607846C00970D03 /* horses@2x.png in Resources */,
+				76324FE11607B3F500970D03 /* horse@2x.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1325,8 +1361,10 @@
 				76D570AC15F1A16B00615891 /* GemSceneTransition.m in Sources */,
 				76D570AD15F1A16B00615891 /* LGeminiDirector.m in Sources */,
 				76D570AE15F1A16B00615891 /* LGeminiScene.m in Sources */,
-				76CBBDD315F3DD6F007880C2 /* GemSoundEffect.m in Sources */,
 				76F6448815FD80670007D29A /* GemPhysics.mm in Sources */,
+				76D2216F1603961A00832178 /* GemSoundEffect.m in Sources */,
+				76D221721603964F00832178 /* GemEventManager.m in Sources */,
+				76324FDA16069F2600970D03 /* GemFileNameResolver.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

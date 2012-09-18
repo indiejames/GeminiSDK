@@ -411,6 +411,14 @@ struct lua_Debug {
 
 /* }====================================================================== */
 
+/* ======================================================================= */
+/*  Added on 2012-09-17 by James Norton to support dynamic file suffix     */
+/*  support based on current device, i.e., loading @2x, @ipad files        */
+/*  automatically as needed.                                               */
+/* ======================================================================= */
+
+extern char **gem_suffixes;
+extern int gem_suffix_count;
 
 /******************************************************************************
 * Copyright (C) 1994-2011 Lua.org, PUC-Rio.  All rights reserved.

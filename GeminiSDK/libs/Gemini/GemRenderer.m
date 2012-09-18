@@ -42,6 +42,35 @@ GLuint ringBufferOffset = 0;
 GLuint lineRingBufferOffset = 0;
 GLuint spriteRingBufferOffset = 0;
 
+GLKMatrix4 computeModelViewProjectionMatrix(){
+    GLKView *view = (GLKView *)((GemGLKViewController *)([Gemini shared].viewController)).view;
+    GLfloat scale = view.contentScaleFactor;
+    
+    GLfloat width = view.bounds.size.width;
+    GLfloat height = view.bounds.size.height;
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    BOOL isLandscape = UIDeviceOrientationIsLandscape([Gemini shared].viewController.interfaceOrientation);
+    
+    if (isLandscape || orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+        GLfloat tmp = width;
+        width = height;
+        height = tmp;
+    }
+    
+    //GLfloat width = 960;
+    //GLfloat height = 640;
+    
+    GemLog(@"View dimensions:(%f,%f)",width,height);
+    
+    GLfloat left = 0;
+    GLfloat right = width;
+    GLfloat bottom = 0;
+    GLfloat top = height;
+    
+    return GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
+}
+
 @implementation GemRenderer
 
 //
@@ -476,18 +505,8 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glUseProgram(lineShaderManager.program);
     
-    GLKView *view = (GLKView *)((GemGLKViewController *)([Gemini shared].viewController)).view;
+    GLKMatrix4 modelViewProjectionMatrix = computeModelViewProjectionMatrix();
     
-    
-    GLfloat width = 960;
-    GLfloat height = 640;
-    
-    GLfloat left = 0;
-    GLfloat right = width;
-    GLfloat bottom = 0;
-    GLfloat top = height;
-    
-    GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
     glUniformMatrix4fv(uniforms_line[UNIFORM_PROJECTION_LINE], 1, 0, modelViewProjectionMatrix.m);
     glEnableVertexAttribArray(ATTRIB_VERTEX_LINE);
     glEnable(GL_DEPTH_TEST);
@@ -525,26 +544,12 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glUseProgram(rectangleShaderManager.program);
     
-    GLKView *view = (GLKView *)((GemGLKViewController *)([Gemini shared].viewController)).view;
-    
-    
-    GLfloat width = 960;
-    GLfloat height = 640;
-    
-    GLfloat left = 0;
-    GLfloat right = width;
-    GLfloat bottom = 0;
-    GLfloat top = height;
-    
-    
-    
     
     glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
     glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
     
+    GLKMatrix4 modelViewProjectionMatrix = computeModelViewProjectionMatrix();
     
-    
-    GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
     glUniformMatrix4fv(uniforms_rectangle[UNIFORM_PROJECTION_RECTANGLE], 1, 0, modelViewProjectionMatrix.m);
    
     //glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
@@ -585,25 +590,14 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
     glUseProgram(spriteShaderManager.program);
     
-    GLKView *view = (GLKView *)((GemGLKViewController *)([Gemini shared].viewController)).view;
-    
-    
-    GLfloat width = 960;
-    GLfloat height = 640;
-    
-    GLfloat left = 0;
-    GLfloat right = width;
-    GLfloat bottom = 0;
-    GLfloat top = height;
-    
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
     glEnableVertexAttribArray(ATTRIB_VERTEX_SPRITE);
     glEnableVertexAttribArray(ATTRIB_COLOR_SPRITE);
     glEnableVertexAttribArray(ATTRIB_TEXCOORD_SPRITE);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     
+    GLKMatrix4 modelViewProjectionMatrix = computeModelViewProjectionMatrix();
     
-    GLKMatrix4 modelViewProjectionMatrix = GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
     glUniformMatrix4fv(uniforms_sprite[UNIFORM_PROJECTION_SPRITE], 1, 0, modelViewProjectionMatrix.m);
     
     

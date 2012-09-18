@@ -400,11 +400,23 @@ static int checkload (lua_State *L, int stat, const char *filename) {
                           lua_tostring(L, 1), filename, lua_tostring(L, -1));
 }
 
-
+/* modified by James Norton on 2012-09-17 to support automically loading   */
+/* files with different suffixes based on current device, i.e., @2x, @ipad */
 static int searcher_Lua (lua_State *L) {
   const char *filename;
-  const char *name = luaL_checkstring(L, 1);
-  filename = findfile(L, name, "path", LUA_LSUBSEP);
+    const char *name = luaL_checkstring(L, 1);
+    for (int i=0; i<gem_suffix_count; i++) {
+        const char *suffix = gem_suffixes[i];
+        char *tmp_name = (char *)malloc(strlen(name) + strlen(suffix) + 1);
+        strcpy(tmp_name, name);
+        strcpy(tmp_name + strlen(name), suffix);
+        filename = findfile(L, tmp_name, "path", LUA_LSUBSEP);
+        if (filename != NULL) {
+            printf("Lua: Using file %s", filename);
+            break;
+        }
+    }
+  
   if (filename == NULL) return 1;  /* module not found in this path */
   return checkload(L, (luaL_loadfile(L, filename) == LUA_OK), filename);
 }

@@ -62,10 +62,10 @@
         
     }
     
-    int top = lua_gettop(L);
+    int top = lua_gettop(_L);
     GemLog(@"top = %d", top);
     
-    if (luaL_checkudata(L, -1, GEMINI_SCENE_LUA_KEY)) {
+    if (luaL_checkudata(_L, -1, GEMINI_SCENE_LUA_KEY)) {
         GemLog(@"Userdata is a GemScene");
     } else {
         GemLog(@"USerdata is not a GemScene!!!");

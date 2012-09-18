@@ -7,6 +7,8 @@
 //
 
 #import "GemSpriteSheet.h"
+#import "GemFileNameResolver.h"
+#import "Gemini.h"
 
 
 @implementation GemSpriteSheet
@@ -26,6 +28,10 @@ static GLKTextureInfo *createTexture(NSString * imgFileName){
     
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithCapacity:1];
     [options setValue:[NSNumber numberWithBool:YES] forKey:GLKTextureLoaderOriginBottomLeft];
+    
+    // resolve the name for the current device resolution
+    GemFileNameResolver *resolver = [Gemini shared].fileNameResolver;
+    imgFilePrefix = [resolver resolveNameForFile:imgFilePrefix ofType:imgFileSuffix];
     
     NSString *filePath = [[NSBundle mainBundle] pathForResource:imgFilePrefix ofType:imgFileSuffix];
     

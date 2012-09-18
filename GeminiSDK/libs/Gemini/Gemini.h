@@ -12,6 +12,7 @@
 #include "lualib.h"
 #include "lauxlib.h"
 #import "GemPhysics.h"
+#import "GemFileNameResolver.h"
 
 
 @interface Gemini : NSObject
@@ -21,6 +22,9 @@
 @property (readonly) GLKViewController *viewController;
 @property (readonly) double initTime;
 @property (readonly) GemPhysics *physics;
+@property (readonly) NSString *deviceString;
+@property (readonly) GemFileNameResolver *fileNameResolver;
+@property (readonly) NSDictionary *settings;
 
 -(void)execute:(NSString *)filename;
 -(BOOL)handleEvent:(NSString *)event;

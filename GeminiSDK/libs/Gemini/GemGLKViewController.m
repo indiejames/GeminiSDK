@@ -48,6 +48,7 @@
 @synthesize spriteManager;
 @synthesize timerManager;
 @synthesize director;
+@synthesize displayType;
 @synthesize updateTime;
 @synthesize L;
 
@@ -62,6 +63,7 @@
         frameCount = 0;
         frameRenderTime = 0;
         updateTime = 0;
+        displayType = GEM_IPHONE;
     }
     
     return self;
@@ -69,6 +71,47 @@
 
 
 -(void) viewDidLoad {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        if ([[UIScreen mainScreen] respondsToSelector: @selector(scale)]) {
+            CGSize result = [[UIScreen mainScreen] bounds].size;
+            CGFloat scale = [UIScreen mainScreen].scale;
+            result = CGSizeMake(result.width * scale, result.height * scale);
+            
+            if(result.height == 960){
+                NSLog(@"iphone 4, 4s retina resolution");
+                displayType = GEM_IPHONE_RETINA;
+            }
+            if(result.height == 1136){
+                NSLog(@"iphone 5 resolution");
+                displayType = GEM_IPHONE_5;
+            }
+            if (result.height == 480) {
+                GemLog(@"iphone standard resolution");
+                displayType = GEM_IPHONE;
+            }
+        }
+        else{
+            NSLog(@"iphone standard resolution");
+            displayType = GEM_IPHONE;
+        }
+    }
+    else{
+        if ([[UIScreen mainScreen] respondsToSelector: @selector(scale)]) {
+            if ([UIScreen mainScreen].scale == 2.0) {
+                NSLog(@"ipad Retina resolution");
+                displayType = GEM_IPAD_RETINA;
+            } else {
+                NSLog(@"ipad resolution");
+                displayType = GEM_IPAD;
+            }
+            
+        }
+        else{
+            NSLog(@"ipad Standard resolution");
+            displayType = GEM_IPAD;
+        }
+    }
+    
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
     if (!self.context) {
@@ -80,11 +123,14 @@
     //view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat16;
     view.drawableMultisample = GLKViewDrawableMultisample4X;
-    view.contentScaleFactor = 2.0;
+    //view.contentScaleFactor = 2.0;
+    view.contentScaleFactor = [UIScreen mainScreen].scale;
     
     self.preferredFramesPerSecond = 60;
     
     [self setupGL];
+    eventManager = [[GemEventManager alloc] initWithLuaState:L];
+    eventManager.parentGLKViewController = self;
     
     timerManager = [[GemTimerManager alloc] init];
     
@@ -208,6 +254,20 @@
 
 - (void) setPostRenderCallback:(SEL)callback {
     postRenderCallback = callback;
+}
+
+// Touch events
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [eventManager touchesBegan:touches withEvent:event];
+}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [eventManager touchesMoved:touches withEvent:event];
+}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [eventManager touchesEnded:touches withEvent:event];
+}
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [eventManager touchesCancelled:touches withEvent:event];
 }
 
 @end

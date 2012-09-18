@@ -24,7 +24,7 @@ Gemini *singleton = nil;
 @interface Gemini () {
 @private
     lua_State *L;
-    NSDictionary *config;
+    NSDictionary *settings;
     GemGLKViewController *viewController;
     int x;
     double initTime;
@@ -41,6 +41,8 @@ Gemini *singleton = nil;
 @synthesize viewController;
 @synthesize initTime;
 @synthesize physics;
+@synthesize fileNameResolver;
+@synthesize settings;
 
 int setLuaPath(lua_State *L, NSString* path );
 
@@ -91,7 +93,7 @@ int setLuaPath(lua_State *L, NSString* path );
     
     // physics draw modes
     lua_pushinteger(L, GEM_PHYSICS_DEBUG);
-    lua_setglobal(L, "REMDER_DEBUG");
+    lua_setglobal(L, "RENDER_DEBUG");
     lua_pushinteger(L, GEM_PHYSICS_NORMAL);
     lua_setglobal(L, "RENDER_NORMAL");
     lua_pushinteger(L, GEM_PHYSICS_HYBRID);
@@ -114,26 +116,34 @@ int setLuaPath(lua_State *L, NSString* path );
 
 
 - (id)init
-{
-    
-   /* GeminiDisplayObject *dob = [[GeminiDisplayObject alloc] init];
-    dob.x = 10.0;
-    dob.y = 10.0;
-    dob.rotation = M_PI / 2.0;
-    GLKVector4 vec = GLKVector4Make(dob.x, dob.y, 0, 1.0);
-    GLKVector4 vec2 = GLKMatrix4MultiplyVector4(dob.transform, vec);
-    GemLog(@"vec2 = (%f,%f,%f)", vec2.x,vec2.y,vec2.z);*/
-    
+{    
     self = [super init];
     if (self) {
         initTime = [NSDate timeIntervalSinceReferenceDate];
-        config = [self readPlist:@"gemini"];
+        float scale = [UIScreen mainScreen].scale;
+        CGSize bounds = [[UIScreen mainScreen] bounds].size;
+        int w = bounds.width * scale;
+        int h = bounds.height * scale;
+        
+        NSString *localizedPath = [[NSBundle mainBundle] pathForResource:@"gemini" ofType:@"plist"];
+        //NSString *myId = [NSString stringWithFormat:@"%dx%d",w,h];
+        NSString *myId = [NSString stringWithFormat:@"%dx%d",w,h];
+        NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:localizedPath];
+        
+        settings = [plist objectForKey:myId];
+        
+        fileNameResolver = [[GemFileNameResolver alloc] initForWidth:bounds.width Height:bounds.height ContentScale:scale Settings:plist];
+                
         geminiObjects = [[NSMutableArray alloc] initWithCapacity:1];
         //viewController = [[GeminiGLKViewController alloc] init];
         L = luaL_newstate();
         luaL_openlibs(L);
         viewController = [[GemGLKViewController alloc] initWithLuaState:L];
         physics = [[GemPhysics alloc] init];
+        float screenWidth = scale * bounds.width;
+        float physScale = 50.0 * screenWidth / 320.0;
+        [physics setScale:physScale];
+        
     }
     
     return self;
@@ -153,7 +163,7 @@ int setLuaPath(lua_State *L, NSString* path );
 
 
 - (id)readPlist:(NSString *)fileName {  
-    NSData *plistData;  
+    /*NSData *plistData;
     NSString *error;  
     NSPropertyListFormat format;  
     NSDictionary *plist;  
@@ -167,7 +177,12 @@ int setLuaPath(lua_State *L, NSString* path );
          
     }  
     
-    return plist;  
+    return plist;  */
+    
+    NSString *localizedPath = [[NSBundle mainBundle] pathForResource:fileName ofType:@"plist"];
+    NSDictionary *plist = [[NSDictionary alloc] initWithContentsOfFile:localizedPath];
+    
+    return plist;
 }  
 
 
@@ -185,7 +200,9 @@ int setLuaPath(lua_State *L, NSString* path );
     
     lua_pushcfunction(L, traceback);
     
-    NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:filename ofType:@"lua"];
+    NSString *resolvedFileName = [fileNameResolver resolveNameForFile:filename ofType:@"lua"];
+    
+    NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:resolvedFileName ofType:@"lua"];
   
     setLuaPath(L, [luaFilePath stringByDeletingLastPathComponent]);
     
