@@ -63,6 +63,9 @@ unsigned int nearestPowerOfTwo(unsigned int v){
 -(void)render {
     glBindVertexArrayOES(0);
     
+    // get the default scene (always rendered)
+    GemScene *defaultScene = [((GemGLKViewController *)[Gemini shared].viewController).director getDefaultScene];
+    
     // compute texture size
     float scale = [Gemini shared].viewController.view.contentScaleFactor;
     unsigned int screenWidth = scale * [Gemini shared].viewController.view.bounds.size.width;
@@ -109,6 +112,7 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     
    [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneA];
+    [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:defaultScene];
 
     
     // do the same for B
@@ -121,6 +125,7 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     
     [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneB];
+    [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:defaultScene];
     
     
     // render the mixed scenes using the two textures
