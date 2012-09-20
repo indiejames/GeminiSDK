@@ -16,8 +16,8 @@
 		76324FFA1608E2DA00970D03 /* scene3@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF91608E2DA00970D03 /* scene3@ipad.lua */; };
 		76324FFC1608E4D600970D03 /* scene4@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FFB1608E4D500970D03 /* scene4@ipad.lua */; };
 		76843F03160942920065A6E2 /* GemFadeSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 76843F02160942910065A6E2 /* GemFadeSceneTransition.m */; };
-		76843F06160A148A0065A6E2 /* scene_transition_shader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */; };
-		76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */; };
+		76843F06160A148A0065A6E2 /* scene_transition_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */; };
+		76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */; };
 		76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216516036E2C00832178 /* Default-Portrait~ipad.png */; };
 		76D2216816036EB200832178 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216716036EB200832178 /* Default.png */; };
 		76D2216A16036FF100832178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216916036FF100832178 /* Default@2x.png */; };
@@ -208,6 +208,7 @@
 		76D570BE15F1A1AD00615891 /* scene2.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B915F1A1AD00615891 /* scene2.lua */; };
 		76D570BF15F1A1AD00615891 /* scene3.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570BA15F1A1AD00615891 /* scene3.lua */; };
 		76D570C015F1A1AD00615891 /* scene4.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570BB15F1A1AD00615891 /* scene4.lua */; };
+		76F508C6160B6C8800DBA64B /* GLUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F508C5160B6C8800DBA64B /* GLUtils.m */; };
 		76F6448815FD80670007D29A /* GemPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 76F6448715FD80660007D29A /* GemPhysics.mm */; };
 /* End PBXBuildFile section */
 
@@ -565,6 +566,8 @@
 		76D570B915F1A1AD00615891 /* scene2.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene2.lua; sourceTree = "<group>"; };
 		76D570BA15F1A1AD00615891 /* scene3.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene3.lua; sourceTree = "<group>"; };
 		76D570BB15F1A1AD00615891 /* scene4.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene4.lua; sourceTree = "<group>"; };
+		76F508C5160B6C8800DBA64B /* GLUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLUtils.m; sourceTree = "<group>"; };
+		76F508C8160B6D1600DBA64B /* GLUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GLUtils.h; path = libs/Gemini/GLUtils.h; sourceTree = "<group>"; };
 		76F6448615FD80650007D29A /* GemPhysics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemPhysics.h; path = libs/Gemini/GemPhysics.h; sourceTree = "<group>"; };
 		76F6448715FD80660007D29A /* GemPhysics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GemPhysics.mm; path = libs/Gemini/GemPhysics.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -846,6 +849,8 @@
 				76324FD916069F2600970D03 /* GemFileNameResolver.m */,
 				76843F01160942910065A6E2 /* GemFadeSceneTransition.h */,
 				76843F02160942910065A6E2 /* GemFadeSceneTransition.m */,
+				76F508C5160B6C8800DBA64B /* GLUtils.m */,
+				76F508C8160B6D1600DBA64B /* GLUtils.h */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1192,6 +1197,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76843F06160A148A0065A6E2 /* scene_transition_shader.fsh in Resources */,
+				76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Resources */,
 				76D56EB115F1943300615891 /* fps_images.png in Resources */,
 				76D56EB315F1943300615891 /* Icon-72.png in Resources */,
 				76D56EB515F1943300615891 /* Icon-Small-50.png in Resources */,
@@ -1393,8 +1400,7 @@
 				76D221721603964F00832178 /* GemEventManager.m in Sources */,
 				76324FDA16069F2600970D03 /* GemFileNameResolver.m in Sources */,
 				76843F03160942920065A6E2 /* GemFadeSceneTransition.m in Sources */,
-				76843F06160A148A0065A6E2 /* scene_transition_shader.fsh in Sources */,
-				76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Sources */,
+				76F508C6160B6C8800DBA64B /* GLUtils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

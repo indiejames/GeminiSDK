@@ -82,7 +82,7 @@ static GemScene * createDefaultScene(lua_State *L){
          */
         
         GemSceneTransition *transition = [[GemFadeSceneTransition alloc] initWithParams:options];
-        transition.duration = 30.0;
+        transition.duration = 5.0;
         transition.sceneA = cScene;
         transition.sceneB = [scenes objectForKey:scene];
         currentTransition = transition;

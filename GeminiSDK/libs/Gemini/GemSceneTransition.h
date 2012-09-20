@@ -15,6 +15,9 @@
     double elapsedTime;
     double duration;
     NSDictionary *params;
+    GLuint vao;
+    GLuint program;
+
 }
 
 @property (nonatomic, retain) GemScene *sceneA;
@@ -24,5 +27,7 @@
 
 -(id)initWithParams:(NSDictionary *)params;
 -(BOOL)transit:(double)timeSinceLastRender;
+- (BOOL)compileShader:(GLuint *)shader type:(GLenum)type source:(NSString *)shaderSource;
+- (BOOL)linkProgram:(GLuint)prog;
 
 @end

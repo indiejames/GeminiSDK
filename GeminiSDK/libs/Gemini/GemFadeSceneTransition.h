@@ -8,6 +8,7 @@
 
 #import "GemSceneTransition.h"
 
-@interface GemFadeSceneTransition : GemSceneTransition
+@interface GemFadeSceneTransition : GemSceneTransition {
+}
 
 @end
