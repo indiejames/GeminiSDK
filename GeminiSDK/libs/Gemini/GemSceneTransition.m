@@ -33,11 +33,11 @@
     return rval;
 }
 
-- (id)init
-{
+- (id)initWithParams:(NSDictionary *)p {
     self = [super init];
     if (self) {
         elapsedTime = 0;
+        params = p;
     }
     return self;
 }

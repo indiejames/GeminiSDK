@@ -14,6 +14,7 @@
 #import "Gemini.h"
 #import "GemGLKViewController.h"
 #import "GemFileNameResolver.h"
+#import "GemFadeSceneTransition.h"
 
 @implementation GemDirector
 @synthesize renderer;
@@ -38,7 +39,7 @@ int render_count = 0;
 
 static GemScene * createDefaultScene(lua_State *L){
     GemScene *defaultScene = [[GemScene alloc] initWithLuaState:L defaultLayerIndex:GEM_DEFAULT_SCENE_DEFAULT_LAYER_INDEX];
-    defaultScene.name = @"DEFAULT_SCENE";
+    defaultScene.name = GEM_DEFAULT_SCENE;
     
     //__unsafe_unretained GemScene **lScene = (__unsafe_unretained GemScene **)lua_newuserdata(L, sizeof(GemScene *));
     //*lScene = defaultScene;
@@ -48,6 +49,9 @@ static GemScene * createDefaultScene(lua_State *L){
     return defaultScene;
 }
 
+-(void)addScene:(GemScene *)scene {
+    [allScenes addObject:scene];
+}
 
 -(void)gotoScene:(NSString *)scene withOptions:(NSDictionary *)options{
     
@@ -57,29 +61,43 @@ static GemScene * createDefaultScene(lua_State *L){
     }
     
     GemScene *cScene = [scenes objectForKey:currentScene];
-    GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Source:cScene];
-    exitEvent.name = GEM_EXIT_SCENE_EVENT;
-    [cScene handleEvent:exitEvent];
     
-    GemScene *gemScene = [scenes objectForKey:scene];
+    if (cScene != nil && ![cScene.name isEqualToString:GEM_DEFAULT_SCENE]) {
+        GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Source:cScene];
+        exitEvent.name = GEM_EXIT_SCENE_EVENT;
+        [cScene handleEvent:exitEvent];
+        
+        
+        
+        NSString *transitionStr = [options objectForKey:@"transition"];
+        if (transitionStr == nil) {
+            transitionStr = @"GEM_DEFAULT_TRANSITION";
+        }
+        
+        GemLog(@"Going to scene %@ with transition %@", scene, transitionStr);
+        
+        /*currentTransition = (GemSceneTransition *)[transitions objectForKey:(NSString *)[options objectForKey:@"transition"]]; // TODO replace this hard-coded string
+         currentTransition.sceneA = [self getCurrentScene];
+         currentTransition.sceneA = (GemScene *)[scenes objectForKey:scene];
+         */
+        
+        GemSceneTransition *transition = [[GemFadeSceneTransition alloc] initWithParams:options];
+        transition.duration = 30.0;
+        transition.sceneA = cScene;
+        transition.sceneB = [scenes objectForKey:scene];
+        currentTransition = transition;
 
-    GemEvent *event = [[GemEvent alloc] initWithLuaState:L Source:gemScene];
-    event.name = GEM_ENTER_SCENE_EVENT;
-    
-    [gemScene handleEvent:event];
-    
-   /* currentTransition = (GemSceneTransition *)[transitions objectForKey:(NSString *)[options objectForKey:@"transition"]]; // TODO replace this hard-coded string
-    currentTransition.sceneA = [self getCurrentScene];
-    currentTransition.sceneA = (GemScene *)[scenes objectForKey:scene];
-    */
-    
-    
-    [self setCurrentScene:scene];
+    } else {
+        [self setCurrentScene:scene];
+        
+        GemScene *gemScene = [scenes objectForKey:scene];
+        
+        GemEvent *event = [[GemEvent alloc] initWithLuaState:L Source:gemScene];
+        event.name = GEM_ENTER_SCENE_EVENT;
+        
+        [gemScene handleEvent:event];
+    }
 
-}
-
--(void)addScene:(GemScene *)scene {
-    [allScenes addObject:scene];
 }
 
 -(void)loadScene:(NSString *)sceneName {
@@ -161,7 +179,7 @@ static GemScene * createDefaultScene(lua_State *L){
     if (render_count % 300 == 0) {
         NSLog(@"Current scene is %@", ((GemScene *)[scenes objectForKey:currentScene]).name);
         render_count = 0;
-        lua_gc(L, LUA_GCCOLLECT, 0);
+        //lua_gc(L, LUA_GCCOLLECT, 0);
     }
     
     render_count++;
@@ -171,7 +189,16 @@ static GemScene * createDefaultScene(lua_State *L){
         // let the transitions do the render
         if ([currentTransition transit:timeSinceLastRender]) {
             // transition is over
+            currentScene = currentTransition.sceneB.name;
+            GemScene *gemScene = [scenes objectForKey:currentScene];
+            
+            GemEvent *event = [[GemEvent alloc] initWithLuaState:L Source:gemScene];
+            event.name = GEM_ENTER_SCENE_EVENT;
+            
+            [gemScene handleEvent:event];
+            
             currentTransition = nil;
+
         }
         
     } else {
@@ -179,11 +206,10 @@ static GemScene * createDefaultScene(lua_State *L){
         tempScene.name = @"TEMP_SCENE";
         [tempScene addScene:[scenes objectForKey:GEM_DEFAULT_SCENE]];
         if (![currentScene isEqualToString:GEM_DEFAULT_SCENE]) {
-            //NSLog(@"current scene has %d layers", [[scenes objectForKey:currentScene] numLayers]);
+                        
             [tempScene addScene:[scenes objectForKey:currentScene]];
         }
         [renderer renderScene:tempScene];
-        
         
     }
 }

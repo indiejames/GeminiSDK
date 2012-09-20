@@ -44,7 +44,6 @@ GLuint spriteRingBufferOffset = 0;
 
 GLKMatrix4 computeModelViewProjectionMatrix(){
     GLKView *view = (GLKView *)((GemGLKViewController *)([Gemini shared].viewController)).view;
-    GLfloat scale = view.contentScaleFactor;
     
     GLfloat width = view.bounds.size.width;
     GLfloat height = view.bounds.size.height;
@@ -58,9 +57,6 @@ GLKMatrix4 computeModelViewProjectionMatrix(){
         height = tmp;
     }
     
-    //GLfloat width = 960;
-    //GLfloat height = 640;
-    
     GemLog(@"View dimensions:(%f,%f)",width,height);
     
     GLfloat left = 0;
@@ -72,6 +68,8 @@ GLKMatrix4 computeModelViewProjectionMatrix(){
 }
 
 @implementation GemRenderer
+
+@synthesize spriteShaderManager;
 
 //
 // apply a transform to a set of vertices.  
@@ -237,6 +235,103 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
 }
 
+-(void)renderSceneTexture:(GLuint)texture {
+    GLenum glErr;
+    glGetError();
+    
+    glBindVertexArrayOES(spriteVAO);
+    glUseProgram(spriteShaderManager.program);
+    
+    glDepthMask(GL_FALSE);
+    glDisable(GL_DEPTH_TEST);
+    
+    glClearColor(0, 0, 1.0, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glDisable(GL_BLEND);
+    
+    
+    //glBindBuffer(GL_ARRAY_BUFFER, spriteVBO[spriteRingBufferOffset]);
+    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, spriteVBO[spriteRingBufferOffset+1]);
+    
+    /*if (spriteRingBufferOffset == 0) {
+        spriteRingBufferOffset = 2;
+    } else {
+        spriteRingBufferOffset = 0;
+    }*/
+    
+   
+    
+    GemTexturedVertex verts[] = {
+        {{100,100,-0.5}, {1,1,1,1}, {0,0}},
+        {{100,200,-0.5}, {1,1,1,1}, {0,1}},
+        {{200,100,-0.5}, {1,1,1,1}, {1,0}},
+        {{200,200,-0.5}, {1,1,1,1}, {1,1}}
+    };
+    
+       
+    GLubyte index[] = {
+        1,0,3,2
+    };
+    
+    GLuint vBuffer;
+    glGenBuffers(1, &vBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
+    glBufferData(GL_ARRAY_BUFFER, 4*sizeof(GemTexturedVertex), verts, GL_STATIC_DRAW);
+    
+    glErr = glGetError();
+    if (glErr) {
+        GemLog(@"GL_ERROR: %d", glErr);
+    }
+    
+    GLuint iBuffer;
+    glGenBuffers(1, &iBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4*sizeof(GLubyte), index, GL_STATIC_DRAW);
+    
+    glErr = glGetError();
+    if (glErr) {
+        GemLog(@"GL_ERROR: %d", glErr);
+    }
+    
+    /*GLKMatrix4 modelViewProjectionMatrix = {
+        2,0,0,0,
+        0,2,0,0,
+        0,0,-2,0,
+        0,0,0,10
+    };
+    
+    glUniformMatrix4fv(uniforms_sprite[UNIFORM_PROJECTION_SPRITE], 1, 0, modelViewProjectionMatrix.m);*/
+        
+    
+    /*glBufferSubData(GL_ARRAY_BUFFER, 0, 4*sizeof(GemTexturedVertex), verts);
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, 4*sizeof(GLubyte), index);*/
+       
+    glVertexAttribPointer(ATTRIB_VERTEX_SPRITE, 3, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)0);
+    
+    glVertexAttribPointer(ATTRIB_COLOR_SPRITE, 4, GL_FLOAT, GL_FALSE,
+                          sizeof(GemTexturedVertex), (GLvoid*) (sizeof(float) * 3));
+    glVertexAttribPointer(ATTRIB_TEXCOORD_SPRITE, 2, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)(sizeof(float) * 7));
+    
+    glActiveTexture(GL_TEXTURE0);
+   
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glUniform1i(uniforms_sprite[UNIFORM_TEXTURE_SPRITE], 0);
+    
+    
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, (void*)0);
+    
+    glErr = glGetError();
+    if (glErr) {
+        GemLog(@"GL_ERROR: %d", glErr);
+    }
+    
+    glDeleteBuffers(1, &vBuffer);
+    glDeleteBuffers(1, &iBuffer);
+
+}
+
 -(void)renderSpriteBatches {
     glBindVertexArrayOES(spriteVAO);
     glUseProgram(spriteShaderManager.program);
@@ -290,7 +385,6 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         
         
         glDrawElements(GL_TRIANGLE_STRIP, indexByteCount / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
-        //glDrawElements(GL_TRIANGLE_STRIP, 10, GL_UNSIGNED_SHORT, (void*)0);
         
         free(index);
     }
@@ -589,25 +683,20 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     [spriteShaderManager loadShaders];
     
     glUseProgram(spriteShaderManager.program);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+        
     glEnableVertexAttribArray(ATTRIB_VERTEX_SPRITE);
     glEnableVertexAttribArray(ATTRIB_COLOR_SPRITE);
     glEnableVertexAttribArray(ATTRIB_TEXCOORD_SPRITE);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     
     GLKMatrix4 modelViewProjectionMatrix = computeModelViewProjectionMatrix();
     
     glUniformMatrix4fv(uniforms_sprite[UNIFORM_PROJECTION_SPRITE], 1, 0, modelViewProjectionMatrix.m);
-    
     
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    //glEnable(GL_TEXTURE_2D);
     
     glBindVertexArrayOES(0);
 }

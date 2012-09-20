@@ -106,7 +106,7 @@ rectangle2.strokeWidth = 1.0
 rectangle2.rotation = -15
 
 director.loadScene('scene1')
-director.gotoScene('scene1')
+director.gotoScene('scene1', {transition="GEM_FADE_TRANSITION"})
 
 
 -- add an event listener that will fire every frame

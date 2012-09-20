@@ -14,6 +14,7 @@
     GemScene *sceneB;
     double elapsedTime;
     double duration;
+    NSDictionary *params;
 }
 
 @property (nonatomic, retain) GemScene *sceneA;
@@ -21,7 +22,7 @@
 @property (readonly) double elapsedTime;
 @property (nonatomic) double duration;
 
--(id)init;
+-(id)initWithParams:(NSDictionary *)params;
 -(BOOL)transit:(double)timeSinceLastRender;
 
 @end

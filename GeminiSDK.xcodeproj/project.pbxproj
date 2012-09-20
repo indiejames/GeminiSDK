@@ -15,6 +15,9 @@
 		76324FF81608E13D00970D03 /* scene2@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF71608E13D00970D03 /* scene2@ipad.lua */; };
 		76324FFA1608E2DA00970D03 /* scene3@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF91608E2DA00970D03 /* scene3@ipad.lua */; };
 		76324FFC1608E4D600970D03 /* scene4@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FFB1608E4D500970D03 /* scene4@ipad.lua */; };
+		76843F03160942920065A6E2 /* GemFadeSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 76843F02160942910065A6E2 /* GemFadeSceneTransition.m */; };
+		76843F06160A148A0065A6E2 /* scene_transition_shader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = 76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */; };
+		76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Sources */ = {isa = PBXBuildFile; fileRef = 76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */; };
 		76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216516036E2C00832178 /* Default-Portrait~ipad.png */; };
 		76D2216816036EB200832178 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216716036EB200832178 /* Default.png */; };
 		76D2216A16036FF100832178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216916036FF100832178 /* Default@2x.png */; };
@@ -218,6 +221,10 @@
 		76324FF71608E13D00970D03 /* scene2@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene2@ipad.lua"; sourceTree = "<group>"; };
 		76324FF91608E2DA00970D03 /* scene3@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene3@ipad.lua"; sourceTree = "<group>"; };
 		76324FFB1608E4D500970D03 /* scene4@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene4@ipad.lua"; sourceTree = "<group>"; };
+		76843F01160942910065A6E2 /* GemFadeSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFadeSceneTransition.h; path = libs/Gemini/GemFadeSceneTransition.h; sourceTree = "<group>"; };
+		76843F02160942910065A6E2 /* GemFadeSceneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFadeSceneTransition.m; path = libs/Gemini/GemFadeSceneTransition.m; sourceTree = "<group>"; };
+		76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = scene_transition_shader.fsh; sourceTree = "<group>"; };
+		76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = scene_transition_shader.vsh; sourceTree = "<group>"; };
 		76D2216516036E2C00832178 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		76D2216716036EB200832178 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		76D2216916036FF100832178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
@@ -837,6 +844,8 @@
 				76D221711603964F00832178 /* GemEventManager.m */,
 				76324FD816069F2600970D03 /* GemFileNameResolver.h */,
 				76324FD916069F2600970D03 /* GemFileNameResolver.m */,
+				76843F01160942910065A6E2 /* GemFadeSceneTransition.h */,
+				76843F02160942910065A6E2 /* GemFadeSceneTransition.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1127,6 +1136,8 @@
 				76D5709015F1943600615891 /* rectangle_shader.vsh */,
 				76D5709215F1943600615891 /* line_shader.fsh */,
 				76D5709415F1943600615891 /* line_shader.vsh */,
+				76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */,
+				76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -1381,6 +1392,9 @@
 				76D2216F1603961A00832178 /* GemSoundEffect.m in Sources */,
 				76D221721603964F00832178 /* GemEventManager.m in Sources */,
 				76324FDA16069F2600970D03 /* GemFileNameResolver.m in Sources */,
+				76843F03160942920065A6E2 /* GemFadeSceneTransition.m in Sources */,
+				76843F06160A148A0065A6E2 /* scene_transition_shader.fsh in Sources */,
+				76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

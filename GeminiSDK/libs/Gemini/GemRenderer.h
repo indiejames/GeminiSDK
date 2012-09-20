@@ -38,9 +38,12 @@
     GeminiRectangleShaderManager *rectangleShaderManager;
 }
 
+@property (readonly) GemSpriteShaderManager *spriteShaderManager;
+
 -(id) initWithLuaState:(lua_State *)luaState;
 
 -(void)renderScene:(GemScene *)scene;
+-(void)renderSceneTexture:(GLuint)texture;
 
 
 
