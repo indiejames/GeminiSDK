@@ -123,12 +123,14 @@ int removeEventListener(lua_State *L){
     lua_getfield(L, -1, eventName);
     
     if (lua_istable(L, -1)) {
-        // use the existing table that holds listeners for this event
-       // push the listener to the top of the stack
+        // set a nil value for our listener key to delete the entry in our table
+        // push the listener to the top of the stack
         lua_pushvalue(L, 3);
+        lua_pushnil(L);
         lua_settable(L, -3);
     } else {
-        lua_pushstring(L, eventName);
+        luaL_error(L, "Object does not handle event %s", eventName);
+        /*lua_pushstring(L, eventName);
         // create a new table to hold listeners for this event
         lua_newtable(L);
         lua_settable(L, -4);
@@ -136,7 +138,7 @@ int removeEventListener(lua_State *L){
         lua_pushinteger(L, 1);
         // push the listener to the top of the stack
         lua_pushvalue(L, 3);
-        lua_settable(L, -3);
+        lua_settable(L, -3);*/
     }
 
     

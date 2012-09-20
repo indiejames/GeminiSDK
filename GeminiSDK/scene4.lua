@@ -44,12 +44,6 @@ function scene:createScene( event )
     
 end
 
-local myListener = function(event)
-  -- rotate our rectangle about its center (reference point)
-  rectangle.rotation = rectangle.rotation + 1.0
-  
-end 
-
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
@@ -87,7 +81,7 @@ function scene:exitScene( event )
 	-----------------------------------------------------------------------------
     
     print("Exiting scene 4")
- 
+    horseSprite:pause();
 
 end
 

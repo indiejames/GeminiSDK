@@ -83,7 +83,7 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, textHeight, 0, GL_RGBA,
                  GL_UNSIGNED_BYTE, NULL);
-    /*
+    
     
     //create textureB
     GLuint textureB;
@@ -94,7 +94,7 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, textHeight, 0, GL_RGBA,
-                 GL_UNSIGNED_BYTE, NULL); */
+                 GL_UNSIGNED_BYTE, NULL); 
     
     //create fboA and attach texture A to it
     GLuint fboA;
@@ -112,7 +112,7 @@ unsigned int nearestPowerOfTwo(unsigned int v){
 
     
     // do the same for B
-    /*GLuint fboB;
+    GLuint fboB;
     glGenFramebuffers(1, &fboB);
     glBindFramebuffer(GL_FRAMEBUFFER, fboB);
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureB, 0);
@@ -121,7 +121,7 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     
     [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneB];
-    */
+    
     
     // render the mixed scenes using the two textures
     GLKView *view = (GLKView *)[Gemini shared].viewController.view;
@@ -132,10 +132,15 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     [view bindDrawable];
     glViewport(0,0, width, height);
     
-    //[((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderSceneTexture:textureA];
-    //[((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneB];
+    GLfloat alpha = elapsedTime / duration;
+    if (alpha > 1.0) {
+        alpha = 1.0;
+    }
     
-    [self renderSceneTexture:textureA];
+    glClearColor(0, 0, 1.0, 0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    [self renderSceneTexture:textureA WithAlpha:(1-alpha)];
+    [self renderSceneTexture:textureB WithAlpha:alpha];
     
     glDeleteFramebuffers(1, &fboA);
     //glDeleteFramebuffers(1, &fboB);
@@ -147,7 +152,7 @@ unsigned int nearestPowerOfTwo(unsigned int v){
 
 
 
--(void)renderSceneTexture:(GLuint)texture {
+-(void)renderSceneTexture:(GLuint)texture WithAlpha:(GLfloat)alpha {
     GLenum glErr;
     glGetError();
     
@@ -167,18 +172,17 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     glDepthMask(GL_FALSE);
     glDisable(GL_DEPTH_TEST);
     
-    glClearColor(0, 0, 1.0, 0);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glDisable(GL_BLEND);
+    
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
     
     
     GemTexturedVertex verts[] = {
-        {{100,100,-0.5}, {1,1,1,1}, {0,0}},
-        {{100,260,-0.5}, {1,1,1,1}, {0,1}},
-        {{340,100,-0.5}, {1,1,1,1}, {1,0}},
-        {{340,260,-0.5}, {1,1,1,1}, {1,1}}
+        {{0,0,-0.5}, {1,1,1,alpha}, {0,0}},
+        {{0,1,-0.5}, {1,1,1,alpha}, {0,1}},
+        {{1,0,-0.5}, {1,1,1,alpha}, {1,0}},
+        {{1,1,-0.5}, {1,1,1,alpha}, {1,1}}
     };
     
     
@@ -206,18 +210,6 @@ unsigned int nearestPowerOfTwo(unsigned int v){
         GemLog(@"GL_ERROR: %d", glErr);
     }
     
-    /*GLKMatrix4 modelViewProjectionMatrix = {
-     2,0,0,0,
-     0,2,0,0,
-     0,0,-2,0,
-     0,0,0,10
-     };
-     
-     glUniformMatrix4fv(uniforms_fade_scene[UNIFORM_PROJECTION_SPRITE], 1, 0, modelViewProjectionMatrix.m);*/
-    
-    
-    /*glBufferSubData(GL_ARRAY_BUFFER, 0, 4*sizeof(GemTexturedVertex), verts);
-     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, 4*sizeof(GLubyte), index);*/
     
     glVertexAttribPointer(ATTRIB_VERTEX_FADE_SCENE, 3, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)0);
     
@@ -230,7 +222,16 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     glBindTexture(GL_TEXTURE_2D, texture);
     glUniform1i(uniforms_fade_scene[UNIFORM_TEXTURE_FADE_SCENE], 0);
     
-    GLKMatrix4 modelViewProjectionMatrix = computeModelViewProjectionMatrix(NO);
+    //GLKMatrix4 modelViewProjectionMatrix = computeModelViewProjectionMatrix(NO);
+    
+    GLKMatrix4 modelViewProjectionMatrix = {
+        2,0,0,0,
+        0,2,0,0,
+        0,0,-2,0,
+        0,0,0,10
+    };
+    
+    modelViewProjectionMatrix = GLKMatrix4MakeOrtho(0, 1, 0, 1, -1, 1);
     
     glUniformMatrix4fv(uniforms_fade_scene[UNIFORM_PROJECTION_FADE_SCENE], 1, 0, modelViewProjectionMatrix.m);
     

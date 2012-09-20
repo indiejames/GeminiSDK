@@ -318,7 +318,7 @@ static const struct luaL_Reg sprite_m [] = {
     {"removeSelf", removeSelf},
     {"prepare", spritePrepare},
     {"play", spritePlay},
-    {"pause", spritePlay},
+    {"pause", spritePause},
     {"onStart", spriteOnStart},
     {NULL, NULL}
 };

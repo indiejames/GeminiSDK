@@ -68,7 +68,6 @@ static GemScene * createDefaultScene(lua_State *L){
         [cScene handleEvent:exitEvent];
         
         
-        
         NSString *transitionStr = [options objectForKey:@"transition"];
         if (transitionStr == nil) {
             transitionStr = @"GEM_DEFAULT_TRANSITION";
