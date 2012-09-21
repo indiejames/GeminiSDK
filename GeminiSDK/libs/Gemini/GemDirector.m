@@ -15,6 +15,7 @@
 #import "GemGLKViewController.h"
 #import "GemFileNameResolver.h"
 #import "GemFadeSceneTransition.h"
+#import "GemSlideSceneTransition.h"
 
 @implementation GemDirector
 @synthesize renderer;
@@ -75,13 +76,24 @@ static GemScene * createDefaultScene(lua_State *L){
         
         GemLog(@"Going to scene %@ with transition %@", scene, transitionStr);
         
-        /*currentTransition = (GemSceneTransition *)[transitions objectForKey:(NSString *)[options objectForKey:@"transition"]]; // TODO replace this hard-coded string
-         currentTransition.sceneA = [self getCurrentScene];
-         currentTransition.sceneA = (GemScene *)[scenes objectForKey:scene];
-         */
         
-        GemSceneTransition *transition = [[GemFadeSceneTransition alloc] initWithParams:options];
-        transition.duration = 5.0;
+        GemSceneTransition *transition = [transitions objectForKey:transitionStr];
+        if (transition == nil) {
+            if ([transitionStr isEqualToString:@"GEM_SLIDE_SCENE_TRANSITION"]) {
+                transition = [[GemSlideSceneTransition alloc] initWithParams:options];
+            } else {
+                transition = [[GemSlideSceneTransition alloc] initWithParams:options];
+                transition.duration = 3.0;
+                
+            }
+            
+            [transitions setObject:transition forKey:transitionStr];
+        } else {
+            transition.params = options;
+            [transition reset];
+        }
+        
+        
         transition.sceneA = cScene;
         transition.sceneB = [scenes objectForKey:scene];
         currentTransition = transition;

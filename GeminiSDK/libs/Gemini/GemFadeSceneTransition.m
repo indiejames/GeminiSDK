@@ -29,20 +29,6 @@ enum {
     NUM_ATTRIBUTES_FADE_SCENE
 };
 
-
-// compute the power of two closest to but not less than a number
-unsigned int nearestPowerOfTwo(unsigned int v){
-    v--;
-    v |= v >> 1;
-    v |= v >> 2;
-    v |= v >> 4;
-    v |= v >> 8;
-    v |= v >> 16;
-    v++;
-    
-    return v;
-}
-
 @implementation GemFadeSceneTransition
 
 // must return YES if the transition is complete, NO otherwise
@@ -77,7 +63,7 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     
     //create texture A
     GLuint textureA;
-    glEnable(GL_TEXTURE_2D);
+    //glEnable(GL_TEXTURE_2D);
     glGenTextures(1, &textureA);
     glBindTexture(GL_TEXTURE_2D, textureA);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -130,8 +116,9 @@ unsigned int nearestPowerOfTwo(unsigned int v){
     
     // render the mixed scenes using the two textures
     GLKView *view = (GLKView *)[Gemini shared].viewController.view;
-    GLuint width = view.bounds.size.width;
-    GLuint height = view.bounds.size.height;
+    GLfloat contentScaleFactor = view.contentScaleFactor;
+    GLuint width = view.bounds.size.width * contentScaleFactor;
+    GLuint height = view.bounds.size.height * contentScaleFactor;
     
         
     [view bindDrawable];
