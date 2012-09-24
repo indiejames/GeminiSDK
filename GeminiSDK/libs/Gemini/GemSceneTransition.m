@@ -89,6 +89,8 @@
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, textHeight, 0, GL_RGBA,
                  GL_UNSIGNED_BYTE, NULL);
     
+    glLabelObjectEXT(GL_TEXTURE, textureA, 0, "ScentTransitionTextureA");
+    
     
     //create textureB
     glGenTextures(1, &textureB);
