@@ -10,7 +10,7 @@
 #import "Gemini.h"
 #import "GemGLKViewController.h"
 #include "GLUtils.h"
-
+#include "GemOpenGLState.h"
 
 // Sprite shader uniform index
 enum {
@@ -28,6 +28,8 @@ enum {
     ATTRIB_TEXCOORD_SLIDE_SCENE,
     NUM_ATTRIBUTES_SLIDE_SCENE
 };
+
+int count = 0;
 
 @implementation GemSlideSceneTransition
 
@@ -47,47 +49,67 @@ enum {
 }
 
 -(void)render {
-    glBindVertexArrayOES(vao);
+    GemOpenGLState *glState = [GemOpenGLState shared];
     
-    // get the default scene (always rendered)
-    GemScene *defaultScene = [((GemGLKViewController *)[Gemini shared].viewController).director getDefaultScene];
+    // render the two scenes involved in the transition to textures so we can do cool things with them
+    // this is only done once at the beginning
+    if (!texturedAreRendered) {
+        // get the default scene (always rendered)
+        GemScene *defaultScene = [((GemGLKViewController *)[Gemini shared].viewController).director getDefaultScene];
+        
+        //set the viewport to be the size of the texture
+        glViewport(0,0, textWidth, textHeight);
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, fboA);
+        
+        //clear the ouput texture for A
+        if (glState.depthMask = GL_FALSE) {
+            glDepthMask(GL_TRUE);
+            glState.depthMask = GL_TRUE;
+        }
+        
+        //glClearColor(0, 0, 0, 1);
+        glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneA];
+        [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:defaultScene];
+        
+        //const GLenum discards[]  = {GL_DEPTH_ATTACHMENT};
+        //glDiscardFramebufferEXT(GL_FRAMEBUFFER,1,discards);
+        
+        glBindFramebuffer(GL_FRAMEBUFFER, fboB);
+        
+        //clear the ouput texture for B
+        glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        
+        [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneB];
+        [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:defaultScene];
+        
+        //glDiscardFramebufferEXT(GL_FRAMEBUFFER,1,discards);
+        
+        // render the mixed scenes using the two textures
+        GLKView *view = (GLKView *)[Gemini shared].viewController.view;
+        GLfloat contentScaleFactor = view.contentScaleFactor;
+        GLuint width = view.bounds.size.width * contentScaleFactor;
+        GLuint height = view.bounds.size.height * contentScaleFactor;
+        
+        
+        [view bindDrawable];
+        glViewport(0,0, width, height);
+        
+        // TODO - figure out why this is necessary and fix it
+        if (count == 1) {
+            texturedAreRendered = YES;
+        
+        } else {
+            count++;
+        }
+        
+        
+    }
     
     
-    
-    //set the viewport to be the size of the texture
-    glViewport(0,0, textWidth, textHeight);
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, fboA);
-    
-    //clear the ouput texture for A
-    glClearColor(0, 0, 0, 1);
-    glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
-    [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneA];
-    [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:defaultScene];
-    
-    
-    glBindFramebuffer(GL_FRAMEBUFFER, fboB);
-    
-    //clear the ouput texture for B
-    glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-    
-    [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneB];
-    [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:defaultScene];
-    
-    
-    // render the mixed scenes using the two textures
-    GLKView *view = (GLKView *)[Gemini shared].viewController.view;
-    GLfloat contentScaleFactor = view.contentScaleFactor;
-    GLuint width = view.bounds.size.width * contentScaleFactor;
-    GLuint height = view.bounds.size.height * contentScaleFactor;
-    
-    
-    [view bindDrawable];
-    glViewport(0,0, width, height);
-    
-    glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     GLfloat xOffsetA = 0;
     GLfloat yOffsetA = 0;
@@ -124,7 +146,12 @@ enum {
     GLenum glErr;
     glGetError();
     
-    glBindVertexArrayOES(vao);
+    GemOpenGLState *glState = [GemOpenGLState shared];
+    if (glState.boundVertexArrayObject != vao) {
+        glBindVertexArrayOES(vao);
+        glState.boundVertexArrayObject = vao;
+    }
+   
     
     
     glUseProgram(program);
@@ -188,6 +215,8 @@ enum {
 -(void)setupRender {
     glGenVertexArraysOES(1, &vao);
     glBindVertexArrayOES(vao);
+    GemOpenGLState *glState = [GemOpenGLState shared];
+    glState.boundVertexArrayObject = vao;
     
     [self loadShaders];
     
@@ -202,6 +231,7 @@ enum {
      glUniformMatrix4fv(uniforms_SLIDE_scene[UNIFORM_PROJECTION_SLIDE_SCENE], 1, 0, modelViewProjectionMatrix.m);*/
     
     glEnable(GL_DEPTH_TEST);
+    glDepthMask(GL_TRUE);
     glDepthFunc(GL_LEQUAL);
     
     glEnable(GL_BLEND);
@@ -219,6 +249,8 @@ enum {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4*sizeof(GLushort), index, GL_STATIC_DRAW);
     
     glBindVertexArrayOES(0);
+    
+    glState.boundVertexArrayObject = 0;
 }
 
 

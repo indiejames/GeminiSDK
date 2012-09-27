@@ -6,8 +6,8 @@
 //
 //
 
-#import "GemSceneTransition.h"
+#import "GemTextureBasedSceneTransition.h"
 
-@interface GemSlideSceneTransition : GemSceneTransition
+@interface GemSlideSceneTransition : GemTextureBasedSceneTransition
 
 @end

@@ -184,8 +184,10 @@
     
     GLint width;
     GLint height;
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
-    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
+    //glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
+    //glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
+    width = 960;
+    height = 640;
     
     /*NSLog(@"width = %d", width);
     NSLog(@"height = %d", height);
@@ -206,6 +208,7 @@
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
     glDepthMask(GL_TRUE);
+    [GemOpenGLState shared].glDepthMask = GL_TRUE;
     
     glClearColor(0, 0, 0, 0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

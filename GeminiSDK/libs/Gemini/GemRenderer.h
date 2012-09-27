@@ -13,6 +13,7 @@
 #import "GeminiRectangleShaderManager.h"
 #include "GeminiTypes.h"
 #import "GemScene.h"
+#import "GemOpenGLState.h"
 
 #define DEFAULT_STAGE_NAME @"DEFAULT_STAGE"
 #define LINE_SHADER_PROGRAM_KEY @"LINE_SHADER_PROGRAM_KEY"

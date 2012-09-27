@@ -33,6 +33,9 @@ int render_count = 0;
         allScenes = [[NSMutableArray alloc] initWithCapacity:1];
         transitions = [[NSMutableDictionary alloc] initWithCapacity:1];
         currentScene = GEM_DEFAULT_SCENE;
+        GemSceneTransition *transition = [[GemSlideSceneTransition alloc] initWithParams:nil];
+        
+        [transitions setObject:transition forKey:@"GEM_SLIDE_SCENE_TRANSITION"];
     }
     
     return self;

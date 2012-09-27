@@ -15,6 +15,8 @@
 		76324FF81608E13D00970D03 /* scene2@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF71608E13D00970D03 /* scene2@ipad.lua */; };
 		76324FFA1608E2DA00970D03 /* scene3@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF91608E2DA00970D03 /* scene3@ipad.lua */; };
 		76324FFC1608E4D600970D03 /* scene4@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FFB1608E4D500970D03 /* scene4@ipad.lua */; };
+		765A759B161131090077A719 /* GemOpenGLState.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A759A161131090077A719 /* GemOpenGLState.m */; };
+		765A759F1613E4270077A719 /* GemTextureBasedSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A759E1613E4270077A719 /* GemTextureBasedSceneTransition.m */; };
 		76843F03160942920065A6E2 /* GemFadeSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 76843F02160942910065A6E2 /* GemFadeSceneTransition.m */; };
 		76843F06160A148A0065A6E2 /* scene_transition_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */; };
 		76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */; };
@@ -223,6 +225,10 @@
 		76324FF71608E13D00970D03 /* scene2@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene2@ipad.lua"; sourceTree = "<group>"; };
 		76324FF91608E2DA00970D03 /* scene3@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene3@ipad.lua"; sourceTree = "<group>"; };
 		76324FFB1608E4D500970D03 /* scene4@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene4@ipad.lua"; sourceTree = "<group>"; };
+		765A7599161131090077A719 /* GemOpenGLState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemOpenGLState.h; path = libs/Gemini/GemOpenGLState.h; sourceTree = "<group>"; };
+		765A759A161131090077A719 /* GemOpenGLState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemOpenGLState.m; path = libs/Gemini/GemOpenGLState.m; sourceTree = "<group>"; };
+		765A759D1613E4270077A719 /* GemTextureBasedSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemTextureBasedSceneTransition.h; path = libs/Gemini/GemTextureBasedSceneTransition.h; sourceTree = "<group>"; };
+		765A759E1613E4270077A719 /* GemTextureBasedSceneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemTextureBasedSceneTransition.m; path = libs/Gemini/GemTextureBasedSceneTransition.m; sourceTree = "<group>"; };
 		76843F01160942910065A6E2 /* GemFadeSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFadeSceneTransition.h; path = libs/Gemini/GemFadeSceneTransition.h; sourceTree = "<group>"; };
 		76843F02160942910065A6E2 /* GemFadeSceneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFadeSceneTransition.m; path = libs/Gemini/GemFadeSceneTransition.m; sourceTree = "<group>"; };
 		76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = scene_transition_shader.fsh; sourceTree = "<group>"; };
@@ -856,6 +862,10 @@
 				76F508C9160B901100DBA64B /* GLUtils.m */,
 				76F508CB160BBA5900DBA64B /* GemSlideSceneTransition.h */,
 				76F508CC160BBA5A00DBA64B /* GemSlideSceneTransition.m */,
+				765A7599161131090077A719 /* GemOpenGLState.h */,
+				765A759A161131090077A719 /* GemOpenGLState.m */,
+				765A759D1613E4270077A719 /* GemTextureBasedSceneTransition.h */,
+				765A759E1613E4270077A719 /* GemTextureBasedSceneTransition.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1407,6 +1417,8 @@
 				76843F03160942920065A6E2 /* GemFadeSceneTransition.m in Sources */,
 				76F508CA160B901100DBA64B /* GLUtils.m in Sources */,
 				76F508CD160BBA5A00DBA64B /* GemSlideSceneTransition.m in Sources */,
+				765A759B161131090077A719 /* GemOpenGLState.m in Sources */,
+				765A759F1613E4270077A719 /* GemTextureBasedSceneTransition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

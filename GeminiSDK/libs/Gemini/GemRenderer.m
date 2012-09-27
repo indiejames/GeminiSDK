@@ -86,8 +86,18 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 // render layers from front to back to minimize overdraw
 -(NSArray *)renderUnblendedLayersForScene:(GemScene *)scene {
-    glDisable(GL_BLEND);
-    glDepthMask(GL_TRUE);
+    GemOpenGLState *glState = [GemOpenGLState shared];
+    
+    if (glState.glBlend == GL_TRUE) {
+        glDisable(GL_BLEND);
+        glState.glBlend = GL_FALSE;
+    }
+    
+    if (glState.depthMask == GL_FALSE) {
+        glDepthMask(GL_TRUE);
+        glState.depthMask = GL_TRUE;
+    }
+    
     NSMutableArray *blendedLayers = [[NSMutableArray alloc] initWithCapacity:1];
     
     NSMutableDictionary *stage = [scene layers];
@@ -133,8 +143,18 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 // render layers from back to front to support blending
 -(void)renderBlendedLayers:(NSArray *)layers {
-    glEnable(GL_BLEND);
-    glDepthMask(GL_FALSE);
+    
+    GemOpenGLState *glState = [GemOpenGLState shared];
+    
+    if (glState.glBlend == GL_FALSE) {
+        glEnable(GL_BLEND);
+        glState.glBlend = GL_TRUE;
+    }
+    if (glState.glDepthMask == GL_TRUE) {
+        glDepthMask(GL_FALSE);
+        glState.glDepthMask = GL_FALSE;
+    }
+    
     for (int i=0; i<[layers count]; i++) {
         
         NSObject *obj = [layers objectAtIndex:i];
@@ -148,7 +168,14 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
             
             GLKMatrix3 transform = GLKMatrix3Identity;
             
-            glBlendFunc(layer.sourceBlend, layer.destBlend);
+            GLKVector2 blendFunc = glState.glBlendFunc;
+            if (blendFunc.x != layer.sourceBlend || blendFunc.y != layer.destBlend) {
+                glBlendFunc(layer.sourceBlend, layer.destBlend);
+                
+                glState.glBlendFunc = GLKVector2Make(layer.sourceBlend, layer.destBlend);
+            }
+            
+            
             
             [self renderDisplayGroup:layer forLayer:layer.index withAlpha:1.0 transform:transform];
             
@@ -213,7 +240,13 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 }
 
 -(void)renderSpriteBatches {
-    glBindVertexArrayOES(spriteVAO);
+    GemOpenGLState *glState = [GemOpenGLState shared];
+    
+    if (glState.boundVertexArrayObject != spriteVAO) {
+        glBindVertexArrayOES(spriteVAO);
+        glState.boundVertexArrayObject = spriteVAO;
+    }
+    
     glUseProgram(spriteShaderManager.program);
     
     glBindBuffer(GL_ARRAY_BUFFER, spriteVBO[spriteRingBufferOffset]);
@@ -319,7 +352,13 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
 
 -(void)renderLines:(NSArray *)lines layerIndex:(int)layerIndex alpha:(GLfloat)alpha tranform:(GLKMatrix3 ) transform {
     
-    glBindVertexArrayOES(lineVAO);
+    GemOpenGLState *glState = [GemOpenGLState shared];
+    
+    if (glState.boundVertexArrayObject != lineVAO) {
+        glBindVertexArrayOES(lineVAO);
+        glState.boundVertexArrayObject = lineVAO;
+    }
+    
     
     glUseProgram(lineShaderManager.program);
     
@@ -378,7 +417,12 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
     
      GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
     
-    glBindVertexArrayOES(rectangleVAO);
+    GemOpenGLState *glState = [GemOpenGLState shared];
+    //if (glState.boundVertexArrayObject != rectangleVAO) {
+        glBindVertexArrayOES(rectangleVAO);
+        glState.boundVertexArrayObject = rectangleVAO;
+    //}
+    
     
     glUseProgram(rectangleShaderManager.program);
     
