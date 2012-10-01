@@ -16,6 +16,7 @@
 #import "GemFileNameResolver.h"
 #import "GemFadeSceneTransition.h"
 #import "GemSlideSceneTransition.h"
+#import "GemPageTurnSceneTransition.h"
 
 @implementation GemDirector
 @synthesize renderer;
@@ -36,6 +37,9 @@ int render_count = 0;
         GemSceneTransition *transition = [[GemSlideSceneTransition alloc] initWithParams:nil];
         
         [transitions setObject:transition forKey:@"GEM_SLIDE_SCENE_TRANSITION"];
+        
+        GemSceneTransition *curl = [[GemPageTurnSceneTransition alloc] initWithParams:nil];
+        [transitions setObject:curl forKey:@"GEM_PAGE_TURN_SCENE_TRANSITION"];
     }
     
     return self;
@@ -84,6 +88,9 @@ static GemScene * createDefaultScene(lua_State *L){
         if (transition == nil) {
             if ([transitionStr isEqualToString:@"GEM_SLIDE_SCENE_TRANSITION"]) {
                 transition = [[GemSlideSceneTransition alloc] initWithParams:options];
+            } else if ([transitionStr isEqualToString:@"GEM_PAGE_TURN_SCENE_TRANSITION"]){
+                transition = [[GemPageTurnSceneTransition alloc] initWithParams:options];
+                transition.duration = 3.0;
             } else {
                 transition = [[GemSlideSceneTransition alloc] initWithParams:options];
                 transition.duration = 3.0;

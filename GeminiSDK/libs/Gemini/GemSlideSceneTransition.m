@@ -51,6 +51,8 @@ int count = 0;
 -(void)render {
     GemOpenGLState *glState = [GemOpenGLState shared];
     
+    
+    
     // render the two scenes involved in the transition to textures so we can do cool things with them
     // this is only done once at the beginning
     if (!texturedAreRendered) {
@@ -143,6 +145,7 @@ int count = 0;
 
 
 -(void)renderSceneTexture:(GLuint)texture WithXOffset:(GLfloat)xOffset YOffset:(GLfloat)yOffset {
+    glUseProgram(program);
     GLenum glErr;
     glGetError();
     
@@ -154,7 +157,7 @@ int count = 0;
    
     
     
-    glUseProgram(program);
+    
     glErr = glGetError();
     
     glDepthMask(GL_FALSE);

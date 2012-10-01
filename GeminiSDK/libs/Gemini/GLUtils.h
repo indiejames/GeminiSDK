@@ -6,5 +6,7 @@
 //
 //
 
-GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout);
+#import <GLKit/GLKit.h>
 
+GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout);
+GLKTextureInfo *createTexture(NSString * imgFileName);

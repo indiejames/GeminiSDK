@@ -41,3 +41,26 @@ GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout){
     
     return GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
 }
+
+GLKTextureInfo *createTexture(NSString * imgFileName){
+    
+    NSRange separatorRange = [imgFileName rangeOfString:@"."];
+    
+    NSString *imgFilePrefix = [imgFileName substringToIndex:separatorRange.location];
+    NSString *imgFileSuffix = [imgFileName substringFromIndex:separatorRange.location + 1];
+    
+    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithCapacity:1];
+    [options setValue:[NSNumber numberWithBool:YES] forKey:GLKTextureLoaderOriginBottomLeft];
+    
+    // resolve the name for the current device resolution
+    GemFileNameResolver *resolver = [Gemini shared].fileNameResolver;
+    imgFilePrefix = [resolver resolveNameForFile:imgFilePrefix ofType:imgFileSuffix];
+    
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:imgFilePrefix ofType:imgFileSuffix];
+    
+    GLKTextureInfo *textId = [GLKTextureLoader textureWithContentsOfFile:filePath options:options error:nil];
+    
+    assert(textId != nil);
+    
+    return textId;
+}

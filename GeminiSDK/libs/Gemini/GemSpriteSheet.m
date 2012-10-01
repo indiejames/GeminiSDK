@@ -9,7 +9,7 @@
 #import "GemSpriteSheet.h"
 #import "GemFileNameResolver.h"
 #import "Gemini.h"
-
+#import "GLUtils.h"
 
 @implementation GemSpriteSheet
 
@@ -19,28 +19,6 @@
 @synthesize frames;
 @synthesize frameCoords;
 
-static GLKTextureInfo *createTexture(NSString * imgFileName){
-    
-    NSRange separatorRange = [imgFileName rangeOfString:@"."];
-    
-    NSString *imgFilePrefix = [imgFileName substringToIndex:separatorRange.location];
-    NSString *imgFileSuffix = [imgFileName substringFromIndex:separatorRange.location + 1];
-    
-    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithCapacity:1];
-    [options setValue:[NSNumber numberWithBool:YES] forKey:GLKTextureLoaderOriginBottomLeft];
-    
-    // resolve the name for the current device resolution
-    GemFileNameResolver *resolver = [Gemini shared].fileNameResolver;
-    imgFilePrefix = [resolver resolveNameForFile:imgFilePrefix ofType:imgFileSuffix];
-    
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:imgFilePrefix ofType:imgFileSuffix];
-    
-    GLKTextureInfo *textId = [GLKTextureLoader textureWithContentsOfFile:filePath options:options error:nil];
-    
-    assert(textId != nil);
-    
-    return textId;
-}
 
 -(id) initWithImage:(NSString *)imgFileName Data:(NSArray *)data {
     self = [super init];
