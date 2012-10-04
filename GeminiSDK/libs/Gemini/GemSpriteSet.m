@@ -24,7 +24,8 @@
         GemSpriteAnimation *animation = [[GemSpriteAnimation alloc] init];
         animation.startFrame = start;
         animation.frameCount = nFrames;
-        animation.frameDuration = 0.1; // 10 frames per sec
+        //animation.frameDuration = 0.1; // 10 frames per sec
+        animation.frameDuration = 0.0333;
         animation.loopCount = 0; // loop forever
         [animations setObject:animation forKey:GEMINI_DEFAULT_ANIMATION];
         spriteSheet = sheet;

@@ -18,7 +18,8 @@
         // defaults
         startFrame = 1;
         frameCount = 0;
-        frameDuration = 0.1;
+        //frameDuration = 0.1;
+        frameDuration = 0.0333;
         loopCount = 0;
     }
     

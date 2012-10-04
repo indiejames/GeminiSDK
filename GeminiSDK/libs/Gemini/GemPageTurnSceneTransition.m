@@ -457,9 +457,6 @@ static inline float funcLinear(float ft, float f0, float f1)
     }
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, numBytes, index, GL_STATIC_DRAW);
     
-    //glGenVertexArraysOES(1, &backPageVao);
-    //glBindVertexArrayOES(backPageVao);
-    //glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
     glGenBuffers(1, &backPageIBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, backPageIBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, numBytes, backPageIndex, GL_STATIC_DRAW);
@@ -555,6 +552,7 @@ static inline float funcLinear(float ft, float f0, float f1)
 }
 
 -(void)reset {
+    [super reset];
     theta = M_PI;
     A = 0;
     gamma = 0;

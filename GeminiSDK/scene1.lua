@@ -64,8 +64,7 @@ function scene:enterScene( event )
     local function listener(event)
     
         director.gotoScene("scene2",
-            {transition="GEM_PAGE_TURN_SCENE_TRANSITION", duration=15.0}
-            --{transition="GEM_SLIDE_SCENE_TRANSITION", duration=5.0, direction="up"}
+            {transition="GEM_PAGE_TURN_SCENE_TRANSITION", duration=5.0}
         )
     end
     

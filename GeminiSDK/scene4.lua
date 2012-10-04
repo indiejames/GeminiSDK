@@ -8,7 +8,7 @@ local director = require( "director" )
 local scene = director.newScene()
 local display = require('display')
 local sprite = require('sprite')
-local horse = require('horse')
+local horse = require('walker')
 
 local horseSprite
 
@@ -33,8 +33,8 @@ function scene:createScene( event )
 	
 	self:addLayer(layer1)
     -- create our sprite for the running horse
-    local horseSpriteSheet = sprite.newSpriteSheetFromData("horses.png", horse.getSpriteSheetData())
-    local horseSpriteSet = sprite.newSpriteSet(horseSpriteSheet, 1, 8)
+    local horseSpriteSheet = sprite.newSpriteSheetFromData("walker.png", horse.getSpriteSheetData())
+    local horseSpriteSet = sprite.newSpriteSet(horseSpriteSheet, 1, 30)
     horseSprite = sprite.newSprite(horseSpriteSet)
     horseSprite.x = 250
     horseSprite.y = 175
@@ -62,7 +62,9 @@ function scene:enterScene( event )
     horseSprite:play()
     
  local function listener(event)
-    director.gotoScene("scene1")
+    director.gotoScene(
+            "scene1",
+            {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="down"})
   end
     
   timer.performWithDelay(5000, listener)

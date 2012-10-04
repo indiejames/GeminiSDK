@@ -61,7 +61,9 @@ function scene:enterScene( event )
     
     local function listener(event)
     
-        director.gotoScene("scene3")
+        director.gotoScene(
+            "scene3",
+            {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="up"})
     end
     
     timer.performWithDelay(3000, listener)
