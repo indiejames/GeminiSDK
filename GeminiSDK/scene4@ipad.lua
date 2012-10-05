@@ -8,9 +8,9 @@ local director = require( "director" )
 local scene = director.newScene()
 local display = require('display')
 local sprite = require('sprite')
-local horse = require('horse')
+local walker = require('walker')
 
-local horseSprite
+local walkerSprite
 
 ----------------------------------------------------------------------------------
 -- 
@@ -33,13 +33,13 @@ function scene:createScene( event )
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
 	self:addLayer(layer1)
-    -- create our sprite for the running horse
-    local horseSpriteSheet = sprite.newSpriteSheetFromData("horses.png", horse.getSpriteSheetData())
-    local horseSpriteSet = sprite.newSpriteSet(horseSpriteSheet, 1, 8)
-    horseSprite = sprite.newSprite(horseSpriteSet)
-    horseSprite.x = 500
-    horseSprite.y = 350
-    layer1:insert(horseSprite)
+    -- create our sprite for the running walker
+    local walkerSpriteSheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
+    local walkerSpriteSet = sprite.newSpriteSet(walkerSpriteSheet, 1, 10)
+    walkerSprite = sprite.newSprite(walkerSpriteSet)
+    walkerSprite.x = 500
+    walkerSprite.y = 350
+    layer1:insert(walkerSprite)
     
 end
 
@@ -63,11 +63,13 @@ function scene:enterScene( event )
     print("Entering scene 4")
     
     
-    horseSprite:prepare()
-    horseSprite:play()
+    walkerSprite:prepare()
+    walkerSprite:play()
     
  local function listener(event)
-    director.gotoScene("scene1")
+    director.gotoScene(
+            "scene1",
+            {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="down"})
   end
     
   timer.performWithDelay(5000, listener)

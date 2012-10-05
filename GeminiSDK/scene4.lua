@@ -8,9 +8,9 @@ local director = require( "director" )
 local scene = director.newScene()
 local display = require('display')
 local sprite = require('sprite')
-local horse = require('walker')
+local walker = require('walker')
 
-local horseSprite
+local walkerSprite
 
 ----------------------------------------------------------------------------------
 -- 
@@ -33,14 +33,14 @@ function scene:createScene( event )
 	
 	self:addLayer(layer1)
     -- create our sprite for the running horse
-    local horseSpriteSheet = sprite.newSpriteSheetFromData("walker.png", horse.getSpriteSheetData())
-    local horseSpriteSet = sprite.newSpriteSet(horseSpriteSheet, 1, 30)
-    horseSprite = sprite.newSprite(horseSpriteSet)
-    horseSprite.x = 250
-    horseSprite.y = 175
-	horseSprite.xScale = 1.0 / display.contentScaleFactor()
-	horseSprite.yScale = 1.0 / display.contentScaleFactor()
-    layer1:insert(horseSprite)
+    local walkerSpriteSheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
+    local walkerSpriteSet = sprite.newSpriteSet(walkerSpriteSheet, 1, 10)
+    walkerSprite = sprite.newSprite(walkerSpriteSet)
+    walkerSprite.x = 250
+    walkerSprite.y = 175
+	walkerSprite.xScale = 1.0 / display.contentScaleFactor()
+	walkerSprite.yScale = 1.0 / display.contentScaleFactor()
+    layer1:insert(walkerSprite)
     
 end
 
@@ -58,8 +58,8 @@ function scene:enterScene( event )
     print("Entering scene 4")
     
     
-    horseSprite:prepare()
-    horseSprite:play()
+    walkerSprite:prepare()
+    walkerSprite:play()
     
  local function listener(event)
     director.gotoScene(
@@ -83,7 +83,7 @@ function scene:exitScene( event )
 	-----------------------------------------------------------------------------
     
     print("Exiting scene 4")
-    horseSprite:pause();
+    walkerSprite:pause();
 
 end
 
