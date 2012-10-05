@@ -29,7 +29,7 @@ function scene:createScene( event )
 	
     print("Lua: Adding layer1 to scene2")
 	self:addLayer(layer1)
-    print("Lua: Creating yellow rectangle")
+    print("Lua: Creating red rectangle")
 	-- draw a yellow rectangle with a white border
 	local rectangle = display.newRect(100,100,100,100)
 	rectangle:setFillColor(1.0,0,0,1.0)

@@ -39,6 +39,8 @@ function scene:createScene( event )
     walkerSprite = sprite.newSprite(walkerSpriteSet)
     walkerSprite.x = 500
     walkerSprite.y = 350
+    walkerSprite.xScale = 2.0
+    walkerSprite.yScale = 2.0
     layer1:insert(walkerSprite)
     
 end
