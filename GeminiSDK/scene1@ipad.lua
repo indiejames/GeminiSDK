@@ -31,7 +31,7 @@ function scene:createScene( event )
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
     print("Lua: Adding layer1 to scene")
-	self:addLayer(layer1)
+	scene:addLayer(layer1)
     print("Lua: Creating green rectangle")
 	-- draw a green rectangle with a white border
 	local rectangle = display.newRect(100,100,100,100)
@@ -50,6 +50,7 @@ function scene:createScene( event )
     star:setColor( 0, 0, 1.0, 0.5 )
     star.width = 10
     star.yReference = 120
+    layer1:insert(star)
     local group1 = display.newGroup()
     layer1:insert(group1)
     group1:insert(star)
@@ -57,7 +58,7 @@ function scene:createScene( event )
     group1.yReference = star.y
     group1.x = 480
     group1.y = 320
-
+    
     -- draw a red rectangle with a white border
     --local rectangle = display.newRect(10,10,100,100)
     --rectangle:delete()
@@ -168,7 +169,7 @@ function scene:enterScene( event )
     local function listener(event)
     
         director.gotoScene("scene2",
-            {transition="GEM_PAGE_TURN_SCENE_TRANSITION", duration=5.0}
+            {transition="GEM_PAGE_TURN_SCENE_TRANSITION", duration=4.0}
             --{transition="GEM_SLIDE_SCENE_TRANSITION", duration=5.0, direction="up"}
         )    end
     

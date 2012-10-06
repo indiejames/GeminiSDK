@@ -28,18 +28,30 @@ function scene:createScene( event )
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
     print("Lua: Adding layer1 to scene2")
-	self:addLayer(layer1)
-    print("Lua: Creating red rectangle")
-	-- draw a yellow rectangle with a white border
-	local rectangle = display.newRect(100,100,100,100)
-	rectangle:setFillColor(1.0,0,0,1.0)
-	rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
-	rectangle.strokeWidth = 5.0
-	rectangle.x = 450
-	rectangle.y = 250
-	rectangle.rotation = -30
-	layer1:insert(rectangle)
-
+	scene:addLayer(layer1)
+    
+    scene.group = display.newGroup()
+    layer1:insert(scene.group)
+	-- draw four rectangles and put them in the group
+    local x_center = 512
+    local y_center = 384
+    for j=0,1 do
+      local y = y_center - 100 + j * 200
+      for i=0,1 do
+        local x = x_center - 100 + i * 200
+        local rectangle = display.newRect(x,y,75,75)
+        rectangle:setFillColor(1.0,0,0,1.0)
+        rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
+        rectangle.strokeWidth = 5.0
+        scene.group:insert(rectangle)
+      end
+    end
+    
+    scene.group.xReference = x_center
+    scene.group.yReference = y_center
+    scene.group.x = x_center
+    scene.group.y = y_center
+    
 end
 
 
@@ -59,6 +71,13 @@ function scene:enterScene( event )
     
     --director.destroyScene('scene1')
     
+    scene.groupListener = function(event)
+      -- rotate our rectangles about the group center (reference points)
+      scene.group.rotation = scene.group.rotation + 1.0
+    end 
+    -- the "enterFrame" event fires at the beginning of each render loop
+    Runtime:addEventListener("enterFrame", scene.groupListener)
+    
     local function listener(event)
     
         director.gotoScene(
@@ -66,7 +85,7 @@ function scene:enterScene( event )
             {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="up"})
     end
     
-    timer.performWithDelay(3000, listener)
+    timer.performWithDelay(10000, listener)
 
 end
 
@@ -81,7 +100,10 @@ function scene:exitScene( event )
 
 	-----------------------------------------------------------------------------
     
+    Runtime:removeEventListener("enterFrame", scene.groupListener)
+
     print("Exiting scene 2")
+    
 
 end
 

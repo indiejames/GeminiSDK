@@ -56,8 +56,10 @@
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, textHeight, 0, GL_RGBA,
+    //             GL_UNSIGNED_SHORT_5_5_5_1, NULL);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, textHeight, 0, GL_RGBA,
-                 GL_UNSIGNED_SHORT_5_5_5_1, NULL);
+                 GL_UNSIGNED_BYTE, NULL);
     
     glLabelObjectEXT(GL_TEXTURE, textureA, 0, "ScentTransitionTextureA");
     
@@ -71,8 +73,10 @@
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, textHeight, 0, GL_RGBA,
     //            GL_UNSIGNED_BYTE, NULL);
+    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, textHeight, 0, GL_RGBA,
+    //             GL_UNSIGNED_SHORT_5_5_5_1, NULL);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, textWidth, textHeight, 0, GL_RGBA,
-                 GL_UNSIGNED_SHORT_5_5_5_1, NULL);
+                 GL_UNSIGNED_BYTE, NULL);
     
     //create fboA and attach texture A to it
     glGenFramebuffers(1, &fboA);

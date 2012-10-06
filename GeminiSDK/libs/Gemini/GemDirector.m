@@ -210,6 +210,7 @@ static GemScene * createDefaultScene(lua_State *L){
         // let the transitions do the render
         if ([currentTransition transit:timeSinceLastRender]) {
             // transition is over
+            GemLog(@"Scene is over!");
             currentScene = currentTransition.sceneB.name;
             GemScene *gemScene = [scenes objectForKey:currentScene];
             

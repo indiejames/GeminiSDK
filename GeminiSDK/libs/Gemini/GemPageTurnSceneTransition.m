@@ -101,19 +101,6 @@ static inline float funcLinear(float ft, float f0, float f1)
         [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneA];
         [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:defaultScene];
         
-        //const GLenum discards[]  = {GL_DEPTH_ATTACHMENT};
-        //glDiscardFramebufferEXT(GL_FRAMEBUFFER,1,discards);
-        
-        //glBindFramebuffer(GL_FRAMEBUFFER, fboB);
-        
-        //clear the ouput texture for B
-        //glClear ( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        //[((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneB];
-        //[((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:defaultScene];
-        
-        //glDiscardFramebufferEXT(GL_FRAMEBUFFER,1,discards);
-        
         // render the mixed scenes using the two textures
         GLKView *view = (GLKView *)[Gemini shared].viewController.view;
         GLfloat contentScaleFactor = view.contentScaleFactor;
@@ -134,13 +121,7 @@ static inline float funcLinear(float ft, float f0, float f1)
         
         
     }
-    
-    GLfloat xOffsetA = 0;
-    GLfloat yOffsetA = 0;
-    GLfloat xOffsetB = 0;
-    GLfloat yOffsetB = 0;
-    
-    
+        
     //[self renderSceneTexture:textureB WithXOffset:xOffsetB YOffset:0];
     GemScene *defaultScene = [((GemGLKViewController *)[Gemini shared].viewController).director getDefaultScene];
     [((GemGLKViewController *)[Gemini shared].viewController).director.renderer renderScene:sceneB];
@@ -148,9 +129,7 @@ static inline float funcLinear(float ft, float f0, float f1)
     glDisable(GL_BLEND);
     [self renderSceneTexture:textureA WithPageTurn:gamma];
     glEnable(GL_BLEND);
-    //[self renderSceneTexture:textureA WithXOffset:xOffsetA YOffset:yOffsetA];
-    //[self renderSceneTexture:textureB WithXOffset:xOffsetB YOffset:yOffsetB];
-    
+       
 }
 
 
@@ -175,8 +154,9 @@ static inline float funcLinear(float ft, float f0, float f1)
     
     
     
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_BLEND);
+    glDisable(GL_BLEND);
     
     glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iBuffer);
@@ -184,7 +164,8 @@ static inline float funcLinear(float ft, float f0, float f1)
     
     
     CGFloat angle1 =  M_PI;  //  }
-    CGFloat angle2 =   0.13962634;  //  }
+    //CGFloat angle2 =   0.13962634;  //  }
+    CGFloat angle2 =   0.13962634;
     CGFloat angle3 =   0.104719755;  //  }
     CGFloat     A1 = -15.0f;        //  }
     CGFloat     A2 =  -2.5f;        //  }--- Experiment with these parameters to adjust the page turn behavior to your liking.
@@ -228,7 +209,8 @@ static inline float funcLinear(float ft, float f0, float f1)
 		dt = (t - 0.4) / 0.6;
 		f1 = sin(M_PI * pow(dt, theta3) / 2.0);
 		f2 = sin(M_PI * pow(dt, theta4) / 2.0);
-		theta = funcLinear(f1, angle3, angle1);
+		//theta = funcLinear(f1, angle3, angle1);
+        theta = funcLinear(f1, angle3, 0);
 		A = funcLinear(f2, A3, A1);
 	}
 
@@ -240,14 +222,6 @@ static inline float funcLinear(float ft, float f0, float f1)
         for (int i=0; i<gridX; i++) {
             GLfloat x = (GLfloat)i / (GLfloat)(gridX - 1);
             GLfloat y = (GLfloat)j / (GLfloat)(gridY - 1);
-            
-            /*GLfloat R = sqrtf(x*x + (y-A)*(y-A));
-            GLfloat r = R * sin(theta);
-            GLfloat phi = asin(x/R) / sin(theta);
-            
-            GLfloat xi = r * sin(phi);
-            GLfloat yi = R + A - r*(1.0 - cos(phi))*sin(theta);
-            GLfloat zi = r*(1-cos(phi))*cos(theta);*/
             
             GLfloat R = sqrtf(x*x + (y-A)*(y-A));
             GLfloat beta = asin(x/R) / sin(theta);
@@ -269,7 +243,16 @@ static inline float funcLinear(float ft, float f0, float f1)
             verts[i + j*gridX].texCoord[0] = x;
             verts[i + j*gridX].texCoord[1] = y;
             
-            //GemLog(@"(x,y,z) = (%f,%f,%f)", x,y,0);
+            /*if (t > 0.95 && i == gridX - 1 && j == gridY - 1) {
+                GemLog(@"(x0,y0,z0) = (%f,%f,%f)", x,y,1.0);
+                GemLog(@"(x,y,z) = (%f,%f,%f)", verts[i + j*gridX].position[0],verts[i + j*gridX].position[1],verts[i + j*gridX].position[2]);
+                GemLog(@"R = %f", R);
+                GemLog(@"beta = %f", beta);
+                GemLog(@"r = %f", r);
+                GemLog(@"rho = %f", rho);
+                GemLog(@"t = %f", t);
+            }*/
+            
             
         }        
     }
@@ -318,77 +301,6 @@ static inline float funcLinear(float ft, float f0, float f1)
     free(verts);
 }
 
-
--(void)renderSceneTexture:(GLuint)texture WithXOffset:(GLfloat)xOffset YOffset:(GLfloat)yOffset {
-    GLenum glErr;
-    glGetError();
-    
-    GemOpenGLState *glState = [GemOpenGLState shared];
-    if (glState.boundVertexArrayObject != vao) {
-        glBindVertexArrayOES(vao);
-        glState.boundVertexArrayObject = vao;
-    }
-    
-    
-    
-    glUseProgram(program);
-    glErr = glGetError();
-    
-    glDepthMask(GL_FALSE);
-    glDisable(GL_DEPTH_TEST);
-    
-    
-    
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_BLEND);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, vBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iBuffer);
-    
-    
-    GemTexturedVertex verts[] = {
-        {{xOffset,yOffset,-0.5}, {1,1,1,1}, {0,0}},
-        {{xOffset,1+yOffset,-0.5}, {1,1,1,1}, {0,1}},
-        {{1+xOffset,yOffset,-0.5}, {1,1,1,1}, {1,0}},
-        {{1+xOffset,1+yOffset,-0.5}, {1,1,1,1}, {1,1}}
-    };
-    
-    glBufferSubData(GL_ARRAY_BUFFER, 0, 4*sizeof(GemTexturedVertex), verts);
-    
-    //glBufferData(GL_ARRAY_BUFFER, 4*sizeof(GemTexturedVertex), verts, GL_STATIC_DRAW);
-    
-    
-    
-    glVertexAttribPointer(ATTRIB_VERTEX_PAGE_TURN_SCENE, 3, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)0);
-    
-    glVertexAttribPointer(ATTRIB_COLOR_PAGE_TURN_SCENE, 4, GL_FLOAT, GL_FALSE,
-                          sizeof(GemTexturedVertex), (GLvoid*) (sizeof(float) * 3));
-    glVertexAttribPointer(ATTRIB_TEXCOORD_PAGE_TURN_SCENE, 2, GL_FLOAT, GL_FALSE, sizeof(GemTexturedVertex), (GLvoid *)(sizeof(float) * 7));
-    
-    glActiveTexture(GL_TEXTURE0);
-    
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glUniform1i(uniforms_PAGE_TURN_scene[UNIFORM_TEXTURE_PAGE_TURN_SCENE], 0);
-    
-    //GLKMatrix4 modelViewProjectionMatrix = computeModelViewProjectionMatrix(NO);
-    
-    GLKMatrix4 modelViewProjectionMatrix = {
-        2,0,0,0,
-        0,2,0,0,
-        0,0,-2,0,
-        0,0,0,10
-    };
-    
-    modelViewProjectionMatrix = GLKMatrix4MakeOrtho(0, 1, 0, 1, -1, 1);
-    
-    glUniformMatrix4fv(uniforms_PAGE_TURN_scene[UNIFORM_PROJECTION_PAGE_TURN_SCENE], 1, 0, modelViewProjectionMatrix.m);
-    
-    
-    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, (void*)0);
-    
-}
-
-
 -(void)setupRender {
     
     // create paper texture
@@ -406,10 +318,6 @@ static inline float funcLinear(float ft, float f0, float f1)
     glEnableVertexAttribArray(ATTRIB_VERTEX_PAGE_TURN_SCENE);
     glEnableVertexAttribArray(ATTRIB_COLOR_PAGE_TURN_SCENE);
     glEnableVertexAttribArray(ATTRIB_TEXCOORD_PAGE_TURN_SCENE);
-    
-    /*GLKMatrix4 modelViewProjectionMatrix = computeModelViewProjectionMatrix();
-     
-     glUniformMatrix4fv(uniforms_PAGE_TURN_scene[UNIFORM_PROJECTION_PAGE_TURN_SCENE], 1, 0, modelViewProjectionMatrix.m);*/
     
     glEnable(GL_DEPTH_TEST);
     glDepthMask(GL_TRUE);
@@ -545,7 +453,7 @@ static inline float funcLinear(float ft, float f0, float f1)
     gridY = 10;
     A = 0;
     theta = M_PI;
-    duration = 7.0;
+    //duration = 7.0;
     t = 0;
     [self setupRender];
     return self;
