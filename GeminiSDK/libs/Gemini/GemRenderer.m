@@ -30,7 +30,7 @@ GLuint lineCount = 0;
 
 GLfloat posVerts[12];
 GLfloat newPosVerts[12];
-GLKVector3 vectorArray[1024];
+
 
 GLuint rectangleVBO[4];
 GLuint lineVBO[4];
@@ -48,35 +48,7 @@ GLuint spriteRingBufferOffset = 0;
 
 @synthesize spriteShaderManager;
 
-//
-// apply a transform to a set of vertices.  
-// the ouput array should be preallocated to the same size as the input array
-//
-static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GLKMatrix3 transform){
-    
-    // create an array of vectors from our input data
-   // GLKVector3 *vectorArray = (GLKVector3 *)malloc(vertCount * sizeof(GLKVector3));
-    /*for (GLuint i = 0; i<vertCount; i++) {
-        vectorArray[i] = GLKVector3MakeWithArray(inVerts + 3*i); 
-    }*/
-    
-    memcpy(vectorArray, inVerts, vertCount * sizeof(GLKVector3));
-    
-    GLKMatrix3MultiplyVector3Array(transform, vectorArray, vertCount);
-    
-    memcpy(outVerts, vectorArray, vertCount * sizeof(GLKVector3));
-    
-    /*for (GLuint i = 0; i<vertCount; i++) {
-        
-        outVerts[i*3] = vectorArray[i].x;
-        outVerts[i*3+1] = vectorArray[i].y;
-        outVerts[i*3+2] = vectorArray[i].z;
-        
-    }*/
-    
-    //free(vectorArray);
-    
-}
+
 
 -(void)renderScene:(GemScene *)scene {
     NSArray *blendedLayers = [self renderUnblendedLayersForScene:(GemScene *)scene];
@@ -154,6 +126,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         glDepthMask(GL_FALSE);
         glState.glDepthMask = GL_FALSE;
     }
+    
     
     for (int i=0; i<[layers count]; i++) {
         
@@ -246,6 +219,9 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         glBindVertexArrayOES(spriteVAO);
         glState.boundVertexArrayObject = spriteVAO;
     }
+    
+    glBindVertexArrayOES(spriteVAO);
+    glState.boundVertexArrayObject = spriteVAO;
     
     glUseProgram(spriteShaderManager.program);
     
@@ -452,13 +428,17 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
         GemRectangle *rectangle = (GemRectangle *)[rectangles objectAtIndex:i];
         GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, rectangle.transform);
         
+        rectangle.cumulativeTransform = finalTransform;
+        
         //GLfloat *newVerts = (GLfloat *)malloc(12*3*sizeof(GLfloat));
                 
         unsigned int vertCount = 4;
+        //unsigned int indexCount = 6;
         unsigned int indexCount = 6;
         if (rectangle.strokeWidth > 0) {
             vertCount = 12;
-            indexCount = 30;
+            //indexCount = 30;
+            indexCount = 18;
         }
         
         transformVertices(newVerts, rectangle.verts, vertCount, finalTransform);
@@ -496,7 +476,7 @@ static void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCo
        
     }
     
-    glDrawElements(GL_TRIANGLES, indexOffset / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
+    glDrawElements(GL_TRIANGLE_STRIP, indexOffset / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
 
 }
 

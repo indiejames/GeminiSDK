@@ -32,9 +32,21 @@ function scene:createScene( event )
     
     scene.group = display.newGroup()
     layer1:insert(scene.group)
-	-- draw four rectangles and put them in the group
+    
+	-- draw four boxes (and cross bars) and put them in the group
     local x_center = 512
     local y_center = 384
+    
+    local hbar = display.newRect(x_center,y_center, 250,20)
+    hbar:setFillColor(0.0,0.0,1.0,1.0)
+    hbar.rotation = 45.0
+    scene.group:insert(hbar)
+    
+    local vbar = display.newRect(x_center,y_center, 20, 250)
+    vbar:setFillColor(0.0,0.0,1.0,1.0)
+    vbar.rotation = 45.0
+    scene.group:insert(vbar)
+    
     for j=0,1 do
       local y = y_center - 100 + j * 200
       for i=0,1 do
@@ -72,8 +84,12 @@ function scene:enterScene( event )
     --director.destroyScene('scene1')
     
     scene.groupListener = function(event)
-      -- rotate our rectangles about the group center (reference points)
+      -- rotate our rectangles about the group center (reference points) and about each recs center
       scene.group.rotation = scene.group.rotation + 1.0
+      for i=3,6 do
+        local rec = scene.group[i]
+        rec.rotation = rec.rotation - 1.0
+      end
     end 
     -- the "enterFrame" event fires at the beginning of each render loop
     Runtime:addEventListener("enterFrame", scene.groupListener)

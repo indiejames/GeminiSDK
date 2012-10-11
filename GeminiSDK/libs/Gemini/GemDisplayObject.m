@@ -20,6 +20,7 @@
 @synthesize needsTransformUpdate;
 @synthesize isVisible;
 @synthesize physicsBody;
+@synthesize cumulativeTransform;
 
 /*-(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];
@@ -261,6 +262,11 @@
     
     
     return transform;
+}
+
+// NOTE - this method must be overriden by subclasses if they are to support touch events
+-(BOOL)doesContainPoint:(GLKVector2) point {
+    return NO;
 }
 
 // remove this display object and any child objects it may have

@@ -53,6 +53,7 @@ typedef enum {
 
 @property (readonly) GemSpriteManager *spriteManager;
 @property (readonly) GemTimerManager *timerManager;
+@property (readonly) GemEventManager *eventManager;
 @property (readonly) GemDirector *director;
 @property (readonly) double updateTime;
 @property (nonatomic) GemDisplayType displayType;

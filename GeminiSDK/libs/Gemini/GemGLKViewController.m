@@ -47,6 +47,7 @@
 @synthesize context;
 @synthesize spriteManager;
 @synthesize timerManager;
+@synthesize eventManager;
 @synthesize director;
 @synthesize displayType;
 @synthesize updateTime;

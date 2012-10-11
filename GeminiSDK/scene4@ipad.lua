@@ -11,6 +11,8 @@ local sprite = require('sprite')
 local walker = require('walker')
 
 local walkerSprite
+local sprite2
+local sprite3
 
 ----------------------------------------------------------------------------------
 -- 
@@ -43,6 +45,16 @@ function scene:createScene( event )
     walkerSprite.yScale = 2.0
     layer1:insert(walkerSprite)
     
+    sprite2 = sprite.newSprite(walkerSpriteSet)
+    sprite2.x = 100
+    sprite2.y = 100
+    layer1:insert(sprite2)
+    
+    sprite3 = sprite.newSprite(walkerSpriteSet)
+    sprite3.x = 924
+    sprite3.y = 680
+    layer1:insert(sprite3)
+    
 end
 
 local myListener = function(event)
@@ -67,6 +79,10 @@ function scene:enterScene( event )
     
     walkerSprite:prepare()
     walkerSprite:play()
+    sprite2:prepare()
+    sprite2:play()
+    sprite3:prepare()
+    sprite3:play()
     
  local function listener(event)
     director.gotoScene(

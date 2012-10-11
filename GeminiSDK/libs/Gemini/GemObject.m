@@ -9,6 +9,7 @@
 #import "Gemini.h"
 #import "GemObject.h"
 #import "GemEvent.h"
+#import "GemEventManager.h"
 
 
 @implementation GemObject
@@ -190,6 +191,13 @@
         GemLog(@"GemObject: handling event %@", event.name);
 
     }
+    
+    if ([event.name isEqualToString:GEM_TOUCH_EVENT_NAME]) {
+        GemLog(@"GemObject: handling event %@", event.name);
+        
+    }
+    
+    BOOL rval = NO;
 
     
     // get the full event handler table
@@ -208,20 +216,29 @@
             if (lua_isfunction(L, -1)) {
                 //NSLog(@"Event handler is a function");
                 // load the stacktrace printer for our error function
-                int base = lua_gettop(L);  /* function index */
-                lua_pushcfunction(L, traceback);  /* push traceback function */
-                lua_insert(L, base);  /* put it under chunk and args */
+                int base = lua_gettop(L);  // function index
+                lua_pushcfunction(L, traceback);  // push traceback function for error handling
+                lua_insert(L, base);  // put it under callback function
                 
                 // push the event object onto the top of the stack as the argument to the event handler
                 lua_rawgeti(L, LUA_REGISTRYINDEX, event.selfRef);
-                int err = lua_pcall(L, 1, 0, -3);
+                int err = lua_pcall(L, 1, LUA_MULTRET, -3);
                 if (err != 0) {
                     const char *msg = lua_tostring(L, -1);
                     GemLog(@"Error executing event handler: %s", msg);
+                } else {
+                    int numResp = lua_gettop(L) - base;
+                    if (numResp == 1) {
+                        // if any of the handlers return true then we will as well
+                        if (lua_toboolean(L, -1)) {
+                            rval = YES;
+                            GemLog(@"Event handler function returned YES");
+                        }
+                    }
                 }
-                
+                         
                 // leave the key on the stack for the next iteration
-                lua_pop(L, 2);
+                lua_pop(L, lua_gettop(L) - base + 2);
                 
             } else { // table or user data
                 BOOL userData = NO;
@@ -231,12 +248,10 @@
                 }
                 
                 const char *ename = [event.name UTF8String];
-                
-                int top = lua_gettop(L);
                                 
                 int base = lua_gettop(L);  /* table index */
                 lua_pushcfunction(L, traceback);  /* push traceback function */
-                lua_insert(L, base);  /* put it under handler */
+                lua_insert(L, base);  /* put handler above traceback function */
                 
                 lua_getfield(L, -1, ename);
                 
@@ -246,22 +261,32 @@
                     lua_pushvalue(L, -2);
                 }
                 
-                //lua_insert(L, -2); // move callback below 1st parameter
                 lua_rawgeti(L, LUA_REGISTRYINDEX, event.selfRef); // add the event as the second param
                 
                 int err = 0;
                 if (userData) {
-                    err = lua_pcall(L, 2, 0, -5);
+                    err = lua_pcall(L, 2, LUA_MULTRET, -5);
                 } else {
-                    err = lua_pcall(L, 1, 0, -4);
+                    err = lua_pcall(L, 1, LUA_MULTRET, -4);
                 }
                 
                 if (err != 0) {
                     const char *msg = lua_tostring(L, -1);
                     GemLog(@"Error executing event handler: %s", msg);
+                } else {
+                    
+                    int numResp = lua_gettop(L) - base - 1;
+                    if (numResp == 1) {
+                        // if any of the handlers return true then we will as well
+                        if (lua_toboolean(L, -1)) {
+                            rval = YES;
+                            GemLog(@"Event handler returned YES");
+                        }
+                    }
+
                 }
-                
-                int pop = lua_gettop(L) - top + 2;
+                                
+                int pop = lua_gettop(L) - base + 2;
                 
                 lua_pop(L, pop);
             }
@@ -271,58 +296,7 @@
 
     }
         
-    
-    /*NSArray *callbacks = (NSMutableArray *)[eventHandlers objectForKey:event.name];
-        
-    if ([callbacks count] > 0) {
-        for (int i=0; i<[callbacks count]; i++) {
-            
-            NSNumber *callback = (NSNumber *)[callbacks objectAtIndex:i];
-            int registryKey = [callback intValue];
-            lua_rawgeti(L, LUA_REGISTRYINDEX, registryKey);
-            
-            if (lua_isfunction(L, -1)) {
-                //NSLog(@"Event handler is a function");
-                // load the stacktrace printer for our error function
-                lua_getglobal(L, "gemini_stacktrace_printer");
-                if (lua_isnil(L, -1)) {
-                    NSLog(@"Error loading stacktrace_printer function");
-                    
-                }
-               
-    
-                // copy our pointer to our function to top of stack
-                lua_copy(L, -2, -1);
-                // push the event object onto the top of the stack as the argument to the event handler
-                lua_rawgeti(L, LUA_REGISTRYINDEX, event.selfRef);
-                int err = lua_pcall(L, 1, 0, 0);
-                if (err != 0) {
-                    const char *msg = lua_tostring(L, -1);
-                    NSLog(@"Error executing event handler: %s", msg);
-                }
-                
-                
-            } else { // table or user data
-                const char *ename = [event.name UTF8String];
-                //NSLog(@"Event handler is a table");
-                lua_getfield(L, -1, ename);
-                if(lua_isnil(L, -1)){
-                    //NSLog(@"lua_getfield for %s returned nil", ename);
-                }
-                lua_insert(L, -2);
-                lua_rawgeti(L, LUA_REGISTRYINDEX, event.selfRef);
-                lua_pcall(L, 2, 0, 0);
-            }
-            
-            // empty the stack
-            lua_pop(L, lua_gettop(L));
-            
-        }
-        //NSLog(@"GemniObject handled event %@", event.name);
-        return YES;
-    } */
-    
-    return NO;
+    return rval;
 }
 
 // add an event listener to this object

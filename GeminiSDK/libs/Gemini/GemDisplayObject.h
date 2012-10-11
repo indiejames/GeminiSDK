@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
 #import "GemObject.h"
+#import "GemBoundsTests.h"
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
@@ -30,6 +31,7 @@
     GLfloat yScale;
     GLfloat alpha;
     GLKMatrix3 transform;
+    GLKMatrix3 cumulativeTransform;
     BOOL needsTransformUpdate;
     BOOL needsUpdate;
     BOOL isVisible;
@@ -61,8 +63,10 @@
 @property (nonatomic) BOOL needsUpdate;
 @property (nonatomic) BOOL needsTransformUpdate;
 @property (nonatomic) void *physicsBody;
+@property (nonatomic) GLKMatrix3 cumulativeTransform;
 
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
 -(GLKMatrix3) transform;
+-(BOOL)doesContainPoint:(GLKVector2)point;
 
 @end

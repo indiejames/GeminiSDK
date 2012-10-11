@@ -26,11 +26,11 @@ public:
         GemDisplayObject *objA = (__bridge GemDisplayObject *)bodyA->GetUserData();
         GemDisplayObject *objB = (__bridge GemDisplayObject *)bodyB->GetUserData();
         
-        GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Source:objA];
+        GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Target:objA];
         event.name = @"collision:presolve";
         [objA handleEvent:event];
         
-        event = [[GemEvent alloc] initWithLuaState:objB.L Source:objB];
+        event = [[GemEvent alloc] initWithLuaState:objB.L Target:objB];
         event.name = @"collision:presolve";
         [objB handleEvent:event];
         
@@ -43,12 +43,12 @@ public:
         GemDisplayObject *objA = (__bridge GemDisplayObject *)bodyA->GetUserData();
         GemDisplayObject *objB = (__bridge GemDisplayObject *)bodyB->GetUserData();
         
-        GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Source:objA];
+        GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Target:objA];
         //event.name = @"collision:postsolve";
         event.name = @"collision";
         [objA handleEvent:event];
         
-        event = [[GemEvent alloc] initWithLuaState:objB.L Source:objB];
+        event = [[GemEvent alloc] initWithLuaState:objB.L Target:objB];
         //event.name = @"collision:postsolve";
         event.name = @"collision";
         [objB handleEvent:event];

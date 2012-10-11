@@ -44,7 +44,6 @@
 -(id) initWithLuaState:(lua_State *)luaState;
 
 -(void)renderScene:(GemScene *)scene;
--(void)renderSceneTexture:(GLuint)texture;
 
 
 

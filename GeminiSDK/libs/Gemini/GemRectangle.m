@@ -9,6 +9,8 @@
 #import "GemRectangle.h"
 #import "GemLayer.h"
 #import "LGeminiDisplay.h"
+#import "GemBoundsTests.h"
+#import "GLUtils.h"
 
 @implementation GemRectangle
 
@@ -139,39 +141,29 @@
     GLfloat z = 1;
     
     // inner portion
-    vertIndex[0] = 0;
-    vertIndex[1] = 1;
-    vertIndex[2] = 2;
-    vertIndex[3] = 0;
-    vertIndex[4] = 2;
-    vertIndex[5] = 3;
+    vertIndex[0] = 3;
+    vertIndex[1] = 3;
+    vertIndex[2] = 0;
+    vertIndex[3] = 2;
+    vertIndex[4] = 1;
+    vertIndex[5] = 1;
     
     // border
-    vertIndex[6] = 4;
-    vertIndex[7] = 5;
-    vertIndex[8] = 9;
-    vertIndex[9] = 4;
-    vertIndex[10] = 9;
-    vertIndex[11] = 8;
-    vertIndex[12] = 5;
-    vertIndex[13] = 6;
-    vertIndex[14] = 10;
-    vertIndex[15] = 5;
-    vertIndex[16] = 10;
-    vertIndex[17] = 9;
-    vertIndex[18] = 6;
-    vertIndex[19] = 7;
-    vertIndex[20] = 11;
-    vertIndex[21] = 6;
-    vertIndex[22] = 11;
-    vertIndex[23] = 10;
-    vertIndex[24] = 7;
-    vertIndex[25] = 4;
-    vertIndex[26] = 8;
-    vertIndex[27] = 7;
-    vertIndex[28] = 8;
-    vertIndex[29] = 11;
+    vertIndex[6] = 8;
+    vertIndex[7] = 8;
+    vertIndex[8] = 4;
+    vertIndex[9] = 9;
+    vertIndex[10] = 5;
+    vertIndex[11] = 10;
+    vertIndex[12] = 6;
+    vertIndex[13] = 11;
+    vertIndex[14] = 7;
+    vertIndex[15] = 8;
+    vertIndex[16] = 4;
+    vertIndex[17] = 4;
     
+    
+         
     if (strokeWidth > 0) {
         // inner portion
         verts[0] = -self.width / 2.0 + strokeWidth;
@@ -230,6 +222,63 @@
     }
     
     needsUpdate = NO;
+}
+
+-(BOOL)doesContainPoint:(GLKVector2)point {
+    
+    GLfloat newVerts[36];
+    unsigned int vertCount = 4;
+    //unsigned int indexCount = 6;
+    unsigned int indexCount = 6;
+    if (strokeWidth > 0) {
+        vertCount = 12;
+        //indexCount = 30;
+        indexCount = 18;
+    }
+    
+    // apply the cumulative transform to our vertices
+    transformVertices(newVerts, verts, vertCount, cumulativeTransform);
+    
+    // check our AABB first (determined by our four outer vertices (4,5,6,7)
+    GLfloat minX = verts[4*3];
+    GLfloat minY = verts[4*3+1];
+    GLfloat maxX = minX;
+    GLfloat maxY = minY;
+    
+    for (int i=5; i<8; i++) {
+        if (newVerts[i*3] < minX) {
+            minX = newVerts[i*3];
+        } else if (newVerts[i*3] > maxX){
+            maxX = newVerts[i*3];
+        }
+        
+        if (newVerts[i*3+1] < minY) {
+            minY = newVerts[i*3+1];
+        } else if (newVerts[i*3+1] > maxY){
+            maxY = newVerts[i*3+1];
+        }
+    }
+    
+    if (point.x < minX || point.x > maxX || point.y < minY || point.y > maxY) {
+        GemLog(@"point is outside bounding box (minX = %f, maxX = %f, minY = %f, maxY = %f", minX,maxX,minY,maxY);
+        return NO;
+    }
+    
+    
+    // now check every triangle composed by our vertices
+    GLKVector2 triangle[3];
+    for (int i=2; i<vertCount;i++) {
+        for (int j=0; j<3; j++) {
+            triangle[j].x = newVerts[(i-j)*3];
+            triangle[j].y = newVerts[(i-j)*3+1];
+        }
+        
+        if (testTriangleIntersection(triangle, point)) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 @end

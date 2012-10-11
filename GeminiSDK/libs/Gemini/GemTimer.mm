@@ -71,9 +71,8 @@
         
         if (accumulatedTime >= delay) {
             NSLog(@"Timer firing");
-            GemEvent *timeEvent = [[GemEvent alloc] initWithLuaState:L Source:self];
+            GemEvent *timeEvent = [[GemEvent alloc] initWithLuaState:L Target:self];
             timeEvent.name = GEM_TIMER_EVENT_NAME;
-            timeEvent.source = self;
             [self handleEvent:timeEvent];
             
             accumulatedTime = 0;

@@ -204,7 +204,7 @@ int setLuaPath(lua_State *L, NSString* path );
 
 -(BOOL)handleEvent:(NSString *)event {
     GemLog(@"Gemini handling event %@", event);
-    GemEvent *ge = [[GemEvent alloc] initWithLuaState:L Source:nil];
+    GemEvent *ge = [[GemEvent alloc] initWithLuaState:L Target:nil];
     ge.name = event;
     
     for (id gemObj in geminiObjects) {
@@ -229,7 +229,7 @@ int setLuaPath(lua_State *L, NSString* path );
     // update transitions
     [[GemTransitionManager shared] processTransitions:deltaT];
     
-    GemEvent *enterFrameEvent = [[GemEvent alloc] initWithLuaState:L Source:nil];
+    GemEvent *enterFrameEvent = [[GemEvent alloc] initWithLuaState:L Target:runtime];
     enterFrameEvent.name = @"enterFrame";
     [runtime handleEvent:enterFrameEvent];
     

@@ -8,5 +8,6 @@
 
 #import <GLKit/GLKit.h>
 
+void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GLKMatrix3 transform);
 GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout);
 GLKTextureInfo *createTexture(NSString * imgFileName);

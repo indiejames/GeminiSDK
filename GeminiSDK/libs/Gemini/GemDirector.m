@@ -71,7 +71,7 @@ static GemScene * createDefaultScene(lua_State *L){
     GemScene *cScene = [scenes objectForKey:currentScene];
     
     if (cScene != nil && ![cScene.name isEqualToString:GEM_DEFAULT_SCENE]) {
-        GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Source:cScene];
+        GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Target:cScene];
         exitEvent.name = GEM_EXIT_SCENE_EVENT;
         [cScene handleEvent:exitEvent];
         
@@ -113,7 +113,7 @@ static GemScene * createDefaultScene(lua_State *L){
         
         GemScene *gemScene = [scenes objectForKey:scene];
         
-        GemEvent *event = [[GemEvent alloc] initWithLuaState:L Source:gemScene];
+        GemEvent *event = [[GemEvent alloc] initWithLuaState:L Target:gemScene];
         event.name = GEM_ENTER_SCENE_EVENT;
         
         [gemScene handleEvent:event];
@@ -214,7 +214,7 @@ static GemScene * createDefaultScene(lua_State *L){
             currentScene = currentTransition.sceneB.name;
             GemScene *gemScene = [scenes objectForKey:currentScene];
             
-            GemEvent *event = [[GemEvent alloc] initWithLuaState:L Source:gemScene];
+            GemEvent *event = [[GemEvent alloc] initWithLuaState:L Target:gemScene];
             event.name = GEM_ENTER_SCENE_EVENT;
             
             [gemScene handleEvent:event];

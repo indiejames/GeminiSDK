@@ -11,6 +11,8 @@ local sprite = require('sprite')
 local walker = require('walker')
 
 local walkerSprite
+local sprite2
+local sprite3
 
 ----------------------------------------------------------------------------------
 -- 
@@ -28,19 +30,29 @@ local walkerSprite
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
     print("Lua: Creating scene 4")
+    
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
 	self:addLayer(layer1)
-    -- create our sprite for the running horse
+    
+    -- create our sprite for the running walker
     local walkerSpriteSheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
     local walkerSpriteSet = sprite.newSpriteSet(walkerSpriteSheet, 1, 10)
     walkerSprite = sprite.newSprite(walkerSpriteSet)
-    walkerSprite.x = 250
-    walkerSprite.y = 175
-	walkerSprite.xScale = 1.0 / display.contentScaleFactor()
-	walkerSprite.yScale = 1.0 / display.contentScaleFactor()
+    walkerSprite.x = 240
+    walkerSprite.y = 160
     layer1:insert(walkerSprite)
+    
+    sprite2 = sprite.newSprite(walkerSpriteSet)
+    sprite2.x = 100
+    sprite2.y = 100
+    layer1:insert(sprite2)
+    
+    sprite3 = sprite.newSprite(walkerSpriteSet)
+    sprite3.x = 400
+    sprite3.y = 240
+    layer1:insert(sprite3)
     
 end
 
@@ -60,14 +72,18 @@ function scene:enterScene( event )
     
     walkerSprite:prepare()
     walkerSprite:play()
+    sprite2:prepare()
+    sprite2:play()
+    sprite3:prepare()
+    sprite3:play()
     
- local function listener(event)
-    director.gotoScene(
+    local function listener(event)
+        director.gotoScene(
             "scene1",
             {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="down"})
-  end
+    end
     
-  timer.performWithDelay(5000, listener)
+    timer.performWithDelay(5000, listener)
 
 end
 

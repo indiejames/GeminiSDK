@@ -11,11 +11,11 @@
 
 
 @interface GemEvent : GemObject {
-    GemObject *source;  // the object generating/triggering the event
+    GemObject *target;  // the object receiving the event
 }
 
-@property (nonatomic, retain) GemObject *source;
+@property (nonatomic, retain) GemObject *target;
 
--(id)initWithLuaState:(lua_State *)luaState Source:(GemObject *)src;
+-(id)initWithLuaState:(lua_State *)luaState Target:(GemObject *)trgt;
 
 @end

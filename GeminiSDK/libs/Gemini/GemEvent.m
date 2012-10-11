@@ -10,12 +10,12 @@
 #import "LGeminiEvent.h"
 
 @implementation GemEvent
-@synthesize source;
+@synthesize target;
 
--(id)initWithLuaState:(lua_State *)luaState Source:(GemObject *)src {
+-(id)initWithLuaState:(lua_State *)luaState Target:(GemObject *)trgt {
     self = [super initWithLuaState:luaState];
     if (self) {
-        self.source = src;
+        self.target = trgt;
         
         // create a lua object for this event
         __unsafe_unretained GemEvent **levent = (__unsafe_unretained GemEvent **)lua_newuserdata(L, sizeof(GemEvent *));
@@ -28,9 +28,9 @@
         lua_newtable(L);
         
         // add a reference to the source into the userdata
-        if (src != nil) {
+        if (trgt != nil) {
             lua_pushstring(L, "source");
-            lua_rawgeti(L, LUA_REGISTRYINDEX, src.selfRef);
+            lua_rawgeti(L, LUA_REGISTRYINDEX, trgt.selfRef);
             lua_rawset(L, -3);
         }
                 

@@ -11,6 +11,8 @@
 #import "GemObject.h"
 #import "LGeminiObject.h"
 #import "GemTimer.h"
+#import "GemGLKViewController.h"
+#import "GemEventManager.h"
 
 
 static int newGeminiObject(lua_State *L){
@@ -69,6 +71,12 @@ int addEventListener(lua_State *L){
     
     if ([name isEqualToString:GEM_TIMER_EVENT_NAME]) {
         GemLog(@"Adding timer event");
+    }
+    
+    if ([name isEqualToString:GEM_TOUCH_EVENT_NAME]) {
+        // add this object to the event manager's list of touch listeners
+        GemEventManager *evtManager = ((GemGLKViewController *)([Gemini shared].viewController)).eventManager;
+        [evtManager addEventListener:*go forEvent:name];
     }
     
     // get the event handler table
