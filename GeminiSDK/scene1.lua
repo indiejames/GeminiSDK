@@ -9,7 +9,8 @@ local director = require( "director" )
 local scene = director.newScene()
 
 local star
-local rectangle
+local greenRectangle
+local redRectangle
 
 ----------------------------------------------------------------------------------
 -- 
@@ -28,22 +29,26 @@ local rectangle
 function scene:createScene( event )
 	print("Lua: Creating scene1")
     
-	local layer1 = display.newLayer(1)
-	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+	local layer2 = display.newLayer(-1)
+	layer2:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
-    print("Lua: Adding layer1 to scene")
-	self:addLayer(layer1)
+    print("Lua: Adding layer2 to scene")
+	self:addLayer(layer2)
     print("Lua: Creating green rectangle")
 	-- draw a green rectangle with a white border
-	rectangle = display.newRect(50,50,50,50)
-	rectangle:setFillColor(0.0,1,0,1.0)
-	rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
-	rectangle.strokeWidth = 2.5
-	rectangle.x = 375
-	rectangle.y = 225
-	rectangle.rotation = 30
-    rectangle.name = "GREEN_RECTANGLE"
-    layer1:insert(rectangle)
+	greenRectangle = display.newRect(50,50,50,50)
+	greenRectangle:setFillColor(0.0,1,0,1.0)
+	greenRectangle:setStrokeColor(1.0,1.0,1.0,1.0)
+	greenRectangle.strokeWidth = 2.5
+	greenRectangle.x = 375
+	greenRectangle.y = 225
+	--greenRectangle.rotation = 30
+    greenRectangle.name = "GREEN_RECTANGLE"
+    layer2:insert(greenRectangle)
+    
+    local layer1 = display.newLayer(1)
+	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    self:addLayer(layer1)
     
      -- draw a star using a poly line
     star = display.newLine( 150/2,30/2, 177/2,115/2 )
@@ -61,14 +66,15 @@ function scene:createScene( event )
 
     
     -- draw a red rectangle with a white border
-    rectangle = display.newRect(100/2,100/2,100/2,100/2)
-    rectangle:setFillColor(1.0,0,0,1.0)
-    rectangle:setStrokeColor(1.0,1.0,1.0,1.0)
-    rectangle.strokeWidth = 2.5
-    rectangle.x = 375
-    rectangle.y = 225
-    rectangle.rotation = 30
-    layer1:insert(rectangle)
+    redRectangle = display.newRect(100/2,100/2,100/2,100/2)
+    redRectangle:setFillColor(1.0,0,0,1.0)
+    redRectangle:setStrokeColor(1.0,1.0,1.0,1.0)
+    redRectangle.strokeWidth = 2.5
+    redRectangle.x = 375
+    redRectangle.y = 225
+    redRectangle.rotation = 30
+    redRectangle.name = "RED RECTANGLE"
+    layer1:insert(redRectangle)
 
     local rectangle3 = display.newRect(200/2,300/2,100/2,100/2)
     rectangle3:setFillColor(0.5,0.25,0.75,1.0)
@@ -171,12 +177,18 @@ function scene:enterScene( event )
     
     timer.performWithDelay(5000, listener)
     
-    -- touch event handler
-    local function touchListener(obj, event)
-        print("Got touched")
+    -- touch event handlers
+    function greenRectangle:touch(event)
+        print(string.format("%s got touched", self.name))
         return true
     end
-    rectangle:addEventListener("touch", touchListener)
+    greenRectangle:addEventListener("touch", greenRectangle)
+
+    function redRectangle:touch(event)
+        print(string.format("%s got touched", self.name))
+        return true
+    end
+    redRectangle:addEventListener("touch", redRectangle)
 
 end
 

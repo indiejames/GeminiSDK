@@ -44,7 +44,7 @@
             
             if(index1 == index2){
                 return NSOrderedSame;
-            } else if (index1 > index2){
+            } else if (index1 < index2){
                 return NSOrderedDescending;
             } else {
                 return NSOrderedAscending;

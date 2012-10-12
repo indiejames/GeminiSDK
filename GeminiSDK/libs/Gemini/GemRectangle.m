@@ -240,8 +240,8 @@
     transformVertices(newVerts, verts, vertCount, cumulativeTransform);
     
     // check our AABB first (determined by our four outer vertices (4,5,6,7)
-    GLfloat minX = verts[4*3];
-    GLfloat minY = verts[4*3+1];
+    GLfloat minX = newVerts[4*3];
+    GLfloat minY = newVerts[4*3+1];
     GLfloat maxX = minX;
     GLfloat maxY = minY;
     
