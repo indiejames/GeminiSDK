@@ -50,10 +50,9 @@ int genericIndex(lua_State *L){
     
 }
 
-// generic indexing for GeminiObjects
+// generic indexing for GeminiDisplayObjects
 int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj){
     if (lua_isstring(L, -1)) {
-        
         
         const char *key = lua_tostring(L, -1);
         if (strcmp("xReference", key) == 0) {
@@ -113,6 +112,10 @@ int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj){
         } else if (strcmp("isVisible", key) == 0){
             bool visible = obj.isVisible;
             lua_pushboolean(L, visible);
+            return 1;
+        } else if (strcmp("isActive", key) == 0) {
+            bool isActive = [obj isActive];
+            lua_pushboolean(L, isActive);
             return 1;
         } else {
             return genericIndex(L);
@@ -204,7 +207,11 @@ int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject __unsafe_unret
                 BOOL visible = lua_toboolean(L, 3);
                 [*obj setIsVisible:visible];
                 return 0;
-            } 
+            } else if (strcmp("isActive", key) == 0){
+                bool active = lua_toboolean(L, 3);
+                [*obj setIsActive:active];
+                return 0;
+            }
         }
         
         // defualt to storing value in attached lua table

@@ -52,7 +52,19 @@ function scene:createScene( event )
     sprite3 = sprite.newSprite(walkerSpriteSet)
     sprite3.x = 400
     sprite3.y = 240
+    sprite3.name = "sprite3"
     layer1:insert(sprite3)
+    
+    local scaleFactor = 1.0
+    local physicsData = (require "test_physics").physicsData(scaleFactor)
+    print("Lua: loaded physics data")
+    local data,data2,data3,data4,data5 = physicsData:get("runner")
+    print("Lua: got physics data for runner using file data")
+    physics.addBody( sprite3, "dynamic", data )
+    --physics.addBody( sprite3, "dynamic", { density=3.0, friction=0.5, restitution=0.7, radius=0.1 })
+    sprite3.isActive = false
+    print("Lua: added physics to sprite3")
+    
     
 end
 
@@ -76,6 +88,7 @@ function scene:enterScene( event )
     sprite2:play()
     sprite3:prepare()
     sprite3:play()
+    sprite3.isActive = true
     
     local function listener(event)
         director.gotoScene(

@@ -127,7 +127,11 @@ public:
         // use a circle shape
         float radius = [(NSNumber *)[params objectForKey:@"radius"] floatValue];
         
-        circle.m_p.Set(pp.x, pp.y);
+        NSArray *posArray = (NSArray *)[params objectForKey:@"position"];
+        float x = [(NSNumber *)[posArray objectAtIndex:0] floatValue] / scale;
+        float y = -[(NSNumber *)[posArray objectAtIndex:1] floatValue] / scale;
+        
+        circle.m_p.Set(x, y);
         circle.m_radius = radius;
         fixtureDef.shape = &circle;
         
@@ -206,6 +210,7 @@ public:
         accumulator -= timeStep;
     }
     
+    // interpolate remainder of update
     const double alpha = accumulator / timeStep;
     
     for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
@@ -222,6 +227,36 @@ public:
         
     }
        
+}
+
+-(bool)isActiveBody:(void *)body {
+    b2Body *physBody = (b2Body *)body;
+    return physBody->IsActive();
+}
+
+-(void)setBody:(void *)body isActive:(bool)active {
+    b2Body *physBody = (b2Body *)body;
+    physBody->SetActive(active);
+}
+
+-(BOOL)doesBody:(void *)body ContainPoint:(GLKVector2)point {
+    b2Body *physicsBody = (b2Body *)body;
+    
+    b2Vec2 p;
+    p.x = point.x / scale;
+    p.y = point.y / scale;
+    
+    b2Fixture* fixture = ((b2Body *)physicsBody)->GetFixtureList();
+    while(fixture != NULL) {
+        if (fixture->TestPoint(p)) {
+            return YES;
+        }
+        
+        fixture = fixture->GetNext();
+    }
+    
+    return NO;
+
 }
 
 -(void)setScale:(double)s {

@@ -10,6 +10,7 @@
 #import "Gemini.h"
 #import "GemLine.h"
 #import "GemRectangle.h"
+#import "GemCircle.h"
 #import "GemSprite.h"
 #import "GemLayer.h"
 #import "LGeminiDisplay.h"
@@ -173,6 +174,7 @@ GLuint spriteRingBufferOffset = 0;
     
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
     NSMutableArray *rectangles = [NSMutableArray arrayWithCapacity:1];
+    NSMutableArray *circles = [NSMutableArray arrayWithCapacity:1];
     
     GLKMatrix3 cumulTransform = GLKMatrix3Multiply(transform, group.transform);
     GLfloat groupAlpha = group.alpha;
@@ -198,6 +200,8 @@ GLuint spriteRingBufferOffset = 0;
         } else if(gemObj.class == GemRectangle.class){
             //[self renderRectangle:((GeminiRectangle *)gemObj) withLayer:layer alpha:cumulAlpha transform:transform];
             [rectangles addObject:gemObj];
+        } else if(gemObj.class == GemCircle.class){
+            [circles addObject:gemObj];
         }
         
     }
@@ -209,7 +213,9 @@ GLuint spriteRingBufferOffset = 0;
        [self renderRectangles:rectangles withLayer:layer alpha:cumulAlpha transform:cumulTransform];
     }
     
-    
+    if ([circles count] > 0) {
+        [self renderCircles:circles withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+    }
 }
 
 -(void)renderSpriteBatches {
@@ -429,9 +435,7 @@ GLuint spriteRingBufferOffset = 0;
         GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, rectangle.transform);
         
         rectangle.cumulativeTransform = finalTransform;
-        
-        //GLfloat *newVerts = (GLfloat *)malloc(12*3*sizeof(GLfloat));
-                
+
         unsigned int vertCount = 4;
         //unsigned int indexCount = 6;
         unsigned int indexCount = 6;
@@ -444,10 +448,6 @@ GLuint spriteRingBufferOffset = 0;
         transformVertices(newVerts, rectangle.verts, vertCount, finalTransform);
         
         GLfloat finalAlpha = alpha * rectangle.alpha;
-        
-        //memcpy(newVerts, rectangle.verts, vertCount*3*sizeof(GLfloat));
-        
-        //ColoredVertex *vertData = (ColoredVertex *)malloc(vertCount*sizeof(ColoredVertex));
         
         
         for (int j=0; j<vertCount; j++) {
@@ -478,6 +478,106 @@ GLuint spriteRingBufferOffset = 0;
     
     glDrawElements(GL_TRIANGLE_STRIP, indexOffset / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
 
+}
+
+
+-(void)renderCircles:(NSArray *)circles withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
+    
+    GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
+    
+    GemOpenGLState *glState = [GemOpenGLState shared];
+    //if (glState.boundVertexArrayObject != rectangleVAO) {
+    glBindVertexArrayOES(rectangleVAO);
+    glState.boundVertexArrayObject = rectangleVAO;
+    //}
+    
+    
+    glUseProgram(rectangleShaderManager.program);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, rectangleVBO[ringBufferOffset]);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangleVBO[ringBufferOffset + 1]);
+    
+    if (ringBufferOffset == 0) {
+        ringBufferOffset = 2;
+    } else {
+        ringBufferOffset = 0;
+    }
+    
+    glVertexAttribPointer(ATTRIB_VERTEX_RECTANGLE, 3, GL_FLOAT, GL_FALSE, sizeof(GemColoredVertex), (GLvoid *)0);
+    
+    glVertexAttribPointer(ATTRIB_COLOR_RECTANGLE, 4, GL_FLOAT, GL_FALSE,
+                          sizeof(GemColoredVertex), (GLvoid*) (sizeof(float) * 3));
+    
+    
+    GLuint vertOffset = 0;
+    GLuint indexOffset = 0;
+    
+    GemColoredVertex *vertData;
+    GLushort *newIndex;
+    unsigned int numVerts = 0;
+    unsigned int numIndices = 0;
+    
+    // loop through the circles once to compute the total number of verts/indices needed
+    for (int i=0; i<[circles count]; i++) {
+        GemCircle *circle = [circles objectAtIndex:i];
+        numIndices += [circle indexCount];
+        numVerts += [circle vertexCount];
+    }
+    
+    vertData = (GemColoredVertex *)malloc(numVerts * sizeof(GemColoredVertex));
+    newIndex = (GLushort *)malloc(numIndices * sizeof(GLushort));
+       
+    // go through every circle and add their vertices to the vertex buffer and their indices to two
+    // index buffers, one for the inner portion ond one for the border (if the circle has one)
+    // the inner portions are drawn all together with one big draw call using GL_TRIANGLE_FAN and redundant
+    // vertices to connect the circles.  the outer portions (borders) are draw all at once using a single call
+    // with GL_TRIANGLE_STRIP
+    for (int i=0; i<[circles count]; i++) {
+        GemCircle *circle = [circles objectAtIndex:i];
+        GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, circle.transform);
+        
+        circle.cumulativeTransform = finalTransform;
+        
+        unsigned int vertCount = [circle vertexCount];
+        unsigned int indexCount = [circle indexCount];
+        
+        GLfloat *newVerts = (GLfloat *)malloc(vertCount * 3 * sizeof(GLfloat));
+        transformVertices(newVerts, circle.verts, vertCount, finalTransform);
+        
+        GLfloat finalAlpha = alpha * circle.alpha;
+        
+        for (int j=0; j<vertCount; j++) {
+            vertData[j+vertOffset].position[0] = newVerts[j*3];
+            vertData[j+vertOffset].position[1] = newVerts[j*3+1];
+            vertData[j+vertOffset].position[2] = z;
+            vertData[j+vertOffset].color[0] = circle.vertColor[j*4];
+            vertData[j+vertOffset].color[1] = circle.vertColor[j*4+1];
+            vertData[j+vertOffset].color[2] = circle.vertColor[j*4+2];
+            vertData[j+vertOffset].color[3] = circle.vertColor[j*4+3] * finalAlpha;
+        }
+        
+        for (int j=0; j<indexCount; j++) {
+            newIndex[j+indexOffset] = circle.vertIndex[j] + vertOffset;
+            
+        }
+  
+        vertOffset += vertCount;
+        indexOffset += indexCount;
+       
+    }
+    
+    GemLog(@"Writing %ld bytes of vertex data to buffer", numVerts*sizeof(GemColoredVertex));
+    GemLog(@"Writing %ld bytes of index data to buffer", numIndices*sizeof(GLushort));
+    
+    glBufferSubData(GL_ARRAY_BUFFER, 0, numVerts*sizeof(GemColoredVertex), vertData);
+    glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, numIndices*sizeof(GLushort), newIndex);
+    
+    
+    glDrawElements(GL_TRIANGLE_STRIP, numIndices, GL_UNSIGNED_SHORT, (void*)0);
+    
+    free(newIndex);
+    free(vertData);
+    
 }
 
 
@@ -516,26 +616,24 @@ GLuint spriteRingBufferOffset = 0;
     glBindVertexArrayOES(0);
 }
 
--(void)setupRectangleRendering {
-    
-    glGenBuffers(4, rectangleVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, rectangleVBO[0]);
-    glBufferData(GL_ARRAY_BUFFER, 512*sizeof(GemColoredVertex), NULL, GL_DYNAMIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangleVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 512*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
-    
-    glBindBuffer(GL_ARRAY_BUFFER, rectangleVBO[2]);
-    glBufferData(GL_ARRAY_BUFFER, 512*sizeof(GemColoredVertex), NULL, GL_DYNAMIC_DRAW);
-    
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangleVBO[3]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 512*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
 
-    
+-(void)setupRectangleRendering {
     
     glGenVertexArraysOES(1, &rectangleVAO);
     glBindVertexArrayOES(rectangleVAO);
     
+    glGenBuffers(4, rectangleVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, rectangleVBO[0]);
+    glBufferData(GL_ARRAY_BUFFER, 5512*sizeof(GemColoredVertex), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangleVBO[1]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 5512*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, rectangleVBO[2]);
+    glBufferData(GL_ARRAY_BUFFER, 5512*sizeof(GemColoredVertex), NULL, GL_DYNAMIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rectangleVBO[3]);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 5512*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
     
     rectangleShaderManager = [[GeminiRectangleShaderManager alloc] init];
     [rectangleShaderManager loadShaders];
@@ -550,9 +648,6 @@ GLuint spriteRingBufferOffset = 0;
     
     glUniformMatrix4fv(uniforms_rectangle[UNIFORM_PROJECTION_RECTANGLE], 1, 0, modelViewProjectionMatrix.m);
    
-    //glEnableVertexAttribArray(ATTRIB_VERTEX_RECTANGLE);
-    //glEnableVertexAttribArray(ATTRIB_COLOR_RECTANGLE);
-    
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
     

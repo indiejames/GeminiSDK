@@ -69,6 +69,7 @@
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInView:self.parentGLKViewController.view];
         float contentScale = self.parentGLKViewController.view.contentScaleFactor;
+        contentScale = 1.0;
         GemLog(@"touch at (x,y) = (%f,%f)", contentScale*location.x, contentScale*(self.parentGLKViewController.view.bounds.size.height - location.y));
         
         GemTouchEvent *tevent = [[GemTouchEvent alloc]initWithLuaState:L Target:nil];
@@ -82,9 +83,7 @@
         GemLog(@"Testing %d objects for touch event", [eventListeners count]);
         
         for (GemDisplayObject *obj in eventListeners){
-            if ([obj doesContainPoint:point]) {
-                GemLog(@"Object contains point");
-            }
+           
             if ([obj doesContainPoint:point] && [obj handleEvent:tevent]) {
                 break;
             }

@@ -138,7 +138,7 @@
 
 -(void)computeVertices {
     //GLfloat z = ((GLfloat)layerIndex) / 256.0 - 0.5;
-    GLfloat z = 1;
+    GLfloat z = 1; // this is not used in the renderer
     
     // inner portion
     vertIndex[0] = 3;
@@ -225,6 +225,11 @@
 }
 
 -(BOOL)doesContainPoint:(GLKVector2)point {
+    
+    if (physicsBody) {
+        GemLog(@"Using physics body to test point for %@", name);
+        return [super doesContainPoint:point];
+    }
     
     GLfloat newVerts[36];
     unsigned int vertCount = 4;

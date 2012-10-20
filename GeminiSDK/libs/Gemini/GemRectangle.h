@@ -17,7 +17,7 @@
     GLKVector4 fillColor;
     GLKVector4 *gradient;
     GLKVector4 strokeColor;
-    GemLine *border;
+    //GemLine *border;
     GLfloat strokeWidth;
 }
 

@@ -8,6 +8,9 @@
 
 #import "GemDisplayObject.h"
 #import "GemDisplayGroup.h"
+#include "Box2D.h"
+#import "GemPhysics.h"
+#import "Gemini.h"
 
 
 @implementation GemDisplayObject
@@ -226,6 +229,19 @@
     needsTransformUpdate = YES;
 }
 
+-(void)setIsActive:(bool)active {
+    if (physicsBody) {
+        [[Gemini shared].physics setBody:physicsBody isActive:active];
+    }
+}
+
+-(bool)isActive {
+    if (physicsBody) {
+        return [[Gemini shared].physics isActiveBody:physicsBody];
+    }
+    
+    return false;
+}
 
 -(GLKMatrix3) transform {
     if (needsTransformUpdate) {
@@ -235,7 +251,7 @@
         // translate to (xOrigin,yOrigin)
         if (xReference != 0 || yReference != 0) {
             // combine two translations into one
-            transform = GLKMatrix3Make(1.0, 0.0, 0, 0, 1, 0, xOrigin + xReference, yOrigin+yReference, 1.0);
+            transform = GLKMatrix3Make(1.0, 0.0, 0, 0, 1, 0, xOrigin + xReference, yOrigin + yReference, 1.0);
             
         } else {
             
@@ -266,6 +282,12 @@
 
 // NOTE - this method must be overriden by subclasses if they are to support touch events
 -(BOOL)doesContainPoint:(GLKVector2) point {
+    
+    // use the physics body attached if available
+    if (physicsBody) {
+        return [[Gemini shared].physics doesBody:physicsBody ContainPoint:point];
+    }
+    
     return NO;
 }
 

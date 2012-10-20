@@ -128,5 +128,17 @@
     currentFrame = cframe;
 }
 
+-(BOOL)doesContainPoint:(GLKVector2)point {
+    if (physicsBody != nil) {
+        // use our physics bounding poly
+        return [super doesContainPoint:point];
+    } else {
+        // TODO use a rectangle for our bounding poly
+    }
+    
+    
+    return NO;
+}
+
 
 @end

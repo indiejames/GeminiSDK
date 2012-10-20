@@ -68,5 +68,7 @@
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
 -(GLKMatrix3) transform;
 -(BOOL)doesContainPoint:(GLKVector2)point;
+-(void)setIsActive:(bool)active;
+-(bool)isActive;
 
 @end

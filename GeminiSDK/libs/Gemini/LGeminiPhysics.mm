@@ -14,6 +14,11 @@
 static int addBody(lua_State *L){
     __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
     
+    if ([(*displayObj).name isEqualToString:@"sprite3"]) {
+        GemLog(@"Adding physics to sprite3");
+    }
+    
+    GemLog(@"Adding physics to %@", (*displayObj).name);
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:1];
     NSString *type = @"static";
@@ -44,6 +49,24 @@ static int addBody(lua_State *L){
                     while (lua_next(L, -2) != 0) {
                         double value = lua_tonumber(L, -1);
                         [shape addObject:[NSNumber numberWithDouble:value]];
+                        /* removes 'value'; keeps 'key' for next iteration */
+                        lua_pop(L, 1);
+                    }
+                } else if (strcmp(key, "filter") == 0){
+                    // don't handle filters yet
+                } else if (strcmp(key, "pe_fixture_id") == 0){
+                  // ignore fixture ids for now
+                } else if (strcmp(key, "position") == 0) {
+                    // value is a table
+                    
+                    NSMutableArray *position = [NSMutableArray arrayWithCapacity:2];
+                    [params setObject:position forKey:[NSString stringWithUTF8String:key]];
+                    
+                    // iterate over the table and copy its values
+                    lua_pushnil(L);
+                    while (lua_next(L, -2) != 0) {
+                        double value = lua_tonumber(L, -1);
+                        [position addObject:[NSNumber numberWithDouble:value]];
                         /* removes 'value'; keeps 'key' for next iteration */
                         lua_pop(L, 1);
                     }

@@ -23,29 +23,17 @@
 // the ouput array should be preallocated to the same size as the input array
 //
 void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GLKMatrix3 transform){
-    GLKVector3 vectorArray[1024];
-    
-    // create an array of vectors from our input data
-    // GLKVector3 *vectorArray = (GLKVector3 *)malloc(vertCount * sizeof(GLKVector3));
-    /*for (GLuint i = 0; i<vertCount; i++) {
-     vectorArray[i] = GLKVector3MakeWithArray(inVerts + 3*i);
-     }*/
-    
+    //GLKVector3 vectorArray[1024];
+    GLKVector3 *vectorArray = (GLKVector3 *)malloc(vertCount * sizeof(GLKVector3));
+       
     memcpy(vectorArray, inVerts, vertCount * sizeof(GLKVector3));
     
     GLKMatrix3MultiplyVector3Array(transform, vectorArray, vertCount);
     
     memcpy(outVerts, vectorArray, vertCount * sizeof(GLKVector3));
     
-    /*for (GLuint i = 0; i<vertCount; i++) {
-     
-     outVerts[i*3] = vectorArray[i].x;
-     outVerts[i*3+1] = vectorArray[i].y;
-     outVerts[i*3+2] = vectorArray[i].z;
-     
-     }*/
     
-    //free(vectorArray);
+    free(vectorArray);
     
 }
 

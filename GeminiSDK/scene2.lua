@@ -100,7 +100,7 @@ function scene:enterScene( event )
             {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="left"})
     end
     
-    timer.performWithDelay(10000, listener)
+    timer.performWithDelay(3000, listener)
 
 end
 

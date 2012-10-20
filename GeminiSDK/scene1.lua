@@ -11,6 +11,8 @@ local scene = director.newScene()
 local star
 local greenRectangle
 local redRectangle
+local rectangle3
+local rectangle4
 
 ----------------------------------------------------------------------------------
 -- 
@@ -63,7 +65,24 @@ function scene:createScene( event )
     group1.yReference = star.y
     group1.x = 240
     group1.y = 160
-
+    
+    -- draw a red circle with a white border
+   local redCircle = display.newCircle(100,100,100)
+    redCircle:setFillColor(1.0,0,0,1.0)
+    redCircle:setStrokeColor(1.0,1.0,1.0,1.0)
+    --redCircle.strokeWidth = 2.5
+    redCircle.alpha = 0.5;
+    --redCircle.x = 100
+    --redCircle.y = 100
+    redCircle.name = "RED CIRCLE"
+    layer1:insert(redCircle)
+    
+    -- draw a blue circle with a white border
+    local blueCircle = display.newCircle(50,50,70)
+    blueCircle:setFillColor(0,0,1.0,1.0)
+    blueCircle.alpha = 0.5
+    blueCircle.name = "BLUE CIRCLE"
+    layer1:insert(blueCircle)
     
     -- draw a red rectangle with a white border
     redRectangle = display.newRect(100/2,100/2,100/2,100/2)
@@ -76,7 +95,7 @@ function scene:createScene( event )
     redRectangle.name = "RED RECTANGLE"
     layer1:insert(redRectangle)
 
-    local rectangle3 = display.newRect(200/2,300/2,100/2,100/2)
+    rectangle3 = display.newRect(200/2,300/2,100/2,100/2)
     rectangle3:setFillColor(0.5,0.25,0.75,1.0)
     rectangle3:setStrokeColor(1.0,1.0,1.0,1.0)
     rectangle3.strokeWidth = 2.5
@@ -86,7 +105,7 @@ function scene:createScene( event )
     rectangle3.name = "rectangle3"
     layer1:insert(rectangle3)
 
-    local rectangle4 = display.newRect(600/2,400/2,100/2,100/2)
+    rectangle4 = display.newRect(600/2,400/2,100/2,100/2)
     rectangle4:setFillColor(0,0.5,0.5,1.0)
     rectangle4:setStrokeColor(1.0,1.0,1.0,1.0)
     rectangle4.strokeWidth = 2.5
@@ -139,9 +158,6 @@ function scene:createScene( event )
     layer1:insert(rightSide)
     physics.addBody(rightSide)
 
-
-	
-
 end
 
 
@@ -175,7 +191,7 @@ function scene:enterScene( event )
             --{transition="GEM_SLIDE_SCENE_TRANSITION", duration=5.0, direction="up"}
         )    end
     
-    timer.performWithDelay(5000, listener)
+    timer.performWithDelay(10000, listener)
     
     -- touch event handlers
     function greenRectangle:touch(event)
@@ -189,6 +205,19 @@ function scene:enterScene( event )
         return true
     end
     redRectangle:addEventListener("touch", redRectangle)
+    
+    function rectangle3:touch(event)
+        print(string.format("%s got touched", self.name))
+        return true
+    end
+    rectangle3:addEventListener("touch", rectangle3)
+    
+    function rectangle4:touch(event)
+        print(string.format("%s got touched", self.name))
+        return true
+    end
+    rectangle4:addEventListener("touch", rectangle4)
+
 
 end
 

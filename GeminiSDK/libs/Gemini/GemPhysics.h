@@ -37,5 +37,8 @@ typedef struct {
 -(GemPoint)fromPhysicsCoord:(GemPoint)point;
 -(void)addBodyForObject:(GemDisplayObject *)obj WithParams:(NSDictionary *)params;
 -(void)update:(double)deltaT;
+-(BOOL)doesBody:(void *)body ContainPoint:(GLKVector2)point;
+-(bool)isActiveBody:(void *)body;
+-(void)setBody:(void *)body isActive:(bool)active;
 
 @end

@@ -13,10 +13,124 @@
 #import "GemScene.h"
 #import "GemLine.h"
 #import "GemRectangle.h"
+#import "GemCircle.h"
 #import "GemGLKViewController.h"
 #import "LGeminiLuaSupport.h"
 #import "LGeminiObject.h"
 
+
+///////////// circles /////////////////////////
+static int newCircle(lua_State *L){
+    GLfloat x = luaL_checknumber(L, 1);
+    GLfloat y = luaL_checknumber(L, 2);
+    GLfloat r = luaL_checknumber(L, 3);
+    
+    GemCircle *circle = [[GemCircle alloc] initWithLuaState:L X:x Y:y Radius:r];
+    [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:circle];
+    
+    return 1;
+}
+
+static int circleIndex(lua_State *L){
+    int rval = 0;
+    __unsafe_unretained GemCircle  **circle = (__unsafe_unretained GemCircle **)luaL_checkudata(L, 1, GEMINI_CIRCLE_LUA_KEY);
+    if (circle != NULL) {
+        if (lua_isstring(L, -1)) {
+            
+            
+            const char *key = lua_tostring(L, -1);
+            if (strcmp("strokeWidth", key) == 0) {
+                
+                GLfloat w = (*circle).strokeWidth;
+                lua_pushnumber(L, w);
+                return 1;
+            } else {
+                rval = genericGeminiDisplayObjectIndex(L, *circle);
+            }
+        }
+        
+        
+    }
+    
+    return rval;
+}
+
+static int circleNewIndex (lua_State *L){
+    int rval = 0;
+    __unsafe_unretained GemCircle  **circle = (__unsafe_unretained GemCircle **)luaL_checkudata(L, 1, GEMINI_CIRCLE_LUA_KEY);
+    
+    if (circle != NULL) {
+        if (lua_isstring(L, 2)) {
+            
+            
+            const char *key = lua_tostring(L, 2);
+            if (strcmp("strokeWidth", key) == 0) {
+                GLfloat w = luaL_checknumber(L, 3);
+                (*circle).strokeWidth = w;
+                rval = 0;
+            } else {
+                
+                rval = genericGemDisplayObjecNewIndex(L, circle);
+            }
+            
+        }
+        
+        
+    }
+    
+    
+    return rval;
+}
+
+static int circleSetFillColor(lua_State *L){
+    int numargs = lua_gettop(L);
+    
+    __unsafe_unretained GemCircle  **circle = (__unsafe_unretained GemCircle **)luaL_checkudata(L, 1, GEMINI_CIRCLE_LUA_KEY);
+    
+    GLfloat red = luaL_checknumber(L, 2);
+    GLfloat green = luaL_checknumber(L, 3);
+    GLfloat blue = luaL_checknumber(L, 4);
+    GLfloat alpha = 1.0;
+    if (numargs == 5) {
+        alpha = luaL_checknumber(L, 5);
+    }
+    
+    (*circle).fillColor = GLKVector4Make(red, green, blue, alpha);
+    
+    
+    return 0;
+}
+
+static int circleSetStrokeColor(lua_State *L){
+    int numargs = lua_gettop(L);
+    
+    __unsafe_unretained GemCircle  **circle = (__unsafe_unretained GemCircle **)luaL_checkudata(L, 1, GEMINI_CIRCLE_LUA_KEY);
+    
+    GLfloat red = luaL_checknumber(L, 2);
+    GLfloat green = luaL_checknumber(L, 3);
+    GLfloat blue = luaL_checknumber(L, 4);
+    GLfloat alpha = 1.0;
+    if (numargs == 5) {
+        alpha = luaL_checknumber(L, 5);
+    }
+    
+    (*circle).strokeColor = GLKVector4Make(red, green, blue, alpha);
+    
+    
+    return 0;
+}
+
+static int circleSetStrokeWidth(lua_State *L){
+    
+    __unsafe_unretained GemCircle  **circle = (__unsafe_unretained GemCircle **)luaL_checkudata(L, 1, GEMINI_CIRCLE_LUA_KEY);
+    
+    GLfloat w = luaL_checknumber(L, 2);
+    
+    (*circle).strokeWidth = w;
+    
+    
+    return 0;
+}
 
 
 
@@ -30,10 +144,6 @@ static int newRectangle(lua_State *L){
 
     GemRectangle *rect = [[GemRectangle alloc] initWithLuaState:L X:x Y:y Width:width Height:height];
     [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:rect];
-    
-    
-    rect.width = width;
-    rect.height = height;
     
     return 1;
 }
@@ -383,6 +493,7 @@ static const struct luaL_Reg displayLib_f [] = {
     {"newGroup", newDisplayGroup},
     {"newLine", newLine},
     {"newRect", newRectangle},
+    {"newCircle", newCircle},
     {"contentScaleFactor", displayGetScaleFactor},
     {NULL, NULL}
 };
@@ -436,6 +547,21 @@ static const struct luaL_Reg rectangle_m [] = {
     {NULL, NULL}
 };
 
+// mappings for the circle methods
+static const struct luaL_Reg circle_m [] = {
+    {"__gc", genericGC},
+    {"__index", circleIndex},
+    {"__newindex", circleNewIndex},
+    {"setFillColor", circleSetFillColor},
+    {"setStrokeColor", circleSetStrokeColor},
+    {"setStrokeWidth", circleSetStrokeWidth},
+    {"removeSelf", removeSelf},
+    {"delete", genericDelete},
+    {"addEventListener", addEventListener},
+    {"removeEventListener", removeEventListener},
+    {NULL, NULL}
+};
+
 
 int luaopen_display_lib (lua_State *L){
     // create meta tables for our various types /////////
@@ -452,6 +578,9 @@ int luaopen_display_lib (lua_State *L){
    
     // rectangles
     createMetatable(L, GEMINI_RECTANGLE_LUA_KEY, rectangle_m);
+    
+    // circles
+    createMetatable(L, GEMINI_CIRCLE_LUA_KEY, circle_m);
     
     /////// finished with metatables ///////////
     
