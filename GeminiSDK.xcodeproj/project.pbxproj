@@ -218,6 +218,7 @@
 		76E1AA0016260FEF00C2CF00 /* GemBoundsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E1A9FF16260FED00C2CF00 /* GemBoundsTests.m */; };
 		76E1AA02162A309A00C2CF00 /* test_physics.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76E1AA01162A309700C2CF00 /* test_physics.lua */; };
 		76E1AA05162C895700C2CF00 /* GemCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E1AA04162C895200C2CF00 /* GemCircle.m */; };
+		76E1AA081633489900C2CF00 /* GemShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E1AA071633489500C2CF00 /* GemShape.m */; };
 		76F508CA160B901100DBA64B /* GLUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F508C9160B901100DBA64B /* GLUtils.m */; };
 		76F508CD160BBA5A00DBA64B /* GemSlideSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 76F508CC160BBA5A00DBA64B /* GemSlideSceneTransition.m */; };
 		76F6448815FD80670007D29A /* GemPhysics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 76F6448715FD80660007D29A /* GemPhysics.mm */; };
@@ -593,6 +594,8 @@
 		76E1AA01162A309700C2CF00 /* test_physics.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test_physics.lua; sourceTree = "<group>"; };
 		76E1AA03162C894F00C2CF00 /* GemCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemCircle.h; path = libs/Gemini/GemCircle.h; sourceTree = "<group>"; };
 		76E1AA04162C895200C2CF00 /* GemCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemCircle.m; path = libs/Gemini/GemCircle.m; sourceTree = "<group>"; };
+		76E1AA061633489200C2CF00 /* GemShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemShape.h; path = libs/Gemini/GemShape.h; sourceTree = "<group>"; };
+		76E1AA071633489500C2CF00 /* GemShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemShape.m; path = libs/Gemini/GemShape.m; sourceTree = "<group>"; };
 		76F508C8160B6D1600DBA64B /* GLUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GLUtils.h; path = libs/Gemini/GLUtils.h; sourceTree = "<group>"; };
 		76F508C9160B901100DBA64B /* GLUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLUtils.m; path = libs/Gemini/GLUtils.m; sourceTree = "<group>"; };
 		76F508CB160BBA5900DBA64B /* GemSlideSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSlideSceneTransition.h; path = libs/Gemini/GemSlideSceneTransition.h; sourceTree = "<group>"; };
@@ -898,6 +901,8 @@
 				76E1A9FF16260FED00C2CF00 /* GemBoundsTests.m */,
 				76E1AA03162C894F00C2CF00 /* GemCircle.h */,
 				76E1AA04162C895200C2CF00 /* GemCircle.m */,
+				76E1AA061633489200C2CF00 /* GemShape.h */,
+				76E1AA071633489500C2CF00 /* GemShape.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1459,6 +1464,7 @@
 				76E1A9FD1624A30400C2CF00 /* GemTouchEvent.m in Sources */,
 				76E1AA0016260FEF00C2CF00 /* GemBoundsTests.m in Sources */,
 				76E1AA05162C895700C2CF00 /* GemCircle.m in Sources */,
+				76E1AA081633489900C2CF00 /* GemShape.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

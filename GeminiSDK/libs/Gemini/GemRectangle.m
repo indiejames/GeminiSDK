@@ -15,9 +15,6 @@
 @implementation GemRectangle
 
 
-@synthesize vertColor;
-
-
 -(id) initWithLuaState:(lua_State *)luaState X:(GLfloat)x0 Y:(GLfloat)y0 Width:(GLfloat)w Height:(GLfloat)h {
     self = [super initWithLuaState:luaState LuaKey:GEMINI_RECTANGLE_LUA_KEY];
     if (self) {
@@ -34,6 +31,9 @@
         vertColor = (GLfloat *)malloc(12*4*sizeof(GLfloat));
         vertIndex = (GLushort *)malloc(30*sizeof(GLushort));
         strokeWidth = 0;
+        
+        numInnerlVerts = 4;
+        numBorderVerts = 8;
         
         [self setStrokeColor:GLKVector4Make(1.0, 1.0, 1.0, 1.0)];
         [self setFillColor:GLKVector4Make(1.0, 1.0, 1.0, 1.0)];
@@ -59,47 +59,13 @@
     return rval;
 }
 
--(void)setLayer:(GemLayer *)_layer {
-    [super setLayer:_layer];
-}
-
--(GLfloat) strokeWidth {
-    return strokeWidth;
-}
-
--(void)setStrokeWidth:(GLfloat)w {
-    strokeWidth = w;
-    needsUpdate = YES;
-    
-}
-
--(void)setStrokeColor:(GLKVector4)sColor {
-    strokeColor = sColor;
-    
-    for (int i=4; i<12; i++) {
-        vertColor[i*4] = sColor.r;
-        vertColor[i*4+1] = sColor.g;
-        vertColor[i*4+2] = sColor.b;
-        vertColor[i*4+3] = sColor.a;
+-(GLuint)vertIndexCount {
+    GLuint rval = 6;
+    if (strokeWidth > 0) {
+        rval = 18;
     }
-}
-
--(GLKVector4)strokeColor {
-    return strokeColor;
-}
-
--(void)setFillColor:(GLKVector4)fill {
-    fillColor = fill;
-    for (int i=0; i<4; i++) {
-        vertColor[i*4] = fill.r;
-        vertColor[i*4+1] = fill.g;
-        vertColor[i*4+2] = fill.b;
-        vertColor[i*4+3] = fill.a;
-    }
-}
-
--(GLKVector4)fillColor {
-    return fillColor;
+    
+    return rval;
 }
 
 // always pass in four colors, one for each corner
@@ -118,27 +84,9 @@
     return gradient;
 }
 
--(GLfloat *)verts {
-    if (needsUpdate) {
-        [self computeVertices];
-        
-    }
-    
-    return verts;
-    
-}
-
--(GLushort *)vertIndex {
-    if (needsUpdate) {
-        [self computeVertices];
-    }
-    
-    return vertIndex;
-}
 
 -(void)computeVertices {
-    //GLfloat z = ((GLfloat)layerIndex) / 256.0 - 0.5;
-    GLfloat z = 1; // this is not used in the renderer
+    GLfloat z = 1; // homogeneous coordinates to all fast matrix math
     
     // inner portion
     vertIndex[0] = 3;

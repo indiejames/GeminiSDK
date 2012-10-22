@@ -12,12 +12,6 @@
 
 @implementation GemCircle
 
-@synthesize verts = verts;
-@synthesize vertColor = vertColor;
-@synthesize vertIndex = vertIndex;
-@synthesize strokeColor = strokeColor;
-@synthesize fillColor = fillColor;
-@synthesize gradient = gradient;
 
 -(id) initWithLuaState:(lua_State *)luaState X:(GLfloat)x0 Y:(GLfloat)y0 Radius:(GLfloat)rad {
     self = [super initWithLuaState:luaState LuaKey:GEMINI_CIRCLE_LUA_KEY];
@@ -45,18 +39,18 @@
     return self;
 }
 
--(void)dealloc {
+/*-(void)dealloc {
    
     free(verts);
     free(vertIndex);
     free(vertColor);
-}
+}*/
 
--(void)setLayer:(GemLayer *)_layer {
+/*-(void)setLayer:(GemLayer *)_layer {
     [super setLayer:_layer];
-}
+}*/
 
--(void)setStrokeColor:(GLKVector4)sColor {
+/*-(void)setStrokeColor:(GLKVector4)sColor {
     unsigned int numSlices = [self numSlices];
     int numInnerVerts = numSlices + 1;
     int numVerts = 3 * numSlices + 1;
@@ -93,7 +87,7 @@
 
 -(GLKVector4)fillColor {
     return fillColor;
-}
+}*/
 
 // always pass in two colors, one for center and one for edge
 -(void)setGradient:(GLKVector4 *)grad {
@@ -121,7 +115,7 @@
     return gradient;
 }
 
--(GLfloat *)verts {
+/*-(GLfloat *)verts {
     if (needsUpdate) {
         [self computeVertices];
         
@@ -137,9 +131,9 @@
     }
     
     return vertIndex;
-}
+}*/
 
--(unsigned int) vertexCount {
+/*-(unsigned int) vertexCount {
     unsigned int numSlices = [self numSlices];
     unsigned int numVerts = numSlices + 1;
     if (self.strokeWidth > 0) {
@@ -147,9 +141,9 @@
     }
     
     return numVerts;
-}
+}*/
 
--(unsigned int)indexCount {
+-(GLuint)vertIndexCount {
     unsigned int numSlices = [self numSlices];
     unsigned int indexCount = 2 * numSlices + 4;
     if (self.strokeWidth > 0) {
@@ -159,7 +153,7 @@
     return indexCount;
 }
 
--(unsigned int)numSlices {
+-(GLuint)numSlices {
     int numSlices = self.radius * GEM_SLICE_TOLERANCE;
     if (numSlices > 300) {
         numSlices = 300;
@@ -177,8 +171,10 @@
         
         unsigned int numSlices = [self numSlices];
         int numVerts = numSlices + 1;
+        numInnerlVerts = numVerts;
         if (self.strokeWidth > 0) {
             numVerts = numVerts + numSlices * 2;
+            numBorderVerts = numSlices * 2;
         }
         
         verts = realloc(verts, numVerts * 3 * sizeof(GLfloat));
