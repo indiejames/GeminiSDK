@@ -82,6 +82,32 @@ static int circleNewIndex (lua_State *L){
     return rval;
 }
 
+static int circleSetGradient(lua_State *L){
+    
+    __unsafe_unretained GemCircle  **circle = (__unsafe_unretained GemCircle **)luaL_checkudata(L, 1, GEMINI_CIRCLE_LUA_KEY);
+    
+    GLfloat red0 = luaL_checknumber(L, 2);
+    GLfloat green0 = luaL_checknumber(L, 3);
+    GLfloat blue0 = luaL_checknumber(L, 4);
+    GLfloat alpha0 = luaL_checknumber(L, 5);
+    
+    GLfloat red1 = luaL_checknumber(L, 6);
+    GLfloat green1 = luaL_checknumber(L, 7);
+    GLfloat blue1 = luaL_checknumber(L, 8);
+    GLfloat alpha1 = luaL_checknumber(L, 9);
+    
+    GLKVector4 grad[2] = {
+        red0,green0,blue0,alpha0,
+        red1,green1,blue1,alpha1
+    };
+    
+    (*circle).gradient = grad;
+    
+    
+    return 0;
+}
+
+
 static int circleSetFillColor(lua_State *L){
     int numargs = lua_gettop(L);
     
@@ -218,6 +244,42 @@ static int rectangleSetFillColor(lua_State *L){
     
     return 0;
 }
+
+static int rectangleSetGradient(lua_State *L){
+    __unsafe_unretained GemRectangle  **rect = (__unsafe_unretained GemRectangle **)luaL_checkudata(L, 1, GEMINI_RECTANGLE_LUA_KEY);
+    
+    GLfloat red0 = luaL_checknumber(L, 2);
+    GLfloat green0 = luaL_checknumber(L, 3);
+    GLfloat blue0 = luaL_checknumber(L, 4);
+    GLfloat alpha0 = luaL_checknumber(L, 5);
+    
+    GLfloat red1 = luaL_checknumber(L, 6);
+    GLfloat green1 = luaL_checknumber(L, 7);
+    GLfloat blue1 = luaL_checknumber(L, 8);
+    GLfloat alpha1 = luaL_checknumber(L, 9);
+    
+    GLfloat red2 = luaL_checknumber(L, 10);
+    GLfloat green2 = luaL_checknumber(L, 11);
+    GLfloat blue2 = luaL_checknumber(L, 12);
+    GLfloat alpha2 = luaL_checknumber(L, 13);
+    
+    GLfloat red3 = luaL_checknumber(L, 14);
+    GLfloat green3 = luaL_checknumber(L, 15);
+    GLfloat blue3 = luaL_checknumber(L, 16);
+    GLfloat alpha3 = luaL_checknumber(L, 17);
+   
+    GLKVector4 grad[4] = {
+        red0, green0, blue0, alpha0,
+        red1, green1, blue1, alpha1,
+        red2, green2, blue2, alpha2,
+        red3, green3, blue3, alpha3
+    };
+    
+    [*rect setGradient:grad];
+    
+    return 0;
+}
+
 
 static int rectangleSetStrokeColor(lua_State *L){
     //NSLog(@"Setting rectangle stroke color");
@@ -538,6 +600,7 @@ static const struct luaL_Reg rectangle_m [] = {
     {"__index", rectangleIndex},
     {"__newindex", rectangleNewIndex},
     {"setFillColor", rectangleSetFillColor},
+    {"setGradient", rectangleSetGradient},
     {"setStrokeColor", rectangleSetStrokeColor},
     {"setStrokeWidth", rectangleSetStrokeWidth},
     {"removeSelf", removeSelf},
@@ -553,6 +616,7 @@ static const struct luaL_Reg circle_m [] = {
     {"__index", circleIndex},
     {"__newindex", circleNewIndex},
     {"setFillColor", circleSetFillColor},
+    {"setGradient", circleSetGradient},
     {"setStrokeColor", circleSetStrokeColor},
     {"setStrokeWidth", circleSetStrokeWidth},
     {"removeSelf", removeSelf},

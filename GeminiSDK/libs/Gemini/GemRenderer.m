@@ -173,9 +173,8 @@ GLuint spriteRingBufferOffset = 0;
     }
     
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
-    NSMutableArray *rectangles = [NSMutableArray arrayWithCapacity:1];
-    NSMutableArray *circles = [NSMutableArray arrayWithCapacity:1];
-    
+    NSMutableArray *shapes = [NSMutableArray arrayWithCapacity:1];
+      
     GLKMatrix3 cumulTransform = GLKMatrix3Multiply(transform, group.transform);
     GLfloat groupAlpha = group.alpha;
     GLfloat cumulAlpha = groupAlpha * alpha;
@@ -199,9 +198,9 @@ GLuint spriteRingBufferOffset = 0;
                                     
         } else if(gemObj.class == GemRectangle.class){
             //[self renderRectangle:((GeminiRectangle *)gemObj) withLayer:layer alpha:cumulAlpha transform:transform];
-            [rectangles addObject:gemObj];
+            [shapes addObject:gemObj];
         } else if(gemObj.class == GemCircle.class){
-            [circles addObject:gemObj];
+            [shapes addObject:gemObj];
         }
         
     }
@@ -209,13 +208,10 @@ GLuint spriteRingBufferOffset = 0;
     if ([lines count] > 0) {
         [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
     }
-    if ([rectangles count] > 0) {
-       [self renderShapes:rectangles withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+    if ([shapes count] > 0) {
+       [self renderShapes:shapes withLayer:layer alpha:cumulAlpha transform:cumulTransform];
     }
     
-    if ([circles count] > 0) {
-        [self renderShapes:circles withLayer:layer alpha:cumulAlpha transform:cumulTransform];
-    }
 }
 
 -(void)renderSpriteBatches {
@@ -391,12 +387,10 @@ GLuint spriteRingBufferOffset = 0;
     free(newVerts);
 }
 
--(void)renderRectangleBatch {
-    
-}
-
 -(void)renderShapes:(NSArray *)shapes withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
     GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
+    
+   
     
     GemOpenGLState *glState = [GemOpenGLState shared];
     //if (glState.boundVertexArrayObject != rectangleVAO) {
@@ -432,13 +426,14 @@ GLuint spriteRingBufferOffset = 0;
     
     for (int i=0; i<[shapes count]; i++) {
         GemShape *shape = (GemShape *)[shapes objectAtIndex:i];
+        
         GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, shape.transform);
         
         shape.cumulativeTransform = finalTransform;
         
         unsigned int vertCount = shape.vertCount;
         unsigned int indexCount = shape.vertIndexCount;
-        
+       
         GLfloat *newVerts = (GLfloat *)malloc(vertCount * 3 * sizeof(GLfloat));
         
         transformVertices(newVerts, shape.verts, vertCount, finalTransform);
@@ -476,6 +471,8 @@ GLuint spriteRingBufferOffset = 0;
     
     glUnmapBufferOES(GL_ARRAY_BUFFER);
     glUnmapBufferOES(GL_ELEMENT_ARRAY_BUFFER);
+    
+     glDisable(GL_CULL_FACE);
     
     glDrawElements(GL_TRIANGLE_STRIP, indexOffset / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
     

@@ -19,7 +19,7 @@
 -(void)setStrokeWidth:(GLfloat)w {
     strokeWidth = w;
     needsUpdate = YES;
-    
+    [self computeVertices];
 }
 
 -(void)setFillColor:(GLKVector4)fill {

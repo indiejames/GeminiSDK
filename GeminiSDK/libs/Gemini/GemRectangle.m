@@ -30,6 +30,7 @@
         verts = (GLfloat *)malloc(12*3*sizeof(GLfloat));
         vertColor = (GLfloat *)malloc(12*4*sizeof(GLfloat));
         vertIndex = (GLushort *)malloc(30*sizeof(GLushort));
+        gradient = 0;
         strokeWidth = 0;
         
         numInnerlVerts = 4;
@@ -47,6 +48,9 @@
     free(verts);
     free(vertIndex);
     free(vertColor);
+    if (gradient != 0){
+        free(gradient);
+    }
 }
 
 -(GLuint) numTriangles {
@@ -70,6 +74,10 @@
 
 // always pass in four colors, one for each corner
 -(void)setGradient:(GLKVector4 *)grad {
+    if (gradient == 0) {
+        gradient = (GLKVector4 *)malloc(4*sizeof(GLKVector4));
+    }
+    
     memcpy(gradient, grad, 4*sizeof(GLKVector4));
     for (int i=0; i<4; i++) {
         vertColor[i*4] = grad[i].r;

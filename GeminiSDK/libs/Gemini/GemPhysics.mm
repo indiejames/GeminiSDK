@@ -123,6 +123,7 @@ public:
         
         polyShape.Set(verts, [points count]/2);
         fixtureDef.shape = &polyShape;
+        free(verts);
     } else if ([params objectForKey:@"radius"] != nil){
         // use a circle shape
         float radius = [(NSNumber *)[params objectForKey:@"radius"] floatValue];

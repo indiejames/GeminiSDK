@@ -371,6 +371,9 @@ static inline float funcLinear(float ft, float f0, float f1)
     
     glBindVertexArrayOES(0);
     
+    free(index);
+    free(backPageIndex);
+    
     glState.boundVertexArrayObject = 0;
 }
 
@@ -468,7 +471,7 @@ static inline float funcLinear(float ft, float f0, float f1)
 }
 
 -(void)dealloc {
-    free(index);
+    
 }
 
 

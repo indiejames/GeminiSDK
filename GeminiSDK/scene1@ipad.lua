@@ -32,6 +32,18 @@ function scene:createScene( event )
 	
     print("Lua: Adding layer1 to scene")
 	scene:addLayer(layer1)
+    
+    local redCircle = display.newCircle(200,200,100)
+   redCircle.name = "RED CIRCLE"
+    redCircle:setFillColor(1.0,0,0,1.0)
+    redCircle.strokeWidth = 10.0
+    redCircle:setStrokeColor(1.0,1.0,1.0,1.0)
+    
+    --[[redCircle.alpha = 0.5;--]]
+    --redCircle.x = 100
+    --redCircle.y = 100
+    layer1:insert(redCircle)
+
     print("Lua: Creating green rectangle")
 	-- draw a green rectangle with a white border
 	local rectangle = display.newRect(100,100,100,100)

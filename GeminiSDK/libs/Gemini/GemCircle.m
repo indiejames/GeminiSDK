@@ -22,9 +22,10 @@
         self.xReference = 0;
         self.yReference = 0;
         self.radius = rad;
+        gradient = 0;
         
         verts = (GLfloat *)malloc(30*3*sizeof(GLfloat));
-        vertColor = (GLfloat *)malloc(12*4*sizeof(GLfloat));
+        vertColor = (GLfloat *)malloc(30*4*sizeof(GLfloat));
         vertIndex = (GLushort *)malloc(30*sizeof(GLushort));
         self.strokeWidth = 0;
         
@@ -39,12 +40,15 @@
     return self;
 }
 
-/*-(void)dealloc {
+-(void)dealloc {
    
     free(verts);
     free(vertIndex);
     free(vertColor);
-}*/
+    if (gradient != 0) {
+        free(gradient);
+    }
+}
 
 /*-(void)setLayer:(GemLayer *)_layer {
     [super setLayer:_layer];
@@ -93,7 +97,10 @@
 -(void)setGradient:(GLKVector4 *)grad {
     unsigned int numSlices = [self numSlices];
     unsigned int numVerts = numSlices + 1;
-    memcpy(gradient, grad, 4*sizeof(GLKVector4));
+    if (gradient == 0) {
+        gradient = (GLKVector4 *)malloc(2*sizeof(GLKVector4));
+    }
+    memcpy(gradient, grad, 2*sizeof(GLKVector4));
     
     // set the center vertex to the first color
     vertColor[0] = grad[0].r;
@@ -143,11 +150,16 @@
     return numVerts;
 }*/
 
+-(GLuint)vertCount {
+    GLuint vCount = [super vertCount];
+    return vCount;
+}
+
 -(GLuint)vertIndexCount {
     unsigned int numSlices = [self numSlices];
     unsigned int indexCount = 2 * numSlices + 4;
     if (self.strokeWidth > 0) {
-        indexCount = indexCount + numSlices * 2 + 3;
+        indexCount = indexCount + numSlices * 2 + 4;
     }
     
     return indexCount;
@@ -155,11 +167,11 @@
 
 -(GLuint)numSlices {
     int numSlices = self.radius * GEM_SLICE_TOLERANCE;
-    if (numSlices > 300) {
-        numSlices = 300;
+    if (numSlices > 150) {
+        numSlices = 150;
     }
     // TEST
-    //numSlices = 128;
+    //numSlices = 8;
     return numSlices;
 }
 
@@ -177,18 +189,23 @@
             numBorderVerts = numSlices * 2;
         }
         
+        unsigned int numIndex = [self vertIndexCount];
+        
         verts = realloc(verts, numVerts * 3 * sizeof(GLfloat));
-        vertIndex = realloc(vertIndex, (2*numSlices + 4) * sizeof(GLushort));
+        vertIndex = realloc(vertIndex, numIndex * sizeof(GLushort));
         vertColor = realloc(vertColor, numVerts * 4 * sizeof(GLfloat));
         
         // inner portion
-        verts[0] = self.x;
-        verts[1] = self.y;
+        verts[0] = 0; // verts are centered on (0,0) - we rely on the tranformation to move to actual (x,y)
+        verts[1] = 0;
+
         verts[2] = 1.0; // homogeneous coordinates
         
-        vertIndex[0] = 0; // repeat the first and last indices to make it easy to use one draw call for all circles
+        unsigned int indexPtr = 0;
+        
+        vertIndex[indexPtr++] = 0; // repeat the first and last indices to make it easy to use one draw call for all circles
                           // via degenerate triangles
-        int indexPtr = 1;
+        
         
         for (int i=0; i<numSlices; i++) {
             GLfloat theta = i * 2*M_PI / (GLfloat)numSlices;
@@ -218,11 +235,17 @@
             for (int i=0; i<numSlices; i++) {
                 GLfloat theta = i * 2*M_PI / (GLfloat)numSlices;
                 
-                verts[i*6 + (numSlices + 1)*3] = innerRadius * cos(theta);
-                verts[i*6 + (numSlices + 1)*3 + 1] = innerRadius * sin(theta);
-                verts[i*6 + (numSlices + 1)*3 + 2] = outerRadius * sin(theta);
-                verts[i*6 + (numSlices + 1)*3 + 3] = outerRadius * sin(theta);
+                verts[i*6 + (numSlices + 1)*3] = verts[0] + innerRadius * cos(theta);
+                verts[i*6 + (numSlices + 1)*3 + 1] = verts[1] + innerRadius * sin(theta);
+                verts[i*6 + (numSlices + 1)*3 + 2] = 1.0;
+                verts[i*6 + (numSlices + 1)*3 + 3] = verts[0] + outerRadius * cos(theta);
+                verts[i*6 + (numSlices + 1)*3 + 4] = verts[1] + outerRadius * sin(theta);
+                verts[i*6 + (numSlices + 1)*3 + 5] = 1.0;
                 vertIndex[indexPtr++] = i*2 + numSlices + 1;
+                if (i==0) {
+                    // duplicate first point to support use of degenerate triangles
+                    vertIndex[indexPtr++] = i*2 + numSlices + 1;
+                }
                 vertIndex[indexPtr++] = i*2 + numSlices + 2;
             }
             
@@ -230,10 +253,29 @@
             vertIndex[indexPtr++] = numSlices + 2;
 
             vertIndex[indexPtr++] = numSlices + 2; // duplicate the last point for degenerate triangles
+            
+            /*for (int i=0; i<numInnerlVerts; i++) {
+                GLfloat x = verts[i*3];
+                GLfloat y = verts[i*3+1];
+                GemLog(@"(x,y) = (%f,%f)", x,y);
+            }
+            
+            for (int i=0; i<numBorderVerts; i++) {
+                GLfloat x = verts[(i+numInnerlVerts)*3];
+                GLfloat y = verts[(i+numInnerlVerts)*3+1];
+                GemLog(@"(x,y) = (%f,%f)", x,y);
+            }
+            
+            for (int i=0; i<indexPtr;i++) {
+                GLushort idx = vertIndex[i];
+                GemLog(@"index[%d] = %d", i, idx); 
+            }*/
+
         }
 
     }
-        
+    
+           
     needsUpdate = NO;
 }
 

@@ -67,26 +67,30 @@ function scene:createScene( event )
     group1.y = 160
     
     -- draw a red circle with a white border
-   local redCircle = display.newCircle(100,100,100)
+   local redCircle = display.newCircle(200,200,100)
+   redCircle.name = "RED CIRCLE"
     redCircle:setFillColor(1.0,0,0,1.0)
+    redCircle:setGradient(1.0,1.0,1.0,1.0, 1.0,0,0,1.0)
+    redCircle.strokeWidth = 3.0
     redCircle:setStrokeColor(1.0,1.0,1.0,1.0)
-    --redCircle.strokeWidth = 2.5
-    redCircle.alpha = 0.5;
+    
+    --redCircle.alpha = 0.5;
     --redCircle.x = 100
     --redCircle.y = 100
-    redCircle.name = "RED CIRCLE"
     layer1:insert(redCircle)
     
     -- draw a blue circle with a white border
     local blueCircle = display.newCircle(50,50,70)
     blueCircle:setFillColor(0,0,1.0,1.0)
-    blueCircle.alpha = 0.5
+    blueCircle:setGradient(1.0,1.0,1.0,1.0,  0,0,1.0,1.0)
+    --blueCircle.alpha = 0.5
     blueCircle.name = "BLUE CIRCLE"
     layer1:insert(blueCircle)
     
     -- draw a red rectangle with a white border
     redRectangle = display.newRect(100/2,100/2,100/2,100/2)
     redRectangle:setFillColor(1.0,0,0,1.0)
+    redRectangle:setGradient(1.0,0,0,1.0, 1.0,0,0,1.0, 1.0,1.0,1.0,1.0, 1.0,1.0,1.0,1.0)
     redRectangle:setStrokeColor(1.0,1.0,1.0,1.0)
     redRectangle.strokeWidth = 2.5
     redRectangle.x = 375
