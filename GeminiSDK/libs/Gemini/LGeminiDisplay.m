@@ -162,7 +162,7 @@ static int circleSetStrokeWidth(lua_State *L){
 
 ///////////// rectangles //////////////////////
 static int newRectangle(lua_State *L){
-   // NSLog(@"Creating new rectangle");
+   
     GLfloat x = luaL_checknumber(L, 1);
     GLfloat y = luaL_checknumber(L, 2);
     GLfloat width = luaL_checknumber(L, 3);

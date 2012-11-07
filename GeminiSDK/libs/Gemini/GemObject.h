@@ -30,15 +30,13 @@
 
 -(id)initWithLuaState:(lua_State *)luaState;
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
--(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt;
+/*-(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt;
 -(double)getDoubleForKey:(const char*) key withDefault:(double)dflt;
 -(int)getIntForKey:(const char*) key withDefault:(int)dflt;
 -(NSString *)getStringForKey:(const char*) key withDefault:(NSString *)dflt;
 -(void)setBOOL:(BOOL)val forKey:(const char*) key;
 -(void)setDouble:(double)val forKey:(const char*) key;
 -(void)setInt:(int)val forKey:(const char*) key;
--(void)setString:(NSString *)val forKey:(const char*) key;
-//-(void)addEventListener:(int)callback forEvent:(NSString *)event;
-//-(void)removeEventListener:(int)callback forEvent:(NSString *)event;
+-(void)setString:(NSString *)val forKey:(const char*) key;*/
 -(BOOL)handleEvent:(GemEvent *)event;
 @end

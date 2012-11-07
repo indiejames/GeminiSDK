@@ -32,7 +32,7 @@ BOOL testTriangleIntersection(GLKVector2 *triangle, GLKVector2 point){
     GLfloat u = (dot11 * dot02 - dot01 * dot12) * invDenom;
     GLfloat v = (dot00 * dot12 - dot01 * dot02) * invDenom;
     
-    // check if the poit is in the triangle
+    // check if the point is in the triangle
     return (u >= 0) &&(v >= 0) && (u * v < 1);
     
 }

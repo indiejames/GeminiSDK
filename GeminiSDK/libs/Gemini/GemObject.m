@@ -97,9 +97,9 @@
     
 }
 
-// methods to support storing attributes in Lau table
+// methods to support storing attributes in Lua table
 
--(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt {
+/*-(BOOL)getBooleanForKey:(const char*) key withDefault:(BOOL)dflt {
     BOOL rval = dflt;
     lua_rawgeti(L, LUA_REGISTRYINDEX, propertyTableRef);
     lua_getfield(L, -1, key);
@@ -181,7 +181,7 @@
     lua_pushstring(L, sval);
     lua_settable(L, -3);
     lua_pop(L, 1);
-}
+}*/
 
 
 
@@ -214,7 +214,7 @@
             lua_rawgeti(L, LUA_REGISTRYINDEX, ref);
             
             if (lua_isfunction(L, -1)) {
-                //NSLog(@"Event handler is a function");
+                //GemLog(@"Event handler is a function");
                 // load the stacktrace printer for our error function
                 int base = lua_gettop(L);  // function index
                 lua_pushcfunction(L, traceback);  // push traceback function for error handling

@@ -18,6 +18,7 @@
 
 @synthesize parent;
 @synthesize layer;
+@synthesize mask;
 @synthesize alpha;
 @synthesize needsUpdate;
 @synthesize needsTransformUpdate;
@@ -79,21 +80,6 @@
     width = w;
 }
 
--(BOOL) isHitTestMasked {
-    return [super getDoubleForKey:"isHitTestMasked" withDefault:YES];
-}
-
--(void) setIsHitTestMasked:(BOOL)isHitTestMasked {
-    [super setBOOL:isHitTestMasked forKey:"isHitTestMasked"];
-}
-
--(BOOL) isHitTestable {
-    return [super getBooleanForKey:"isHitTestable" withDefault:YES];
-}
-
--(void) setIsHitTestable:(BOOL)isHitTestable {
-    [super setBOOL:isHitTestable forKey:"isHitTestable"];
-}
 
 
 -(GLfloat)xScale {
@@ -113,47 +99,6 @@
     yScale = ys;
     needsTransformUpdate = YES;
 }
-
--(GLfloat)maskRotation {
-    return [super getDoubleForKey:"maskRotation" withDefault:0];
-}
-
--(void)setMaskRotation:(GLfloat)maskRotation {
-    [super setDouble:maskRotation forKey:"maskRotation"];
-}
-
--(GLfloat)maskScaleX {
-    return [super getDoubleForKey:"maskScaleX" withDefault:1.0];
-}
-
--(void)setMaskScaleX:(GLfloat)maskScaleX {
-    [super setDouble:maskScaleX forKey:"maskScaleX"];
-}
-
--(GLfloat)maskScaleY {
-    return [super getDoubleForKey:"maskScaleY" withDefault:1.0];
-}
-
--(void)setMaskScaleY:(GLfloat)maskScaleY {
-    [super setDouble:maskScaleY forKey:"maskScaleY"];
-}
-
--(GLfloat)maskX {
-    return [super getDoubleForKey:"maskX" withDefault:0];
-}
-
--(void)setMaskX:(GLfloat)maskX {
-    [super setDouble:maskX forKey:"maskX"];
-}
-
--(GLfloat)maskY {
-    return [super getDoubleForKey:"maskY" withDefault:0];
-}
-
--(void)setMaskY:(GLfloat)maskY {
-    [super setDouble:maskY forKey:"maskY"];
-}
-
 -(GLfloat)rotation {
     //return [super getDoubleForKey:"rotation" withDefault:0];
     return rotation;

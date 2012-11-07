@@ -4,6 +4,7 @@
 --
 ----------------------------------------------------------------------------------
 
+local timer = require("timer")
 local director = require( "director" )
 local scene = director.newScene()
 local display = require('display')
@@ -60,7 +61,7 @@ function scene:createScene( event )
     print("Lua: loaded physics data")
     local data,data2,data3,data4,data5 = physicsData:get("runner")
     print("Lua: got physics data for runner using file data")
-    physics.addBody( sprite3, "dynamic", data )
+    physics.addBody( sprite3, "dynamic", physicsData:get("runner") )
     --physics.addBody( sprite3, "dynamic", { density=3.0, friction=0.5, restitution=0.7, radius=0.1 })
     sprite3.isActive = false
     print("Lua: added physics to sprite3")

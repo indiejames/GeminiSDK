@@ -14,13 +14,12 @@
 static int addBody(lua_State *L){
     __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
     
-    if ([(*displayObj).name isEqualToString:@"sprite3"]) {
-        GemLog(@"Adding physics to sprite3");
-    }
-    
     GemLog(@"Adding physics to %@", (*displayObj).name);
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithCapacity:1];
+    NSMutableDictionary *fixtureDefs = [NSMutableDictionary dictionaryWithCapacity:1];
+    [params setObject:fixtureDefs forKey:@"fixtures"];
+    
     NSString *type = @"static";
     
     int numArgs = lua_gettop(L);
@@ -31,7 +30,10 @@ static int addBody(lua_State *L){
             type = [NSString stringWithUTF8String:lua_tostring(L, i+1)];
             
         } else {
-            // argument is a table
+            // argument is a table - iterate over keys/vals to add to configuration for fixtures
+            
+            NSMutableDictionary *fixtureDef = [[NSMutableDictionary alloc] initWithCapacity:1];
+            NSString *fixtureId = @"ANONYMOUS";
             
             lua_pushnil(L);  /* first key */
             while (lua_next(L, i+1) != 0) {
@@ -42,47 +44,62 @@ static int addBody(lua_State *L){
                     // value is a table
                     
                     NSMutableArray *shape = [NSMutableArray arrayWithCapacity:1];
-                    [params setObject:shape forKey:[NSString stringWithUTF8String:key]];
+                    [fixtureDef setObject:shape forKey:[NSString stringWithUTF8String:key]];
                     
                     // iterate over the table and copy its values
                     lua_pushnil(L);
                     while (lua_next(L, -2) != 0) {
                         double value = lua_tonumber(L, -1);
                         [shape addObject:[NSNumber numberWithDouble:value]];
-                        /* removes 'value'; keeps 'key' for next iteration */
+                        // removes 'value'; keeps 'key' for next iteration
                         lua_pop(L, 1);
                     }
                 } else if (strcmp(key, "filter") == 0){
-                    // don't handle filters yet
+                    // value is a table
+                    NSMutableDictionary *filter = [NSMutableDictionary dictionaryWithCapacity:3];
+                    [fixtureDef setObject:filter forKey:@"filter"];
+                    // iterate over table keys/values
+                    lua_pushnil(L);
+                    while (lua_next(L, -2) != 0) {
+                        const char *filterKey = lua_tostring(L, -2);
+                        unsigned int value = lua_tounsigned(L, -1);
+                        [filter setObject:[NSNumber numberWithUnsignedInt:value] forKey:[NSString stringWithUTF8String:filterKey]];
+                        // remove the value but leave the key for the next iteration
+                        lua_pop(L, 1);
+                    }
                 } else if (strcmp(key, "pe_fixture_id") == 0){
-                  // ignore fixture ids for now
+                    const char *fixId = lua_tostring(L, -1);
+                    fixtureId = [NSString stringWithUTF8String:fixId];
                 } else if (strcmp(key, "position") == 0) {
                     // value is a table
                     
                     NSMutableArray *position = [NSMutableArray arrayWithCapacity:2];
-                    [params setObject:position forKey:[NSString stringWithUTF8String:key]];
+                    [fixtureDef setObject:position forKey:[NSString stringWithUTF8String:key]];
                     
                     // iterate over the table and copy its values
                     lua_pushnil(L);
                     while (lua_next(L, -2) != 0) {
                         double value = lua_tonumber(L, -1);
                         [position addObject:[NSNumber numberWithDouble:value]];
-                        /* removes 'value'; keeps 'key' for next iteration */
+                        // removes 'value'; keeps 'key' for next iteration
                         lua_pop(L, 1);
                     }
+                } else if (strcmp(key, "isSensor") == 0){
+                    bool isSensor = lua_toboolean(L, -1);
+                    [fixtureDef setObject:[NSNumber numberWithBool:isSensor] forKey:@"isSensor"];
                 } else {
-                    
+                    // handle float values like density, friction, etc.
                     double val = lua_tonumber(L, -1);
                     
-                    [params setObject:[NSNumber numberWithDouble:val] forKey:[NSString stringWithUTF8String:key]];
+                    [fixtureDef setObject:[NSNumber numberWithDouble:val] forKey:[NSString stringWithUTF8String:key]];
                     
                 }
                 
-                /* removes 'value'; keeps 'key' for next iteration */
+                // removes 'value'; keeps 'key' for next iteration
                 lua_pop(L, 1);
             }
             
-            
+            [fixtureDefs setObject:fixtureDef forKey:fixtureId];
         }
 
     }

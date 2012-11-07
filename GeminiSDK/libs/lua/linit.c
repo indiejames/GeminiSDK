@@ -49,8 +49,6 @@ static const luaL_Reg loadedlibs[] = {
     {LUA_DBLIBNAME, luaopen_debug},
     {"gemini", luaopen_geminiObjectLib},
     {"system", luaopen_system_lib},
-    {"transition", luaopen_transition_lib},
-    {"timer", luaopen_timer_lib},
     {"event", luaopen_event_lib},
     {"director", luaopen_director_lib},
     {NULL, NULL}
@@ -58,14 +56,15 @@ static const luaL_Reg loadedlibs[] = {
 
 
 /*
-** these libs are preloaded and must be required before used
+** these libs are preloaded and must be required before use
 */
 static const luaL_Reg preloadedlibs[] = {
-    // {"sound_effect", luaopen_soundlib},
     {"sound", luaopen_soundlib},
     {"sprite", luaopen_spritelib},
     {"display", luaopen_display_lib},
     {"physics", luaopen_physics_lib},
+    {"transition", luaopen_transition_lib},
+    {"timer", luaopen_timer_lib},
   {NULL, NULL}
 };
 

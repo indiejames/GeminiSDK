@@ -25,28 +25,28 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "head", density = 2, friction = 0, restitution = 0, 
+                    pe_fixture_id = "head", density = 2, friction = 0, bounce = 0,
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    radius = 0.125,
+                    radius = 10.0,
 					position = { -13.9411764396516, -65.2058823297386 }
                     }
                     
                     
-                     ,
+                    , 
                     
                     
                     {
                     pe_fixture_id = "body", density = 2, friction = 0, bounce = 0, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {   6, -51  ,  18, 12  ,  -9, 17  ,  -22, -45  }
+                    shape = {-22, -45, -9, 17,  18, 12, 6, -51  }
                     }
                     
-                    
+                
                     
                      ,
                     
                     {
-                    pe_fixture_id = "legs", density = 2, friction = 0, bounce = 0, 
+                    pe_fixture_id = "legs", density = 3, friction = 0.5, bounce = 0.7, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
                     radius = 33.242,
 					position = { 8.32352787266552, 48.2941185906272 }

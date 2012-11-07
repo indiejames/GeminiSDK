@@ -10,6 +10,7 @@
 #import <GLKit/GLKit.h>
 #import "GemObject.h"
 #import "GemBoundsTests.h"
+#import "GemMask.h"
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
@@ -20,6 +21,7 @@
 @interface GemDisplayObject : GemObject {
     GemDisplayGroup *parent;
     GemLayer *layer;
+    GemMask *mask;
     GLfloat xReference;
     GLfloat yReference;
     GLfloat xOrigin;
@@ -49,8 +51,9 @@
 @property (nonatomic) GLfloat maskScaleY;
 @property (nonatomic) GLfloat maskX;
 @property (nonatomic) GLfloat maskY;
-@property (nonatomic, retain) GemDisplayGroup *parent;
-@property (nonatomic, retain) GemLayer *layer;
+@property (nonatomic, strong) GemDisplayGroup *parent;
+@property (nonatomic, strong) GemLayer *layer;
+@property (nonatomic, strong) GemMask *mask;
 @property (nonatomic) GLfloat rotation;
 @property (nonatomic) GLfloat x;
 @property (nonatomic) GLfloat y;

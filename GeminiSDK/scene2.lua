@@ -4,6 +4,7 @@
 --
 ----------------------------------------------------------------------------------
 
+local timer = require("timer")
 local director = require( "director" )
 local scene = director.newScene()
 

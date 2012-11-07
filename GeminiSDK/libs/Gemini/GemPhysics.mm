@@ -107,64 +107,106 @@ public:
     bodyDef.angularDamping = 0.1;
     
     b2Body* body = world->CreateBody(&bodyDef);
-    b2FixtureDef fixtureDef;
-    b2PolygonShape polyShape;
-    b2CircleShape circle;
     
-    if ([params objectForKey:@"shape"] != nil) {
-        // use a polygon shape
-        NSArray *points = (NSArray *)[params objectForKey:@"shape"];
-        b2Vec2 *verts = (b2Vec2 *)malloc([points count]/ 2 * sizeof(b2Vec2));
-        for (int i=0; i<[points count]/2; i++) {
-            float x = [(NSNumber *)[points objectAtIndex:i*2] floatValue];
-            float y = [(NSNumber *)[points objectAtIndex:i*2+1] floatValue];
-            verts[i].Set(x, y);
+    NSDictionary *fixtures = [params objectForKey:@"fixtures"];
+    [fixtures enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+        
+        NSDictionary *fixtureParams = value;
+        
+        b2FixtureDef fixtureDef;
+        b2PolygonShape polyShape;
+        b2CircleShape circle;
+        
+        if ([fixtureParams objectForKey:@"shape"] != nil) {
+            // use a polygon shape
+            NSArray *points = (NSArray *)[fixtureParams objectForKey:@"shape"];
+            b2Vec2 *verts = (b2Vec2 *)malloc([points count]/ 2 * sizeof(b2Vec2));
+            for (int i=0; i<[points count]/2; i++) {
+                float x = [(NSNumber *)[points objectAtIndex:i*2] floatValue] / scale;
+                float y = -[(NSNumber *)[points objectAtIndex:i*2+1] floatValue] / scale;
+                verts[i].Set(x, y);
+            }
+            
+            polyShape.Set(verts, [points count]/2);
+            fixtureDef.shape = &polyShape;
+            free(verts);
+        } else if ([fixtureParams objectForKey:@"radius"] != nil){
+            // use a circle shape
+            float radius = [(NSNumber *)[fixtureParams objectForKey:@"radius"] floatValue] / scale;
+            
+            NSArray *posArray = (NSArray *)[fixtureParams objectForKey:@"position"];
+            float x = [(NSNumber *)[posArray objectAtIndex:0] floatValue] / scale;
+            float y = -[(NSNumber *)[posArray objectAtIndex:1] floatValue] / scale;
+            
+            circle.m_p.Set(x, y);
+            circle.m_radius = radius;
+            fixtureDef.shape = &circle;
+            
+        } else if ([fixtureParams objectForKey:@"width"] != nil) {
+            // use box shape
+            float width = [(NSNumber *)[fixtureParams objectForKey:@"width"] floatValue] / scale;
+            float height = [(NSNumber *)[fixtureParams objectForKey:@"height"] floatValue] / scale;
+            
+            polyShape.SetAsBox(width / 2.0, height / 2.0);
+            fixtureDef.shape = &polyShape;
+            
+        } else {
+            // use the default box shape
+            float hWidth = obj.width / scale / 2.0;
+            float hHeight = obj.height / scale / 2.0;
+            
+            polyShape.SetAsBox(hWidth, hHeight);
+            fixtureDef.shape = &polyShape;
         }
         
-        polyShape.Set(verts, [points count]/2);
+        float density = 1.0;
+        if ([fixtureParams objectForKey:@"density"] != nil) {
+            density = [(NSNumber *)[fixtureParams objectForKey:@"density"] floatValue];
+        }
+        
+        float friction = 1.0;
+        if ([fixtureParams objectForKey:@"friction"] != nil) {
+            friction = [(NSNumber *)[fixtureParams objectForKey:@"friction"] floatValue];
+        }
+        
+        float restitution = 0;
+        // support "bounce" or "restitution" keyword
+        if ([fixtureParams objectForKey:@"bounce"] != nil) {
+            restitution = [(NSNumber *)[fixtureParams objectForKey:@"bounce"] floatValue];
+        }
+        if ([fixtureParams objectForKey:@"restitution"] != nil) {
+            restitution = [(NSNumber *)[fixtureParams objectForKey:@"restitution"] floatValue];
+        }
+        
+        bool isSensor = false;
+        if ([fixtureParams objectForKey:@"isSensor"] != nil) {
+            isSensor = [(NSNumber *)[fixtureParams objectForKey:@"isSensor"] boolValue];
+        }
+        
+        fixtureDef.density = density;
+        fixtureDef.friction = friction;
+        fixtureDef.restitution = restitution;
+        fixtureDef.isSensor = isSensor;
+        
+        body->CreateFixture(&fixtureDef);
+    }];
+    
+    // create a default fixture if none are supplied
+    if (fixtures == nil || [fixtures count] == 0) {
+        b2FixtureDef fixtureDef;
+        b2PolygonShape polyShape;
+        
+        // use box shape
+        float width = obj.width / scale;
+        float height = obj.height / scale;
+        
+        polyShape.SetAsBox(width / 2.0, height / 2.0);
         fixtureDef.shape = &polyShape;
-        free(verts);
-    } else if ([params objectForKey:@"radius"] != nil){
-        // use a circle shape
-        float radius = [(NSNumber *)[params objectForKey:@"radius"] floatValue];
         
-        NSArray *posArray = (NSArray *)[params objectForKey:@"position"];
-        float x = [(NSNumber *)[posArray objectAtIndex:0] floatValue] / scale;
-        float y = -[(NSNumber *)[posArray objectAtIndex:1] floatValue] / scale;
-        
-        circle.m_p.Set(x, y);
-        circle.m_radius = radius;
-        fixtureDef.shape = &circle;
-        
-    } else {
-        // use the default box shape
-        float hWidth = obj.width / scale / 2.0;
-        float hHeight = obj.height / scale / 2.0;
-        
-        polyShape.SetAsBox(hWidth, hHeight);
-        fixtureDef.shape = &polyShape;
+        body->CreateFixture(&fixtureDef);
+
     }
     
-    float density = 1.0;
-    if ([params objectForKey:@"density"] != nil) {
-        density = [(NSNumber *)[params objectForKey:@"density"] floatValue];
-    }
-    
-    float friction = 1.0;
-    if ([params objectForKey:@"friction"] != nil) {
-        friction = [(NSNumber *)[params objectForKey:@"friction"] floatValue];
-    }
-    
-    float restitution = 0;
-    if ([params objectForKey:@"restitution"] != nil) {
-        restitution = [(NSNumber *)[params objectForKey:@"restitution"] floatValue];
-    }
-    
-    fixtureDef.density = density;
-    fixtureDef.friction = friction;
-    fixtureDef.restitution = restitution;
-    
-    body->CreateFixture(&fixtureDef);
     body->SetUserData((__bridge void*)obj);
     obj.physicsBody = body;
 }

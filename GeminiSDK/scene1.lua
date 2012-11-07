@@ -150,6 +150,7 @@ function scene:createScene( event )
     local ground = display.newRect(480/2,0,960/2,30/2)
     ground:setFillColor(0,1.0,0,1.0)
     layer1:insert(ground)
+    ground.name = "GROUND"
     physics.addBody(ground)
 
     local leftSide = display.newRect(0,320/2,30/2,640/2)
@@ -179,6 +180,9 @@ function scene:enterScene( event )
     
     director.loadScene('scene2')
     
+    rectangle3.isActive = true
+    rectangle4.isActive = true
+    
      -- add an event listener that will fire every frame
     scene.starListener = function(event)
       -- rotate our star
@@ -195,13 +199,17 @@ function scene:enterScene( event )
             --{transition="GEM_SLIDE_SCENE_TRANSITION", duration=5.0, direction="up"}
         )    end
     
-    timer.performWithDelay(10000, listener)
+    timer.performWithDelay(5000, listener)
     
     -- touch event handlers
-    function greenRectangle:touch(event)
+    --function greenRectangle:touch(event)
+    function touchHandler(self, event)
         print(string.format("%s got touched", self.name))
         return true
     end
+    
+    greenRectangle.touch = touchHandler
+
     greenRectangle:addEventListener("touch", greenRectangle)
 
     function redRectangle:touch(event)
@@ -216,10 +224,11 @@ function scene:enterScene( event )
     end
     rectangle3:addEventListener("touch", rectangle3)
     
-    function rectangle4:touch(event)
-        print(string.format("%s got touched", self.name))
-        return true
-    end
+    --function rectangle4:touch(event)
+     --   print(string.format("%s got touched", self.name))
+      --  return true
+    --end
+    rectangle4.touch = touchHandler
     rectangle4:addEventListener("touch", rectangle4)
 
 
@@ -239,6 +248,9 @@ function scene:exitScene( event )
     Runtime:removeEventListener("enterFrame", scene.starListener)
     
     print("Exiting scene 1")
+    
+    rectangle3.isActive = false
+    rectangle4.isActive = false
 
 end
 

@@ -9,8 +9,8 @@
 #import "GemEvent.h"
 
 typedef enum GemTouchPhase {
-    GEM_TOUCH_BEGIN,
-    GEM_TOUCH_MOVE,
+    GEM_TOUCH_BEGAN,
+    GEM_TOUCH_MOVED,
     GEM_TOUCH_ENDED,
     GEM_TOUCH_CANCELLED
 } GemTouchPhase;
