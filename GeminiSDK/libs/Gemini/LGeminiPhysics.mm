@@ -44,16 +44,26 @@ static int addBody(lua_State *L){
                     // value is a table
                     
                     NSMutableArray *shape = [NSMutableArray arrayWithCapacity:1];
+                    NSMutableArray *tmpShape = [NSMutableArray arrayWithCapacity:1];
                     [fixtureDef setObject:shape forKey:[NSString stringWithUTF8String:key]];
                     
                     // iterate over the table and copy its values
                     lua_pushnil(L);
                     while (lua_next(L, -2) != 0) {
                         double value = lua_tonumber(L, -1);
-                        [shape addObject:[NSNumber numberWithDouble:value]];
+                        [tmpShape addObject:[NSNumber numberWithDouble:value]];
                         // removes 'value'; keeps 'key' for next iteration
                         lua_pop(L, 1);
                     }
+                    
+                    // reverse the order to compensate for difference with Corona
+                    for (int i=[tmpShape count]/2 - 1; i>=0; i--) {
+                        NSNumber *x = [tmpShape objectAtIndex:i*2];
+                        NSNumber *y = [tmpShape objectAtIndex:i*2+1];
+                        [shape addObject:x];
+                        [shape addObject:y];
+                    }
+                    
                 } else if (strcmp(key, "filter") == 0){
                     // value is a table
                     NSMutableDictionary *filter = [NSMutableDictionary dictionaryWithCapacity:3];

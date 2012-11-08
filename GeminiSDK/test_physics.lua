@@ -38,7 +38,7 @@ function M.physicsData(scale)
                     {
                     pe_fixture_id = "body", density = 2, friction = 0, bounce = 0, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {-22, -45, -9, 17,  18, 12, 6, -51  }
+                    shape = {6, -51, 18,12,  -9, 17,  -22, -45  }
                     }
                     
                 
