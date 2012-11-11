@@ -225,7 +225,8 @@
     return transform;
 }
 
-// NOTE - this method must be overriden by subclasses if they are to support touch events
+// NOTE - this method must be overriden by subclasses if they are to support touch events and
+// don't want to depend on an attached physics body
 -(BOOL)doesContainPoint:(GLKVector2) point {
     
     // use the physics body attached if available

@@ -63,6 +63,10 @@ function scene:createScene( event )
     scene.group.yReference = y_center
     scene.group.x = x_center
     scene.group.y = y_center
+    
+    local shape1 = display.newShape(20,20, 5,100, 70,120, 145,100, 130,20)
+    shape1:setFillColor(0,1.0,0,0.5)
+    layer1:insert(shape1)
 
 end
 

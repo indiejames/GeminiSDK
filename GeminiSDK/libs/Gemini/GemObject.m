@@ -43,35 +43,39 @@
     self = [super init];
     if (self) {
         L = luaState;
-        
-        // sizeof(self) should give the size of this objects pointer (I hope)
-        __unsafe_unretained GemObject **lgo = (__unsafe_unretained GemObject **)lua_newuserdata(L, sizeof(self));
-        *lgo = self;
-        
-        luaL_getmetatable(L, luaKey);
-        lua_setmetatable(L, -2);
-        
-        // append a lua table to this user data to allow the user to store values in it
-        lua_newtable(L);
-        lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
-        // store a reference to this table so our object methods can access it
-        propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
-        
-        // set the table as the user value for the Lua object
-        lua_setuservalue(L, -2);
-        
-        // create a table for the event listeners
-        lua_newtable(L);
-        eventListenerTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
-        
-        lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
-        selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
-        
-        // NOTE - at this point the object is on the top of the Lua stack  - if this method was not
-        // invoked (indirectly) by Lua code, then the caller MUST empty the stack to avoid leaking
-        // memory.  This should only matter for the handful of GemObjects that get created manually.
-        // This behaviour is not completely desirable, but necessary to avoid a lot of complications.
-        
+        if (luaState) {
+            // sizeof(self) should give the size of this objects pointer (I hope)
+            __unsafe_unretained GemObject **lgo = (__unsafe_unretained GemObject **)lua_newuserdata(L, sizeof(self));
+            *lgo = self;
+            
+            luaL_getmetatable(L, luaKey);
+            lua_setmetatable(L, -2);
+            
+            // append a lua table to this user data to allow the user to store values in it
+            lua_newtable(L);
+            lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
+            // store a reference to this table so our object methods can access it
+            propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+            
+            // set the table as the user value for the Lua object
+            lua_setuservalue(L, -2);
+            
+            // create a table for the event listeners
+            lua_newtable(L);
+            eventListenerTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
+            
+            lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
+            selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
+            
+            // NOTE - at this point the object is on the top of the Lua stack  - if this method was not
+            // invoked (indirectly) by Lua code, then the caller MUST empty the stack to avoid leaking
+            // memory.  This should only matter for the handful of GemObjects that get created manually.
+            // This behaviour is not completely desirable, but necessary to avoid a lot of complications.
+        } else {
+            propertyTableRef = -1;
+            eventListenerTableRef = -1;
+            selfRef = -1;
+        }
     }
     
     return self;

@@ -1,5 +1,5 @@
 //
-//  GemPhysics.m
+//  GemPhysics.mm
 //  GeminiSDK
 //
 //  Created by James Norton on 9/9/12.
@@ -9,6 +9,8 @@
 #import "GemPhysics.h"
 #include "Box2D.h"
 #import "GemEvent.h"
+#import "GemCircle.h"
+#import "GemConvexShape.h"
 
 // handles collisions between objects
 class GemContactListener : public b2ContactListener {
@@ -152,8 +154,8 @@ public:
             
         } else {
             // use the default box shape
-            float hWidth = obj.width / scale / 2.0;
-            float hHeight = obj.height / scale / 2.0;
+            float hWidth = (obj.width - RENDER_PADDING) / scale / 2.0;
+            float hHeight = (obj.height - RENDER_PADDING) / scale / 2.0;
             
             polyShape.SetAsBox(hWidth, hHeight);
             fixtureDef.shape = &polyShape;
@@ -304,6 +306,10 @@ public:
 
 -(void)setScale:(double)s {
     scale = s;
+}
+
+-(float)getScale {
+    return scale;
 }
 
 -(void)setDrawMode:(GemPhysicsDrawMode)mode {

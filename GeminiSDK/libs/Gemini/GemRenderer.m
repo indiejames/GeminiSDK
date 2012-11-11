@@ -11,6 +11,7 @@
 #import "GemLine.h"
 #import "GemRectangle.h"
 #import "GemCircle.h"
+#import "GemConvexShape.h"
 #import "GemSprite.h"
 #import "GemLayer.h"
 #import "LGeminiDisplay.h"
@@ -18,6 +19,7 @@
 #import "GemGLKViewController.h"
 #import "GemDirector.h"
 #import "GemScene.h"
+#import "GemPhysicsUtil.h"
 #include "GLUtils.h"
 
 #define LINE_BUFFER_CHUNK_SIZE (512)
@@ -174,6 +176,7 @@ GLuint spriteRingBufferOffset = 0;
     
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
     NSMutableArray *shapes = [NSMutableArray arrayWithCapacity:1];
+    NSMutableArray *physicsShapes = [NSMutableArray arrayWithCapacity:1];
       
     GLKMatrix3 cumulTransform = GLKMatrix3Multiply(transform, group.transform);
     GLfloat groupAlpha = group.alpha;
@@ -197,10 +200,21 @@ GLuint spriteRingBufferOffset = 0;
             [self renderSprite:(GemSprite *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
                                     
         } else if(gemObj.class == GemRectangle.class){
-            //[self renderRectangle:((GeminiRectangle *)gemObj) withLayer:layer alpha:cumulAlpha transform:transform];
+            
             [shapes addObject:gemObj];
         } else if(gemObj.class == GemCircle.class){
             [shapes addObject:gemObj];
+        } else if(gemObj.class == GemConvexShape.class){
+            [shapes addObject:gemObj];
+        }
+        
+        // TODO make this a real flag
+        BOOL renderPhysics = YES;
+        
+        if (renderPhysics && gemObj.physicsBody != NULL) {
+            GemDisplayGroup *phyShapes = getPhysicsShapes((__bridge void *)(gemObj), [[Gemini shared].physics getScale]);
+            [physicsShapes addObject:phyShapes];
+            
         }
         
     }
@@ -208,8 +222,16 @@ GLuint spriteRingBufferOffset = 0;
     if ([lines count] > 0) {
         [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
     }
+    
     if ([shapes count] > 0) {
        [self renderShapes:shapes withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+    }
+    
+    if ([physicsShapes count] > 0) {
+        for (int i=0; i<[physicsShapes count]; i++) {
+            GemDisplayGroup *pgroup = [physicsShapes objectAtIndex:i];
+            [self renderDisplayGroup:pgroup forLayer:layer+1 withAlpha:cumulAlpha transform:cumulTransform];
+        }
     }
     
 }
@@ -411,8 +433,6 @@ GLuint spriteRingBufferOffset = 0;
         ringBufferOffset = 0;
     }
     
-    
-    
     // invalidate the VBO mappings to make sure any leftover rendering will get done
     glMapBufferRangeEXT(GL_ARRAY_BUFFER, 0, 0, GL_MAP_INVALIDATE_BUFFER_BIT_EXT);
     glMapBufferRangeEXT(GL_ELEMENT_ARRAY_BUFFER, 0, 0, GL_MAP_INVALIDATE_BUFFER_BIT_EXT);
@@ -423,7 +443,6 @@ GLuint spriteRingBufferOffset = 0;
     GLuint vertOffset = 0;  // offsets into the mapped VBOs
     GLuint indexOffset = 0;
 
-    
     for (int i=0; i<[shapes count]; i++) {
         GemShape *shape = (GemShape *)[shapes objectAtIndex:i];
         
@@ -450,8 +469,7 @@ GLuint spriteRingBufferOffset = 0;
             vertData[j].color[0] = shape.vertColor[j*4];
             vertData[j].color[1] = shape.vertColor[j*4+1];
             vertData[j].color[2] = shape.vertColor[j*4+2];
-            vertData[j].color[3] = shape.vertColor[j*4+3] * finalAlpha;
-            
+            vertData[j].color[3] = shape.vertColor[j*4+3] * finalAlpha;            
         }
         
         free(newVerts);

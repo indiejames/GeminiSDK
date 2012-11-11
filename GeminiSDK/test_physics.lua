@@ -25,28 +25,28 @@ function M.physicsData(scale)
                     
                     
                     {
-                    pe_fixture_id = "head", density = 2, friction = 0, bounce = 0,
+                    pe_fixture_id = "head", density = 3, friction = 0.5, bounce = 0.5, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    radius = 10.0,
-					position = { -13.9411764396516, -65.2058823297386 }
+                    radius = 16.125,
+					position = { -13.9411764396516, -64.4705882198257 }
                     }
                     
                     
-                    , 
+                     ,
                     
                     
                     {
-                    pe_fixture_id = "body", density = 2, friction = 0, bounce = 0, 
+                    pe_fixture_id = "body", density = 3, friction = 0.5, bounce = 0.5, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    shape = {6, -51, 18,12,  -9, 17,  -22, -45  }
+                    shape = {   6, -51  ,  18, 12  ,  -9, 17  ,  -22, -45  }
                     }
                     
-                
+                    
                     
                      ,
                     
                     {
-                    pe_fixture_id = "legs", density = 3, friction = 0.5, bounce = 0.7, 
+                    pe_fixture_id = "legs", density = 3, friction = 0.5, bounce = 0.5, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
                     radius = 33.242,
 					position = { 8.32352787266552, 48.2941185906272 }
@@ -68,7 +68,7 @@ function M.physicsData(scale)
                     {
                     pe_fixture_id = "sensor2", density = 2, friction = 0, bounce = 0, isSensor=true, 
                     filter = { categoryBits = 1, maskBits = 65535, groupIndex = 0 },
-                    radius = 1.000,
+                    radius = 10.000,
 					position = { 69.3529389954356, -11.2647043123171 }
                     }
                     

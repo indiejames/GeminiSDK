@@ -14,10 +14,68 @@
 #import "GemLine.h"
 #import "GemRectangle.h"
 #import "GemCircle.h"
+#import "GemConvexShape.h"
 #import "GemGLKViewController.h"
 #import "LGeminiLuaSupport.h"
 #import "LGeminiObject.h"
 
+
+//////// convex shapes ////////////////////////
+static int newShape(lua_State *L){
+    int numPoints = lua_gettop(L)/2;
+    GLfloat *points = (GLfloat *)malloc(2*numPoints * sizeof(GLfloat)); // this will be freed when the object is dealloced
+    for (int i=0; i<numPoints; i++) {
+        points[i*2] = luaL_checknumber(L, i*2+1);
+        points[i*2+1] = luaL_checknumber(L, i*2+2);
+    }
+    
+    GemConvexShape *shape = [[GemConvexShape alloc] initWithLuaState:L Points:points NumPoints:numPoints];
+    [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:shape];
+    
+    return 1;
+}
+
+static int shapeIndex(lua_State *L){
+    int rval = 0;
+    __unsafe_unretained GemConvexShape **shape = (__unsafe_unretained GemConvexShape **)luaL_checkudata(L, 1, GEMINI_CONVEX_SHAPE_LUA_KEY);
+    if (shape != NULL) {
+        rval = genericGeminiDisplayObjectIndex(L, *shape);
+    }
+    
+    return rval;
+}
+
+static int shapeNewIndex(lua_State *L){
+    int rval = 0;
+    __unsafe_unretained GemShape  **shape = (__unsafe_unretained GemShape **)luaL_checkudata(L, 1, GEMINI_CONVEX_SHAPE_LUA_KEY);
+    
+    if (shape != NULL) {
+        rval = genericGemDisplayObjecNewIndex(L, shape);
+                 
+    }
+    
+    
+    return rval;
+}
+
+static int shapeSetFillColor(lua_State *L){
+    int numargs = lua_gettop(L);
+    
+    __unsafe_unretained GemConvexShape  **shape = (__unsafe_unretained GemConvexShape **)luaL_checkudata(L, 1, GEMINI_CONVEX_SHAPE_LUA_KEY);
+    
+    GLfloat red = luaL_checknumber(L, 2);
+    GLfloat green = luaL_checknumber(L, 3);
+    GLfloat blue = luaL_checknumber(L, 4);
+    GLfloat alpha = 1.0;
+    if (numargs == 5) {
+        alpha = luaL_checknumber(L, 5);
+    }
+    
+    (*shape).fillColor = GLKVector4Make(red, green, blue, alpha);
+    
+    
+    return 0;
+}
 
 ///////////// circles /////////////////////////
 static int newCircle(lua_State *L){
@@ -556,6 +614,7 @@ static const struct luaL_Reg displayLib_f [] = {
     {"newLine", newLine},
     {"newRect", newRectangle},
     {"newCircle", newCircle},
+    {"newShape", newShape},
     {"contentScaleFactor", displayGetScaleFactor},
     {NULL, NULL}
 };
@@ -626,6 +685,19 @@ static const struct luaL_Reg circle_m [] = {
     {NULL, NULL}
 };
 
+// mappings for the convex shape methods
+static const struct luaL_Reg shape_m [] = {
+    {"__gc", genericGC},
+    {"__index", shapeIndex},
+    {"__newindex", shapeNewIndex},
+    {"setFillColor", shapeSetFillColor},
+    {"removeSelf", removeSelf},
+    {"delete", genericDelete},
+    {"addEventListener", addEventListener},
+    {"removeEventListener", removeEventListener},
+    {NULL, NULL}
+};
+
 
 int luaopen_display_lib (lua_State *L){
     // create meta tables for our various types /////////
@@ -645,6 +717,9 @@ int luaopen_display_lib (lua_State *L){
     
     // circles
     createMetatable(L, GEMINI_CIRCLE_LUA_KEY, circle_m);
+    
+    // convex shapes
+    createMetatable(L, GEMINI_CONVEX_SHAPE_LUA_KEY, shape_m);
     
     /////// finished with metatables ///////////
     

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GemDisplayObject.h"
 
+#define RENDER_PADDING (4.0)
 
 typedef enum {
     GEM_PHYSICS_NORMAL,
@@ -28,6 +29,7 @@ typedef struct {
 }
 
 -(void)setScale:(double)s;
+-(float)getScale;
 -(void)setDrawMode:(GemPhysicsDrawMode)mode;
 -(void)setContinous:(bool) cont;
 -(void)setGravityGx:(float)gx Gy:(float)gy;
