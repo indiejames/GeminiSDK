@@ -7,7 +7,9 @@
 //
 
 #include "GemPhysicsUtil.h"
+#import "GemPhysics.h"
 #import "GemCircle.h"
+#import "GemRectangle.h"
 #import "GemConvexShape.h"
 #import "GemDisplayGroup.h"
 #include "Box2D.h"
@@ -33,7 +35,7 @@ GemDisplayGroup *getPhysicsShapes(void *vobj, float scale){
             GemShape *shape;
             if ( shapeType == b2Shape::e_circle ) {
                 b2CircleShape* circleShape = (b2CircleShape*)fixture->GetShape();
-                GLfloat radius = circleShape->m_radius * scale;
+                GLfloat radius = circleShape->m_radius * scale + RENDER_PADDING;
                 GLfloat x = circleShape->m_p.x * scale;
                 GLfloat y = circleShape->m_p.y * scale;
                 
@@ -49,15 +51,34 @@ GemDisplayGroup *getPhysicsShapes(void *vobj, float scale){
                     points[i*2+1] = point.y * scale;
                 }
                 
+                // compensate for padding added for boxes
+                if (obj.class == GemRectangle.class) {
+                    float radius = polygonShape->m_radius * scale;
+                    points[0] -= radius;
+                    points[1] -= radius;
+                    points[2] += radius;
+                    points[3] -= radius;
+                    points[4] += radius;
+                    points[5] += radius;
+                    points[6] -= radius;
+                    points[7] += radius;
+                }
+                
+                
                 shape = [[GemConvexShape alloc] initWithLuaState:NULL Points:points NumPoints:pcount];
                 //shape.x = obj.x;
                 //shape.y = obj.y;
             }
             
             if (fixture->IsSensor()) {
-                shape.fillColor = GLKVector4Make(1.0, 0, 0, 0.5); // transparent red
+                shape.fillColor = GLKVector4Make(0, 0, 1.0, 0.75); // transparent blue
             } else {
-                shape.fillColor = GLKVector4Make(0, 1.0, 0, 0.5); // transparent green
+                shape.fillColor = GLKVector4Make(0, 1.0, 0, 0.75); // transparent green
+            }
+            
+            if (body->GetType() == b2_staticBody) {
+                // static bodies
+                shape.fillColor = GLKVector4Make(1.0, 0, 0, 0.75); // transparent red
             }
             
             [group insert:shape];

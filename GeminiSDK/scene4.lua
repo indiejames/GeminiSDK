@@ -97,7 +97,7 @@ function scene:enterScene( event )
             {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="down"})
     end
     
-    timer.performWithDelay(5000, listener)
+    timer.performWithDelay(25000, listener)
 
 end
 
@@ -114,6 +114,9 @@ function scene:exitScene( event )
     
     print("Exiting scene 4")
     walkerSprite:pause();
+    sprite2:pause();
+    sprite3:pause();
+    sprite3.isActive = false
 
 end
 

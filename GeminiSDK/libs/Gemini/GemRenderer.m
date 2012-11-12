@@ -46,6 +46,21 @@ GLuint ringBufferOffset = 0;
 GLuint lineRingBufferOffset = 0;
 GLuint spriteRingBufferOffset = 0;
 
+@interface DisplayGroupTransform : NSObject {
+    GLKMatrix3 transform;
+    GemDisplayGroup *group;
+}
+
+@property (nonatomic) GLKMatrix3 transform;
+@property (nonatomic, strong) GemDisplayGroup *group;
+
+@end
+
+@implementation DisplayGroupTransform
+@synthesize transform, group;
+
+@end
+
 
 @implementation GemRenderer
 
@@ -133,6 +148,8 @@ GLuint spriteRingBufferOffset = 0;
     
     for (int i=0; i<[layers count]; i++) {
         
+        [physicsShapes removeAllObjects];
+        
         NSObject *obj = [layers objectAtIndex:i];
         if (obj.class == NSValue.class) {
             // this is a callback layer
@@ -151,16 +168,25 @@ GLuint spriteRingBufferOffset = 0;
                 glState.glBlendFunc = GLKVector2Make(layer.sourceBlend, layer.destBlend);
             }
             
-            
-            
             [self renderDisplayGroup:layer forLayer:layer.index withAlpha:1.0 transform:transform];
             
         }
         
-        if ([spriteBatches count] > 0) {
+        GemPhysicsDrawMode drawMode = [Gemini shared].physics.drawMode;
+        
+        if ([spriteBatches count] > 0 && (drawMode == GEM_PHYSICS_NORMAL || drawMode == GEM_PHYSICS_HYBRID)) {
             [self renderSpriteBatches];
         }
-
+        
+        
+        
+        if ([physicsShapes count] > 0 && (drawMode == GEM_PHYSICS_DEBUG || drawMode == GEM_PHYSICS_HYBRID)) {
+            for (int i=0; i<[physicsShapes count]; i++) {
+                DisplayGroupTransform *dgroup = [physicsShapes objectAtIndex:i];
+                GLKMatrix3 gtran = dgroup.transform;
+                [self renderDisplayGroup:dgroup.group forLayer:dgroup.group.layer.index+1 withAlpha:1.0 transform:gtran];
+            }
+        }
         
     }
 }
@@ -176,7 +202,7 @@ GLuint spriteRingBufferOffset = 0;
     
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
     NSMutableArray *shapes = [NSMutableArray arrayWithCapacity:1];
-    NSMutableArray *physicsShapes = [NSMutableArray arrayWithCapacity:1];
+    
       
     GLKMatrix3 cumulTransform = GLKMatrix3Multiply(transform, group.transform);
     GLfloat groupAlpha = group.alpha;
@@ -213,25 +239,22 @@ GLuint spriteRingBufferOffset = 0;
         
         if (renderPhysics && gemObj.physicsBody != NULL) {
             GemDisplayGroup *phyShapes = getPhysicsShapes((__bridge void *)(gemObj), [[Gemini shared].physics getScale]);
-            [physicsShapes addObject:phyShapes];
-            
+            DisplayGroupTransform *dgt = [[DisplayGroupTransform alloc] init];
+            dgt.transform = cumulTransform;
+            dgt.group = phyShapes;
+            [physicsShapes addObject:dgt];
         }
         
     }
     
-    if ([lines count] > 0) {
+    GemPhysicsDrawMode drawMode = [Gemini shared].physics.drawMode;
+    
+    if ([lines count] > 0 && (drawMode == GEM_PHYSICS_NORMAL || drawMode == GEM_PHYSICS_HYBRID)) {
         [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
     }
     
-    if ([shapes count] > 0) {
+    if ([shapes count] > 0 && (drawMode == GEM_PHYSICS_NORMAL || drawMode == GEM_PHYSICS_HYBRID)) {
        [self renderShapes:shapes withLayer:layer alpha:cumulAlpha transform:cumulTransform];
-    }
-    
-    if ([physicsShapes count] > 0) {
-        for (int i=0; i<[physicsShapes count]; i++) {
-            GemDisplayGroup *pgroup = [physicsShapes objectAtIndex:i];
-            [self renderDisplayGroup:pgroup forLayer:layer+1 withAlpha:cumulAlpha transform:cumulTransform];
-        }
     }
     
 }
@@ -627,6 +650,7 @@ GLuint spriteRingBufferOffset = 0;
     [self setupLineRendering];
     [self setupRectangleRendering];
     [self setupSpriteRendering];
+    physicsShapes = [NSMutableArray arrayWithCapacity:1];
 }
 
 -(id) initWithLuaState:(lua_State *)luaState {

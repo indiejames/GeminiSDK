@@ -93,6 +93,11 @@
     return fillColor;
 }*/
 
+-(void)setStrokeWidth:(GLfloat)w {
+    [super setStrokeWidth:w];
+    needsUpdate = YES;
+}
+
 // always pass in two colors, one for center and one for edge
 -(void)setGradient:(GLKVector4 *)grad {
     unsigned int numSlices = [self numSlices];
@@ -206,11 +211,13 @@
         vertIndex[indexPtr++] = 0; // repeat the first and last indices to make it easy to use one draw call for all circles
                           // via degenerate triangles
         
+        GLfloat innerRadius = self.radius - self.strokeWidth;
+        
         
         for (int i=0; i<numSlices; i++) {
             GLfloat theta = i * 2*M_PI / (GLfloat)numSlices;
-            verts[(i+1)*3] = verts[0] + self.radius * cos(theta);
-            verts[(i+1)*3+1] = verts[1] + self.radius * sin(theta);
+            verts[(i+1)*3] = verts[0] + innerRadius * cos(theta);
+            verts[(i+1)*3+1] = verts[1] + innerRadius * sin(theta);
             verts[(i+1)*3+2] = 1.0;
         }
         
@@ -230,8 +237,7 @@
         
         if (self.strokeWidth > 0) {
             // border portion
-            GLfloat innerRadius = self.radius;
-            GLfloat outerRadius = self.radius + self.strokeWidth;
+            GLfloat outerRadius = self.radius;
             for (int i=0; i<numSlices; i++) {
                 GLfloat theta = i * 2*M_PI / (GLfloat)numSlices;
                 

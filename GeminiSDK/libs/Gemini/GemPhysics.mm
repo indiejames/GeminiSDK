@@ -10,7 +10,9 @@
 #include "Box2D.h"
 #import "GemEvent.h"
 #import "GemCircle.h"
+#import "GemRectangle.h"
 #import "GemConvexShape.h"
+
 
 // handles collisions between objects
 class GemContactListener : public b2ContactListener {
@@ -64,6 +66,8 @@ public:
     float timeStep;
     double accumulator;
 }
+
+@synthesize drawMode;
 
 -(id)init {
     self = [super init];
@@ -153,12 +157,28 @@ public:
             fixtureDef.shape = &polyShape;
             
         } else {
-            // use the default box shape
-            float hWidth = (obj.width - RENDER_PADDING) / scale / 2.0;
-            float hHeight = (obj.height - RENDER_PADDING) / scale / 2.0;
             
-            polyShape.SetAsBox(hWidth, hHeight);
-            fixtureDef.shape = &polyShape;
+            if (obj.class == GemCircle.class) {
+                circle.m_radius = (((GemCircle *)obj).radius) / scale - RENDER_PADDING;
+                fixtureDef.shape = &circle;
+            } else if (obj.class == GemRectangle.class){
+                // us a box shape and account for the border on the rectange
+                GemRectangle *rect = (GemRectangle *)obj;
+                float width = (rect.width) / scale - 2*RENDER_PADDING;
+                float height = (rect.height) / scale - 2*RENDER_PADDING;
+                
+                polyShape.SetAsBox(width / 2.0, height / 2.0);
+                fixtureDef.shape = &polyShape;
+                
+            } else {
+                // use box shape for everything else
+                float width = (obj.width) / scale - 2*RENDER_PADDING;
+                float height = (obj.height) / scale - 2*RENDER_PADDING;
+                
+                polyShape.SetAsBox(width / 2.0, height / 2.0);
+                fixtureDef.shape = &polyShape;
+            }
+            
         }
         
         float density = 1.0;
@@ -196,14 +216,20 @@ public:
     // create a default fixture if none are supplied
     if (fixtures == nil || [fixtures count] == 0) {
         b2FixtureDef fixtureDef;
+        b2CircleShape circleShape;
         b2PolygonShape polyShape;
         
-        // use box shape
-        float width = obj.width / scale;
-        float height = obj.height / scale;
-        
-        polyShape.SetAsBox(width / 2.0, height / 2.0);
-        fixtureDef.shape = &polyShape;
+        if (obj.class == GemCircle.class) {
+            circleShape.m_radius = ((GemCircle *)obj).radius / scale;
+            fixtureDef.shape = &circleShape;
+        } else {
+            // use box shape for everything else
+            float width = obj.width / scale;
+            float height = obj.height / scale;
+            
+            polyShape.SetAsBox(width / 2.0, height / 2.0);
+            fixtureDef.shape = &polyShape;
+        }
         
         body->CreateFixture(&fixtureDef);
 
@@ -310,10 +336,6 @@ public:
 
 -(float)getScale {
     return scale;
-}
-
--(void)setDrawMode:(GemPhysicsDrawMode)mode {
-    drawMode = mode;
 }
 
 -(void)setContinous:(bool) cont{

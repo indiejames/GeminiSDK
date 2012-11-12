@@ -13,6 +13,7 @@ local greenRectangle
 local redRectangle
 local rectangle3
 local rectangle4
+local redCircle
 
 ----------------------------------------------------------------------------------
 -- 
@@ -67,8 +68,8 @@ function scene:createScene( event )
     group1.y = 160
     
     -- draw a red circle with a white border
-   local redCircle = display.newCircle(200,200,100)
-   redCircle.name = "RED CIRCLE"
+    redCircle = display.newCircle(200,200,30)
+    redCircle.name = "RED CIRCLE"
     redCircle:setFillColor(1.0,0,0,1.0)
     redCircle:setGradient(1.0,1.0,1.0,1.0, 1.0,0,0,1.0)
     redCircle.strokeWidth = 3.0
@@ -102,7 +103,7 @@ function scene:createScene( event )
     rectangle3 = display.newRect(200/2,300/2,100/2,100/2)
     rectangle3:setFillColor(0.5,0.25,0.75,1.0)
     rectangle3:setStrokeColor(1.0,1.0,1.0,1.0)
-    rectangle3.strokeWidth = 2.5
+    rectangle3.strokeWidth = 3
     rectangle3.x = 125
     rectangle3.y = 225
     rectangle3.rotation = 40
@@ -112,10 +113,10 @@ function scene:createScene( event )
     rectangle4 = display.newRect(600/2,400/2,100/2,100/2)
     rectangle4:setFillColor(0,0.5,0.5,1.0)
     rectangle4:setStrokeColor(1.0,1.0,1.0,1.0)
-    rectangle4.strokeWidth = 2.5
+    rectangle4.strokeWidth = 3
     rectangle4.x = 275
     rectangle4.y = 250
-    rectangle4.rotation = -20
+    --rectangle4.rotation = -20
     rectangle4.name = "rectangle4"
     layer1:insert(rectangle4)
 
@@ -140,12 +141,14 @@ function scene:createScene( event )
 
     physics.setScale(100)
     physics.setGravity(0, -9.8)
+    physics.setDrawMode("hybrid")
     physics.addBody(rectangle3, "dynamic", { density=3.0, friction=0.5, restitution=0.7 } )
     --rectangle3:addEventListener("collision:postsolve", collisionPresolve)
     physics.addBody(rectangle4, "dynamic", { density=3.0, friction=0.5, restitution=0.7 } )
     --rectangle4:addEventListener("collision:postsolve", collisionPresolve)
     rectangle4:addEventListener("collision", rectangle4)
-
+    
+    physics.addBody(redCircle, "dynamic", {density=3.0, friction=0.5, restitution=0.7})
 
     local ground = display.newRect(480/2,0,960/2,30/2)
     ground:setFillColor(0,1.0,0,1.0)
@@ -182,6 +185,7 @@ function scene:enterScene( event )
     
     rectangle3.isActive = true
     rectangle4.isActive = true
+    redCircle.isActive = true
     
      -- add an event listener that will fire every frame
     scene.starListener = function(event)
@@ -251,7 +255,7 @@ function scene:exitScene( event )
     
     rectangle3.isActive = false
     rectangle4.isActive = false
-
+    redCircle.isActive = false
 end
 
 

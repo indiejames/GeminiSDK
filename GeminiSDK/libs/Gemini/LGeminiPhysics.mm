@@ -132,8 +132,15 @@ static int setScale(lua_State *L){
 }
 
 static int setDrawMode(lua_State *L){
-    int mode = lua_tointeger(L, 1);
-    [[Gemini shared].physics setDrawMode:(GemPhysicsDrawMode)mode];
+    const char *mode = lua_tostring(L, -1);
+    GemPhysicsDrawMode drawMode = GEM_PHYSICS_NORMAL;
+    if (strcmp(mode, "debug") == 0) {
+        drawMode = GEM_PHYSICS_DEBUG;
+    } else if (strcmp(mode, "hybrid") == 0){
+        drawMode = GEM_PHYSICS_HYBRID;
+    }
+    
+    [[Gemini shared].physics setDrawMode:drawMode];
     
     return 0;
 }

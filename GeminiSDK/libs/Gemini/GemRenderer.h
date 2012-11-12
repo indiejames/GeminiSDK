@@ -26,6 +26,7 @@
     
     GemScene *activeScene;
     NSMutableDictionary *spriteBatches;
+    NSMutableArray *physicsShapes;
     GLuint lineShaderProgram;
     GLuint spriteShaderProgram;
     GLuint vertexBuffer;

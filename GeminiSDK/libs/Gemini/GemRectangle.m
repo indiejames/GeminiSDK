@@ -92,9 +92,15 @@
     return gradient;
 }
 
+-(void)setStrokeWidth:(GLfloat)sw {
+    [super setStrokeWidth:sw];
+    self.needsUpdate = YES;
+    [self computeVertices];
+}
+
 
 -(void)computeVertices {
-    GLfloat z = 1; // homogeneous coordinates to all fast matrix math
+    GLfloat z = 1; // homogeneous coordinates to allow fast matrix math
     
     // inner portion
     vertIndex[0] = 3;
