@@ -326,6 +326,7 @@ static const struct luaL_Reg sprite_m [] = {
     {"setLinearVelocity", setLinearVelocity},
     {"applyForce", applyForce},
     {"applyLinearImpulse", applyLinearImpulse},
+    {"isTouching", isObjectTouching},
     {NULL, NULL}
 };
 

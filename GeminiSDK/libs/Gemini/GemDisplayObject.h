@@ -81,5 +81,6 @@
 -(BOOL)doesContainPoint:(GLKVector2)point;
 -(void)setIsActive:(bool)active;
 -(bool)isActive;
+-(NSArray *)getTouchingObjects;
 
 @end

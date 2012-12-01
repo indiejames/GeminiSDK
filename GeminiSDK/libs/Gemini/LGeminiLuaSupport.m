@@ -279,6 +279,25 @@ int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject __unsafe_unret
     
 }
 
+int isObjectTouching(lua_State *L){
+    __unsafe_unretained GemDisplayObject **displayObjA = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
+    __unsafe_unretained GemDisplayObject **displayObjB = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 2);
+    
+    bool isTouching = false;
+    
+    NSArray *touching = [*displayObjA getTouchingObjects];
+    GemLog(@"touching %d objects", [touching count]);
+    if ([touching containsObject:*displayObjB]) {
+        isTouching = true;
+    }
+    
+    lua_pushboolean(L, isTouching);
+    
+    return 1;
+    
+    
+}
+
 int removeSelf(lua_State *L){
     __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, -1);
     [(*displayObj).parent remove:*displayObj];

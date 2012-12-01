@@ -27,6 +27,7 @@ int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject __unsafe_unret
 int removeSelf(lua_State *L);
 int genericDelete(lua_State *L);
 int genericGC(lua_State *L);
+int isObjectTouching(lua_State *L);
 void setDefaultValues(lua_State *L);
 void setupObject(lua_State *L, const char *luaKey, GemObject *obj);
 

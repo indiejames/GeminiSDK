@@ -655,6 +655,7 @@ static const struct luaL_Reg line_m [] = {
     {"append", lineAppendPoints},
     {"delete", genericDelete},
     {"applyForce", applyForce},
+    {"isTouching", isObjectTouching},
     {NULL, NULL}
 };
 
@@ -672,6 +673,7 @@ static const struct luaL_Reg rectangle_m [] = {
     {"addEventListener", addEventListener},
     {"removeEventListener", removeEventListener},
     {"applyForce", applyForce},
+    {"isTouching", isObjectTouching},
     {NULL, NULL}
 };
 
@@ -689,6 +691,7 @@ static const struct luaL_Reg circle_m [] = {
     {"addEventListener", addEventListener},
     {"removeEventListener", removeEventListener},
     {"applyForce", applyForce},
+    {"isTouching", isObjectTouching},
     {NULL, NULL}
 };
 
@@ -703,6 +706,7 @@ static const struct luaL_Reg shape_m [] = {
     {"addEventListener", addEventListener},
     {"removeEventListener", removeEventListener},
     {"applyForce", applyForce},
+    {"isTouching", isObjectTouching},
     {NULL, NULL}
 };
 

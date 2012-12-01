@@ -187,6 +187,41 @@
     needsTransformUpdate = YES;
 }
 
+-(NSArray *)getTouchingObjects {
+    NSMutableArray *rval = [[NSMutableArray alloc] initWithCapacity:1];
+    if (physicsBody) {
+        b2Body *body = (b2Body *)physicsBody;
+        for (b2ContactEdge *ce = body->GetContactList(); ce; ce = ce->next) {
+            b2Contact *contact = ce->contact;
+            if (contact->IsTouching()) {
+                // add the object containing the first fixture to our list unless the
+                // first fixture belongs to this object, in which case we use the
+                // object belonging to the second fixture
+                b2Fixture *fixtureA = contact->GetFixtureA();
+                b2Body *bodyA = fixtureA->GetBody();
+                
+                GemDisplayObject *obj = (__bridge GemDisplayObject *)(bodyA->GetUserData());
+                
+                if (obj != self) {
+                    [rval addObject:obj];
+                } else {
+                    // use fixbure B
+                    b2Fixture *fixtureB = contact->GetFixtureB();
+                    b2Body *bodyB = fixtureB->GetBody();
+                    
+                    obj = (__bridge GemDisplayObject *)(bodyB->GetUserData());
+                    [rval addObject:obj];
+                }
+                
+                
+            }
+            
+        }
+    }
+    
+    return rval;
+}
+
 -(void)setIsActive:(bool)active {
     if (physicsBody) {
         [[Gemini shared].physics setBody:physicsBody isActive:active];

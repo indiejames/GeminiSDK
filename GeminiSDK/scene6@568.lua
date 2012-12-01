@@ -334,7 +334,7 @@ function scene:enterScene( event )
    function marioSprite:collision(event)
       local obj = event.source
 
-      if (marioSprite.state == "JUMPING") then
+      if marioSprite.state == "JUMPING" then
         marioSprite:setLinearVelocity(0,0)
         marioSprite.state = "STANDING"
       end
@@ -415,11 +415,20 @@ function scene:enterScene( event )
       
       -- reverse direction of platform if necessary
       if platform[1].x < platform_position[1] - 64 then
+        -- change mario's velocity to avoid jerk when platform changes direction
+        if marioSprite:isTouching(platform[1]) or marioSprite:isTouching(platform[2]) then
+            print("mario is on the platform")
+            marioSprite:setLinearVelocity(platform_speed, 0)
+        end
         for i = 1, #platform do
             platform[i]:setLinearVelocity(platform_speed, 0)
         end
       else
         if platform[1].x > platform_position[1] then
+            -- change mario's velocity to avoid jerk when platform changes direction
+            if marioSprite:isTouching(platform[1]) or marioSprite:isTouching(platform[2]) then
+                marioSprite:setLinearVelocity(-platform_speed, 0)
+            end
             for i = 1, #platform do
                 platform[i]:setLinearVelocity(-platform_speed, 0)
             end
