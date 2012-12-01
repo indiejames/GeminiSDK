@@ -8,6 +8,8 @@
 
 #import "GemEvent.h"
 
+#define GEM_TOUCH_EVENT_LUA_KEY "Gemini.TouchEventLuaKey"
+
 typedef enum GemTouchPhase {
     GEM_TOUCH_BEGAN,
     GEM_TOUCH_MOVED,
@@ -22,6 +24,8 @@ typedef enum GemTouchPhase {
 @property (nonatomic) float y;
 @property (nonatomic) float startX;
 @property (nonatomic) float startY;
+
+-(id)initWithLuaState:(lua_State *)luaState Target:trgt Event:(UIEvent *)evt;
 
 @end
 

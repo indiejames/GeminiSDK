@@ -85,3 +85,47 @@ GLKTextureInfo *createTexture(NSString * imgFileName){
     
     return textId;
 }
+
+void GemCheckGLError(void){
+    int err;
+    
+    BOOL isError = NO;
+    while ((err = glGetError()) != GL_NO_ERROR) {
+        switch (err) {
+            case GL_INVALID_ENUM:
+                GemLog(@"An unacceptable value is specified for an enumerated argument. The offending command is ignored and has no other side effect than to set the error flag.");
+                isError = YES;
+                break;
+            case GL_INVALID_VALUE:
+                GemLog(@"A numeric argument is out of range. The offending command is ignored and has no other side effect than to set the error flag.");
+                isError = YES;
+                break;
+            case GL_INVALID_OPERATION:
+                GemLog(@"The specified operation is not allowed in the current state. The offending command is ignored and has no other side effect than to set the error flag.");
+                isError = YES;
+                break;
+            case GL_INVALID_FRAMEBUFFER_OPERATION:
+                GemLog(@"The framebuffer object is not complete. The offending command is ignored and has no other side effect than to set the error flag.");
+                isError = YES;
+                break;
+            case GL_OUT_OF_MEMORY:
+                GemLog(@"There is not enough memory left to execute the command. The state of the GL is undefined, except for the state of the error flags, after this error is recorded.");
+                isError = YES;
+                break;
+            case GL_STACK_UNDERFLOW:
+                GemLog(@"An attempt has been made to perform an operation that would cause an internal stack to underflow.");
+                isError = YES;
+                break;
+            case GL_STACK_OVERFLOW:
+                GemLog(@"An attempt has been made to perform an operation that would cause an internal stack to overflow.");
+                isError = YES;
+                break;
+            default:
+                break;
+        }
+    }
+    
+    if (isError) {
+        [NSException raise:@"glGetError() returned error" format:@"Error code %d", err];
+    }
+}

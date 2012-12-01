@@ -8,6 +8,8 @@
 
 #import "LGeminiLuaSupport.h"
 
+NSLock *globalLuaLock;
+
 // call a lua method that takes a display object as its parameter
 void callLuaMethodForDisplayObject(lua_State *L, int methodRef, GemDisplayObject *obj){
     lua_rawgeti(L, LUA_REGISTRYINDEX, methodRef);
@@ -48,6 +50,17 @@ int genericIndex(lua_State *L){
     // nil or otherwise, we return here
     return 1;
     
+}
+
+// generic new index method for userdata types
+int genericNewIndex(lua_State *L){
+    
+    lua_getuservalue( L, -3 );  // table attached is attached to objects via user value
+    lua_pushvalue(L, -3);
+    lua_pushvalue(L,-3);
+    lua_rawset( L, -3 );
+    
+    return 0;
 }
 
 // generic indexing for GeminiDisplayObjects
@@ -117,6 +130,28 @@ int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj){
             bool isActive = [obj isActive];
             lua_pushboolean(L, isActive);
             return 1;
+        } else if (strcmp("isFlippedHorizontally", key) == 0){
+            bool flipped = obj.isFlippedHorizontally;
+            lua_pushboolean(L, flipped);
+            return 1;
+        } else if (strcmp("isFlippedVertically", key) == 0){
+            bool flipped = obj.isFlippedVertically;
+            lua_pushboolean(L, flipped);
+            return 1;
+        } else if (strcmp("fixedRotation", key) == 0){
+            bool fixed = obj.fixedRotation;
+            lua_pushboolean(L, fixed);
+            return 1;
+        } else if (strcmp("vx", key) == 0){
+            GLKVector2 vel = obj.linearVelocity;
+            lua_pushnumber(L, vel.x);
+            
+            return 1;
+        } else if (strcmp("vy", key) == 0){
+            GLKVector2 vel = obj.linearVelocity;
+            lua_pushnumber(L, vel.y);
+            
+            return 1;
         } else {
             return genericIndex(L);
         }
@@ -157,6 +192,11 @@ int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject __unsafe_unret
                 
                 GLfloat y = luaL_checknumber(L, 3);
                 [*obj setY:y];
+                if ((*obj).physicsBody) {
+                    // if this is a physics object then change the physics body too
+                    GLKVector3 trans = GLKVector3Make((*obj).x, y, (*obj).rotation);
+                    [*obj setPhysicsTransform:trans];
+                }
                 return 0;
                 
             } else if (strcmp("xOrigin", key) == 0) {
@@ -211,17 +251,26 @@ int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject __unsafe_unret
                 bool active = lua_toboolean(L, 3);
                 [*obj setIsActive:active];
                 return 0;
+            } else if (strcmp("isFlippedHorizontally", key) == 0){
+                bool flipped = lua_toboolean(L, 3);
+                (*obj).isFlippedHorizontally = flipped;
+                return 0;
+            } else if (strcmp("isFlippedVertically", key) == 0){
+                bool flipped = lua_toboolean(L, 3);
+                (*obj).isFlippedVertically = flipped;
+                return 0;
+            } else if (strcmp("fixedRotation", key) == 0){
+                bool fixed = lua_toboolean(L, 3);
+                (*obj).fixedRotation = fixed;
+                return 0;
+            } else {
+                return genericNewIndex(L);
             }
         }
         
         // defualt to storing value in attached lua table
-        lua_getuservalue( L, -3 );
-        /* object, key, value */
-        lua_pushvalue(L, -3);
-        lua_pushvalue(L,-3);
-        lua_rawset( L, -3 );
+        return genericNewIndex(L);
         
-        return 0;
     } 
     
     
@@ -316,3 +365,16 @@ void setupObject(lua_State *L, const char *luaKey, GemObject *obj){
     obj.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
 }
 
+// mutex for Lua
+void lockLuaLock(){
+    if (globalLuaLock == nil){
+        globalLuaLock = [[NSLock alloc] init];
+    }
+    
+    [globalLuaLock lock];
+    
+}
+
+void unlockLuaLock(){
+    [globalLuaLock unlock];
+}

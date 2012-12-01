@@ -11,7 +11,7 @@ local display = require('display')
 local sprite = require('sprite')
 local walker = require('walker')
 
-local walkerSprite
+local sprite1
 local sprite2
 local sprite3
 
@@ -38,19 +38,19 @@ function scene:createScene( event )
 	self:addLayer(layer1)
     
     -- create our sprite for the running walker
-    local walkerSpriteSheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
-    local walkerSpriteSet = sprite.newSpriteSet(walkerSpriteSheet, 1, 10)
-    walkerSprite = sprite.newSprite(walkerSpriteSet)
-    walkerSprite.x = 240
-    walkerSprite.y = 160
-    layer1:insert(walkerSprite)
+    local sprite1Sheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
+    local sprite1Set = sprite.newSpriteSet(sprite1Sheet, 1, 10)
+    sprite1 = sprite.newSprite(sprite1Set)
+    sprite1.x = 240
+    sprite1.y = 160
+    layer1:insert(sprite1)
     
-    sprite2 = sprite.newSprite(walkerSpriteSet)
+    sprite2 = sprite.newSprite(sprite1Set)
     sprite2.x = 100
     sprite2.y = 100
     layer1:insert(sprite2)
     
-    sprite3 = sprite.newSprite(walkerSpriteSet)
+    sprite3 = sprite.newSprite(sprite1Set)
     sprite3.x = 400
     sprite3.y = 240
     sprite3.name = "sprite3"
@@ -59,12 +59,19 @@ function scene:createScene( event )
     local scaleFactor = 1.0
     local physicsData = (require "test_physics").physicsData(scaleFactor)
     print("Lua: loaded physics data")
-    local data,data2,data3,data4,data5 = physicsData:get("runner")
-    print("Lua: got physics data for runner using file data")
     physics.addBody( sprite3, "dynamic", physicsData:get("runner") )
-    --physics.addBody( sprite3, "dynamic", { density=3.0, friction=0.5, restitution=0.7, radius=0.1 })
+    physics.addBody(sprite2, "dynamic", physicsData:get("runner") )
+    physics.addBody(sprite1, "dynamic", physicsData:get("runner") )
     sprite3.isActive = false
-    print("Lua: added physics to sprite3")
+    sprite2.isActive = false
+    sprite1.isActive = false
+    
+    local ground = display.newRect(568/2,0,1136/2,30/2)
+    ground:setFillColor(0,1.0,0,1.0)
+    layer1:insert(ground)
+    ground.name = "GROUND"
+    physics.addBody(ground)
+    ground.isVisible = false
     
     
 end
@@ -81,23 +88,28 @@ function scene:enterScene( event )
 	-----------------------------------------------------------------------------
     
     print("Entering scene 4")
+    levelLabel:setText("Level 4")
+    transition.to(levelLabelGroup, {time=levelFadeDuration, alpha=1})
     
+    physics.setDrawMode("hybrid")
     
-    walkerSprite:prepare()
-    walkerSprite:play()
+    sprite1:prepare()
+    sprite1:play()
     sprite2:prepare()
     sprite2:play()
     sprite3:prepare()
     sprite3:play()
     sprite3.isActive = true
+    sprite2.isActive = true
+    sprite1.isActive = true
     
     local function listener(event)
         director.gotoScene(
-            "scene1",
+            "scene5",
             {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="down"})
     end
     
-    timer.performWithDelay(5000, listener)
+    timer.performWithDelay(25000, listener)
 
 end
 
@@ -113,10 +125,13 @@ function scene:exitScene( event )
 	-----------------------------------------------------------------------------
     
     print("Exiting scene 4")
-    walkerSprite:pause();
+    sprite1:pause();
+    sprite1.isActive = false
     sprite2:pause();
+    sprite2.isActive = false
     sprite3:pause();
     sprite3.isActive = false
+    levelLabelGroup.alpha = 0
 
 end
 

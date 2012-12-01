@@ -8,6 +8,8 @@
 
 #import "GemDisplayGroup.h"
 
+#define GEMINI_LAYER_LUA_KEY "GeminiLib.GEMINI_LAYER_LUA_KEY"
+
 @class GemScene;
 
 @interface GemLayer : GemDisplayGroup {

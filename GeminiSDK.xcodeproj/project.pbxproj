@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		76114C1116682B03004A4C8A /* GemCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76114C1016682B03004A4C8A /* GemCollisionEvent.m */; };
 		76324FDA16069F2600970D03 /* GemFileNameResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76324FD916069F2600970D03 /* GemFileNameResolver.m */; };
 		76324FDD1607748800970D03 /* main@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FDC1607748700970D03 /* main@ipad.lua */; };
 		76324FDF1607846C00970D03 /* horses@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76324FDE1607846C00970D03 /* horses@2x.png */; };
@@ -15,13 +16,36 @@
 		76324FF81608E13D00970D03 /* scene2@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF71608E13D00970D03 /* scene2@ipad.lua */; };
 		76324FFA1608E2DA00970D03 /* scene3@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FF91608E2DA00970D03 /* scene3@ipad.lua */; };
 		76324FFC1608E4D600970D03 /* scene4@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FFB1608E4D500970D03 /* scene4@ipad.lua */; };
+		7640CA8B16517B3B00CC9DA4 /* lib_text_candy.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7640CA8A16517B3B00CC9DA4 /* lib_text_candy.lua */; };
+		7640CA8F16517B5E00CC9DA4 /* chilopod_gd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7640CA8D16517B5E00CC9DA4 /* chilopod_gd.lua */; };
+		7640CA9016517B5E00CC9DA4 /* chilopod_gd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640CA8E16517B5E00CC9DA4 /* chilopod_gd.png */; };
+		7647AC2216587B25001D6867 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7647AC2116587B25001D6867 /* Default-568h@2x.png */; };
+		7647AC2A165882A9001D6867 /* scene1@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7647AC27165882A9001D6867 /* scene1@568.lua */; };
+		7647AC2B165882A9001D6867 /* scene2@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7647AC28165882A9001D6867 /* scene2@568.lua */; };
+		7647AC2C165882A9001D6867 /* scene4@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7647AC29165882A9001D6867 /* scene4@568.lua */; };
 		765A759B161131090077A719 /* GemOpenGLState.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A759A161131090077A719 /* GemOpenGLState.m */; };
 		765A759F1613E4270077A719 /* GemTextureBasedSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A759E1613E4270077A719 /* GemTextureBasedSceneTransition.m */; };
 		765A75A21614FE170077A719 /* GemPageTurnSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A75A11614FE170077A719 /* GemPageTurnSceneTransition.m */; };
 		765A75B1161695770077A719 /* paper.png in Resources */ = {isa = PBXBuildFile; fileRef = 765A75B0161695770077A719 /* paper.png */; };
+		766539FA165F3AFC00079950 /* mountains.lua in Resources */ = {isa = PBXBuildFile; fileRef = 766539F8165F3AFC00079950 /* mountains.lua */; };
+		766539FB165F3AFC00079950 /* mountains.png in Resources */ = {isa = PBXBuildFile; fileRef = 766539F9165F3AFC00079950 /* mountains.png */; };
+		766539FE165FD62000079950 /* scene3@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 766539FD165FD62000079950 /* scene3@568.lua */; };
 		76843F03160942920065A6E2 /* GemFadeSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 76843F02160942910065A6E2 /* GemFadeSceneTransition.m */; };
 		76843F06160A148A0065A6E2 /* scene_transition_shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */; };
 		76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */; };
+		7688D729165DB9CA0029CE07 /* cannon.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7688D727165DB9CA0029CE07 /* cannon.lua */; };
+		7688D72A165DB9CA0029CE07 /* cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7688D728165DB9CA0029CE07 /* cannon.png */; };
+		7688D72D165DB9FD0029CE07 /* scene5.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7688D72C165DB9FD0029CE07 /* scene5.lua */; };
+		7688D72F165DBF460029CE07 /* cannon_physics.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7688D72E165DBF460029CE07 /* cannon_physics.lua */; };
+		7688D731165EF1510029CE07 /* cannon.wav in Resources */ = {isa = PBXBuildFile; fileRef = 7688D730165EF1510029CE07 /* cannon.wav */; };
+		7688D734165EF6A00029CE07 /* GemSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7688D733165EF69F0029CE07 /* GemSoundManager.m */; };
+		7688D736165F283D0029CE07 /* scene5@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7688D735165F283C0029CE07 /* scene5@568.lua */; };
+		769D555B165FDB410037DB6F /* marios.lua in Resources */ = {isa = PBXBuildFile; fileRef = 769D5559165FDB410037DB6F /* marios.lua */; };
+		769D555C165FDB410037DB6F /* marios.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D555A165FDB410037DB6F /* marios.png */; };
+		769D555F166404930037DB6F /* scene6@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 769D555E166404930037DB6F /* scene6@568.lua */; };
+		769D556216653E6B0037DB6F /* mario_game.lua in Resources */ = {isa = PBXBuildFile; fileRef = 769D556016653E6A0037DB6F /* mario_game.lua */; };
+		769D556316653E6B0037DB6F /* mario_game.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D556116653E6B0037DB6F /* mario_game.png */; };
+		769D5565166541390037DB6F /* mario_game_physics.lua in Resources */ = {isa = PBXBuildFile; fileRef = 769D5564166541380037DB6F /* mario_game_physics.lua */; };
 		76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216516036E2C00832178 /* Default-Portrait~ipad.png */; };
 		76D2216816036EB200832178 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216716036EB200832178 /* Default.png */; };
 		76D2216A16036FF100832178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216916036FF100832178 /* Default@2x.png */; };
@@ -215,6 +239,8 @@
 		76D7877D1646EE8000F10BE4 /* GemMask.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D7877C1646EE8000F10BE4 /* GemMask.m */; };
 		76D78781164B4C5200F10BE4 /* GemConvexShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D78780164B4C5100F10BE4 /* GemConvexShape.m */; };
 		76D78784164EC74200F10BE4 /* GemPhysicsUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 76D78783164EC74100F10BE4 /* GemPhysicsUtil.mm */; };
+		76E1389016541B53004190BD /* GemPhysicsJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 76E1388F16541B53004190BD /* GemPhysicsJoint.mm */; };
+		76E13894165433E5004190BD /* GemPhysicsRevoluteJoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 76E13893165433E4004190BD /* GemPhysicsRevoluteJoint.mm */; };
 		76E1A9F8161DE8A900C2CF00 /* walker.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76E1A9F6161DE8A800C2CF00 /* walker.lua */; };
 		76E1A9F9161DE8A900C2CF00 /* walker.png in Resources */ = {isa = PBXBuildFile; fileRef = 76E1A9F7161DE8A900C2CF00 /* walker.png */; };
 		76E1A9FD1624A30400C2CF00 /* GemTouchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E1A9FC1624A30400C2CF00 /* GemTouchEvent.m */; };
@@ -228,6 +254,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		76114C0F16682B03004A4C8A /* GemCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemCollisionEvent.h; path = libs/Gemini/GemCollisionEvent.h; sourceTree = "<group>"; };
+		76114C1016682B03004A4C8A /* GemCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemCollisionEvent.m; path = libs/Gemini/GemCollisionEvent.m; sourceTree = "<group>"; };
 		76324FD816069F2600970D03 /* GemFileNameResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFileNameResolver.h; path = libs/Gemini/GemFileNameResolver.h; sourceTree = "<group>"; };
 		76324FD916069F2600970D03 /* GemFileNameResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFileNameResolver.m; path = libs/Gemini/GemFileNameResolver.m; sourceTree = "<group>"; };
 		76324FDC1607748700970D03 /* main@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "main@ipad.lua"; sourceTree = "<group>"; };
@@ -237,6 +265,13 @@
 		76324FF71608E13D00970D03 /* scene2@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene2@ipad.lua"; sourceTree = "<group>"; };
 		76324FF91608E2DA00970D03 /* scene3@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene3@ipad.lua"; sourceTree = "<group>"; };
 		76324FFB1608E4D500970D03 /* scene4@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene4@ipad.lua"; sourceTree = "<group>"; };
+		7640CA8A16517B3B00CC9DA4 /* lib_text_candy.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lib_text_candy.lua; sourceTree = "<group>"; };
+		7640CA8D16517B5E00CC9DA4 /* chilopod_gd.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chilopod_gd.lua; sourceTree = "<group>"; };
+		7640CA8E16517B5E00CC9DA4 /* chilopod_gd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chilopod_gd.png; sourceTree = "<group>"; };
+		7647AC2116587B25001D6867 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		7647AC27165882A9001D6867 /* scene1@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene1@568.lua"; sourceTree = "<group>"; };
+		7647AC28165882A9001D6867 /* scene2@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene2@568.lua"; sourceTree = "<group>"; };
+		7647AC29165882A9001D6867 /* scene4@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene4@568.lua"; sourceTree = "<group>"; };
 		765A7599161131090077A719 /* GemOpenGLState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemOpenGLState.h; path = libs/Gemini/GemOpenGLState.h; sourceTree = "<group>"; };
 		765A759A161131090077A719 /* GemOpenGLState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemOpenGLState.m; path = libs/Gemini/GemOpenGLState.m; sourceTree = "<group>"; };
 		765A759D1613E4270077A719 /* GemTextureBasedSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemTextureBasedSceneTransition.h; path = libs/Gemini/GemTextureBasedSceneTransition.h; sourceTree = "<group>"; };
@@ -244,10 +279,27 @@
 		765A75A01614FE160077A719 /* GemPageTurnSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemPageTurnSceneTransition.h; path = libs/Gemini/GemPageTurnSceneTransition.h; sourceTree = "<group>"; };
 		765A75A11614FE170077A719 /* GemPageTurnSceneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemPageTurnSceneTransition.m; path = libs/Gemini/GemPageTurnSceneTransition.m; sourceTree = "<group>"; };
 		765A75B0161695770077A719 /* paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paper.png; sourceTree = "<group>"; };
+		766539F8165F3AFC00079950 /* mountains.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mountains.lua; sourceTree = "<group>"; };
+		766539F9165F3AFC00079950 /* mountains.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mountains.png; sourceTree = "<group>"; };
+		766539FD165FD62000079950 /* scene3@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene3@568.lua"; sourceTree = "<group>"; };
 		76843F01160942910065A6E2 /* GemFadeSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFadeSceneTransition.h; path = libs/Gemini/GemFadeSceneTransition.h; sourceTree = "<group>"; };
 		76843F02160942910065A6E2 /* GemFadeSceneTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFadeSceneTransition.m; path = libs/Gemini/GemFadeSceneTransition.m; sourceTree = "<group>"; };
 		76843F05160A148A0065A6E2 /* scene_transition_shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = scene_transition_shader.fsh; sourceTree = "<group>"; };
 		76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = scene_transition_shader.vsh; sourceTree = "<group>"; };
+		7688D727165DB9CA0029CE07 /* cannon.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cannon.lua; sourceTree = "<group>"; };
+		7688D728165DB9CA0029CE07 /* cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cannon.png; sourceTree = "<group>"; };
+		7688D72C165DB9FD0029CE07 /* scene5.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene5.lua; sourceTree = "<group>"; };
+		7688D72E165DBF460029CE07 /* cannon_physics.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cannon_physics.lua; sourceTree = "<group>"; };
+		7688D730165EF1510029CE07 /* cannon.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cannon.wav; sourceTree = "<group>"; };
+		7688D732165EF69E0029CE07 /* GemSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSoundManager.h; path = libs/Gemini/GemSoundManager.h; sourceTree = "<group>"; };
+		7688D733165EF69F0029CE07 /* GemSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemSoundManager.m; path = libs/Gemini/GemSoundManager.m; sourceTree = "<group>"; };
+		7688D735165F283C0029CE07 /* scene5@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene5@568.lua"; sourceTree = "<group>"; };
+		769D5559165FDB410037DB6F /* marios.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = marios.lua; sourceTree = "<group>"; };
+		769D555A165FDB410037DB6F /* marios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marios.png; sourceTree = "<group>"; };
+		769D555E166404930037DB6F /* scene6@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene6@568.lua"; sourceTree = "<group>"; };
+		769D556016653E6A0037DB6F /* mario_game.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mario_game.lua; sourceTree = "<group>"; };
+		769D556116653E6B0037DB6F /* mario_game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mario_game.png; sourceTree = "<group>"; };
+		769D5564166541380037DB6F /* mario_game_physics.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mario_game_physics.lua; sourceTree = "<group>"; };
 		76D2216516036E2C00832178 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		76D2216716036EB200832178 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		76D2216916036FF100832178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
@@ -594,6 +646,10 @@
 		76D78780164B4C5100F10BE4 /* GemConvexShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemConvexShape.m; path = libs/Gemini/GemConvexShape.m; sourceTree = "<group>"; };
 		76D78782164EC74000F10BE4 /* GemPhysicsUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemPhysicsUtil.h; path = libs/Gemini/GemPhysicsUtil.h; sourceTree = "<group>"; };
 		76D78783164EC74100F10BE4 /* GemPhysicsUtil.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GemPhysicsUtil.mm; path = libs/Gemini/GemPhysicsUtil.mm; sourceTree = "<group>"; };
+		76E1388E16541B53004190BD /* GemPhysicsJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemPhysicsJoint.h; path = libs/Gemini/GemPhysicsJoint.h; sourceTree = "<group>"; };
+		76E1388F16541B53004190BD /* GemPhysicsJoint.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GemPhysicsJoint.mm; path = libs/Gemini/GemPhysicsJoint.mm; sourceTree = "<group>"; };
+		76E13892165433E4004190BD /* GemPhysicsRevoluteJoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemPhysicsRevoluteJoint.h; path = libs/Gemini/GemPhysicsRevoluteJoint.h; sourceTree = "<group>"; };
+		76E13893165433E4004190BD /* GemPhysicsRevoluteJoint.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GemPhysicsRevoluteJoint.mm; path = libs/Gemini/GemPhysicsRevoluteJoint.mm; sourceTree = "<group>"; };
 		76E1A9F6161DE8A800C2CF00 /* walker.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = walker.lua; sourceTree = "<group>"; };
 		76E1A9F7161DE8A900C2CF00 /* walker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walker.png; sourceTree = "<group>"; };
 		76E1A9FB1624A30300C2CF00 /* GemTouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemTouchEvent.h; path = libs/Gemini/GemTouchEvent.h; sourceTree = "<group>"; };
@@ -636,6 +692,7 @@
 		76D56E8B15F1943300615891 = {
 			isa = PBXGroup;
 			children = (
+				7647AC2116587B25001D6867 /* Default-568h@2x.png */,
 				76D2216716036EB200832178 /* Default.png */,
 				76D56EAC15F1943300615891 /* GeminiSDK */,
 				76D56E9915F1943300615891 /* Frameworks */,
@@ -670,6 +727,26 @@
 		76D56EAC15F1943300615891 /* GeminiSDK */ = {
 			isa = PBXGroup;
 			children = (
+				769D5564166541380037DB6F /* mario_game_physics.lua */,
+				769D556016653E6A0037DB6F /* mario_game.lua */,
+				769D556116653E6B0037DB6F /* mario_game.png */,
+				769D5559165FDB410037DB6F /* marios.lua */,
+				769D555A165FDB410037DB6F /* marios.png */,
+				766539F8165F3AFC00079950 /* mountains.lua */,
+				766539F9165F3AFC00079950 /* mountains.png */,
+				7688D730165EF1510029CE07 /* cannon.wav */,
+				7688D72E165DBF460029CE07 /* cannon_physics.lua */,
+				7688D727165DB9CA0029CE07 /* cannon.lua */,
+				7688D728165DB9CA0029CE07 /* cannon.png */,
+				7647AC27165882A9001D6867 /* scene1@568.lua */,
+				7647AC28165882A9001D6867 /* scene2@568.lua */,
+				766539FD165FD62000079950 /* scene3@568.lua */,
+				7647AC29165882A9001D6867 /* scene4@568.lua */,
+				7688D735165F283C0029CE07 /* scene5@568.lua */,
+				769D555E166404930037DB6F /* scene6@568.lua */,
+				7640CA8D16517B5E00CC9DA4 /* chilopod_gd.lua */,
+				7640CA8E16517B5E00CC9DA4 /* chilopod_gd.png */,
+				7640CA8A16517B3B00CC9DA4 /* lib_text_candy.lua */,
 				76E1AA01162A309700C2CF00 /* test_physics.lua */,
 				76E1A9F6161DE8A800C2CF00 /* walker.lua */,
 				76E1A9F7161DE8A900C2CF00 /* walker.png */,
@@ -683,6 +760,7 @@
 				76324FF91608E2DA00970D03 /* scene3@ipad.lua */,
 				76D570BB15F1A1AD00615891 /* scene4.lua */,
 				76324FFB1608E4D500970D03 /* scene4@ipad.lua */,
+				7688D72C165DB9FD0029CE07 /* scene5.lua */,
 				76D570AF15F1A19200615891 /* horse_and_rider.lua */,
 				76D570B015F1A19200615891 /* horse_and_rider.png */,
 				76D570B115F1A19200615891 /* horse.lua */,
@@ -918,6 +996,14 @@
 				76D78780164B4C5100F10BE4 /* GemConvexShape.m */,
 				76D78782164EC74000F10BE4 /* GemPhysicsUtil.h */,
 				76D78783164EC74100F10BE4 /* GemPhysicsUtil.mm */,
+				76E1388E16541B53004190BD /* GemPhysicsJoint.h */,
+				76E1388F16541B53004190BD /* GemPhysicsJoint.mm */,
+				76E13892165433E4004190BD /* GemPhysicsRevoluteJoint.h */,
+				76E13893165433E4004190BD /* GemPhysicsRevoluteJoint.mm */,
+				7688D732165EF69E0029CE07 /* GemSoundManager.h */,
+				7688D733165EF69F0029CE07 /* GemSoundManager.m */,
+				76114C0F16682B03004A4C8A /* GemCollisionEvent.h */,
+				76114C1016682B03004A4C8A /* GemCollisionEvent.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1311,6 +1397,28 @@
 				76E1A9F8161DE8A900C2CF00 /* walker.lua in Resources */,
 				76E1A9F9161DE8A900C2CF00 /* walker.png in Resources */,
 				76E1AA02162A309A00C2CF00 /* test_physics.lua in Resources */,
+				7640CA8B16517B3B00CC9DA4 /* lib_text_candy.lua in Resources */,
+				7640CA8F16517B5E00CC9DA4 /* chilopod_gd.lua in Resources */,
+				7640CA9016517B5E00CC9DA4 /* chilopod_gd.png in Resources */,
+				7647AC2216587B25001D6867 /* Default-568h@2x.png in Resources */,
+				7647AC2A165882A9001D6867 /* scene1@568.lua in Resources */,
+				7647AC2B165882A9001D6867 /* scene2@568.lua in Resources */,
+				7647AC2C165882A9001D6867 /* scene4@568.lua in Resources */,
+				7688D729165DB9CA0029CE07 /* cannon.lua in Resources */,
+				7688D72A165DB9CA0029CE07 /* cannon.png in Resources */,
+				7688D72D165DB9FD0029CE07 /* scene5.lua in Resources */,
+				7688D72F165DBF460029CE07 /* cannon_physics.lua in Resources */,
+				7688D731165EF1510029CE07 /* cannon.wav in Resources */,
+				7688D736165F283D0029CE07 /* scene5@568.lua in Resources */,
+				766539FA165F3AFC00079950 /* mountains.lua in Resources */,
+				766539FB165F3AFC00079950 /* mountains.png in Resources */,
+				766539FE165FD62000079950 /* scene3@568.lua in Resources */,
+				769D555B165FDB410037DB6F /* marios.lua in Resources */,
+				769D555C165FDB410037DB6F /* marios.png in Resources */,
+				769D555F166404930037DB6F /* scene6@568.lua in Resources */,
+				769D556216653E6B0037DB6F /* mario_game.lua in Resources */,
+				769D556316653E6B0037DB6F /* mario_game.png in Resources */,
+				769D5565166541390037DB6F /* mario_game_physics.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1483,6 +1591,10 @@
 				76D7877D1646EE8000F10BE4 /* GemMask.m in Sources */,
 				76D78781164B4C5200F10BE4 /* GemConvexShape.m in Sources */,
 				76D78784164EC74200F10BE4 /* GemPhysicsUtil.mm in Sources */,
+				76E1389016541B53004190BD /* GemPhysicsJoint.mm in Sources */,
+				76E13894165433E5004190BD /* GemPhysicsRevoluteJoint.mm in Sources */,
+				7688D734165EF6A00029CE07 /* GemSoundManager.m in Sources */,
+				76114C1116682B03004A4C8A /* GemCollisionEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1546,6 +1658,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: James Norton (6HL2NY2ELJ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
@@ -1553,6 +1666,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-lz";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "2A2A4CA3-4535-4292-B056-5719BE011265";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"GeminiSDK/libs/**\"";
 				WRAPPER_EXTENSION = app;

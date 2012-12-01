@@ -9,10 +9,11 @@
 #import "GemPhysics.h"
 #include "Box2D.h"
 #import "GemEvent.h"
+#import "GemCollisionEvent.h"
 #import "GemCircle.h"
 #import "GemRectangle.h"
 #import "GemConvexShape.h"
-
+#import "GemPhysicsJoint.h"
 
 // handles collisions between objects
 class GemContactListener : public b2ContactListener {
@@ -30,12 +31,14 @@ public:
         GemDisplayObject *objA = (__bridge GemDisplayObject *)bodyA->GetUserData();
         GemDisplayObject *objB = (__bridge GemDisplayObject *)bodyB->GetUserData();
         
-        GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Target:objA];
-        event.name = @"collision:presolve";
+        GemCollisionEvent *event = [[GemCollisionEvent alloc] initWithLuaState:objA.L Target:objA Source:objB];
+        event.name = @"collision";
+        event.phase = GEM_COLLISION_PRESOLVE;
         [objA handleEvent:event];
         
-        event = [[GemEvent alloc] initWithLuaState:objB.L Target:objB];
-        event.name = @"collision:presolve";
+        event = [[GemCollisionEvent alloc] initWithLuaState:objB.L Target:objB Source:objA];
+        event.name = @"collision";
+        event.phase = GEM_COLLISION_PRESOLVE;
         [objB handleEvent:event];
         
     }
@@ -47,14 +50,14 @@ public:
         GemDisplayObject *objA = (__bridge GemDisplayObject *)bodyA->GetUserData();
         GemDisplayObject *objB = (__bridge GemDisplayObject *)bodyB->GetUserData();
         
-        GemEvent *event = [[GemEvent alloc] initWithLuaState:objA.L Target:objA];
-        //event.name = @"collision:postsolve";
+        GemCollisionEvent *event = [[GemCollisionEvent alloc] initWithLuaState:objA.L Target:objA Source:objB];
         event.name = @"collision";
+        event.phase = GEM_COLLISION_POSTSOLVE;
         [objA handleEvent:event];
         
-        event = [[GemEvent alloc] initWithLuaState:objB.L Target:objB];
-        //event.name = @"collision:postsolve";
+        event = [[GemCollisionEvent alloc] initWithLuaState:objB.L Target:objB Source:objA];
         event.name = @"collision";
+        event.phase = GEM_COLLISION_POSTSOLVE;
         [objB handleEvent:event];
     }
 };
@@ -83,6 +86,8 @@ public:
         timeStep = 1.0 / 60.0; // sec
         accumulator = 0;
         paused = NO;
+        
+        joints = [[NSMutableArray alloc] initWithCapacity:1];
     }
     
     return self;
@@ -235,8 +240,30 @@ public:
 
     }
     
+    if (obj.fixedRotation) {
+        body->SetFixedRotation(true);
+    }
+    
     body->SetUserData((__bridge void*)obj);
     obj.physicsBody = body;
+}
+
+// this method creates a Box2D joint and then returns it wrapped in a GemPhysicsJoint
+-(id)addJoint:(void *)jDef forLuaState:(lua_State *)L{
+    
+    b2JointDef *jointDef = (b2JointDef *)jDef;
+    
+    b2Joint *joint =  world->CreateJoint(jointDef);
+    
+    // TEST
+    ((b2RevoluteJoint *)joint)->SetMaxMotorTorque(100000);
+    GemPhysicsJoint *gemJoint = [[GemPhysicsJoint alloc] initWithLuaState:L];
+    
+    gemJoint.joint = joint;
+    
+    [joints addObject:gemJoint];
+    
+    return gemJoint;
 }
 
 -(void)update:(double)deltaT {

@@ -22,5 +22,7 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+-(void)setTouchFocus:(GemObject *)focus forEvent:(GemEvent *)event;
+-(void)removeTouchFocus:(GemObject *)focus;
 
 @end

@@ -17,11 +17,12 @@
 @synthesize startX;
 @synthesize startY;
 
--(id)initWithLuaState:(lua_State *)luaState Target:trgt  {
-    self = [super initWithLuaState:luaState Target:trgt];
+-(id)initWithLuaState:(lua_State *)luaState Target:trgt Event:(UIEvent *)evt  {
+    self = [super initWithLuaState:luaState Target:trgt LuaKey:GEM_TOUCH_EVENT_LUA_KEY];
     
     if (self) {
-        
+        NSTimeInterval ts = evt.timestamp;
+        timestamp = [NSNumber numberWithDouble:ts];
     }
     
     return self;

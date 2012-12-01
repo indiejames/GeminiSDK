@@ -175,6 +175,11 @@
     if (numSlices > 150) {
         numSlices = 150;
     }
+    
+    if (numSlices % 2 != 0) {
+        numSlices += 1;
+    }
+    
     // TEST
     //numSlices = 8;
     return numSlices;

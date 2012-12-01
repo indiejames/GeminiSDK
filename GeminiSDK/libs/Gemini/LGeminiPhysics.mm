@@ -7,9 +7,14 @@
 //
 
 #import "LGeminiPhysics.h"
+#import "LGeminiLuaSupport.h"
 #import "Gemini.h"
+#import "GemPhysicsJoint.h"
+#include "Box2D.h"
+#import "GemPhysics.h"
 
 
+//////////// bodies /////////////////
 
 static int addBody(lua_State *L){
     __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
@@ -124,6 +129,155 @@ static int addBody(lua_State *L){
     return 0;
 }
 
+int applyForce(lua_State *L){
+    double scale = [[Gemini shared].physics getScale];
+    __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
+    float fx = luaL_checknumber(L, 2);
+    float fy = luaL_checknumber(L, 3);
+    
+    
+    b2Body *body =  (b2Body *)(*displayObj).physicsBody;
+    if (body == NULL) {
+        lua_pushstring(L, "LUA ERROR: Object does not have a physics body attached");
+        lua_error(L);
+    } else {
+        // use the coordinates for the point of application if they have been supplied
+        if (lua_gettop(L) == 5) {
+            float x = luaL_checknumber(L, 4) / scale;
+            float y = luaL_checknumber(L, 5) / scale;
+            body->ApplyForce(b2Vec2(fx,fy), b2Vec2(x,y));
+        } else {
+            body->ApplyForceToCenter(b2Vec2(fx,fy));
+        }
+        
+    }
+    
+    return 0;
+}
+
+int applyLinearImpulse(lua_State *L){
+    double scale = [[Gemini shared].physics getScale];
+    __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
+    float fx = luaL_checknumber(L, 2);
+    float fy = luaL_checknumber(L, 3);
+    
+    
+    b2Body *body =  (b2Body *)(*displayObj).physicsBody;
+    if (body == NULL) {
+        lua_pushstring(L, "LUA ERROR: Object does not have a physics body attached");
+        lua_error(L);
+    } else {
+        // use the coordinates for the point of application if they have been supplied
+        if (lua_gettop(L) == 5) {
+            float x = luaL_checknumber(L, 4) / scale;
+            float y = luaL_checknumber(L, 5) / scale;
+            body->ApplyLinearImpulse(b2Vec2(fx, fy), b2Vec2(x, y));
+        } else {
+            body->ApplyForceToCenter(b2Vec2(fx,fy));
+            body->ApplyLinearImpulse(b2Vec2(fx, fy), body->GetWorldCenter());
+        }
+        
+    }
+
+    
+    return 0;
+}
+
+int setLinearVelocity(lua_State *L){
+    __unsafe_unretained GemDisplayObject **displayObj = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 1);
+    float vx = luaL_checknumber(L, 2);
+    float vy = luaL_checknumber(L, 3);
+    
+    
+    b2Body *body =  (b2Body *)(*displayObj).physicsBody;
+    if (body == NULL) {
+        lua_pushstring(L, "LUA ERROR: Object does not have a physics body attaced");
+        lua_error(L);
+    } else {
+        b2Vec2 vel = b2Vec2(vx, vy);
+        body->SetLinearVelocity(vel);
+    }
+
+    
+    return 0;
+}
+
+/////////// joints ///////////
+
+static int newJoint(lua_State *L){
+    double scale = [[Gemini shared].physics getScale];
+    const char *type = lua_tostring(L, 1);
+    if (strcmp(type, "revolute") == 0) {
+        __unsafe_unretained GemDisplayObject **objA = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 2);
+        __unsafe_unretained GemDisplayObject **objB = (__unsafe_unretained GemDisplayObject **)lua_touserdata(L, 3);
+        b2RevoluteJointDef jointDef;
+        
+        float x = luaL_checknumber(L, 4) / scale;
+        float y = luaL_checknumber(L, 5) / scale;
+        
+        b2Vec2 anchor(x,y);
+        
+        jointDef.Initialize((b2Body *)(*objA).physicsBody, (b2Body *)(*objB).physicsBody, anchor);
+    
+        [[Gemini shared].physics addJoint:&jointDef forLuaState:L];
+        
+        // joint is now on Lua stack
+    }
+    
+    return 1;
+}
+
+static bool validateRevoluteJoint(lua_State *L, GemPhysicsJoint *joint){
+    bool rval = true;
+    
+    if (joint.joint->GetType() != e_revoluteJoint) {
+        lua_pushstring(L, "LUA ERROR: Expected revolute joint");
+        lua_error(L);
+        rval = false;
+    }
+    
+    return rval;
+}
+
+static int jointNewIndex(lua_State *L){
+    __unsafe_unretained GemPhysicsJoint **lJoint = (__unsafe_unretained GemPhysicsJoint **)luaL_checkudata(L, 1, GEMINI_PHYSICS_JOINT_LUA_KEY);
+    GemPhysicsJoint *joint = *lJoint;
+    
+    
+    
+    if (lua_isstring(L, 2)) {
+        
+        const char *key = lua_tostring(L, 2);
+        if (strcmp("isMotorEnabled", key) == 0) {
+            if (!validateRevoluteJoint(L, joint)) {
+                return 0;
+            }
+            
+            bool enabled = lua_toboolean(L, 3);
+            ((b2RevoluteJoint *)joint.joint)->EnableMotor(enabled);
+            
+           
+        } else if (strcmp("motorSpeed", key) == 0) {
+            if (!validateRevoluteJoint(L, joint)) {
+                return 0;
+            }
+            float speed = luaL_checknumber(L, 3);
+            ((b2RevoluteJoint *)joint.joint)->SetMotorSpeed(speed);
+    
+        } else {
+            return genericNewIndex(L);
+        }
+        
+    }
+    
+    
+    
+    return 0;
+    
+}
+
+/////////// general physics stuff //////////////
+
 static int setScale(lua_State *L){
     double scale = lua_tonumber(L, 1);
     [[Gemini shared].physics setScale:scale];
@@ -182,6 +336,7 @@ static int newIndex(lua_State *L){
 // the mappings for the library functions
 static const struct luaL_Reg physicsLib_f [] = {
     {"addBody", addBody},
+    {"newJoint", newJoint},
     {"setScale", setScale},
     {"setContinuous", setContinuous},
     {"setDrawMode", setDrawMode},
@@ -192,16 +347,23 @@ static const struct luaL_Reg physicsLib_f [] = {
 };
 
 // mappings for the body methods
-static const struct luaL_Reg physics_m [] = {
+static const struct luaL_Reg physicsBody_m [] = {
     {"__index", genericIndex},
     {"__newindex", newIndex},
     {NULL, NULL}
 };
 
+// mappings for the joint methods
+static const struct luaL_Reg physicsJoint_m [] = {
+    {"__index", genericIndex},
+    {"__newindex", jointNewIndex},
+    {NULL, NULL}
+};
+
 
 extern "C" int luaopen_physics_lib (lua_State *L){
-    // create meta table for our physics type
-    //createMetatable(L, GEMINI_PHYSICS_LUA_KEY, physics_m);
+    // create meta table for our physics types
+    createMetatable(L, GEMINI_PHYSICS_JOINT_LUA_KEY, physicsJoint_m);
        
     // create the table for this library and popuplate it with our functions
     luaL_newlib(L, physicsLib_f);

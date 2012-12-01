@@ -10,6 +10,8 @@
 #import "GemShape.h"
 #import "GemLine.h"
 
+#define GEMINI_RECTANGLE_LUA_KEY "GeminiLib.GEMINI_RECTANGLE_LUA_KEY"
+
 @interface GemRectangle : GemShape {
     
 }

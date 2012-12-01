@@ -14,6 +14,8 @@
 #import "GemSpriteAnimation.h"
 #import "GemGLKViewController.h"
 #import "LGeminiLuaSupport.h"
+#import "LGeminiObject.h"
+#import "LGeminiPhysics.h"
 
 // prototype for library init function
 int luaopen_spritelib (lua_State *L);
@@ -320,6 +322,10 @@ static const struct luaL_Reg sprite_m [] = {
     {"play", spritePlay},
     {"pause", spritePause},
     {"onStart", spriteOnStart},
+    {"addEventListener", addEventListener},
+    {"setLinearVelocity", setLinearVelocity},
+    {"applyForce", applyForce},
+    {"applyLinearImpulse", applyLinearImpulse},
     {NULL, NULL}
 };
 

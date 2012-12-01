@@ -25,6 +25,8 @@
 @synthesize isVisible;
 @synthesize physicsBody;
 @synthesize cumulativeTransform;
+@synthesize isFlippedHorizontally;
+@synthesize isFlippedVertically;
 
 /*-(id)initWithLuaState:(lua_State *)luaState {
     self = [super initWithLuaState:luaState];
@@ -110,6 +112,17 @@
     needsTransformUpdate = YES;
 }
 
+-(void) setPhysicsTransform:(GLKVector3)trans {
+    if (physicsBody) {
+        float scale = [[Gemini shared].physics getScale];
+        
+        b2Vec2 pos = b2Vec2(trans.x / scale, trans.y / scale);
+        ((b2Body *)physicsBody)->SetTransform(pos, toRad(trans.z));
+        
+    }      
+
+}
+
 -(GLfloat)x {
     //return [super getDoubleForKey:"x" withDefault:0];
     return xOrigin + xReference;
@@ -178,6 +191,10 @@
     if (physicsBody) {
         [[Gemini shared].physics setBody:physicsBody isActive:active];
     }
+    
+    if (!active) {
+        GemLog(@"Deactivating physics for %@", self.name);
+    }
 }
 
 -(bool)isActive {
@@ -186,6 +203,34 @@
     }
     
     return false;
+}
+
+-(void)setFixedRotation:(BOOL)fixed {
+    fixedRotation = fixed;
+    if (fixed) {
+        if (physicsBody != NULL) {
+            ((b2Body *)physicsBody)->SetFixedRotation(fixedRotation);
+        }
+    }
+}
+
+-(BOOL)fixedRotation {
+    return fixedRotation;
+    
+}
+
+-(GLKVector2)linearVelocity {
+    GLfloat vx = 0;
+    GLfloat vy = 0;
+    
+    if (physicsBody != NULL) {
+        b2Vec2 vel = ((b2Body *)physicsBody)->GetLinearVelocity();
+        vx = vel.x;
+        vy = vel.y;
+    }
+    
+    return GLKVector2Make(vx, vy);
+    
 }
 
 -(GLKMatrix3) transform {
@@ -230,7 +275,8 @@
 -(BOOL)doesContainPoint:(GLKVector2) point {
     
     // use the physics body attached if available
-    if (physicsBody) {
+    if (physicsBody && [[Gemini shared].physics isActiveBody:physicsBody]) {
+        GemLog(@"Using physics body to test point for %@", name);
         return [[Gemini shared].physics doesBody:physicsBody ContainPoint:point];
     }
     

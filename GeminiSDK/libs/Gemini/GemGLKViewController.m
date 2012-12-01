@@ -135,6 +135,8 @@
     
     timerManager = [[GemTimerManager alloc] init];
     
+    view.multipleTouchEnabled = YES;
+    
 }
 
 - (void)viewDidUnload

@@ -79,7 +79,7 @@
     vertIndex[indexCount++] = maxIndex;
     vertIndex[indexCount++] = maxIndex;
     int offset = -1;
-    while (indexCount < [self vertIndexCount]) {
+    while (indexCount < [self vertIndexCount] - 1) {
         int index = maxIndex + offset;
         if (index < 0) {
             index = numPoints + index;
@@ -93,7 +93,7 @@
         } else {
             offset = -offset - 1;
         }
-        if (indexCount == [self vertIndexCount]) {
+        if (indexCount == [self vertIndexCount] - 1) {
             vertIndex[indexCount] = index;
         }
         

@@ -86,6 +86,7 @@
     // TODO - verify this logic
     if (!paused) {
         double timeDelta = currentTime - lastUpdateTime;
+        
         lastUpdateTime = currentTime;
         accumulatedTime += timeDelta;
         unsigned int rawFrameNum = (int)(accumulatedTime / currentAnimation.frameDuration);
@@ -97,16 +98,21 @@
         } else if(currentAnimation.loopCount >= 1){
             // loop n times then stop on last frame
             currentFrame = rawFrameNum % currentAnimation.frameCount;
-            if (currentFrame >= currentAnimation.loopCount * currentAnimation.frameCount) {
+            if (rawFrameNum >= currentAnimation.loopCount * currentAnimation.frameCount) {
                 currentFrame = currentAnimation.frameCount - 1;
+                // reset the animation
                 paused = YES;
+                accumulatedTime = 0;
             } else {
                 currentFrame = rawFrameNum % currentAnimation.frameCount;
             }
+            //GemLog(@"currentFrame = %d", currentFrame);
         } else if(currentAnimation.loopCount == -1) {
             // see-saw back and forth between first and last frame exacly once
             if (rawFrameNum >= 2*(currentAnimation.frameCount - 1)) {
                 currentFrame = 0;
+                paused = YES;
+                accumulatedTime = 0;
             } else {
                 currentFrame = rawFrameNum % (2*(currentAnimation.frameCount-1));
                 if (currentFrame >= currentAnimation.frameCount) {

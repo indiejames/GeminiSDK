@@ -14,6 +14,9 @@
 
 #include "lua.h"
 
+extern void lockLuaLock();
+extern void unlockLuaLock();
+
 
 typedef unsigned LUA_INT32 lu_int32;
 
@@ -152,6 +155,8 @@ typedef lu_int32 Instruction;
 #if !defined(lua_lock)
 #define lua_lock(L)     ((void) 0)
 #define lua_unlock(L)   ((void) 0)
+/*#define lua_lock(L)     lockLuaLock()
+#define lua_unlock(L)   unlockLuaLock()*/
 #endif
 
 #if !defined(luai_threadyield)

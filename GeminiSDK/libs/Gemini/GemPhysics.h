@@ -11,6 +11,9 @@
 
 #define RENDER_PADDING (0.01)
 
+float toRad(float);
+float toDeg(float);
+
 typedef enum {
     GEM_PHYSICS_NORMAL,
     GEM_PHYSICS_HYBRID,
@@ -25,7 +28,7 @@ typedef struct {
 @interface GemPhysics : NSObject {
     double scale;
     GemPhysicsDrawMode drawMode;
-   
+    NSMutableArray *joints;
 }
 
 @property (nonatomic) GemPhysicsDrawMode drawMode;
@@ -39,6 +42,7 @@ typedef struct {
 -(GemPoint)toPhysicsCoord:(GemPoint)point;
 -(GemPoint)fromPhysicsCoord:(GemPoint)point;
 -(void)addBodyForObject:(GemDisplayObject *)obj WithParams:(NSDictionary *)params;
+-(id)addJoint:(void *)jointDef forLuaState:(lua_State *)L;
 -(void)update:(double)deltaT;
 -(BOOL)doesBody:(void *)body ContainPoint:(GLKVector2)point;
 -(bool)isActiveBody:(void *)body;

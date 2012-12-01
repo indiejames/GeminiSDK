@@ -191,7 +191,7 @@ static int l_irc_index( lua_State* L )
 // this function gets called with the table on the bottom of the stack, the index to assign to next,
 // and the value to be assigned on top
 // TODO - set the underlying GeminiObject properties to match the lua table value
-static int l_irc_newindex( lua_State* L )
+static int newindex( lua_State* L )
 {
     GemLog(@"Calling l_irc_newindex()");
     int top = lua_gettop(L);
@@ -199,23 +199,9 @@ static int l_irc_newindex( lua_State* L )
     /* object, key, value */
     
     lua_getuservalue( L, -3 );  // table attached is attached to objects via user value
-    /*BOOL newtable = NO;
-    if (lua_isnil(L, -1)) {
-        GemLog(@"No data table for lua object");
-        // this object has no lua table associated with it yes, so create a table and set it
-        lua_newtable(L);
-        newtable = YES;
-    }
-    if (newtable) {
-        lua_pushvalue( L, -4 );
-        lua_pushvalue( L, -4 );
-        lua_rawset( L, -3 );
-        lua_setuservalue(L, -5);
-    } else {*/
-        lua_pushvalue(L, -3);
-        lua_pushvalue(L,-3);
-        lua_rawset( L, -3 );
-    //}
+    lua_pushvalue(L, -3);
+    lua_pushvalue(L,-3);
+    lua_rawset( L, -3 );
     
     return 0;
 }
@@ -230,7 +216,7 @@ static const struct luaL_Reg geminiObjectLib_m [] = {
     {"removeEventListener", removeEventListener},
     {"__gc", geminiObjectGC},
     {"__index", l_irc_index},
-    {"__newindex", l_irc_newindex},
+    {"__newindex", newindex},
     {NULL, NULL}
 };
 

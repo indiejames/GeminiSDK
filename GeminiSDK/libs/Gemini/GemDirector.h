@@ -20,6 +20,7 @@
     NSMutableDictionary *scenes;
     NSMutableArray *allScenes;
     NSString *currentScene;  // the current scene used for rendering, etc.
+    NSMutableSet *loadingScenes;
     NSMutableDictionary *transitions;
     GemSceneTransition *currentTransition;
     GemRenderer *renderer;

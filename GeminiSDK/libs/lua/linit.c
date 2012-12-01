@@ -51,6 +51,8 @@ static const luaL_Reg loadedlibs[] = {
     {"system", luaopen_system_lib},
     {"event", luaopen_event_lib},
     {"director", luaopen_director_lib},
+    {"display", luaopen_display_lib},
+    {"transition", luaopen_transition_lib},
     {NULL, NULL}
 };
 
@@ -61,9 +63,7 @@ static const luaL_Reg loadedlibs[] = {
 static const luaL_Reg preloadedlibs[] = {
     {"sound", luaopen_soundlib},
     {"sprite", luaopen_spritelib},
-    {"display", luaopen_display_lib},
     {"physics", luaopen_physics_lib},
-    {"transition", luaopen_transition_lib},
     {"timer", luaopen_timer_lib},
   {NULL, NULL}
 };

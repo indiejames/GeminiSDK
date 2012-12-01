@@ -37,8 +37,9 @@ function scene:createScene( event )
     layer1:insert(scene.group)
     
     -- draw four boxes (and cross bars) and put them in the group
-    local x_center = 240
+    local x_center = 284
     local y_center = 160
+
     
     local hbar = display.newRect(x_center,y_center, 250,15)
     hbar:setFillColor(0.0,0.0,1.0,1.0)
@@ -67,11 +68,18 @@ function scene:createScene( event )
     scene.group.x = x_center
     scene.group.y = y_center
     
+    local layer2 = display.newLayer(-1)
+    layer2:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    print("Lua: Adding layer2 to scene2")
+	self:addLayer(layer2)
     local shape1 = display.newShape(20,20, 5,100, 70,120, 145,100, 130,20)
-    shape1:setFillColor(0,1.0,0,0.5)
-    layer1:insert(shape1)
+    shape1:setFillColor(0.5,0.4,0,1.0)
+    shape1.x = x_center-70
+    shape1.y = y_center-110
+    layer2:insert(shape1)
     
-  --[[  TextCandy = require("lib_text_candy")
+        
+ --[[   TextCandy = require("lib_text_candy")
     
     print("TextCandy loaded")
 
@@ -106,7 +114,7 @@ function scene:createScene( event )
         ignoreSpaces    = false
     })
 
-   --]] 
+  --]]  
 
 end
 
@@ -122,6 +130,9 @@ function scene:enterScene( event )
 	-----------------------------------------------------------------------------
     
     print("Entering scene 2")
+    
+    levelLabel:setText("Level 2")
+    transition.to(levelLabelGroup, {time=levelFadeDuration, alpha=1})
     
     director.loadScene('scene4')
     
@@ -140,15 +151,16 @@ function scene:enterScene( event )
     
     local function listener(event)
     
-        director.gotoScene("scene3",
+        director.gotoScene(
+            "scene3",
             {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="left"})
     end
     
-    timer.performWithDelay(3000, listener)
+    timer.performWithDelay(25000, listener)
     
     print ("setting up label transition")
     -- make the circular label spin two rotations in twenty seconds
-    --transition.to(circleLabel, {time=20000, rotation=720})
+   -- transition.to(circleLabel, {time=20000, rotation=720})
 
     print ("label transition set")
 
@@ -167,6 +179,8 @@ function scene:exitScene( event )
     
     print("Exiting scene 2")
     Runtime:removeEventListener("enterFrame", scene.groupListener)
+    
+    levelLabelGroup.alpha = 0
 
 end
 

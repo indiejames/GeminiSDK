@@ -28,9 +28,9 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    self.window.multipleTouchEnabled = YES;
+    
     [gemini execute:@"main"];
-    [gemini handleEvent:@"touch"];
-
     
     return YES;
     

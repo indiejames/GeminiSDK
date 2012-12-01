@@ -45,6 +45,7 @@ GemDisplayGroup *getPhysicsShapes(void *vobj, float scale){
                 b2PolygonShape* polygonShape = (b2PolygonShape*)fixture->GetShape();
                 unsigned int pcount = polygonShape->GetVertexCount();
                 GLfloat *points = (GLfloat *)malloc(pcount * 2 * sizeof(GLfloat));
+                memset(points, 0, pcount * 2 * sizeof(GLfloat));
                 for (int i=0; i<pcount; i++) {
                     b2Vec2 point = polygonShape->GetVertex(i);
                     points[i*2] = point.x * scale;
@@ -66,6 +67,8 @@ GemDisplayGroup *getPhysicsShapes(void *vobj, float scale){
                 
                 
                 shape = [[GemConvexShape alloc] initWithLuaState:NULL Points:points NumPoints:pcount];
+                
+                
                 //shape.x = obj.x;
                 //shape.y = obj.y;
             }

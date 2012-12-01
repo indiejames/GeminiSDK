@@ -9,6 +9,7 @@
 #import "Gemini.h"
 #import "GemObject.h"
 #import "GemEvent.h"
+#import "GemTouchEvent.h"
 #import "GemEventManager.h"
 
 
@@ -38,7 +39,7 @@
 // NOTE - this initializer will leave the object on the top of the Lua stack  - if this method was not
 // invoked (indirectly) by Lua code, then the caller MUST empty the stack to avoid leaking
 // memory.  This should only matter for the handful of GemObjects that get created manually.
-// This behaviour is not completely desirable, but necessary to avoid a lot of complications.
+// This behaviour is not completely desirable, but is necessary to avoid a lot of complications.
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey {
     self = [super init];
     if (self) {
@@ -191,7 +192,7 @@
 
 
 -(BOOL)handleEvent:(GemEvent *)event {
-    if ([event.name isEqualToString:@"GEM_TIMER_EVENT"]) {
+    /*if ([event.name isEqualToString:@"GEM_TIMER_EVENT"]) {
         GemLog(@"GemObject: handling event %@", event.name);
 
     }
@@ -199,11 +200,11 @@
     if ([event.name isEqualToString:GEM_TOUCH_EVENT_NAME]) {
         GemLog(@"GemObject: handling event %@", event.name);
         
-    }
+    }*/
     
     BOOL rval = NO;
 
-    
+       
     // get the full event handler table
     lua_rawgeti(L, LUA_REGISTRYINDEX, eventListenerTableRef);
     // get the event handlers for this event
@@ -236,7 +237,7 @@
                         // if any of the handlers return true then we will as well
                         if (lua_toboolean(L, -1)) {
                             rval = YES;
-                            GemLog(@"Event handler function returned YES");
+                            //GemLog(@"Event handler function returned YES");
                         }
                     }
                 }
@@ -252,7 +253,7 @@
                 }
                 
                 const char *ename = [event.name UTF8String];
-                                
+                                                
                 int base = lua_gettop(L);  /* table index */
                 lua_pushcfunction(L, traceback);  /* push traceback function */
                 lua_insert(L, base);  /* put handler above traceback function */

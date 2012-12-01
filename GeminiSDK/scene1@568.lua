@@ -15,6 +15,12 @@ local rectangle3
 local rectangle4
 local redCircle
 
+local group1
+local rectGroup
+
+local ground, leftSide, rightSide
+
+
 ----------------------------------------------------------------------------------
 -- 
 --	NOTE:
@@ -56,16 +62,17 @@ function scene:createScene( event )
      -- draw a star using a poly line
     star = display.newLine( 150/2,30/2, 177/2,115/2 )
     star:append( 255/2,115/2, 193/2,166/2, 215/2,240/2, 150/2,195/2, 85/2,240/2, 107/2,165/2, 45/2,115/2, 123/2,115/2, 150/2,30/2 )
-    star:setColor( 0, 0, 1.0, 0.5 )
+    star:setColor( 0, 0, 1.0, 0.75 )
     star.width = 5
     star.yReference = 60
-    local group1 = display.newGroup()
+    group1 = display.newGroup()
     layer1:insert(group1)
     group1:insert(star)
     group1.xReference = star.x
     group1.yReference = star.y
-    group1.x = 240
+    group1.x = 284
     group1.y = 160
+    group1.alpha = 0.5
     
     -- draw a red circle with a white border
     redCircle = display.newCircle(200,200,30)
@@ -80,8 +87,8 @@ function scene:createScene( event )
     --redCircle.y = 100
     layer1:insert(redCircle)
     
-    -- draw a blue circle with a white border
-    local blueCircle = display.newCircle(50,50,40)
+    -- draw a circle with a blue gradient
+    local blueCircle = display.newCircle(50,50,70)
     blueCircle:setFillColor(0,0,1.0,1.0)
     blueCircle:setGradient(1.0,1.0,1.0,1.0,  0,0,1.0,1.0)
     --blueCircle.alpha = 0.5
@@ -94,11 +101,16 @@ function scene:createScene( event )
     redRectangle:setGradient(1.0,0,0,1.0, 1.0,0,0,1.0, 1.0,1.0,1.0,1.0, 1.0,1.0,1.0,1.0)
     redRectangle:setStrokeColor(1.0,1.0,1.0,1.0)
     redRectangle.strokeWidth = 2.5
-    redRectangle.x = 375
+    redRectangle.x = 175
     redRectangle.y = 225
     redRectangle.rotation = 30
     redRectangle.name = "RED RECTANGLE"
-    layer1:insert(redRectangle)
+    
+    rectGroup = display.newGroup()
+    rectGroup:insert(redRectangle)
+
+    layer1:insert(rectGroup)
+
 
     rectangle3 = display.newRect(200/2,300/2,100/2,100/2)
     rectangle3:setFillColor(0.5,0.25,0.75,1.0)
@@ -120,6 +132,7 @@ function scene:createScene( event )
     rectangle4.name = "rectangle4"
     layer1:insert(rectangle4)
 
+    --[[
     local collisionPresolve = function(event)
       local obj = event.source
       print(string.format("Lua: %s - BANG!", obj.name))
@@ -131,13 +144,13 @@ function scene:createScene( event )
       print(string.format("Lua: %s - BANG!", obj.name))
       print(string.format("Using main"))
     end
-
+--]]
     function rectangle4:collision(event)
       local obj = event.source
-      print(string.format("Lua: %s - BANG!", obj.name))
-      print(string.format("Using main"))
+      --print(string.format("Lua: %s - BANG!", obj.name))
+      --print(string.format("Using main"))
     end
-
+    
 
     physics.setScale(100)
     physics.setGravity(0, -9.8)
@@ -148,29 +161,30 @@ function scene:createScene( event )
     --rectangle4:addEventListener("collision:postsolve", collisionPresolve)
     rectangle4:addEventListener("collision", rectangle4)
     
-    joint = physics.newJoint("revolute", rectangle3, rectangle4, 125, 225)
+    --[[joint = physics.newJoint("revolute", rectangle3, rectangle4, 125, 225)
     joint.isMotorEnabled = true
     joint.motorSpeed = -3.0
+    --]]
     
     physics.addBody(redCircle, "dynamic", {density=3.0, friction=0.5, restitution=0.7})
     
     redCircle:applyForce(0,250)
 
-    --[[local ground = display.newRect(480/2,0,960/2,30/2)
+    ground = display.newRect(568/2,0,1136/2,30/2)
     ground:setFillColor(0,1.0,0,1.0)
     layer1:insert(ground)
     ground.name = "GROUND"
     physics.addBody(ground)
 
-    local leftSide = display.newRect(0,320/2,30/2,640/2)
+    leftSide = display.newRect(0,320/2,30/2,640/2)
     leftSide:setFillColor(0,1.0,0,1.0)
     layer1:insert(leftSide)
     physics.addBody(leftSide)
 
-    local rightSide = display.newRect(960/2,320/2,30/2,640/2)
+    rightSide = display.newRect(1136/2,320/2,30/2,640/2)
     rightSide:setFillColor(0,1.0,0,1.0)
     layer1:insert(rightSide)
-    physics.addBody(rightSide)--]]
+    physics.addBody(rightSide)
 
 end
 
@@ -187,7 +201,10 @@ function scene:enterScene( event )
     
     print("Entering scene 1")
     
-    director.loadScene('scene2')
+    levelLabel:setText("Level 1")
+    transition.to(levelLabelGroup, {time=levelFadeDuration, alpha=1})
+    
+    director.loadScene('scene6')
     
     rectangle3.isActive = true
     rectangle4.isActive = true
@@ -195,6 +212,11 @@ function scene:enterScene( event )
     
      -- add an event listener that will fire every frame
     scene.starListener = function(event)
+    
+        print(event)
+        local name = event.name
+        
+        print ("star: " .. name)
       -- rotate our star
       star.rotation = star.rotation + 0.2
       
@@ -204,12 +226,14 @@ function scene:enterScene( event )
     
     local function listener(event)
     
-        director.gotoScene("scene5",
-            {transition="GEM_PAGE_TURN_SCENE_TRANSITION", duration=2.0}
-            --{transition="GEM_SLIDE_SCENE_TRANSITION", duration=5.0, direction="up"}
+        director.gotoScene("scene6",
+            --{transition="GEM_PAGE_TURN_SCENE_TRANSITION", duration=2.0}
+            {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.0, direction="up"}
         )    end
     
-    timer.performWithDelay(2000, listener)
+    timer.performWithDelay(3000, listener)
+    
+    transition.to(rectGroup, {time=3000, alpha=0})
     
     -- touch event handlers
     --function greenRectangle:touch(event)
@@ -258,10 +282,16 @@ function scene:exitScene( event )
     Runtime:removeEventListener("enterFrame", scene.starListener)
     
     print("Exiting scene 1")
-    
+
     rectangle3.isActive = false
     rectangle4.isActive = false
     redCircle.isActive = false
+    
+    ground.isActive = false
+    leftSide.isActive = false
+    rightSide.isActive = false
+    
+    levelLabelGroup.alpha = 0
 end
 
 

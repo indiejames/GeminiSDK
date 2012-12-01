@@ -43,4 +43,11 @@
     [super insert:obj];
 }
 
+// layers take up the whole screen so this always passes
+// TODO - change this to check to see if the point is within the
+// screen bounds
+-(BOOL)doesContainPoint:(GLKVector2)point {
+    return YES;
+}
+
 @end

@@ -36,6 +36,9 @@
     GLKMatrix3 cumulativeTransform;
     BOOL needsTransformUpdate;
     BOOL needsUpdate;
+    BOOL isFlippedHorizontally;
+    BOOL isFlippedVertically;
+    BOOL fixedRotation;
     BOOL isVisible;
     void *physicsBody;
 }
@@ -46,6 +49,7 @@
 @property (nonatomic) BOOL isHitTestMasked;
 @property (nonatomic) BOOL isHitTestable;
 @property (nonatomic) BOOL isVisible;
+@property (nonatomic) BOOL fixedRotation;
 @property (nonatomic) GLfloat maskRotation;
 @property (nonatomic) GLfloat maskScaleX;
 @property (nonatomic) GLfloat maskScaleY;
@@ -55,6 +59,8 @@
 @property (nonatomic, strong) GemLayer *layer;
 @property (nonatomic, strong) GemMask *mask;
 @property (nonatomic) GLfloat rotation;
+@property (nonatomic) BOOL isFlippedHorizontally;
+@property (nonatomic) BOOL isFlippedVertically;
 @property (nonatomic) GLfloat x;
 @property (nonatomic) GLfloat y;
 @property (nonatomic) GLfloat xOrigin;
@@ -67,9 +73,11 @@
 @property (nonatomic) BOOL needsTransformUpdate;
 @property (nonatomic) void *physicsBody;
 @property (nonatomic) GLKMatrix3 cumulativeTransform;
+@property (readonly) GLKVector2 linearVelocity;
 
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
 -(GLKMatrix3) transform;
+-(void) setPhysicsTransform:(GLKVector3)trans;
 -(BOOL)doesContainPoint:(GLKVector2)point;
 -(void)setIsActive:(bool)active;
 -(bool)isActive;

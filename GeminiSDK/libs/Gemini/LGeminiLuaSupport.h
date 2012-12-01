@@ -20,6 +20,7 @@ extern "C" {
 void callLuaMethodForDisplayObject(lua_State *L, int methodRef, GemDisplayObject *obj);
 void createMetatable(lua_State *L, const char *key, const struct luaL_Reg *funcs);
 int genericIndex(lua_State *L);
+int genericNewIndex(lua_State *L);
 int genericGeminiDisplayObjectIndex(lua_State *L, GemDisplayObject *obj);
 int genericGemDisplayGroupIndex(lua_State *L, GemDisplayGroup *obj);
 int genericGemDisplayObjecNewIndex(lua_State *L, GemDisplayObject __unsafe_unretained **obj);
@@ -28,6 +29,9 @@ int genericDelete(lua_State *L);
 int genericGC(lua_State *L);
 void setDefaultValues(lua_State *L);
 void setupObject(lua_State *L, const char *luaKey, GemObject *obj);
+
+void lockLuaLock();
+void unlockLuaLock();
 
 #ifdef __cplusplus
 }

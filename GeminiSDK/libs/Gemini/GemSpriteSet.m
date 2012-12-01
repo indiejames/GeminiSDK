@@ -33,9 +33,11 @@
     return self;
 }
 
+// add an animation definition to the sprite set
+// NOTE: the start parameter is wrt to the start frame of this sprite set, not the whole sprite sheet
 -(void) addAnimation:(NSString *)name WithStartFrame:(int)start NumFrames:(int)nFrames FrameDuration:(float)duration LoopCount:(int)loopCount {
     GemSpriteAnimation *animation = [[GemSpriteAnimation alloc] init];
-    animation.startFrame = start;
+    animation.startFrame = startFrame + start - 1;
     animation.frameCount = nFrames;
     animation.frameDuration = duration;
     animation.loopCount = loopCount;

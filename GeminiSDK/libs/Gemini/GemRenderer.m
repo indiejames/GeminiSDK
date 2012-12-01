@@ -46,6 +46,8 @@ GLuint ringBufferOffset = 0;
 GLuint lineRingBufferOffset = 0;
 GLuint spriteRingBufferOffset = 0;
 
+BOOL firstPass = YES;
+
 @interface DisplayGroupTransform : NSObject {
     GLKMatrix3 transform;
     GemDisplayGroup *group;
@@ -69,6 +71,7 @@ GLuint spriteRingBufferOffset = 0;
 
 
 -(void)renderScene:(GemScene *)scene {
+    firstPass = YES;
     NSArray *blendedLayers = [self renderUnblendedLayersForScene:(GemScene *)scene];
     [self renderBlendedLayers:blendedLayers];
     glBindVertexArrayOES(0);
@@ -178,13 +181,12 @@ GLuint spriteRingBufferOffset = 0;
             [self renderSpriteBatches];
         }
         
-        
-        
         if ([physicsShapes count] > 0 && (drawMode == GEM_PHYSICS_DEBUG || drawMode == GEM_PHYSICS_HYBRID)) {
             for (int i=0; i<[physicsShapes count]; i++) {
                 DisplayGroupTransform *dgroup = [physicsShapes objectAtIndex:i];
                 GLKMatrix3 gtran = dgroup.transform;
-                [self renderDisplayGroup:dgroup.group forLayer:dgroup.group.layer.index+1 withAlpha:1.0 transform:gtran];
+                //[self renderDisplayGroup:dgroup.group forLayer:dgroup.group.layer.index+1 withAlpha:1.0 transform:gtran];
+                [self renderPhysicsShapeDisplayGroup:dgroup.group forLayer:dgroup.group.layer.index+1 withAlpha:1.0 transform:gtran];
             }
         }
         
@@ -200,6 +202,8 @@ GLuint spriteRingBufferOffset = 0;
         return;
     }
     
+    GemPhysicsDrawMode drawMode = [Gemini shared].physics.drawMode;
+    
     NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
     NSMutableArray *shapes = [NSMutableArray arrayWithCapacity:1];
     
@@ -211,33 +215,33 @@ GLuint spriteRingBufferOffset = 0;
     for (int i=0; i<[group.objects count]; i++) {
         
         GemDisplayObject *gemObj = (GemDisplayObject *)[group.objects objectAtIndex:i];
-        if (!gemObj.isVisible) {
-            continue;
-        }
-        if (gemObj.class == GemDisplayGroup.class) {
-            // recursion
-            [self renderDisplayGroup:(GemDisplayGroup *)gemObj forLayer:layer withAlpha:cumulAlpha transform:cumulTransform];
-            
-        } else if(gemObj.class == GemLine.class){
-            // TODO - sort all lines by line properties so they can be batched
-            [lines addObject:gemObj];
-            
-        } else if(gemObj.class == GemSprite.class){
-            [self renderSprite:(GemSprite *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
-                                    
-        } else if(gemObj.class == GemRectangle.class){
-            
-            [shapes addObject:gemObj];
-        } else if(gemObj.class == GemCircle.class){
-            [shapes addObject:gemObj];
-        } else if(gemObj.class == GemConvexShape.class){
-            [shapes addObject:gemObj];
+        if (gemObj.isVisible) {
+            if (gemObj.class == GemDisplayGroup.class) {
+                // recursion
+                [self renderDisplayGroup:(GemDisplayGroup *)gemObj forLayer:layer withAlpha:cumulAlpha transform:cumulTransform];
+                
+            } else if (drawMode == GEM_PHYSICS_NORMAL || drawMode == GEM_PHYSICS_HYBRID) {
+                if(gemObj.class == GemLine.class){
+                    // TODO - sort all lines by line properties so they can be batched
+                    [lines addObject:gemObj];
+                    
+                } else if(gemObj.class == GemSprite.class){
+                    [self renderSprite:(GemSprite *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+                    
+                } else if(gemObj.class == GemRectangle.class){
+                    
+                    [shapes addObject:gemObj];
+                } else if(gemObj.class == GemCircle.class){
+                    [shapes addObject:gemObj];
+                } else if(gemObj.class == GemConvexShape.class){
+                    [shapes addObject:gemObj];
+                }
+            }
         }
         
-        // TODO make this a real flag
-        BOOL renderPhysics = YES;
         
-        if (renderPhysics && gemObj.physicsBody != NULL) {
+        
+        if (gemObj.physicsBody != NULL && gemObj.isActive && (drawMode == GEM_PHYSICS_DEBUG || drawMode == GEM_PHYSICS_HYBRID)) {
             GemDisplayGroup *phyShapes = getPhysicsShapes((__bridge void *)(gemObj), [[Gemini shared].physics getScale]);
             DisplayGroupTransform *dgt = [[DisplayGroupTransform alloc] init];
             dgt.transform = cumulTransform;
@@ -246,20 +250,67 @@ GLuint spriteRingBufferOffset = 0;
         }
         
     }
+
     
-    GemPhysicsDrawMode drawMode = [Gemini shared].physics.drawMode;
-    
-    if ([lines count] > 0 && (drawMode == GEM_PHYSICS_NORMAL || drawMode == GEM_PHYSICS_HYBRID)) {
-        [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
-    }
-    
-    if ([shapes count] > 0 && (drawMode == GEM_PHYSICS_NORMAL || drawMode == GEM_PHYSICS_HYBRID)) {
-       [self renderShapes:shapes withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+    if (drawMode == GEM_PHYSICS_NORMAL || drawMode == GEM_PHYSICS_HYBRID) {
+        if ([lines count] > 0) {
+            [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
+        }
+        
+        if ([shapes count] > 0) {
+            [self renderShapes:shapes withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+        }
     }
     
 }
 
+-(void)renderPhysicsShapeDisplayGroup:(GemDisplayGroup *)group forLayer:(int)layer withAlpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
+    NSMutableArray *lines = [NSMutableArray arrayWithCapacity:1];
+    NSMutableArray *shapes = [NSMutableArray arrayWithCapacity:1];
+    
+    
+    GLKMatrix3 cumulTransform = GLKMatrix3Multiply(transform, group.transform);
+    GLfloat groupAlpha = group.alpha;
+    GLfloat cumulAlpha = groupAlpha * alpha;
+    
+    for (int i=0; i<[group.objects count]; i++) {
+        
+        GemDisplayObject *gemObj = (GemDisplayObject *)[group.objects objectAtIndex:i];
+        if (!gemObj.isVisible) {
+            //continue;
+        }
+        
+        if (gemObj.class == GemLine.class){
+            // TODO - sort all lines by line properties so they can be batched
+            [lines addObject:gemObj];
+            
+        } else if(gemObj.class == GemSprite.class){
+            [self renderSprite:(GemSprite *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+            
+        } else if(gemObj.class == GemRectangle.class){
+            
+            [shapes addObject:gemObj];
+        } else if(gemObj.class == GemCircle.class){
+            [shapes addObject:gemObj];
+        } else if(gemObj.class == GemConvexShape.class){
+            [shapes addObject:gemObj];
+        }  
+    }
+    
+    
+    if ([lines count] > 0) {
+        [self renderLines:lines layerIndex:layer alpha:cumulAlpha tranform:cumulTransform];
+    }
+    
+    if ([shapes count] > 0) {
+        [self renderShapes:shapes withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+    }
+
+
+}
+
 -(void)renderSpriteBatches {
+    //return;
     GemOpenGLState *glState = [GemOpenGLState shared];
     
     if (glState.boundVertexArrayObject != spriteVAO) {
@@ -324,6 +375,11 @@ GLuint spriteRingBufferOffset = 0;
         
         free(index);
     }
+    
+    glBindVertexArrayOES(0);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   
 
     [spriteBatches removeAllObjects];
@@ -348,6 +404,19 @@ GLuint spriteRingBufferOffset = 0;
     
     GLKVector4 texCoord = sprite.textureCoord;
     
+    // account for sprite orientation
+    if (sprite.isFlippedHorizontally) {
+        GLfloat oldX = texCoord.x;
+        texCoord.x = texCoord.z;
+        texCoord.z = oldX;
+    }
+    
+    if (sprite.isFlippedVertically) {
+        GLfloat oldY = texCoord.y;
+        texCoord.y = texCoord.w;
+        texCoord.w = oldY;
+    }
+    
     GLfloat texCoordX = texCoord.x;
     GLfloat texCoordY = texCoord.y;
     GLfloat texCoordZ = texCoord.z;
@@ -363,7 +432,7 @@ GLuint spriteRingBufferOffset = 0;
         }
         spriteVerts[i].position[2] = z;
         spriteVerts[i].color[2] = 1.0;
-        spriteVerts[i].color[3] = sprite.alpha;
+        spriteVerts[i].color[3] = sprite.alpha * alpha;
         spriteVerts[i].texCoord[0] = (i == 0 || i == 1) ? texCoordX : texCoordZ;
         spriteVerts[i].texCoord[1] = (i == 0 || i == 2) ? texCoordY : texCoordW;
     }
@@ -398,17 +467,22 @@ GLuint spriteRingBufferOffset = 0;
     for (int i=0; i<[lines count]; i++) {
         GemLine *line = (GemLine *)[lines objectAtIndex:i];
         
-        glUniform4f(uniforms_line[UNIFORM_COLOR_LINE], line.color.r, line.color.g, line.color.b, line.color.a * line.alpha);
-       
+               
         [self renderLine:line withLayer:layerIndex alpha:alpha transform:transform];
         
     }
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 -(void)renderLine:(GemLine *)line withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
     
     GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
     //[line computeVertices:layerIndex];
+    
+    glUniform4f(uniforms_line[UNIFORM_COLOR_LINE], line.color.r, line.color.g, line.color.b, line.color.a * line.alpha * alpha);
+
     
     GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, line.transform);
     
@@ -435,7 +509,6 @@ GLuint spriteRingBufferOffset = 0;
 -(void)renderShapes:(NSArray *)shapes withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
     GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
     
-   
     
     GemOpenGLState *glState = [GemOpenGLState shared];
     //if (glState.boundVertexArrayObject != rectangleVAO) {
@@ -456,18 +529,38 @@ GLuint spriteRingBufferOffset = 0;
         ringBufferOffset = 0;
     }
     
-    // invalidate the VBO mappings to make sure any leftover rendering will get done
-    glMapBufferRangeEXT(GL_ARRAY_BUFFER, 0, 0, GL_MAP_INVALIDATE_BUFFER_BIT_EXT);
-    glMapBufferRangeEXT(GL_ELEMENT_ARRAY_BUFFER, 0, 0, GL_MAP_INVALIDATE_BUFFER_BIT_EXT);
+    //GemCheckGLError();
     
-    GLvoid *vbuf = glMapBufferRangeEXT(GL_ARRAY_BUFFER, 0, 5000, GL_MAP_WRITE_BIT_EXT);
-    GLvoid *ibuf = glMapBufferRangeEXT(GL_ELEMENT_ARRAY_BUFFER, 0, 5000, GL_MAP_WRITE_BIT_EXT);
+    // invalidate the VBO mappings to make sure any leftover rendering will get done
+    //glMapBufferRangeEXT(GL_ARRAY_BUFFER, 0, 0, GL_MAP_INVALIDATE_BUFFER_BIT_EXT);
+    //GemCheckGLError();
+    //glMapBufferRangeEXT(GL_ELEMENT_ARRAY_BUFFER, 0, 0, GL_MAP_INVALIDATE_BUFFER_BIT_EXT);
+    
+    GemCheckGLError();
+    
+    GLvoid *vbuf;
+    GLvoid *ibuf;
+    
+  /* if (firstPass) {
+        firstPass = NO;
+        vbuf = glMapBufferRangeEXT(GL_ARRAY_BUFFER, 0, 15000, GL_MAP_WRITE_BIT_EXT | GL_MAP_INVALIDATE_BUFFER_BIT_EXT);
+        GemCheckGLError();
+        ibuf = glMapBufferRangeEXT(GL_ELEMENT_ARRAY_BUFFER, 0, 5000, GL_MAP_WRITE_BIT_EXT | GL_MAP_INVALIDATE_BUFFER_BIT_EXT);
+        GemCheckGLError(); */
+  //  } else {
+        vbuf = glMapBufferRangeEXT(GL_ARRAY_BUFFER, 0, 15000, GL_MAP_WRITE_BIT_EXT);
+        GemCheckGLError();
+        ibuf = glMapBufferRangeEXT(GL_ELEMENT_ARRAY_BUFFER, 0, 5000, GL_MAP_WRITE_BIT_EXT);
+        GemCheckGLError();
+    //}
+    
     
     GLuint vertOffset = 0;  // offsets into the mapped VBOs
     GLuint indexOffset = 0;
 
     for (int i=0; i<[shapes count]; i++) {
         GemShape *shape = (GemShape *)[shapes objectAtIndex:i];
+        //GemLog(@"Rendering shape %@", shape.name);
         
         GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, shape.transform);
         
@@ -510,14 +603,23 @@ GLuint spriteRingBufferOffset = 0;
         
     }
     
-    glUnmapBufferOES(GL_ARRAY_BUFFER);
-    glUnmapBufferOES(GL_ELEMENT_ARRAY_BUFFER);
     
-     glDisable(GL_CULL_FACE);
+    
+    glDisable(GL_CULL_FACE);
     
     glDrawElements(GL_TRIANGLE_STRIP, indexOffset / sizeof(GLushort), GL_UNSIGNED_SHORT, (void*)0);
     
+    //GemCheckGLError();
+    
+    glUnmapBufferOES(GL_ARRAY_BUFFER);
+    glUnmapBufferOES(GL_ELEMENT_ARRAY_BUFFER);
+    
+    //GemCheckGLError();
+    
     glBindVertexArrayOES(0);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 
@@ -528,12 +630,12 @@ GLuint spriteRingBufferOffset = 0;
     glBindBuffer(GL_ARRAY_BUFFER, lineVBO[0]);
     glBufferData(GL_ARRAY_BUFFER, 4096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lineVBO[1]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 8096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
     
     glBindBuffer(GL_ARRAY_BUFFER, lineVBO[2]);
     glBufferData(GL_ARRAY_BUFFER, 4096*sizeof(GLfloat), NULL, GL_DYNAMIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lineVBO[3]);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 8096*sizeof(GLushort), NULL, GL_DYNAMIC_DRAW);
     
     glGenVertexArraysOES(1, &lineVAO);
     glBindVertexArrayOES(lineVAO);

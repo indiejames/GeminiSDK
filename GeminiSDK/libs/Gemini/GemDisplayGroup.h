@@ -8,6 +8,8 @@
 
 #import "GemDisplayObject.h"
 
+#define GEMINI_DISPLAY_GROUP_LUA_KEY "GeminiLib.GEMINI_DISPLAY_GROUP_LUA_KEY"
+
 @interface GemDisplayGroup : GemDisplayObject {
     NSMutableArray *objects;
 }

@@ -13,6 +13,7 @@
 #include "lauxlib.h"
 #import "GemPhysics.h"
 #import "GemFileNameResolver.h"
+#import "GemSoundManager.h"
 
 
 @interface Gemini : NSObject
@@ -25,9 +26,11 @@
 @property (readonly) NSString *deviceString;
 @property (readonly) GemFileNameResolver *fileNameResolver;
 @property (readonly) NSDictionary *settings;
+@property (readonly) GemSoundManager *soundManager;
 
 -(void)execute:(NSString *)filename;
--(BOOL)handleEvent:(NSString *)event;
+//-(BOOL)handleEvent:(NSString *)event;
+-(void)handleEvent:(GemEvent *)event;
 -(void)update:(double)deltaT;
 +(Gemini *)shared;
 

@@ -189,7 +189,7 @@
 -(BOOL)doesContainPoint:(GLKVector2)point {
     
     if (physicsBody) {
-        GemLog(@"Using physics body to test point for %@", name);
+        //GemLog(@"Using physics body to test point for %@", name);
         return [super doesContainPoint:point];
     }
     
@@ -227,7 +227,7 @@
     }
     
     if (point.x < minX || point.x > maxX || point.y < minY || point.y > maxY) {
-        GemLog(@"point is outside bounding box (minX = %f, maxX = %f, minY = %f, maxY = %f", minX,maxX,minY,maxY);
+        //GemLog(@"point is outside bounding box (minX = %f, maxX = %f, minY = %f, maxY = %f", minX,maxX,minY,maxY);
         return NO;
     }
     

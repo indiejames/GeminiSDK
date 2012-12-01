@@ -11,45 +11,43 @@
 
 @implementation GemEvent
 @synthesize target;
+@synthesize timestamp;
 
--(id)initWithLuaState:(lua_State *)luaState Target:(GemObject *)trgt {
-    self = [super initWithLuaState:luaState];
+-(id) initWithLuaState:(lua_State *)luaState Target:(GemObject *)trgt LuaKey:(const char *)luaKey {
+    self = [super initWithLuaState:luaState LuaKey:luaKey];
+    // empty the stack
+    lua_pop(L, lua_gettop(L));
     if (self) {
-        self.target = trgt;
-        
-        // create a lua object for this event
-        __unsafe_unretained GemEvent **levent = (__unsafe_unretained GemEvent **)lua_newuserdata(L, sizeof(GemEvent *));
-        *levent = self;
-        
-        luaL_getmetatable(L, GEMINI_EVENT_LUA_KEY);
-        
-        lua_setmetatable(L, -2);
-        
-        lua_newtable(L);
-        
-        // add a reference to the source into the userdata
-        if (trgt != nil) {
-            lua_pushstring(L, "source");
-            lua_rawgeti(L, LUA_REGISTRYINDEX, trgt.selfRef);
-            lua_rawset(L, -3);
-        }
-                
-        lua_pushvalue(L, -1); // make a copy of the table becaue the next line pops the top value
-        // store a reference to this table so our event methods can access it
-        self.propertyTableRef = luaL_ref(L, LUA_REGISTRYINDEX);
-        lua_setuservalue(L, -2);
-        
-        lua_pushvalue(L, -1); // make another copy of the userdata since the next line will pop it off
-        self.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
-        
-        
-        
-        // empty the stack
-        lua_pop(L, lua_gettop(L));
-        
+        target = trgt;
     }
     
     return self;
 }
+
+-(id)initWithLuaState:(lua_State *)luaState Target:(GemObject *)trgt {
+    self = [super initWithLuaState:luaState LuaKey:GEMINI_EVENT_LUA_KEY];
+    // empty the stack
+    lua_pop(L, lua_gettop(L));
+    if (self) {
+        target = trgt;
+    }
+    
+    return self;
+
+}
+
+/*
+-(id)initWithLuaState:(lua_State *)luaState Target:(GemObject *)trgt Event:(UIEvent *)evt; {
+    self = [super initWithLuaState:luaState LuaKey:GEMINI_EVENT_LUA_KEY];
+    if (self) {
+        target = trgt;
+        if (evt) {
+            timestamp = [NSNumber numberWithDouble:evt.timestamp];
+        }
+        
+    }
+    
+    return self;
+}*/
 
 @end

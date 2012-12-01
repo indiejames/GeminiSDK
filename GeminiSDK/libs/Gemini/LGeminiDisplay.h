@@ -12,10 +12,7 @@
 #import "GemLayer.h"
 
 #define GEMINI_DISPLAY_LUA_KEY "GeminiLib.GEMINI_DISPLAY_LUA_KEY"
-#define GEMINI_LAYER_LUA_KEY "GeminiLib.GEMINI_LAYER_LUA_KEY"
-#define GEMINI_DISPLAY_GROUP_LUA_KEY "GeminiLib.GEMINI_DISPLAY_GROUP_LUA_KEY"
-#define GEMINI_LINE_LUA_KEY "GeminiLib.GEMINI_LINE_LUA_KEY"
-#define GEMINI_RECTANGLE_LUA_KEY "GeminiLib.GEMINI_RECTANGLE_LUA_KEY"
+
 
 int luaopen_display_lib (lua_State *L);
 

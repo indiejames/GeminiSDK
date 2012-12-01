@@ -6,14 +6,24 @@
 
 local timer = require("timer")
 local director = require( "director" )
+local sound = require("sound")
 local scene = director.newScene()
 local display = require('display')
 local sprite = require('sprite')
-local walker = require('walker')
+local cannon = require('cannon')
 
-local walkerSprite
-local sprite2
-local sprite3
+local cannonSprite
+local cannonBall
+local cannonSound
+local box = {}
+
+local box_positions = { 355, 32,
+                        405, 32,
+                        455, 32,
+                        380, 80,
+                        430, 80,
+                        405, 128,
+                        }
 
 ----------------------------------------------------------------------------------
 -- 
@@ -34,39 +44,73 @@ function scene:createScene( event )
     
 	local layer1 = display.newLayer(1)
 	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    
+    local layer2 = display.newLayer(-1)
+    layer2:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 	
 	self:addLayer(layer1)
     
     -- create our sprite for the running walker
-    local walkerSpriteSheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
-    local walkerSpriteSet = sprite.newSpriteSet(walkerSpriteSheet, 1, 10)
-    walkerSprite = sprite.newSprite(walkerSpriteSet)
-    walkerSprite.x = 240
-    walkerSprite.y = 160
-    layer1:insert(walkerSprite)
+    local cannonSpriteSheet = sprite.newSpriteSheetFromData("cannon.png", cannon.getSpriteSheetData())
+    local cannonSpriteSet = sprite.newSpriteSet(cannonSpriteSheet, 1, 3)
+    sprite.add(cannonSpriteSet, "fire", 2, 3, 0.1, -1)
+    sprite.add(cannonSpriteSet, "box", 1, 1, 0.1, 1)
+    cannonSprite = sprite.newSprite(cannonSpriteSet)
+    cannonSprite:prepare("fire")
+    cannonSprite.name = "cannon"
+    cannonSprite.x = 50
+    cannonSprite.y = 47
+    layer1:insert(cannonSprite)
     
-    sprite2 = sprite.newSprite(walkerSpriteSet)
-    sprite2.x = 100
-    sprite2.y = 100
-    layer1:insert(sprite2)
-    
-    sprite3 = sprite.newSprite(walkerSpriteSet)
-    sprite3.x = 400
-    sprite3.y = 240
-    sprite3.name = "sprite3"
-    layer1:insert(sprite3)
     
     local scaleFactor = 1.0
-    local physicsData = (require "test_physics").physicsData(scaleFactor)
+    local physicsData = (require "cannon_physics").physicsData(scaleFactor)
     print("Lua: loaded physics data")
-    local data,data2,data3,data4,data5 = physicsData:get("runner")
-    print("Lua: got physics data for runner using file data")
-    physics.addBody( sprite3, "dynamic", physicsData:get("runner") )
-    --physics.addBody( sprite3, "dynamic", { density=3.0, friction=0.5, restitution=0.7, radius=0.1 })
-    sprite3.isActive = false
-    print("Lua: added physics to sprite3")
+    physics.addBody( cannonSprite, "static", physicsData:get("cannon03") )
+    cannonSprite.isActive = false
+    
+    cannonBall = display.newCircle(52,58, 7.5)
+    cannonBall:setFillColor(0.5,0.5,0.5,1.0)
+    layer2:insert(cannonBall)
+    physics.addBody(cannonBall, "dynamic", {density=10.0, friction=0.5, restitution=0.7})
+    cannonBall.isActive = false
+    cannonBall.isVisible = false
+    
+    -- boxes
+    
+    local num_boxes = #box_positions / 2
+    
+    for i = 0, num_boxes-1 do
+        local x = box_positions[i*2+1]
+        local y = box_positions[i*2+2]
+        
+        box[i+1] = sprite.newSprite(cannonSpriteSet)
+        box[i+1]:prepare("box")
+        box[i+1].name = "box1"
+        box[i+1].x = x
+        box[i+1].y = y
+        layer1:insert(box[i+1])
+    
+        physics.addBody(box[i+1], "dynamic", physicsData:get("box"))
+        box[i+1].isActive = false
+    end
     
     
+    
+    
+    -- ground
+    
+    local ground = display.newRect(480/2,0,960/2,30/2)
+    ground:setFillColor(0,1.0,0,1.0)
+    layer1:insert(ground)
+    ground.name = "GROUND"
+    ground.isVisible = false
+    physics.addBody(ground)
+    
+    
+    -- sounds
+    cannonSound = sound.new("cannon.wav")
+        
 end
 
 
@@ -80,24 +124,37 @@ function scene:enterScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Entering scene 4")
+    print("Entering scene 5")
     
+    cannonSprite.isActive = true
     
-    walkerSprite:prepare()
-    walkerSprite:play()
-    sprite2:prepare()
-    sprite2:play()
-    sprite3:prepare()
-    sprite3:play()
-    sprite3.isActive = true
+    cannonBall.isActive = true
+    cannonBall.isVisible = true
     
+    local num_boxes = #box_positions / 2
+    
+    for i = 1, num_boxes do
+        box[i].isActive = true
+    end
+    
+    function cannonSprite:touch(event)
+        cannonSound:play()
+        cannonSprite:play()
+        cannonBall:applyForce(55,52)
+        
+        return true
+    end
+    cannonSprite:addEventListener("touch", cannonSprite)
+
+
+       
     local function listener(event)
         director.gotoScene(
             "scene1",
             {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="down"})
     end
     
-    timer.performWithDelay(5000, listener)
+    --timer.performWithDelay(5000, listener)
 
 end
 
@@ -112,11 +169,9 @@ function scene:exitScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Exiting scene 4")
-    walkerSprite:pause();
-    sprite2:pause();
-    sprite3:pause();
-    sprite3.isActive = false
+    print("Exiting scene 5")
+    cannonSprite:pause();
+    cannonSprite.isActive = false
 
 end
 

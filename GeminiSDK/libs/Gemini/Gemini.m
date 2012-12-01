@@ -30,6 +30,7 @@ Gemini *singleton = nil;
     double initTime;
     GemObject *runtime;
     GemPhysics *physics;
+    GemSoundManager *soundManager;
 }
 @end
 
@@ -43,6 +44,7 @@ Gemini *singleton = nil;
 @synthesize physics;
 @synthesize fileNameResolver;
 @synthesize settings;
+@synthesize soundManager;
 
 int setLuaPath(lua_State *L, NSString* path );
 
@@ -144,6 +146,8 @@ int setLuaPath(lua_State *L, NSString* path );
         float physScale = 50.0 * screenWidth / 320.0;
         [physics setScale:physScale];
         
+        soundManager = [[GemSoundManager alloc] init];
+        
     }
     
     return self;
@@ -202,9 +206,9 @@ int setLuaPath(lua_State *L, NSString* path );
     [timer retain];*/
 }
 
--(BOOL)handleEvent:(NSString *)event {
+/*-(BOOL)handleEvent:(NSString *)event {
     GemLog(@"Gemini handling event %@", event);
-    GemEvent *ge = [[GemEvent alloc] initWithLuaState:L Target:nil];
+    GemEvent *ge = [[GemEvent alloc] initWithLuaState:L Target:nil Event:nil];
     ge.name = event;
     
     for (id gemObj in geminiObjects) {
@@ -216,6 +220,10 @@ int setLuaPath(lua_State *L, NSString* path );
     
     
     return NO;
+}*/
+
+-(void)handleEvent:(GemEvent *)event {
+    [runtime handleEvent:event];
 }
 
 // the global update method - called from the GeminiGLKViewController update method

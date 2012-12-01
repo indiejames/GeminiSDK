@@ -32,6 +32,7 @@ int render_count = 0;
         scenes = [[NSMutableDictionary alloc] initWithCapacity:1];
         [scenes setValue:defaultScene forKey:GEM_DEFAULT_SCENE];
         allScenes = [[NSMutableArray alloc] initWithCapacity:1];
+        loadingScenes = [[NSMutableSet alloc] initWithCapacity:1];
         transitions = [[NSMutableDictionary alloc] initWithCapacity:1];
         currentScene = GEM_DEFAULT_SCENE;
         GemSceneTransition *transition = [[GemSlideSceneTransition alloc] initWithParams:nil];
@@ -62,8 +63,13 @@ static GemScene * createDefaultScene(lua_State *L){
 }
 
 -(void)gotoScene:(NSString *)scene withOptions:(NSDictionary *)options{
-    
+    //GemLog(@"WAITING FOR LOAD");
+    //sleep(3);
     // load the scene if it is not already loaded
+    while ([loadingScenes containsObject:scene]) {
+        
+        sleep(1);
+    }
     if ([scenes objectForKey:scene] == nil) {
         [self loadScene:scene];
     }
@@ -121,10 +127,93 @@ static GemScene * createDefaultScene(lua_State *L){
 
 }
 
+// block for loading scenes
+GemScene * (^sceneLoader)(NSString *sceneName, lua_State *L) = ^GemScene *(NSString * sceneName, lua_State *L) {
+    int err;
+    
+    GemLog(@"Gem: Loading scene %@", sceneName);
+    
+    lockLuaLock();
+    
+    lua_settop(L, 0);
+    
+    // set our error handler function
+    lua_pushcfunction(L, traceback);
+    
+    GemFileNameResolver *resolver = [Gemini shared].fileNameResolver;
+    
+    NSString *resolvedFileName = [resolver resolveNameForFile:sceneName ofType:@"lua"];
+    
+    NSString *luaFilePath = [[NSBundle mainBundle] pathForResource:resolvedFileName ofType:@"lua"];
+    
+    err = luaL_loadfile(L, [luaFilePath cStringUsingEncoding:[NSString defaultCStringEncoding]]);
+    
+    if (0 != err) {
+        luaL_error(L, "LUA ERROR: cannot load lua file: %s",
+                   lua_tostring(L, -1));
+        return nil;
+    }
+    
+    
+    err = lua_pcall(L, 0, 1, 1);
+    if (0 != err) {
+        luaL_error(L, "LUA ERROR: cannot run lua file: %s",
+                   lua_tostring(L, -1));
+        return nil;
+    }
+    
+    // The scene should now be on the top of the stack
+    __unsafe_unretained GemScene **lscene = (__unsafe_unretained GemScene **)luaL_checkudata(L, -1, GEMINI_SCENE_LUA_KEY);
+    GemScene *scene = *lscene;
+    scene.name = sceneName;
+    //[scenes setObject:scene forKey:sceneName];
+    
+    // this gets a pointer to the "createScene" method on the new scene
+    lua_getfield(L, -1, "createScene");
+    
+    // duplicate the scene on top of th stack since it is the first param of the createScene method
+    lua_pushvalue(L, -2);
+    // invokde the createScene method
+    lua_pcall(L, 1, 0, 0);
+    
+    lua_settop(L, 0);
+    
+    unlockLuaLock();
+    
+    return scene;
+};
+
 -(void)loadScene:(NSString *)sceneName {
     // don't load the scene if it is already in our cache
-    if ([scenes objectForKey:sceneName] == nil) {
-        int err;
+    if ([scenes objectForKey:sceneName] == nil && ![loadingScenes containsObject:sceneName]) {
+        
+        [loadingScenes addObject:sceneName];
+        
+        dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        
+        dispatch_sync(globalQueue, ^(){
+            GemScene *newScene = sceneLoader(sceneName, L);
+            [scenes setObject:newScene forKey:sceneName];
+            [loadingScenes removeObject:sceneName];
+        });
+        /*dispatch_async(globalQueue, ^(){
+            GemScene *newScene = sceneLoader(sceneName, L);
+            dispatch_sync(globalQueue, ^{
+                [scenes setObject:newScene forKey:sceneName];
+                [loadingScenes removeObject:sceneName];
+                
+            });
+            
+        });*/
+        
+        /*dispatch_async(globalQueue, ^(){
+            GemScene *newScene = sceneLoader(sceneName, L);
+            [scenes setObject:newScene forKey:sceneName];
+            [loadingScenes removeObject:sceneName];
+        });*/
+        
+        
+        /*int err;
         
         lua_settop(L, 0);
         
@@ -166,7 +255,10 @@ static GemScene * createDefaultScene(lua_State *L){
         lua_pushvalue(L, -2);
         lua_pcall(L, 1, 0, 0);
         
-        lua_settop(L, 0);
+        lua_settop(L, 0); */
+        
+        
+        
     }
     
 }

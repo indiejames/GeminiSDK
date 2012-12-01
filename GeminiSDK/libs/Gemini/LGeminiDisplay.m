@@ -19,6 +19,9 @@
 #import "LGeminiLuaSupport.h"
 #import "LGeminiObject.h"
 
+// physics methods
+extern int applyForce(lua_State *L);
+
 
 //////// convex shapes ////////////////////////
 static int newShape(lua_State *L){
@@ -262,8 +265,7 @@ static int rectangleNewIndex (lua_State *L){
     
     if (rect != NULL) {
         if (lua_isstring(L, 2)) {
-            
-            
+                        
             const char *key = lua_tostring(L, 2);
             if (strcmp("strokeWidth", key) == 0) {
                 GLfloat w = luaL_checknumber(L, 3);
@@ -626,6 +628,8 @@ static const struct luaL_Reg layer_m [] = {
     {"__gc", layerGC},
     {"__index", genericIndex},
     {"__newindex", layerNewIndex},
+    {"addEventListener", addEventListener},
+    {"removeEventListener", removeEventListener},
     // TODO - add remove self for layers (can't call generic method)
     {NULL, NULL}
 };
@@ -650,6 +654,7 @@ static const struct luaL_Reg line_m [] = {
     {"setColor", lineSetColor},
     {"append", lineAppendPoints},
     {"delete", genericDelete},
+    {"applyForce", applyForce},
     {NULL, NULL}
 };
 
@@ -666,6 +671,7 @@ static const struct luaL_Reg rectangle_m [] = {
     {"delete", genericDelete},
     {"addEventListener", addEventListener},
     {"removeEventListener", removeEventListener},
+    {"applyForce", applyForce},
     {NULL, NULL}
 };
 
@@ -682,6 +688,7 @@ static const struct luaL_Reg circle_m [] = {
     {"delete", genericDelete},
     {"addEventListener", addEventListener},
     {"removeEventListener", removeEventListener},
+    {"applyForce", applyForce},
     {NULL, NULL}
 };
 
@@ -695,6 +702,7 @@ static const struct luaL_Reg shape_m [] = {
     {"delete", genericDelete},
     {"addEventListener", addEventListener},
     {"removeEventListener", removeEventListener},
+    {"applyForce", applyForce},
     {NULL, NULL}
 };
 
@@ -707,7 +715,6 @@ int luaopen_display_lib (lua_State *L){
     
     // display groups
     createMetatable(L, GEMINI_DISPLAY_GROUP_LUA_KEY, displayGroup_m);
-   
     
     // lines
     createMetatable(L, GEMINI_LINE_LUA_KEY, line_m);

@@ -8,6 +8,8 @@
 
 #import "GemDisplayObject.h"
 
+#define GEMINI_LINE_LUA_KEY "GeminiLib.GEMINI_LINE_LUA_KEY"
+
 @interface GemLine : GemDisplayObject {
     GLfloat *points;
     unsigned int numPoints;

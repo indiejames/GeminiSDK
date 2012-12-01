@@ -4,16 +4,12 @@
 --
 ----------------------------------------------------------------------------------
 
-local timer = require("timer")
 local director = require( "director" )
+local sprite = require("sprite")
+local timer = require("timer")
 local scene = director.newScene()
-local display = require('display')
-local sprite = require('sprite')
-local walker = require('walker')
+local marios = require("marios")
 
-local walkerSprite
-local sprite2
-local sprite3
 
 ----------------------------------------------------------------------------------
 -- 
@@ -30,43 +26,47 @@ local sprite3
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
-    print("Lua: Creating scene 4")
+	print("Lua: Creating scene 3")
+
+	local layer = display.newLayer(1)
+	layer:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+    self:addLayer(layer)
+
+    local spriteSheet = sprite.newSpriteSheetFromData("marios.png", marios.getSpriteSheetData())
+ 
+    local spriteSet = sprite.newSpriteSet(spriteSheet, 1, 8)
     
-	local layer1 = display.newLayer(1)
-	layer1:setBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-	
-	self:addLayer(layer1)
+    local ys = 22
+    local x0 = 10
+
+    for j=1,10 do
+        local xs = x0
+        for i=1,37 do
+            if i < 16 or i > 22 or j < 4 or j > 7 then
+                local sprite = sprite.newSprite(spriteSet)
+                sprite.x = xs
+                sprite.y = ys
+                --sprite.xScale = 1.5
+                --sprite.yScale = 1.5
+                sprite:prepare()
+                sprite:play()
+                layer:insert(sprite)
+            end
+            xs = xs + 15
+        end
+        ys = ys + 30
+    end
     
-    -- create our sprite for the running walker
-    local walkerSpriteSheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
-    local walkerSpriteSet = sprite.newSpriteSet(walkerSpriteSheet, 1, 10)
-    walkerSprite = sprite.newSprite(walkerSpriteSet)
-    walkerSprite.x = 240
-    walkerSprite.y = 160
-    layer1:insert(walkerSprite)
-    
-    sprite2 = sprite.newSprite(walkerSpriteSet)
-    sprite2.x = 100
-    sprite2.y = 100
-    layer1:insert(sprite2)
-    
-    sprite3 = sprite.newSprite(walkerSpriteSet)
-    sprite3.x = 400
-    sprite3.y = 240
-    sprite3.name = "sprite3"
-    layer1:insert(sprite3)
-    
-    local scaleFactor = 1.0
-    local physicsData = (require "test_physics").physicsData(scaleFactor)
-    print("Lua: loaded physics data")
-    local data,data2,data3,data4,data5 = physicsData:get("runner")
-    print("Lua: got physics data for runner using file data")
-    physics.addBody( sprite3, "dynamic", physicsData:get("runner") )
-    --physics.addBody( sprite3, "dynamic", { density=3.0, friction=0.5, restitution=0.7, radius=0.1 })
-    sprite3.isActive = false
-    print("Lua: added physics to sprite3")
-    
-    
+    -- make a big sprite
+    local bigSprite = sprite.newSprite(spriteSet)
+    bigSprite.x = 284
+    bigSprite.y = 160
+    bigSprite.xScale = 2.5
+    bigSprite.yScale = 2.5
+    bigSprite:prepare()
+    bigSprite:play()
+    layer:insert(bigSprite)
+
 end
 
 
@@ -80,24 +80,19 @@ function scene:enterScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Entering scene 4")
+    print("Entering scene 3")
     
-    
-    walkerSprite:prepare()
-    walkerSprite:play()
-    sprite2:prepare()
-    sprite2:play()
-    sprite3:prepare()
-    sprite3:play()
-    sprite3.isActive = true
+    levelLabel:setText("Level 3")
+    transition.to(levelLabelGroup, {time=levelFadeDuration, alpha=1})
+
     
     local function listener(event)
         director.gotoScene(
-            "scene1",
-            {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="down"})
+            "scene4",
+            {transition="GEM_SLIDE_SCENE_TRANSITION", duration=2.5, direction="left"})
     end
     
-    timer.performWithDelay(5000, listener)
+    timer.performWithDelay(25000, listener)
 
 end
 
@@ -112,11 +107,8 @@ function scene:exitScene( event )
 
 	-----------------------------------------------------------------------------
     
-    print("Exiting scene 4")
-    walkerSprite:pause();
-    sprite2:pause();
-    sprite3:pause();
-    sprite3.isActive = false
+    print("Exiting scene 3")
+    levelLabelGroup.alpha = 0
 
 end
 
@@ -137,7 +129,7 @@ end
 -- END OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
-scene.name = "scene4"
+scene.name = "scene3"
 
 -- "createScene" event is dispatched if scene's view does not exist
 scene:addEventListener( "createScene", scene )
