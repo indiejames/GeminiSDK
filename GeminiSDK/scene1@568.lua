@@ -213,12 +213,13 @@ function scene:enterScene( event )
      -- add an event listener that will fire every frame
     scene.starListener = function(event)
     
-        print(event)
+        --print(event)
         local name = event.name
         
-        print ("star: " .. name)
+        print ("Lua: star: " .. name)
       -- rotate our star
       star.rotation = star.rotation + 0.2
+      print ("Lua: finished enterFrame event handler")
       
     end 
     -- the "enterFrame" event fires at the beginning of each render loop

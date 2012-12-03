@@ -113,13 +113,13 @@
 }
 
 -(void) setPhysicsTransform:(GLKVector3)trans {
-    if (physicsBody) {
+   /* if (physicsBody) {
         float scale = [[Gemini shared].physics getScale];
         
         b2Vec2 pos = b2Vec2(trans.x / scale, trans.y / scale);
         ((b2Body *)physicsBody)->SetTransform(pos, toRad(trans.z));
         
-    }      
+    }  */    
 
 }
 

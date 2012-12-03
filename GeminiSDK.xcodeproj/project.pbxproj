@@ -8,6 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		76114C1116682B03004A4C8A /* GemCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76114C1016682B03004A4C8A /* GemCollisionEvent.m */; };
+		76114C14166D2B3D004A4C8A /* LICENSE_Gemini.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */; };
+		76114C23166D2C1F004A4C8A /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C16166D2C1F004A4C8A /* Default-Portrait~ipad.png */; };
+		76114C24166D2C1F004A4C8A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C17166D2C1F004A4C8A /* Default.png */; };
+		76114C25166D2C1F004A4C8A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C18166D2C1F004A4C8A /* Default@2x.png */; };
+		76114C26166D2C1F004A4C8A /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C19166D2C1F004A4C8A /* fps_images.png */; };
+		76114C27166D2C1F004A4C8A /* gemini.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76114C1A166D2C1F004A4C8A /* gemini.plist */; };
+		76114C28166D2C1F004A4C8A /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C1B166D2C1F004A4C8A /* Icon-72.png */; };
+		76114C29166D2C1F004A4C8A /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C1C166D2C1F004A4C8A /* Icon-Small-50.png */; };
+		76114C2A166D2C1F004A4C8A /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C1D166D2C1F004A4C8A /* Icon-Small.png */; };
+		76114C2B166D2C1F004A4C8A /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C1E166D2C1F004A4C8A /* Icon-Small@2x.png */; };
+		76114C2C166D2C1F004A4C8A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C1F166D2C1F004A4C8A /* Icon.png */; };
+		76114C2D166D2C1F004A4C8A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C20166D2C1F004A4C8A /* Icon@2x.png */; };
+		76114C2E166D2C1F004A4C8A /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 76114C21166D2C1F004A4C8A /* Info.plist */; };
+		76114C2F166D2C1F004A4C8A /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 76114C22166D2C1F004A4C8A /* iTunesArtwork */; };
+		76114C31166D2C9E004A4C8A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C30166D2C9E004A4C8A /* Default-568h@2x.png */; };
 		76324FDA16069F2600970D03 /* GemFileNameResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76324FD916069F2600970D03 /* GemFileNameResolver.m */; };
 		76324FDD1607748800970D03 /* main@ipad.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76324FDC1607748700970D03 /* main@ipad.lua */; };
 		76324FDF1607846C00970D03 /* horses@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76324FDE1607846C00970D03 /* horses@2x.png */; };
@@ -19,7 +34,6 @@
 		7640CA8B16517B3B00CC9DA4 /* lib_text_candy.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7640CA8A16517B3B00CC9DA4 /* lib_text_candy.lua */; };
 		7640CA8F16517B5E00CC9DA4 /* chilopod_gd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7640CA8D16517B5E00CC9DA4 /* chilopod_gd.lua */; };
 		7640CA9016517B5E00CC9DA4 /* chilopod_gd.png in Resources */ = {isa = PBXBuildFile; fileRef = 7640CA8E16517B5E00CC9DA4 /* chilopod_gd.png */; };
-		7647AC2216587B25001D6867 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7647AC2116587B25001D6867 /* Default-568h@2x.png */; };
 		7647AC2A165882A9001D6867 /* scene1@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7647AC27165882A9001D6867 /* scene1@568.lua */; };
 		7647AC2B165882A9001D6867 /* scene2@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7647AC28165882A9001D6867 /* scene2@568.lua */; };
 		7647AC2C165882A9001D6867 /* scene4@568.lua in Resources */ = {isa = PBXBuildFile; fileRef = 7647AC29165882A9001D6867 /* scene4@568.lua */; };
@@ -47,7 +61,6 @@
 		769D556316653E6B0037DB6F /* mario_game.png in Resources */ = {isa = PBXBuildFile; fileRef = 769D556116653E6B0037DB6F /* mario_game.png */; };
 		769D5565166541390037DB6F /* mario_game_physics.lua in Resources */ = {isa = PBXBuildFile; fileRef = 769D5564166541380037DB6F /* mario_game_physics.lua */; };
 		76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216516036E2C00832178 /* Default-Portrait~ipad.png */; };
-		76D2216816036EB200832178 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216716036EB200832178 /* Default.png */; };
 		76D2216A16036FF100832178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216916036FF100832178 /* Default@2x.png */; };
 		76D2216F1603961A00832178 /* GemSoundEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D2216E1603961A00832178 /* GemSoundEffect.m */; };
 		76D221721603964F00832178 /* GemEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D221711603964F00832178 /* GemEventManager.m */; };
@@ -256,6 +269,21 @@
 /* Begin PBXFileReference section */
 		76114C0F16682B03004A4C8A /* GemCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemCollisionEvent.h; path = libs/Gemini/GemCollisionEvent.h; sourceTree = "<group>"; };
 		76114C1016682B03004A4C8A /* GemCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemCollisionEvent.m; path = libs/Gemini/GemCollisionEvent.m; sourceTree = "<group>"; };
+		76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE_Gemini.txt; path = libs/LICENSE_Gemini.txt; sourceTree = "<group>"; };
+		76114C16166D2C1F004A4C8A /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		76114C17166D2C1F004A4C8A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		76114C18166D2C1F004A4C8A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		76114C19166D2C1F004A4C8A /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		76114C1A166D2C1F004A4C8A /* gemini.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gemini.plist; sourceTree = "<group>"; };
+		76114C1B166D2C1F004A4C8A /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		76114C1C166D2C1F004A4C8A /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		76114C1D166D2C1F004A4C8A /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		76114C1E166D2C1F004A4C8A /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		76114C1F166D2C1F004A4C8A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		76114C20166D2C1F004A4C8A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		76114C21166D2C1F004A4C8A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76114C22166D2C1F004A4C8A /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		76114C30166D2C9E004A4C8A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		76324FD816069F2600970D03 /* GemFileNameResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFileNameResolver.h; path = libs/Gemini/GemFileNameResolver.h; sourceTree = "<group>"; };
 		76324FD916069F2600970D03 /* GemFileNameResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFileNameResolver.m; path = libs/Gemini/GemFileNameResolver.m; sourceTree = "<group>"; };
 		76324FDC1607748700970D03 /* main@ipad.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "main@ipad.lua"; sourceTree = "<group>"; };
@@ -268,7 +296,6 @@
 		7640CA8A16517B3B00CC9DA4 /* lib_text_candy.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = lib_text_candy.lua; sourceTree = "<group>"; };
 		7640CA8D16517B5E00CC9DA4 /* chilopod_gd.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chilopod_gd.lua; sourceTree = "<group>"; };
 		7640CA8E16517B5E00CC9DA4 /* chilopod_gd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chilopod_gd.png; sourceTree = "<group>"; };
-		7647AC2116587B25001D6867 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		7647AC27165882A9001D6867 /* scene1@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene1@568.lua"; sourceTree = "<group>"; };
 		7647AC28165882A9001D6867 /* scene2@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene2@568.lua"; sourceTree = "<group>"; };
 		7647AC29165882A9001D6867 /* scene4@568.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "scene4@568.lua"; sourceTree = "<group>"; };
@@ -301,7 +328,6 @@
 		769D556116653E6B0037DB6F /* mario_game.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mario_game.png; sourceTree = "<group>"; };
 		769D5564166541380037DB6F /* mario_game_physics.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mario_game_physics.lua; sourceTree = "<group>"; };
 		76D2216516036E2C00832178 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		76D2216716036EB200832178 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		76D2216916036FF100832178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		76D2216D1603961A00832178 /* GemSoundEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSoundEffect.h; path = libs/Gemini/GemSoundEffect.h; sourceTree = "<group>"; };
 		76D2216E1603961A00832178 /* GemSoundEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemSoundEffect.m; path = libs/Gemini/GemSoundEffect.m; sourceTree = "<group>"; };
@@ -689,11 +715,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		76114C15166D2C1F004A4C8A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				76114C30166D2C9E004A4C8A /* Default-568h@2x.png */,
+				76114C16166D2C1F004A4C8A /* Default-Portrait~ipad.png */,
+				76114C17166D2C1F004A4C8A /* Default.png */,
+				76114C18166D2C1F004A4C8A /* Default@2x.png */,
+				76114C19166D2C1F004A4C8A /* fps_images.png */,
+				76114C1A166D2C1F004A4C8A /* gemini.plist */,
+				76114C1B166D2C1F004A4C8A /* Icon-72.png */,
+				76114C1C166D2C1F004A4C8A /* Icon-Small-50.png */,
+				76114C1D166D2C1F004A4C8A /* Icon-Small.png */,
+				76114C1E166D2C1F004A4C8A /* Icon-Small@2x.png */,
+				76114C1F166D2C1F004A4C8A /* Icon.png */,
+				76114C20166D2C1F004A4C8A /* Icon@2x.png */,
+				76114C21166D2C1F004A4C8A /* Info.plist */,
+				76114C22166D2C1F004A4C8A /* iTunesArtwork */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		76D56E8B15F1943300615891 = {
 			isa = PBXGroup;
 			children = (
-				7647AC2116587B25001D6867 /* Default-568h@2x.png */,
-				76D2216716036EB200832178 /* Default.png */,
 				76D56EAC15F1943300615891 /* GeminiSDK */,
 				76D56E9915F1943300615891 /* Frameworks */,
 				76D56E9715F1943300615891 /* Products */,
@@ -782,6 +827,7 @@
 		76D56EAD15F1943300615891 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				76114C15166D2C1F004A4C8A /* Resources */,
 				76D2216916036FF100832178 /* Default@2x.png */,
 				76D2216516036E2C00832178 /* Default-Portrait~ipad.png */,
 				76D56EAE15F1943300615891 /* Default.png */,
@@ -802,6 +848,7 @@
 		76D56EC115F1943300615891 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */,
 				76D56EC215F1943300615891 /* LICENSE_Lua.txt */,
 				76D5701C15F1943500615891 /* LICENSE_Box2D.txt */,
 				76D5701E15F1943500615891 /* LICENSE_ObjectAL.txt */,
@@ -1383,7 +1430,6 @@
 				76D570BF15F1A1AD00615891 /* scene3.lua in Resources */,
 				76D570C015F1A1AD00615891 /* scene4.lua in Resources */,
 				76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */,
-				76D2216816036EB200832178 /* Default.png in Resources */,
 				76D2216A16036FF100832178 /* Default@2x.png in Resources */,
 				76D221741603967F00832178 /* gemini.plist in Resources */,
 				76324FDD1607748800970D03 /* main@ipad.lua in Resources */,
@@ -1400,7 +1446,6 @@
 				7640CA8B16517B3B00CC9DA4 /* lib_text_candy.lua in Resources */,
 				7640CA8F16517B5E00CC9DA4 /* chilopod_gd.lua in Resources */,
 				7640CA9016517B5E00CC9DA4 /* chilopod_gd.png in Resources */,
-				7647AC2216587B25001D6867 /* Default-568h@2x.png in Resources */,
 				7647AC2A165882A9001D6867 /* scene1@568.lua in Resources */,
 				7647AC2B165882A9001D6867 /* scene2@568.lua in Resources */,
 				7647AC2C165882A9001D6867 /* scene4@568.lua in Resources */,
@@ -1419,6 +1464,21 @@
 				769D556216653E6B0037DB6F /* mario_game.lua in Resources */,
 				769D556316653E6B0037DB6F /* mario_game.png in Resources */,
 				769D5565166541390037DB6F /* mario_game_physics.lua in Resources */,
+				76114C14166D2B3D004A4C8A /* LICENSE_Gemini.txt in Resources */,
+				76114C23166D2C1F004A4C8A /* Default-Portrait~ipad.png in Resources */,
+				76114C24166D2C1F004A4C8A /* Default.png in Resources */,
+				76114C25166D2C1F004A4C8A /* Default@2x.png in Resources */,
+				76114C26166D2C1F004A4C8A /* fps_images.png in Resources */,
+				76114C27166D2C1F004A4C8A /* gemini.plist in Resources */,
+				76114C28166D2C1F004A4C8A /* Icon-72.png in Resources */,
+				76114C29166D2C1F004A4C8A /* Icon-Small-50.png in Resources */,
+				76114C2A166D2C1F004A4C8A /* Icon-Small.png in Resources */,
+				76114C2B166D2C1F004A4C8A /* Icon-Small@2x.png in Resources */,
+				76114C2C166D2C1F004A4C8A /* Icon.png in Resources */,
+				76114C2D166D2C1F004A4C8A /* Icon@2x.png in Resources */,
+				76114C2E166D2C1F004A4C8A /* Info.plist in Resources */,
+				76114C2F166D2C1F004A4C8A /* iTunesArtwork in Resources */,
+				76114C31166D2C9E004A4C8A /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

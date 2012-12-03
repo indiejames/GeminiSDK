@@ -229,7 +229,6 @@ int setLuaPath(lua_State *L, NSString* path );
 // the global update method - called from the GeminiGLKViewController update method
 // deltaT - time in seconds since last update
 -(void) update:(double)deltaT {
-    static int callCount = 0;
     
     // do physics
     [physics update:deltaT];
@@ -242,6 +241,7 @@ int setLuaPath(lua_State *L, NSString* path );
     [runtime handleEvent:enterFrameEvent];
     
 #ifdef GEM_DEBUG
+    static int callCount = 0;
     
     if (callCount % 120 == 0) {
         callCount = 0;

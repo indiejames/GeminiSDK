@@ -25,12 +25,12 @@ require 'optparse'
    end
    
    options[:source_dir] = "./GeminiSDK"
-   opts.on('-s', '--source DIR', 'Source directory') do
+   opts.on('-s', '--source DIR', 'Source directory') do |dir|
      options[:source_dir] = dir
    end
    
    options[:output_dir] = "./TemplateBuild"
-   opts.on('-o', '--output DIR', 'Output directory') do
+   opts.on('-o', '--output DIR', 'Output directory') do |dir|
      options[:output_dir] = dir
    end
  
