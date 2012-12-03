@@ -4,15 +4,13 @@ Gemini is an open source framework for building 2D games on iOS using the [Lua](
 
 1. **Gemini uses a layer based** rendering system.  Each layer can have any blending mode (including no blending) supported by OpenGL, additive blending, alpha blending, you name it.
 2. **Gemini provides high level graphics objects** including sprites, sprite sheets, and geometric primitives like poly-lines and rectangles.  All rendering is done in high performance OpenGL ES 2.0 code using sprite batching and other optimizations for maximum efficiency.
-2. **Gemini provides scene management**.  Script each level of your game as  a separate Lua module and control the order in which they get loaded directly in your Lua code via the _Director_ API.  Use built in scene transitions or code your own.
-3. **Gemini provides physics**.  Bindings to the [Box2D](http://box2d.org) physics library allow you to add physics properties to any graphics object, including support for collision detection.
-4. **Gemini does sound**.  Bindings to the [Object AL](http://kstenerud.github.com/ObjectAL-for-iPhone/) sound API provide easy sound effects and background music.
-4. **Gemini provides an event API**.  Register objects for touch events, collision events, or other events.  Set up timer events (one-shot or recurring) to call your Lua code periodically.  Regiser Lua code as callbacks for events like the beginning of the render loop.
-5. **Gemini supports popular third party tools.** Import sprites sheets created in [Sprite Helper](http://www.spritehelper.org) or [Texture Packer](http://www.codeandweb.com/texturepacker).  Use [Text Candy](http://www.x-pressive.com/TextCandy_Corona/)<sup>1</sup> to render font files created with [Glyph Designer](http://glyphdesigner.71squared.com).
-6. **Gemini supports callbacks to custom Objective C/C++ code**.  Use render callbacks to render layers with your own custom Objective C/C++ code.
-7. **It's easy to get started.** Just drop the Xcode 4 project templates in your template folder and your ready to go.
-8. **Provides Xcode 4 project tempates.**  Just drop the templates in your template folder and your ready to go.
-
+3. **Gemini provides scene management**.  Script each level of your game as  a separate Lua module and control the order in which they get loaded directly in your Lua code via the _Director_ API.  Use built in scene transitions or code your own.
+4. **Gemini provides physics**.  Bindings to the [Box2D](http://box2d.org) physics library allow you to add physics properties to any graphics object, including support for collision detection.
+5. **Gemini does sound**.  Bindings to the [Object AL](http://kstenerud.github.com/ObjectAL-for-iPhone/) sound API provide easy sound effects and background music.
+6. **Gemini provides an event API**.  Register objects for touch events, collision events, or other events.  Set up timer events (one-shot or recurring) to call your Lua code periodically.  Regiser Lua code as callbacks for events like the beginning of the render loop.
+7. **Gemini supports popular third party tools.** Import sprites sheets created in [Sprite Helper](http://www.spritehelper.org) or [Texture Packer](http://www.codeandweb.com/texturepacker).  Use [Text Candy](http://www.x-pressive.com/TextCandy_Corona/)<sup>1</sup> to render font files created with [Glyph Designer](http://glyphdesigner.71squared.com).
+8. **Gemini supports callbacks to custom Objective C/C++ code**.  Use render callbacks to render layers with your own custom Objective C/C++ code.
+9. **It's easy to get started.** Just drop the Xcode 4 project templates in your template folder and your ready to go.
 
 ## Documentation
 
