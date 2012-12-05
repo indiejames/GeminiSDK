@@ -151,7 +151,12 @@
 		<dict>
 			<key>Path</key>
 			<string>main.lua</string>
-		</dict>	
+		</dict>
+		<key>scene1.lua</key>
+		<dict>
+			<key>Path</key>
+			<string>scene1.lua</string>
+		</dict>
 		<key>paper.png</key>
 		<dict>
 			<key>Path</key>
@@ -165,6 +170,7 @@
 		<string>AppDelegate.h</string>
 		<string>AppDelegate.mm</string>
 		<string>main.lua</string>
+		<string>scene1.lua</string>
 		<string>paper.png</string>
 		<string>sprite_shader.fsh</string>
 		<string>sprite_shader.vsh</string>
