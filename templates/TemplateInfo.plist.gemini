@@ -4,19 +4,14 @@
 <dict>
 	<key>Ancestors</key>
 	<array>
-		<!--string>com.cocos2d.bundlebase</string-->
 		<string>com.stokedsoftware.iosbase</string>
 		<string>com.stokedsoftware.lualib</string>
 		<string>com.stokedsoftware.geminilib</string>
 		<string>com.stokedsoftware.box2dlib</string>
 		<string>com.stokedsoftware.objectallib</string>
-		<!--string>com.cocos2d.cocos2dlib</string>
-		<string>com.cocos2d.cocosdenshionlib</string>
-		<string>com.cocos2d.cocoslivelib</string>
-		<string>com.cocos2d.fontlabellib</string-->
 	</array>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses Gemini for iOS. It includes Gemini, Lua, Box2d, and ObjectAL.</string>
+	<string>This template provides a starting point for an application that uses Gemini for iOS. It includes Gemini, Lua, Box2D, and ObjectAL.</string>
 	<key>Identifier</key>
 	<string>com.stokedsoftware.geminiIOSTemplate</string>
 	<key>Kind</key>
@@ -37,6 +32,24 @@
 			<string>latest_iphoneos</string>
 			<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
 			<string>iPhone Developer</string>
+			<key>ALWAYS_SEARCH_USER_PATHS</key>
+			<string>YES</string>
+			<key>USER_HEADER_SEARCH_PATHS</key>
+			<string>"___PACKAGENAME___/libs/**"</string>
+			<key>GCC_THUMB_SUPPORT[arch=armv6]</key>
+			<string></string>
+			<key>OTHER_LDFLAGS</key>
+			<string>-lz</string>
+			<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+			<string>YES</string>
+			<key>GCC_PREFIX_HEADER</key>
+			<string>___PACKAGENAME___/Prefix.pch</string>
+			<key>INFOPLIST_FILE</key>
+			<string>___PACKAGENAME___/Resources/Info.plist</string>
+			<key>Objective-C Automatic Reference Counting</key>
+			<string>YES</string>
+			 <key>CLANG_ENABLE_OBJC_ARC</key>
+            <string>YES</string>
 		</dict>
 		<key>Configurations</key>
 		<dict>
@@ -101,6 +114,20 @@
 			<key>Path</key>
 			<string>rectangle_shader.vsh</string>
 		</dict>
+		<key>scene_transition_shader.fsh</key>
+		<dict>
+			<key>Group</key>
+			<string>Shaders</string>
+			<key>Path</key>
+			<string>scene_transition_shader.fsh</string>
+		</dict>
+		<key>scene_transition_shader.vsh</key>
+		<dict>
+			<key>Group</key>
+			<string>Shaders</string>
+			<key>Path</key>
+			<string>scene_transition_shader.vsh</string>
+		</dict>
 		<key>main.m</key>
 		<dict>
 			<key>Group</key>
@@ -125,6 +152,11 @@
 			<key>Path</key>
 			<string>main.lua</string>
 		</dict>	
+		<key>paper.png</key>
+		<dict>
+			<key>Path</key>
+			<string>paper.png</string>
+		</dict>	
 	</dict>
 	<key>Nodes</key>
 	<array>
@@ -133,12 +165,15 @@
 		<string>AppDelegate.h</string>
 		<string>AppDelegate.mm</string>
 		<string>main.lua</string>
+		<string>paper.png</string>
 		<string>sprite_shader.fsh</string>
 		<string>sprite_shader.vsh</string>
 		<string>rectangle_shader.fsh</string>
 		<string>rectangle_shader.vsh</string>
 		<string>line_shader.fsh</string>
 		<string>line_shader.vsh</string>
+		<string>scene_transition_shader.fsh</string>
+		<string>scene_transition_shader.vsh</string>
 	</array>
 	<key>Targets</key>
 	<array>
@@ -155,6 +190,10 @@
 				<string>YES</string>
 				<key>USER_HEADER_SEARCH_PATHS</key>
 				<string>"___PACKAGENAME___/libs/**"</string>
+				<key>Objective-C Automatic Reference Counting</key>
+				<string>YES</string>
+				 <key>CLANG_ENABLE_OBJC_ARC</key>
+            <string>YES</string>
 				<key>INFOPLIST_FILE</key>
 				<string>___PACKAGENAME___/Resources/Info.plist</string>
 				<key>GCC_THUMB_SUPPORT[arch=armv6]</key>
@@ -214,23 +253,6 @@
 	<array>
 		<dict>
 			<key>Description</key>
-			<string>Your new product&apos;s name.</string>
-			<key>EmptyReplacement</key>
-			<string>ProductName</string>
-			<key>Identifier</key>
-			<string>productName</string>
-			<key>Name</key>
-			<string>Product Name</string>
-			<key>NotPersisted</key>
-			<true/>
-			<key>Required</key>
-			<true/>
-			<key>Type</key>
-			<string>text</string>
-		</dict>
-		
-		<dict>
-			<key>Description</key>
 			<string>Your company&apos;s bundle identifier prefix.</string>
 			<key>EmptyReplacement</key>
 			<string>com.yourcompany</string>
@@ -242,20 +264,7 @@
 			<true/>
 			<key>Type</key>
 			<string>text</string>
-		</dict>
-		<dict>
-			<key>Default</key>
-			<string>___VARIABLE_bundleIdentifierPrefix:bundleIdentifier___.___VARIABLE_productName:RFC1034Identifier___</string>
-			<key>Description</key>
-			<string>Your new product&apos;s bundle identifier.</string>
-			<key>Identifier</key>
-			<string>bundleIdentifier</string>
-			<key>Name</key>
-			<string>Bundle Identifier</string>
-			<key>Type</key>
-			<string>static</string>
-		</dict>
-		
+		</dict>	
 	
 		<dict>
 			<key>Identifier</key>

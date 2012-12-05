@@ -25,17 +25,17 @@ require 'optparse'
    end
    
    options[:template_dir] = "./templates"
-   opts.on('-t', '--templates DIR', 'Source directory') do
+   opts.on('-t', '--templates DIR', 'Source directory') do |dir|
      options[:template_dir] = dir
    end
    
    options[:source_dir] = "./GeminiSDK"
-   opts.on('-s', '--source DIR', 'Source directory') do
+   opts.on('-s', '--source DIR', 'Source directory') do |dir|
      options[:source_dir] = dir
    end
    
    options[:output_dir] = "./TemplateBuild"
-   opts.on('-o', '--output DIR', 'Output directory') do
+   opts.on('-o', '--output DIR', 'Output directory') do |dir|
      options[:output_dir] = dir
    end
  
@@ -55,12 +55,16 @@ require 'optparse'
  puts "OUTPATH: #{outpath}" if options[:verbose]
  FileUtils.mkdir_p(outpath)
  FileUtils.cp("#{options[:template_dir]}/TemplateInfo.plist.gemini",  "#{outpath}/TemplateInfo.plist")
- 
+ # copy icon file for template
+ FileUtils.cp("#{options[:template_dir]}/TemplateIcon.icns",  "#{outpath}/TemplateIcon.icns")
+
+ # copy source files
  Dir.entries(options[:source_dir]).each do |path|
-   if !FileTest.directory?(path) && path =~ /.*(m|mm|h|fsh|vsh|icns|pch|lua)$/
+   if !FileTest.directory?(path) && path =~ /.*(m|mm|h|fsh|vsh|icns|pch|lua|png)$/
      
      FileUtils.cp("#{options[:source_dir]}/#{path}", outpath)
      puts "Adding #{path}" if options[:verbose]
    end
  end
+
 

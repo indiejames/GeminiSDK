@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Description</key>
-	<string>This is a template for Lua.</string>
+	<string>This is a template for the Gemini library.</string>
 	<key>Identifier</key>
 	<string>com.stokedsoftware.geminilib</string>
 	<key>Kind</key>
@@ -12,6 +12,7 @@
 	<key>Definitions</key>
 	<dict>
 		<% @paths.each do |path| %>
+		<% path.gsub!('/libs','libs') %>
 		<key><%= path %></key>
 		<dict>
 			<key>Group</key>
@@ -30,7 +31,9 @@
 	</dict>	
 	<key>Nodes</key>
 	<array>
-		<% @paths.each do |path| %><string><%= path %></string>
+		<% @paths.each do |path| %>
+		<% path.gsub!('/libs','libs') %>
+		<string><%= path %></string>
 		<% end %>
 	</array>
 </dict>

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Identifier</key>
-	<string>com.cocos2d.base</string>
+	<string>com.stokedsoftware.base</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Options</key>
@@ -24,6 +24,18 @@
 			<key>Type</key>
 			<string>text</string>
 		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_bundleIdentifierPrefix:bundleIdentifier___.___VARIABLE_productName:RFC1034Identifier___</string>
+			<key>Description</key>
+			<string>Your new product&apos;s bundle identifier.</string>
+			<key>Identifier</key>
+			<string>bundleIdentifier</string>
+			<key>Name</key>
+			<string>Bundle Identifier</string>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
 	</array>
 	<key>Project</key>
 	<dict>
@@ -36,7 +48,7 @@
 				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
                 <array>
                     <string>DEBUG</string>
-                    <string>COCOS2D_DEBUG=1</string>
+                    <string>GEMINI_DEBUG=1</string>
                 </array>
 				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
 				<string>NO</string>
@@ -64,6 +76,8 @@
 			<string>___PACKAGENAME___</string>
 			<key>SharedSettings</key>
 			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>YES</string>
 				<key>PRODUCT_NAME</key>
 				<string>$(TARGET_NAME)</string>
 				<key>WRAPPER_EXTENSION</key>
@@ -101,6 +115,45 @@
 			</dict>
 			<key>ProductType</key>
 			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>Definitions</key>
+		<dict>
+			<key>*:comments</key>
+			<string>//
+	//  ___FILENAME___
+	//  ___PACKAGENAME___
+	//
+	//  Created by ___FULLUSERNAME___ on ___DATE___.
+	//___COPYRIGHT___
+	//
+	</string>
+			<key>*:import:*</key>
+			<string>#import &quot;___*___&quot;
+	</string>
+			<key>*:*:importFoundation</key>
+			<string>#import &lt;Foundation/Foundation.h&gt;
+	</string>
+			<key>___PACKAGENAME___-Prefix.pch</key>
+			<dict>
+				<key>Beginning</key>
+				<string>//
+	// Prefix header for all source files of the &apos;___PACKAGENAME___&apos; target in the &apos;___PACKAGENAME___&apos; project
+	//
+	</string>
+				<key>Group</key>
+				<string>Supporting Files</string>
+				<key>TargetIndices</key>
+				<array/>
+			</dict>
+			<key>___PACKAGENAME___-Prefix.pch:objC</key>
+			<dict>
+				<key>Beginning</key>
+				<string>#ifdef __OBJC__</string>
+				<key>End</key>
+				<string>#endif</string>
+				<key>Indent</key>
+				<integer>1</integer>
+			</dict>
 		</dict>
 	</array>
 </dict>
