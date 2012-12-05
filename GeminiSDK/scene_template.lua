@@ -4,75 +4,63 @@
 --
 ----------------------------------------------------------------------------------
 
-local director = require( "director" )
+local director = require("director")
 local scene = director.newScene()
 
-----------------------------------------------------------------------------------
--- 
---	NOTE:
---	
---	Code outside of listener functions (below) will only be executed once,
---	unless director.removeScene() is called.
--- 
----------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------
--- BEGINNING OF YOUR IMPLEMENTATION
+-- Scene event handlers
 ---------------------------------------------------------------------------------
 
--- Called when the scene's view does not exist:
-function scene:createScene( event )
+-- Called when the scene is first created
+function scene:createScene(event)
 
 	-----------------------------------------------------------------------------
+	--	CREATE display objects here (layers, groups, sprites, etc.)
+	-----------------------------------------------------------------------------
 
-	--	CREATE display objects and add them to 'group' here.
-	--	Example use-case: Restore 'group' from previously saved state.
+end
 
+-- Called immediately after scene has moved onscreen
+function scene:enterScene(event)
+
+	-----------------------------------------------------------------------------
+	--	Start timers, set up event listeners, etc.  
 	-----------------------------------------------------------------------------
 
 end
 
 
--- Called immediately after scene has moved onscreen:
-function scene:enterScene( event )
-	local group = self.view
+-- Called when scene is about to move offscreen
+function scene:exitScene(event)
 
 	-----------------------------------------------------------------------------
-
-	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
-
+	--	Stop timers, remove event listeners, etc.
 	-----------------------------------------------------------------------------
+	
 
 end
 
 
--- Called when scene is about to move offscreen:
-function scene:exitScene( event )
-	local group = self.view
+-- Called when the scene is about to be deallocated
+function scene:destroyScene(event)
 
 	-----------------------------------------------------------------------------
-
-	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)
-
-	-----------------------------------------------------------------------------
-
-end
-
-
--- Called prior to the removal of scene's "view" (display group)
-function scene:destroyScene( event )
-	local group = self.view
-
-	-----------------------------------------------------------------------------
-
-	--	INSERT code here (e.g. remove listeners, widgets, save state, etc.)
-
+	--	Cleanup scene elements here
 	-----------------------------------------------------------------------------
 
 end
 
 ---------------------------------------------------------------------------------
--- END OF YOUR IMPLEMENTATION
+-- End of event handers
 ---------------------------------------------------------------------------------
+
+scene:addEventListener("createScene", scene)
+
+scene:addEventListener("enterScene", scene)
+
+scene:addEventListener("exitScene", scene)
+
+scene:addEventListener("destroyScene", scene)
 
 return scene
