@@ -17,9 +17,11 @@
 @interface GemScene : GemDisplayObject {
     NSMutableDictionary *layers;
     NSNumber *defaultLayerIndex;
+    GLfloat zoom;
 }
 
 @property (readonly) NSMutableDictionary *layers;
+@property (nonatomic) GLfloat zoom;
 
 -(id)initWithLuaState:(lua_State *)_L;
 -(id)initWithLuaState:(lua_State *)_L defaultLayerIndex:(int)index;

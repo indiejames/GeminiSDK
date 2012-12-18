@@ -32,14 +32,27 @@
 }
 
 
+// default for a single sprite
 // !!! IMPORTANT !!! - calling this method will increment the insertion pointer, possibly
 // allocating more memory, so ONLY call this when actually about to insert data
 -(GemTexturedVertex *)getPointerForInsertion {
+    return [self getPointerForInsertion:1];
+}
+
+
+// !!! IMPORTANT !!! - calling this method will increment the insertion pointer, possibly
+// allocating more memory, so ONLY call this when actually about to insert data
+-(GemTexturedVertex *)getPointerForInsertion:(unsigned short)numSprites {
     
-    unsigned int newBufferOffset = bufferOffset + 4;
+    unsigned int newBufferOffset = bufferOffset + 4 * numSprites;
     if (newBufferOffset > (capacity - 1) * 4) {
-        capacity = 2 * capacity;
+        while ((capacity - 1)*4 < newBufferOffset) {
+            capacity = 2 * capacity;
+        }
+        
         vertexBuffer = (GemTexturedVertex *)realloc(vertexBuffer, capacity * 4 * sizeof(GemTexturedVertex));
+        
+        assert(vertexBuffer != 0);
     }
     
     GemTexturedVertex * rval = vertexBuffer + bufferOffset;

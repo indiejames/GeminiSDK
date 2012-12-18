@@ -320,8 +320,9 @@ GemScene * (^sceneLoader)(NSString *sceneName, lua_State *L) = ^GemScene *(NSStr
         tempScene.name = @"TEMP_SCENE";
         [tempScene addScene:[scenes objectForKey:GEM_DEFAULT_SCENE]];
         if (![currentScene isEqualToString:GEM_DEFAULT_SCENE]) {
-                        
-            [tempScene addScene:[scenes objectForKey:currentScene]];
+            GemScene *currScene = (GemScene *)[scenes objectForKey:currentScene];
+            [tempScene addScene:currScene];
+            tempScene.zoom = currScene.zoom;
         }
         [renderer renderScene:tempScene];
         

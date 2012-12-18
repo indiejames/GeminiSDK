@@ -48,6 +48,7 @@
 @synthesize spriteManager;
 @synthesize timerManager;
 @synthesize eventManager;
+@synthesize particleSystemManager;
 @synthesize director;
 @synthesize displayType;
 @synthesize updateTime;
@@ -127,12 +128,14 @@
     //view.contentScaleFactor = 2.0;
     view.contentScaleFactor = [UIScreen mainScreen].scale;
     
+    GemLog(@"view.contentScaleFactor = %f", view.contentScaleFactor);
+    
     self.preferredFramesPerSecond = 60;
     
     [self setupGL];
     eventManager = [[GemEventManager alloc] initWithLuaState:L];
     eventManager.parentGLKViewController = self;
-    
+    particleSystemManager = [[GemParticleSystemManager alloc] init];
     timerManager = [[GemTimerManager alloc] init];
     
     view.multipleTouchEnabled = YES;
@@ -187,10 +190,10 @@
     
     GLint width;
     GLint height;
-    //glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
-    //glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
-    width = 960;
-    height = 640;
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
+    //width = 960;
+   // height = 640;
     
     /*NSLog(@"width = %d", width);
     NSLog(@"height = %d", height);
@@ -200,6 +203,7 @@
     
     [timerManager update:updateTime];
     [spriteManager update:updateTime];
+    [particleSystemManager update:updateTime];
     
     [[Gemini shared] update:timeDelta];
     
@@ -220,7 +224,7 @@
         frameRenderTime += self.timeSinceLastDraw;
     }
     
-    if (frameCount == 60) {
+    if (frameCount == 300) {
         double frameRate = (double)frameCount / frameRenderTime;
         frameCount = 0;
         frameRenderTime = 0;

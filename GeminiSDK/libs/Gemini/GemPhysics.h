@@ -11,9 +11,6 @@
 
 #define RENDER_PADDING (0.01)
 
-float toRad(float);
-float toDeg(float);
-
 typedef enum {
     GEM_PHYSICS_NORMAL,
     GEM_PHYSICS_HYBRID,

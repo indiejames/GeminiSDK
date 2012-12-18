@@ -64,6 +64,9 @@ static int createTransition(lua_State *L, BOOL to){
             // value is a function
             int ref = luaL_ref(L, LUA_REGISTRYINDEX);
             [params setObject:[NSNumber numberWithInt:ref] forKey:[NSString stringWithUTF8String:key]];
+        } else if(strcmp(key, "easing")==0){
+            const char* estr = luaL_checkstring(L, -1);
+            [params setObject:[NSString stringWithUTF8String:estr] forKey:@"easing"];
         } else {
             
             double val = lua_tonumber(L, -1);

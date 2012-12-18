@@ -10,6 +10,12 @@
 #import "GemDisplayObject.h"
 #import "LGeminiLuaSupport.h"
 
+typedef enum {
+    GEM_LINEAR_EASING,
+    GEM_NONLINEAR_EASING
+} GemEasingType;
+
+
 @interface GemTransistion : NSObject {
     double elapsedTime;
     double duration;
@@ -20,6 +26,8 @@
     
     NSMutableDictionary *finalParamValues;
     NSMutableDictionary *initialParamValues;
+    
+    GemEasingType easing;
 
     GemDisplayObject *obj;
 }

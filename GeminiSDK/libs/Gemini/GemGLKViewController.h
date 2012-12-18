@@ -13,6 +13,7 @@
 #import "GemTimerManager.h"
 #import "GemDirector.h"
 #import "GemEventManager.h"
+#import "GemParticleSystemManager.h"
 
 // Uniform index.
 enum {
@@ -48,6 +49,7 @@ typedef enum {
     GemTimerManager *timerManager;
     GemDirector *director;
     GemEventManager *eventManager;
+    GemParticleSystemManager *particleSystemManager;
     double updateTime;
 }
 
@@ -57,6 +59,7 @@ typedef enum {
 @property (readonly) GemDirector *director;
 @property (readonly) double updateTime;
 @property (nonatomic) GemDisplayType displayType;
+@property (readonly) GemParticleSystemManager *particleSystemManager;
 
 -(void)setPreRenderCallback:(SEL)callback;
 -(void)setPostRenderCallback:(SEL)callback;

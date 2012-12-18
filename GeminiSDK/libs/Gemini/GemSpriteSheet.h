@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
 
+#define GEMINI_SPRITE_SHEET_LUA_KEY "GeminiLib.GEMINI_SPRITE_SHEET_LUA_KEY"
+
 @interface GemSpriteSheet : NSObject {
     GLKVector4 *frames;
     int frameCount;
@@ -21,6 +23,7 @@
     GLfloat *frameWidths;
     GLfloat *frameHeights;
     GLfloat *frameCoords;
+    NSMutableDictionary *frameIndexByName;
 }
 
 
@@ -33,10 +36,11 @@
 @property (readonly) GLfloat *frameCoords;
 
 -(id) initWithImage:(NSString *)imageFileName Data:(NSArray *)data;
--(id)initWithImage:(NSString *)imgFileName FrameWidth:(int)width FrameHeight:(int)height;
+-(id) initWithImage:(NSString *)imgFileName FrameWidth:(int)width FrameHeight:(int)height;
 -(GLKVector4)texCoordsForFrame:(unsigned int)frame;
 -(GLfloat)frameWidth:(unsigned int)frameNum;
 -(GLfloat)frameHeight:(unsigned int)frameNum;
+-(GLKVector4)texCoordsForFilename:(NSString *)fileName;
 
 -(int) frameCount;
 

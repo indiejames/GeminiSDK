@@ -222,6 +222,11 @@ static int newSpriteSheetFromData(lua_State *L){
         lua_gettable(L, -2);
         // current frame is now on top of the stack
         
+        // get the image file name associated with this frame
+        lua_pushstring(L, "name");
+        lua_gettable(L, -2);
+        const char *imgFile = lua_tostring(L, -1);
+        lua_pop(L, 1);
         // get the rotated flag
         lua_pushstring(L, "textureRotated");
         lua_gettable(L, -2);
@@ -258,6 +263,7 @@ static int newSpriteSheetFromData(lua_State *L){
         [frame setObject:[NSNumber numberWithInt:y] forKey:@"y"];
         [frame setObject:[NSNumber numberWithInt:width] forKey:@"width"];
         [frame setObject:[NSNumber numberWithInt:height] forKey:@"height"];
+        [frame setObject:[NSString stringWithUTF8String:imgFile] forKey:@"name"];
         
         [frames addObject:frame];
 

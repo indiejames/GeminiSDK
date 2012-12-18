@@ -31,6 +31,7 @@ extern int luaopen_timer_lib(lua_State *L);
 extern int luaopen_event_lib(lua_State *L);
 extern int luaopen_director_lib(lua_State *L);
 extern int luaopen_physics_lib(lua_State *L);
+extern int luaopen_particle_system_lib(lua_State *L);
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua
@@ -65,6 +66,7 @@ static const luaL_Reg preloadedlibs[] = {
     {"sprite", luaopen_spritelib},
     {"physics", luaopen_physics_lib},
     {"timer", luaopen_timer_lib},
+    {"particle_system", luaopen_particle_system_lib},
   {NULL, NULL}
 };
 

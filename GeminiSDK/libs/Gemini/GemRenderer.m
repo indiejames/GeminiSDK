@@ -19,6 +19,7 @@
 #import "GemGLKViewController.h"
 #import "GemDirector.h"
 #import "GemScene.h"
+#import "GemParticleSystem.h"
 #import "GemPhysicsUtil.h"
 #include "GLUtils.h"
 
@@ -71,9 +72,10 @@ BOOL firstPass = YES;
 
 
 -(void)renderScene:(GemScene *)scene {
+        
     firstPass = YES;
-    NSArray *blendedLayers = [self renderUnblendedLayersForScene:(GemScene *)scene];
-    [self renderBlendedLayers:blendedLayers];
+    NSArray *blendedLayers = [self renderUnblendedLayersForScene:scene];
+    [self renderBlendedLayers:blendedLayers forScene:scene];
     glBindVertexArrayOES(0);
 }
 
@@ -117,7 +119,8 @@ BOOL firstPass = YES;
                 [blendedLayers insertObject:layer atIndex:0];
             } else {
                 
-                GLKMatrix3 transform = GLKMatrix3Identity;
+                //GLKMatrix3 transform = GLKMatrix3Identity;
+                GLKMatrix3 transform = [scene transform];
                 
                 [self renderDisplayGroup:layer forLayer:[layerIndex intValue] withAlpha:1.0 transform:transform];
             }
@@ -135,7 +138,7 @@ BOOL firstPass = YES;
 }
 
 // render layers from back to front to support blending
--(void)renderBlendedLayers:(NSArray *)layers {
+-(void)renderBlendedLayers:(NSArray *)layers forScene:(GemScene *)scene{
     
     GemOpenGLState *glState = [GemOpenGLState shared];
     
@@ -162,7 +165,8 @@ BOOL firstPass = YES;
             // a display group layer
             GemLayer *layer = (GemLayer *)obj;
             
-            GLKMatrix3 transform = GLKMatrix3Identity;
+            //GLKMatrix3 transform = GLKMatrix3Identity;
+            GLKMatrix3 transform = [scene transform];
             
             GLKVector2 blendFunc = glState.glBlendFunc;
             if (blendFunc.x != layer.sourceBlend || blendFunc.y != layer.destBlend) {
@@ -227,6 +231,10 @@ BOOL firstPass = YES;
                     
                 } else if(gemObj.class == GemSprite.class){
                     [self renderSprite:(GemSprite *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+                    
+                } else if(gemObj.class == GemParticleSystem.class){
+                    
+                    [self renderParticleEmitter:(GemParticleSystem *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
                     
                 } else if(gemObj.class == GemRectangle.class){
                     
@@ -341,10 +349,13 @@ BOOL firstPass = YES;
     NSEnumerator *textureEnumerator = [spriteBatches keyEnumerator];
     GLKTextureInfo *texture;
     while (texture = (GLKTextureInfo *)[textureEnumerator nextObject]) {
+        //GemLog(@"Rendering with texture %d", texture.name);
         GemSpriteBatch *batch = [spriteBatches objectForKey:texture];
         //GLuint indexByteCount = 6 * [batch count] * sizeof(GLushort);
         GLuint indexByteCount = (4 * [batch count] + 2*([batch count] - 1)) * sizeof(GLushort);
         GLushort *index = (GLushort *)malloc(indexByteCount);
+        
+        assert(index != 0);
         
         unsigned int indexCount = 0;
         for (int i=0; i<[batch count]; i++) {
@@ -437,7 +448,55 @@ BOOL firstPass = YES;
         spriteVerts[i].texCoord[1] = (i == 0 || i == 2) ? texCoordY : texCoordW;
     }
     
-    //free(posVerts);
+    
+}
+
+-(void)renderParticleEmitter:(GemParticleSystem *)emitter withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform  {
+
+    
+    if (emitter.particleCount > 0) {
+        GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
+        
+        GemSpriteBatch *sprites = (GemSpriteBatch *)[spriteBatches objectForKey:emitter.spriteSheet.textureInfo];
+        if (sprites == nil) {
+            sprites = [[GemSpriteBatch alloc] initWithCapacity:SPRITE_BATCH_CHUNK_SIZE];
+            [spriteBatches setObject:sprites forKey:emitter.spriteSheet.textureInfo];
+            
+        }
+        
+        //int particleCount = MIN(emitter.particleCount, 100);
+        int particleCount = emitter.particleCount;
+        
+        GemTexturedVertex *spriteVerts = [sprites getPointerForInsertion:particleCount];
+
+        GemTexturedVertex *emitterVerts = [emitter getVertsWithTransform:transform];
+                        
+        for (int i=0; i<particleCount*4; i++) {
+            
+            spriteVerts[i].position[0] = emitterVerts[i].position[0];
+            spriteVerts[i].position[1] = emitterVerts[i].position[1];
+            spriteVerts[i].position[2] = z;
+            
+            //GemLog(@"vertex at (%f, %f)", spriteVerts[i].position[0], spriteVerts[i].position[1]);
+            
+            spriteVerts[i].color[0] = emitterVerts[i].color[0];
+            spriteVerts[i].color[1] = emitterVerts[i].color[1];
+            spriteVerts[i].color[2] = emitterVerts[i].color[2];
+            spriteVerts[i].color[3] = emitterVerts[i].color[3] * emitter.alpha * alpha;
+            
+            //int j = i % 4;
+            
+            // vertex texture coordinates
+            GLfloat tx = emitterVerts[i].texCoord[0];
+            GLfloat ty = emitterVerts[i].texCoord[1];
+            spriteVerts[i].texCoord[0] = tx;
+            spriteVerts[i].texCoord[1] = ty;
+            
+        }
+        
+        
+
+    }
     
 }
 

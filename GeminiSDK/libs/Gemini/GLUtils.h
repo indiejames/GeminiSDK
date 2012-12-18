@@ -12,3 +12,5 @@ void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GL
 GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout);
 GLKTextureInfo *createTexture(NSString * imgFileName);
 void GemCheckGLError(void);
+GLKVector2 getDimensionsFromSettings(BOOL adjustForLayout);
+float randNorm(void);

@@ -34,6 +34,7 @@
         frameWidths = (GLfloat *)malloc([data count] * sizeof(GLfloat));
         frameHeights = (GLfloat *)malloc([data count] * sizeof(GLfloat));
         frameCoords = (GLfloat *)malloc([data count] * 12 *sizeof(GLfloat));
+        frameIndexByName = [[NSMutableDictionary alloc] initWithCapacity:[data count]];
         for (int i=0; i<[data count]; i++) {
             NSDictionary *frame = (NSDictionary *)[data objectAtIndex:i];
             
@@ -63,6 +64,9 @@
             frameCoords[i*12+9] = frmWidth / 2.0;
             frameCoords[i*12+10] = frmHeight / 2.0;
             frameCoords[i*12+11] = 1.0;
+            
+            NSString *fileName = [frame valueForKey:@"name"];
+            [frameIndexByName setValue:[NSNumber numberWithInt:i] forKey:fileName];
         }
     }
     
@@ -130,6 +134,11 @@
 
 -(GLKVector4)texCoordsForFrame:(unsigned int)frameNum {
     return frames[frameNum];
+}
+
+-(GLKVector4)texCoordsForFilename:(NSString *)fileName {
+    NSNumber *index = [frameIndexByName objectForKey:fileName];
+    return frames[[index intValue]];
 }
 
 

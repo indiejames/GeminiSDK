@@ -13,6 +13,7 @@
 #import "LGeminiLuaSupport.h"
 #import "LGeminiDisplay.h"
 #import "LGeminiObject.h"
+#import "GLUtils.h"
 
 
 static int newScene(lua_State *L){
@@ -42,8 +43,20 @@ static int sceneIndex(lua_State *L){
     int rval = 0;
     __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     if (scene != NULL) {
+        if (lua_isstring(L, 2)) {
+            
+            const char *key = lua_tostring(L, 2);
+            if (strcmp("zoom", key) == 0) {
+                lua_pushnumber(L, (*scene).zoom);
+                rval = 1;
+            } else {
+                rval = genericGeminiDisplayObjectIndex(L, *scene);
+            }
+            
+        } else {
+            rval = genericGeminiDisplayObjectIndex(L, *scene);
+        }
         
-        rval = genericGeminiDisplayObjectIndex(L, *scene);
         
     }
     
@@ -51,8 +64,32 @@ static int sceneIndex(lua_State *L){
 }
 
 static int sceneNewIndex (lua_State *L){
+    int rval = 0;
     __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
-    return genericGemDisplayObjecNewIndex(L, scene);
+    if (scene != NULL) {
+        if (lua_isstring(L, 2)) {
+            
+            const char *key = lua_tostring(L, 2);
+            if (strcmp("zoom", key) == 0) {
+                GLfloat zoom = luaL_checknumber(L, 3);
+                if (zoom <= 0) {
+                    luaL_error(L, "Lua: ERROR - zoom must be greater than zero");
+                } else {
+                    (*scene).zoom = zoom;
+                }
+                rval = 0;
+            } else {
+                rval = genericGemDisplayObjecNewIndex(L, scene);
+            }
+            
+        } else {
+            rval = genericGemDisplayObjecNewIndex(L, scene);
+        }
+
+
+    }
+    
+    return rval;
 }
 
 static int addLayerToScene(lua_State *L){
@@ -62,6 +99,19 @@ static int addLayerToScene(lua_State *L){
     [*scene addLayer:*layer];
     
     return 0;
+}
+
+static int setSceneZoom(lua_State *L){
+    __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
+    GLfloat zoom = luaL_checknumber(L, -1);
+    if (zoom <= 0) {
+        luaL_error(L, "Lua: ERROR - zoom must be greater than zero");
+    } else {
+        (*scene).zoom = zoom;
+    }
+    
+    return 0;
+    
 }
 
 static int directorLoadScene(lua_State *L){
@@ -128,6 +178,7 @@ static const struct luaL_Reg scene_m [] = {
     {"__newindex", sceneNewIndex},
     {"addLayer", addLayerToScene},
     {"addEventListener", addEventListener},
+    {"setZoom", setSceneZoom},
     {NULL, NULL}
 };
 

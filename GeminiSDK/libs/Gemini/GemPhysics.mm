@@ -14,6 +14,7 @@
 #import "GemRectangle.h"
 #import "GemConvexShape.h"
 #import "GemPhysicsJoint.h"
+#include "GemMathUtils.h"
 
 // handles collisions between objects
 class GemContactListener : public b2ContactListener {
@@ -99,7 +100,7 @@ public:
     GemPoint p = {obj.x, obj.y};
     GemPoint pp = [self toPhysicsCoord:p];
     bodyDef.position.Set(pp.x, pp.y);
-    bodyDef.angle = toRad(obj.rotation);
+    bodyDef.angle = DEG_TO_RAD(obj.rotation);
     
     b2BodyType type = b2_staticBody;
     
@@ -420,13 +421,7 @@ void (^updatePhysics)(double, double &, double, b2World *, GemPhysics *self) = ^
     return rval;
 }
 
-float toRad(float deg){
-    return deg  * M_PI / 180.0;
-}
 
-float toDeg(float rad){
-    return rad * 180.0 / M_PI;
-}
 
 @end
 

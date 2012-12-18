@@ -10,6 +10,7 @@
 #import "GemSpriteSheet.h"
 #import "GemSpriteAnimation.h"
 
+#define GEMINI_SPRITE_SET_LUA_KEY "GeminiLib.GEMINI_SPRITE_SET_LUA_KEY"
 #define GEMINI_DEFAULT_ANIMATION @"default"
 
 @interface GemSpriteSet : NSObject {

@@ -29,6 +29,13 @@
             delay = 0;
         }
         
+        NSString *easingStr = (NSString *)[data objectForKey:@"easing"];
+        if ([easingStr isEqualToString:@"nonlinear"]) {
+            easing = GEM_NONLINEAR_EASING;
+        } else {
+            easing = GEM_LINEAR_EASING;
+        }
+        
         if ([data objectForKey:@"onStart"]) {
             onStart = [(NSNumber *)[data objectForKey:@"onStart"] intValue];
             
@@ -49,7 +56,8 @@
         NSArray *params = [data allKeys];
         for (int i=0; i<[params count]; i++) {
             NSString *param = (NSString *)[params objectAtIndex:i];
-            if (![param isEqualToString:@"time"] && ![param isEqualToString:@"delay"] && ![param isEqualToString:@"onStart"] && ![param isEqualToString:@"onComplete"]) {
+            if (![param isEqualToString:@"time"] && ![param isEqualToString:@"delay"] && ![param isEqualToString:@"onStart"] && ![param isEqualToString:@"onComplete"]
+                && ![param isEqualToString:@"easing"]) {
                 
                 NSNumber *value = [data objectForKey:param];
                 NSNumber *initialValue = [obj valueForKey:param];
@@ -78,7 +86,10 @@
     if (elapsedTime) {
         if (onStart != -1) {
             callOnStartForDisplayObject(L, onStart, obj);
+            onStart = -1;
         }
+        
+        
         
     }
     elapsedTime += secondsSinceLastUpdate;
@@ -95,17 +106,26 @@
             double finalValue = [(NSNumber *)[finalParamValues objectForKey:param] doubleValue];
             double initialValue = [(NSNumber *)[initialParamValues objectForKey:param] doubleValue];
             
-            // only support linear easing for now
-            
-            double currentValue = initialValue + (finalValue - initialValue) * (actualTime / duration);
+            double currentValue;
+            if (easing == GEM_LINEAR_EASING) {
+                currentValue = initialValue + (finalValue - initialValue) * (actualTime / duration);
+            } else {
+                // easing is controlled by the logistic function (sigmoid)
+                double slope = 10.0 / duration;
+                double halfPoint = duration * 0.5;
+                currentValue = initialValue + (finalValue - initialValue) * (1.0/(1.0 + exp(-slope*(actualTime - halfPoint))));
+            }
             
             [obj setValue:[NSNumber numberWithDouble:currentValue] forKey:param];
             
-            // call onComplete method
-            if (onComplete != -1) {
-                callOnCompleteForDisplayObject(L, onComplete, obj);
-            }
         }
+        
+        // call onComplete method
+        if (actualTime >= duration && onComplete != -1) {
+            callOnCompleteForDisplayObject(L, onComplete, obj);
+            onComplete = -1;
+        }
+
     }
     
 }

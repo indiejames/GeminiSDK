@@ -8,9 +8,11 @@
 
 #import "GemScene.h"
 #import "LGeminiDirector.h"
+#import "GLUtils.h"
 
 @implementation GemScene
 @synthesize layers;
+@synthesize zoom;
 
 // create a scene with no default layer
 -(id)initWithLuaState:(lua_State *)_L {
@@ -21,6 +23,8 @@
         layers = [[NSMutableDictionary alloc] initWithCapacity:1];
         int pop = lua_gettop(L) - top;
         lua_pop(L, pop);
+        
+        zoom = 1.0;
     }
     
     return self;
@@ -59,6 +63,8 @@
         lua_pop(L, pop);
         
         [layers setObject:defaultLayer forKey:defaultLayerIndex];
+        
+        zoom = 1.0;
         
     }
     
@@ -138,6 +144,28 @@
 
 -(int)numLayers {
     return [layers count];
+}
+
+-(void) setZoom:(GLfloat)z {
+    
+    if (z > 0) {
+        
+        // scale
+        GLfloat scale = sqrtf(z);
+        
+        [self setXScale:scale];
+        [self setYScale:scale];
+        
+        // translate
+        GLKVector2 dim = getDimensionsFromSettings(YES);
+        
+        self.x = self.x + 0.5 * dim.x * (1.0 - scale);
+        self.y = self.y + 0.5 * dim.y * (1.0 - scale);
+        
+        zoom = z;
+        
+    }     
+    
 }
 
 @end

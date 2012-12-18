@@ -17,6 +17,11 @@
 #import "Gemini.h"
 
 
+// return a random number between -1 and 1
+float randNorm(void){
+    return 2.0*arc4random()/ULONG_MAX - 1.0;
+}
+
 
 //
 // apply a transform to a set of vertices.
@@ -24,7 +29,7 @@
 //
 void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GLKMatrix3 transform){
     //GLKVector3 vectorArray[1024];
-    GLKVector3 *vectorArray = (GLKVector3 *)malloc(vertCount * sizeof(GLKVector3));
+    /*GLKVector3 *vectorArray = (GLKVector3 *)malloc(vertCount * sizeof(GLKVector3));
        
     memcpy(vectorArray, inVerts, vertCount * sizeof(GLKVector3));
     
@@ -33,16 +38,19 @@ void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GL
     memcpy(outVerts, vectorArray, vertCount * sizeof(GLKVector3));
     
     
-    free(vectorArray);
+    free(vectorArray);*/
+    memcpy(outVerts, inVerts, vertCount*sizeof(GLKVector3));
+    GLKMatrix3MultiplyVector3Array(transform, (GLKVector3 *)outVerts, vertCount);
     
 }
 
-
-GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout){
-    GLKView *view = (GLKView *)((GemGLKViewController *)([Gemini shared].viewController)).view;
-    
-    GLfloat width = view.bounds.size.width;
-    GLfloat height = view.bounds.size.height;
+GLKVector2 getDimensionsFromSettings(BOOL adjustForLayout){
+    NSDictionary *settings = [Gemini shared].settings;
+    NSString *resolution = [settings objectForKey:@"resolution"];
+    NSCharacterSet *cs = [NSCharacterSet characterSetWithCharactersInString:@"xX"];
+    NSArray *widthHeight = [resolution componentsSeparatedByCharactersInSet:cs];
+    GLfloat width = [(NSString *)[widthHeight objectAtIndex:0] floatValue];
+    GLfloat height = [(NSString *)[widthHeight objectAtIndex:1] floatValue];
     
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     BOOL isLandscape = UIDeviceOrientationIsLandscape([Gemini shared].viewController.interfaceOrientation);
@@ -53,6 +61,21 @@ GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout){
         height = tmp;
     }
     
+    return GLKVector2Make(width, height);
+}
+
+
+GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout){
+    /*GLKView *view = (GLKView *)((GemGLKViewController *)([Gemini shared].viewController)).view;
+    
+    GLfloat width = view.bounds.size.width * view.contentScaleFactor;
+    GLfloat height = view.bounds.size.height * view.contentScaleFactor;*/
+    
+    GLKVector2 dim = getDimensionsFromSettings(YES);
+    GLfloat width = dim.x;
+    GLfloat height = dim.y;
+    
+       
     GemLog(@"View dimensions:(%f,%f)",width,height);
     
     GLfloat left = 0;

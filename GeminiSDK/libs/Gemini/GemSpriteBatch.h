@@ -20,6 +20,7 @@
 
 -(id)initWithCapacity:(unsigned int)capacity;
 -(GemTexturedVertex *)getPointerForInsertion;
+-(GemTexturedVertex *)getPointerForInsertion:(unsigned short)numSprites;
 -(unsigned int)count; // number of sprites currently stored
 
 @end
