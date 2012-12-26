@@ -21,6 +21,11 @@
 		76843F08160A14A20065A6E2 /* scene_transition_shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 76843F07160A14A20065A6E2 /* scene_transition_shader.vsh */; };
 		7688D734165EF6A00029CE07 /* GemSoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7688D733165EF69F0029CE07 /* GemSoundManager.m */; };
 		769498BA166FCB9A007BDF73 /* scene1.lua in Resources */ = {isa = PBXBuildFile; fileRef = 769498B9166FCB9A007BDF73 /* scene1.lua */; };
+		76CBD8E0168B7CF1005D8680 /* GemMathUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8D6168B7CF1005D8680 /* GemMathUtils.c */; };
+		76CBD8E1168B7CF1005D8680 /* GemParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8D9168B7CF1005D8680 /* GemParticleSystem.m */; };
+		76CBD8E2168B7CF1005D8680 /* GemParticleSystemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8DB168B7CF1005D8680 /* GemParticleSystemManager.m */; };
+		76CBD8E3168B7CF1005D8680 /* LGeminiParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8DD168B7CF1005D8680 /* LGeminiParticleSystem.m */; };
+		76CBD8E4168B7CF1005D8680 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8DF168B7CF1005D8680 /* XMLDictionary.m */; };
 		76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216516036E2C00832178 /* Default-Portrait~ipad.png */; };
 		76D2216A16036FF100832178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216916036FF100832178 /* Default@2x.png */; };
 		76D2216F1603961A00832178 /* GemSoundEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D2216E1603961A00832178 /* GemSoundEffect.m */; };
@@ -250,6 +255,16 @@
 		7688D732165EF69E0029CE07 /* GemSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSoundManager.h; path = libs/Gemini/GemSoundManager.h; sourceTree = "<group>"; };
 		7688D733165EF69F0029CE07 /* GemSoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemSoundManager.m; path = libs/Gemini/GemSoundManager.m; sourceTree = "<group>"; };
 		769498B9166FCB9A007BDF73 /* scene1.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene1.lua; sourceTree = "<group>"; };
+		76CBD8D6168B7CF1005D8680 /* GemMathUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GemMathUtils.c; path = libs/Gemini/GemMathUtils.c; sourceTree = "<group>"; };
+		76CBD8D7168B7CF1005D8680 /* GemMathUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemMathUtils.h; path = libs/Gemini/GemMathUtils.h; sourceTree = "<group>"; };
+		76CBD8D8168B7CF1005D8680 /* GemParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemParticleSystem.h; path = libs/Gemini/GemParticleSystem.h; sourceTree = "<group>"; };
+		76CBD8D9168B7CF1005D8680 /* GemParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemParticleSystem.m; path = libs/Gemini/GemParticleSystem.m; sourceTree = "<group>"; };
+		76CBD8DA168B7CF1005D8680 /* GemParticleSystemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemParticleSystemManager.h; path = libs/Gemini/GemParticleSystemManager.h; sourceTree = "<group>"; };
+		76CBD8DB168B7CF1005D8680 /* GemParticleSystemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemParticleSystemManager.m; path = libs/Gemini/GemParticleSystemManager.m; sourceTree = "<group>"; };
+		76CBD8DC168B7CF1005D8680 /* LGeminiParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGeminiParticleSystem.h; path = libs/Gemini/LGeminiParticleSystem.h; sourceTree = "<group>"; };
+		76CBD8DD168B7CF1005D8680 /* LGeminiParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiParticleSystem.m; path = libs/Gemini/LGeminiParticleSystem.m; sourceTree = "<group>"; };
+		76CBD8DE168B7CF1005D8680 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = libs/Gemini/XMLDictionary.h; sourceTree = "<group>"; };
+		76CBD8DF168B7CF1005D8680 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = libs/Gemini/XMLDictionary.m; sourceTree = "<group>"; };
 		76D2216516036E2C00832178 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		76D2216916036FF100832178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		76D2216D1603961A00832178 /* GemSoundEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSoundEffect.h; path = libs/Gemini/GemSoundEffect.h; sourceTree = "<group>"; };
@@ -801,6 +816,16 @@
 		76D56F1F15F1943400615891 /* Gemini */ = {
 			isa = PBXGroup;
 			children = (
+				76CBD8D6168B7CF1005D8680 /* GemMathUtils.c */,
+				76CBD8D7168B7CF1005D8680 /* GemMathUtils.h */,
+				76CBD8D8168B7CF1005D8680 /* GemParticleSystem.h */,
+				76CBD8D9168B7CF1005D8680 /* GemParticleSystem.m */,
+				76CBD8DA168B7CF1005D8680 /* GemParticleSystemManager.h */,
+				76CBD8DB168B7CF1005D8680 /* GemParticleSystemManager.m */,
+				76CBD8DC168B7CF1005D8680 /* LGeminiParticleSystem.h */,
+				76CBD8DD168B7CF1005D8680 /* LGeminiParticleSystem.m */,
+				76CBD8DE168B7CF1005D8680 /* XMLDictionary.h */,
+				76CBD8DF168B7CF1005D8680 /* XMLDictionary.m */,
 				76D570A015F1A16B00615891 /* GemDirector.h */,
 				76D570A115F1A16B00615891 /* GemDirector.m */,
 				76D570A215F1A16B00615891 /* GemScene.h */,
@@ -1479,6 +1504,11 @@
 				76E13894165433E5004190BD /* GemPhysicsRevoluteJoint.mm in Sources */,
 				7688D734165EF6A00029CE07 /* GemSoundManager.m in Sources */,
 				76114C1116682B03004A4C8A /* GemCollisionEvent.m in Sources */,
+				76CBD8E0168B7CF1005D8680 /* GemMathUtils.c in Sources */,
+				76CBD8E1168B7CF1005D8680 /* GemParticleSystem.m in Sources */,
+				76CBD8E2168B7CF1005D8680 /* GemParticleSystemManager.m in Sources */,
+				76CBD8E3168B7CF1005D8680 /* LGeminiParticleSystem.m in Sources */,
+				76CBD8E4168B7CF1005D8680 /* XMLDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

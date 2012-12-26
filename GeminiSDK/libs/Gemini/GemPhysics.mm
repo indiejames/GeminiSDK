@@ -286,7 +286,7 @@ void (^updatePhysics)(double, double &, double, b2World *, GemPhysics *self) = ^
         if (accumulator < timeStep * 2.0) {
             // only update if on last simulation loop
         
-           /* dispatch_sync(my_queue, ^{
+            dispatch_sync(my_queue, ^{
                 for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
                     //b->SetAwake(true);
                     b2Vec2 position = b->GetPosition();
@@ -295,13 +295,13 @@ void (^updatePhysics)(double, double &, double, b2World *, GemPhysics *self) = ^
                     float32 angle = b->GetAngle();
                     
                     GemDisplayObject *gdo = (__bridge GemDisplayObject *)b->GetUserData();
-                    gdo.rotation = toDeg(angle);
+                    gdo.rotation = RAD_TO_DEG(angle);
                     gdo.x = point.x;
                     gdo.y = point.y;
                     
                     //GemLog(@"(x,y,theta) = (%4.2f, %4.2f, %4.2f)\n", position.x, position.y, angle);
                 }
-            });*/
+            });
             
             
         }
@@ -316,7 +316,7 @@ void (^updatePhysics)(double, double &, double, b2World *, GemPhysics *self) = ^
     // interpolate remainder of update
     const double alpha = accumulator / timeStep;
     
-   /* dispatch_sync(my_queue, ^{
+    dispatch_sync(my_queue, ^{
     
     for (b2Body* b = world->GetBodyList(); b; b = b->GetNext()) {
         
@@ -326,12 +326,12 @@ void (^updatePhysics)(double, double &, double, b2World *, GemPhysics *self) = ^
         float32 angle = b->GetAngle();
         
         GemDisplayObject *gdo = (__bridge GemDisplayObject *)b->GetUserData();
-        gdo.rotation = alpha * toDeg(angle) + (1.0-alpha)*gdo.rotation;
+        gdo.rotation = alpha * RAD_TO_DEG(angle) + (1.0-alpha)*gdo.rotation;
         gdo.x = alpha * point.x + (1.0 - alpha)*gdo.x;
         gdo.y = alpha * point.y + (1.0-alpha)*gdo.y;
         
     }
-    });*/
+    });
 };
 
 -(void)update:(double)deltaT {
@@ -342,7 +342,7 @@ void (^updatePhysics)(double, double &, double, b2World *, GemPhysics *self) = ^
     
     dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
-    dispatch_async(globalQueue, ^(){
+    dispatch_sync(globalQueue, ^(){
         updatePhysics(deltaT, accumulator, timeStep, world, self);
     });
 
