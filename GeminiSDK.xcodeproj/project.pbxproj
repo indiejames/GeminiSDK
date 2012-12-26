@@ -26,6 +26,7 @@
 		76CBD8E2168B7CF1005D8680 /* GemParticleSystemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8DB168B7CF1005D8680 /* GemParticleSystemManager.m */; };
 		76CBD8E3168B7CF1005D8680 /* LGeminiParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8DD168B7CF1005D8680 /* LGeminiParticleSystem.m */; };
 		76CBD8E4168B7CF1005D8680 /* XMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8DF168B7CF1005D8680 /* XMLDictionary.m */; };
+		76CBD8F0168B8DF2005D8680 /* GemBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CBD8EF168B8DF1005D8680 /* GemBezier.m */; };
 		76D2216616036E2C00832178 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216516036E2C00832178 /* Default-Portrait~ipad.png */; };
 		76D2216A16036FF100832178 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76D2216916036FF100832178 /* Default@2x.png */; };
 		76D2216F1603961A00832178 /* GemSoundEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D2216E1603961A00832178 /* GemSoundEffect.m */; };
@@ -265,6 +266,8 @@
 		76CBD8DD168B7CF1005D8680 /* LGeminiParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiParticleSystem.m; path = libs/Gemini/LGeminiParticleSystem.m; sourceTree = "<group>"; };
 		76CBD8DE168B7CF1005D8680 /* XMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLDictionary.h; path = libs/Gemini/XMLDictionary.h; sourceTree = "<group>"; };
 		76CBD8DF168B7CF1005D8680 /* XMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLDictionary.m; path = libs/Gemini/XMLDictionary.m; sourceTree = "<group>"; };
+		76CBD8EE168B8DF1005D8680 /* GemBezier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemBezier.h; path = libs/Gemini/GemBezier.h; sourceTree = "<group>"; };
+		76CBD8EF168B8DF1005D8680 /* GemBezier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemBezier.m; path = libs/Gemini/GemBezier.m; sourceTree = "<group>"; };
 		76D2216516036E2C00832178 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Portrait~ipad.png"; path = "Resources/Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		76D2216916036FF100832178 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		76D2216D1603961A00832178 /* GemSoundEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemSoundEffect.h; path = libs/Gemini/GemSoundEffect.h; sourceTree = "<group>"; };
@@ -816,6 +819,8 @@
 		76D56F1F15F1943400615891 /* Gemini */ = {
 			isa = PBXGroup;
 			children = (
+				76CBD8EE168B8DF1005D8680 /* GemBezier.h */,
+				76CBD8EF168B8DF1005D8680 /* GemBezier.m */,
 				76CBD8D6168B7CF1005D8680 /* GemMathUtils.c */,
 				76CBD8D7168B7CF1005D8680 /* GemMathUtils.h */,
 				76CBD8D8168B7CF1005D8680 /* GemParticleSystem.h */,
@@ -1509,6 +1514,7 @@
 				76CBD8E2168B7CF1005D8680 /* GemParticleSystemManager.m in Sources */,
 				76CBD8E3168B7CF1005D8680 /* LGeminiParticleSystem.m in Sources */,
 				76CBD8E4168B7CF1005D8680 /* XMLDictionary.m in Sources */,
+				76CBD8F0168B8DF2005D8680 /* GemBezier.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
