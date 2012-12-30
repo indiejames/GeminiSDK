@@ -8,14 +8,16 @@
 
 #import "GemShaderManager.h"
 
+
+
+extern GLint uniforms_line[];
+
 // Line shader uniform index
 enum {
     UNIFORM_PROJECTION_LINE,
     UNIFORM_COLOR_LINE,
     NUM_UNIFORMS_LINE
 };
-
-GLint uniforms_line[NUM_UNIFORMS_LINE];
 
 // Line attribute index
 enum {

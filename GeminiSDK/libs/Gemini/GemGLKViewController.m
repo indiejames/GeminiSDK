@@ -10,6 +10,23 @@
 #import "GemGLKViewController.h"
 #import "GemRenderer.h"
 #import "LGeminiDisplay.h"
+#import <QuartzCore/CAEAGLLayer.h>
+
+// Uniform index.
+enum {
+    UNIFORM_PROJECTION,
+    UNIFORM_ROTATION,
+    NUM_UNIFORMS
+};
+GLint uniforms[NUM_UNIFORMS];
+
+// Attribute index.
+enum {
+    ATTRIB_VERTEX,
+    ATTRIB_TEXCOORD,
+    NUM_ATTRIBUTES
+};
+
 
 
 @interface GemGLKViewController () {
@@ -127,7 +144,10 @@
     //view.drawableMultisample = GLKViewDrawableMultisample4X;
     //view.contentScaleFactor = 2.0;
     view.contentScaleFactor = [UIScreen mainScreen].scale;
-    
+    /*CAEAGLLayer *lyr = (CAEAGLLayer *)view.layer;
+    lyr.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGB565, kEAGLDrawablePropertyColorFormat, nil];
+    */
     GemLog(@"view.contentScaleFactor = %f", view.contentScaleFactor);
     
     self.preferredFramesPerSecond = 60;
@@ -217,7 +237,7 @@
     glDepthMask(GL_TRUE);
     [GemOpenGLState shared].glDepthMask = GL_TRUE;
     
-    glClearColor(0, 0, 0, 0);
+    glClearColor(0, 0, 0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     // compute frame rate
     if (frameCount > 0) {
@@ -279,5 +299,6 @@
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     [eventManager touchesCancelled:touches withEvent:event];
 }
+
 
 @end

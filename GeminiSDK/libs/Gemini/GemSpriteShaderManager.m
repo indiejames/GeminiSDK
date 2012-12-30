@@ -8,6 +8,8 @@
 
 #import "GemSpriteShaderManager.h"
 
+GLint uniforms_sprite[NUM_UNIFORMS_SPRITE];
+
 @implementation GemSpriteShaderManager
 
 - (BOOL)loadShaders

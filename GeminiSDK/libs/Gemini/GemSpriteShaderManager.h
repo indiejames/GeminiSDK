@@ -15,7 +15,7 @@ enum {
     NUM_UNIFORMS_SPRITE
 };
 
-GLint uniforms_sprite[NUM_UNIFORMS_SPRITE];
+extern GLint uniforms_sprite[NUM_UNIFORMS_SPRITE];
 
 // Sprite vertex attribute index
 enum {

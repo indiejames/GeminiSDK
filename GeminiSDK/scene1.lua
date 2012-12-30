@@ -4,8 +4,10 @@
 --
 ----------------------------------------------------------------------------------
 
+local timer = require("timer")
 local director = require("director")
 local scene = director.newScene()
+local system = require("system")
 
 local redRectangle
 
@@ -37,6 +39,12 @@ function scene:enterScene(event)
 	-----------------------------------------------------------------------------
 	--	Start timers, set up event listeners, etc.  
 	-----------------------------------------------------------------------------
+
+    function screenshot()
+        system.screenshot()
+    end
+    
+    timer.performWithDelay(3000, screenshot)
 
 end
 

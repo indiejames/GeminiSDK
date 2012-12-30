@@ -14,7 +14,7 @@ enum {
     NUM_UNIFORMS_RECTANGLE
 };
 
-GLint uniforms_rectangle[NUM_UNIFORMS_RECTANGLE];
+extern GLint uniforms_rectangle[NUM_UNIFORMS_RECTANGLE];
 
 // Line attribute index
 enum {

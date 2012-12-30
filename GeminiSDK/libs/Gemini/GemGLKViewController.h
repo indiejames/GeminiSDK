@@ -15,20 +15,6 @@
 #import "GemEventManager.h"
 #import "GemParticleSystemManager.h"
 
-// Uniform index.
-enum {
-    UNIFORM_PROJECTION,
-    UNIFORM_ROTATION,
-    NUM_UNIFORMS
-};
-GLint uniforms[NUM_UNIFORMS];
-
-// Attribute index.
-enum {
-    ATTRIB_VERTEX,
-    ATTRIB_TEXCOORD,
-    NUM_ATTRIBUTES
-};
 
 typedef enum {
     GEM_IPHONE,

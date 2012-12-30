@@ -8,6 +8,8 @@
 
 #import "GeminiRectangleShaderManager.h"
 
+GLint uniforms_rectangle[NUM_UNIFORMS_RECTANGLE];
+
 @implementation GeminiRectangleShaderManager
 
 - (BOOL)loadShaders

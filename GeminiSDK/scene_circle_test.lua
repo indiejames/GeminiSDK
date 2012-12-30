@@ -1,0 +1,78 @@
+----------------------------------------------------------------------------------
+--
+-- scene1.lua
+--
+----------------------------------------------------------------------------------
+
+local timer = require("timer")
+local director = require("director")
+local scene = director.newScene()
+local system = require("system")
+
+local redCircle
+
+
+---------------------------------------------------------------------------------
+-- Scene event handlers
+---------------------------------------------------------------------------------
+
+-- Called when the scene is first created
+function scene:createScene(event)
+
+	-----------------------------------------------------------------------------
+	--	CREATE display objects here (layers, groups, sprites, etc.)
+	-----------------------------------------------------------------------------
+    
+    local layer1 = display.newLayer(1)
+    redCircle = display.newCircle(100, 100, 100)
+    redCircle:setFillColor(1, 0, 1, 1)
+    redCircle:setBorderColor(1, 1, 1, 1)
+    redCircle:setBorderWidth(2.0)
+    
+    layer1:insert(redCircle)
+
+end
+
+-- Called immediately after scene has moved onscreen
+function scene:enterScene(event)
+
+	-----------------------------------------------------------------------------
+	--	Start timers, set up event listeners, etc.  
+	-----------------------------------------------------------------------------
+
+end
+
+
+-- Called when scene is about to move offscreen
+function scene:exitScene(event)
+
+	-----------------------------------------------------------------------------
+	--	Stop timers, remove event listeners, etc.
+	-----------------------------------------------------------------------------
+	
+
+end
+
+
+-- Called when the scene is about to be deallocated
+function scene:destroyScene(event)
+
+	-----------------------------------------------------------------------------
+	--	Cleanup scene elements here
+	-----------------------------------------------------------------------------
+
+end
+
+---------------------------------------------------------------------------------
+-- End of event handers
+---------------------------------------------------------------------------------
+
+scene:addEventListener("createScene", scene)
+
+scene:addEventListener("enterScene", scene)
+
+scene:addEventListener("exitScene", scene)
+
+scene:addEventListener("destroyScene", scene)
+
+return scene

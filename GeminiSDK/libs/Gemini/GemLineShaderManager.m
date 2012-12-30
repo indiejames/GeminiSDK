@@ -8,6 +8,9 @@
 
 #import "GemLineShaderManager.h"
 
+
+GLint uniforms_line[NUM_UNIFORMS_LINE];
+
 @implementation GemLineShaderManager
 
 - (BOOL)loadShaders

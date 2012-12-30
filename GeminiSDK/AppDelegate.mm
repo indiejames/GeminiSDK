@@ -7,13 +7,44 @@
 //
 
 #import "AppDelegate.h"
-
+#import "QSStrings.h"
+#import "GemGLKViewController.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 
+
+#ifdef CUKE
+// backdoor for calabash testing - allows calabash steps to do screen captures
+- (NSString *) calabashBackdoor:(NSString *)command {
+    
+    if ([command isEqualToString:@"screenshot"]) {
+        // take and return a base64 encoded screenshot
+        GLKViewController *viewController = [Gemini shared].viewController;
+        GLKView *view = (GLKView *)viewController.view;
+        
+        UIImage *image = [view snapshot];
+        NSData *data = UIImagePNGRepresentation(image);
+        
+        NSString *base64 = [QSStrings encodeBase64WithData:data];
+        
+        return base64;
+        
+    } else if([command hasPrefix:@"goto_"]){
+        // load a Lua scene
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"goto_(.*)" options:0 error:NULL];
+        NSTextCheckingResult *match = [regex firstMatchInString:command options:0 range:NSMakeRange(0, [command length])];
+        NSString *sceneName = [command substringWithRange:[match rangeAtIndex:1]];
+        
+        [((GemGLKViewController *)[Gemini shared].viewController).director loadScene:sceneName];
+        
+    }
+    
+    return @"OK";
+}
+#endif // CUKE
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -30,7 +61,12 @@
     
     self.window.multipleTouchEnabled = YES;
     
+#ifdef CUKE
+    [gemini execute:@"main_cuke"];
+    GemLog(@"Using CUKE");
+#else
     [gemini execute:@"main"];
+#endif // CUKE
     
     return YES;
     

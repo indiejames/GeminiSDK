@@ -61,9 +61,21 @@ static int getPathForFile(lua_State *L){
     return 1;
 }
 
+static int screenshot(lua_State *L){
+    GLKViewController *viewController = [Gemini shared].viewController;
+    GLKView *view = (GLKView *)viewController.view;
+    
+    UIImage *image = [view snapshot];
+    NSString *pngPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents/screenshot.png"];
+    [UIImagePNGRepresentation(image) writeToFile:pngPath atomically:YES];
+    
+    return 0;
+}
+
 static const struct luaL_Reg system_f [] = {
     {"getTimer", getTimer},
     {"pathForFile", getPathForFile},
+    {"screenshot", screenshot},
     {"__index", systemIndex},
     {NULL, NULL}
 };
