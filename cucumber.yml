@@ -1,1 +1,1 @@
-default: --no-source --format json --out result.json
+default: --format json --out result.json
