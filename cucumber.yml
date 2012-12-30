@@ -1,1 +1,1 @@
-default: --format json --out result.json
+default: --format html --out result.html
