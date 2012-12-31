@@ -2184,6 +2184,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "\"GeminiSDK/libs/**\"";
 				VALID_ARCHS = "armv7 armv7";
+				"VALID_ARCHS[sdk=*]" = i386;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
