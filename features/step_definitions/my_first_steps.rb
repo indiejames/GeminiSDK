@@ -19,7 +19,6 @@ def device_str
 
 	sv = server_version["simulator"]
 	sv=~/\((.*)\//
-	
 	dev_str[$1]
 
 end
