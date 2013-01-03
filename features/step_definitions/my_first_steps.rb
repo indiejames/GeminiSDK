@@ -50,7 +50,6 @@ end
 
 Then /^screen_compare\("(.*?)"\)$/ do |filename|
   base64 = backdoor("calabashBackdoor:", "screenshot")
-  
   ref_img = reference_image(filename)
   img = Image.read_inline(base64).first
   diff, dist = img.compare_channel(ref_img, RootMeanSquaredErrorMetric)
