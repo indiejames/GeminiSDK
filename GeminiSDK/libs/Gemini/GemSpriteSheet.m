@@ -136,6 +136,11 @@
     return frames[frameNum];
 }
 
+-(GLuint)indexForFilename:(NSString *)fileName {
+    NSNumber *index = [frameIndexByName objectForKey:fileName];
+    return [index unsignedIntValue];
+}
+
 -(GLKVector4)texCoordsForFilename:(NSString *)fileName {
     NSNumber *index = [frameIndexByName objectForKey:fileName];
     return frames[[index intValue]];

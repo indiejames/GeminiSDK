@@ -9,6 +9,7 @@
 #import "LGeminiSprite.h"
 #import "Gemini.h"
 #import "GemSprite.h"
+#import "GemImage.h"
 #import "GemSpriteSheet.h"
 #import "GemSpriteSet.h"
 #import "GemSpriteAnimation.h"
@@ -20,6 +21,40 @@
 // prototype for library init function
 int luaopen_spritelib (lua_State *L);
 
+////////// Images ///////////////////////
+static int newImage(lua_State *L){
+     __unsafe_unretained GemSpriteSheet **ss = (__unsafe_unretained GemSpriteSheet **)luaL_checkudata(L, 1, GEMINI_SPRITE_SHEET_LUA_KEY);
+    const char *filename = luaL_checkstring(L, 2);
+    NSString *fileNameStr = [NSString stringWithUTF8String:filename];
+    GemImage *image = [[GemImage alloc] initWithLuaState:L SpriteSheet:*ss ForImageName:fileNameStr];
+    [((GemGLKViewController *)([Gemini shared].viewController)).spriteManager addSprite:image];
+    [[((GemGLKViewController *)([Gemini shared].viewController)).director getDefaultScene] addObject:image];
+    
+    return 1;
+}
+
+static int imageIndex( lua_State* L )
+{
+    int rval = 0;
+    __unsafe_unretained GemImage **image = (__unsafe_unretained GemImage **)luaL_checkudata(L, 1, GEMINI_IMAGE_LUA_KEY);
+    if (image != NULL) {
+        rval = genericGeminiDisplayObjectIndex(L, *image);
+    }
+    
+    return rval;
+}
+
+static int imageNewIndex (lua_State *L){
+    int rval = 0;
+    __unsafe_unretained GemImage  **image = (__unsafe_unretained GemImage **)luaL_checkudata(L, 1, GEMINI_IMAGE_LUA_KEY);
+    
+    if (image != NULL) {
+        rval = genericGemDisplayObjecNewIndex(L, image);
+    }
+    
+    
+    return rval;
+}
 
 
 ////////// Sprites //////////////////////
@@ -66,18 +101,7 @@ static int spriteIndex( lua_State* L )
     int rval = 0;
     __unsafe_unretained GemSprite  **sprite = (__unsafe_unretained GemSprite **)luaL_checkudata(L, 1, GEMINI_SPRITE_LUA_KEY);
     if (sprite != NULL) {
-        if (lua_isstring(L, -1)) {
-            
-            
-            const char *key = lua_tostring(L, -1);
-            if (strcmp("strokeWidth", key) == 0) {
-                
-            } else {
-                rval = genericGeminiDisplayObjectIndex(L, *sprite);
-            }
-        }
-        
-        
+        rval = genericGeminiDisplayObjectIndex(L, *sprite);
     }
     
     return rval;
@@ -301,6 +325,7 @@ static const struct luaL_Reg spriteLib_f [] = {
     {"newSpriteSheetFromData", newSpriteSheetFromData},
     {"newSpriteSet", newSpriteSet},
     {"newSprite", newSprite},
+    {"newImage", newImage},
     {"add", addAnimation},
     {NULL, NULL}
 };
@@ -329,10 +354,21 @@ static const struct luaL_Reg sprite_m [] = {
     {"pause", spritePause},
     {"onStart", spriteOnStart},
     {"addEventListener", addEventListener},
+    {"removeEventListener", removeEventListener},
     {"setLinearVelocity", setLinearVelocity},
     {"applyForce", applyForce},
     {"applyLinearImpulse", applyLinearImpulse},
     {"isTouching", isObjectTouching},
+    {NULL, NULL}
+};
+
+// mappings for the image methods
+static const struct luaL_Reg image_m [] = {
+    {"__index", imageIndex},
+    {"__newindex", imageNewIndex},
+    {"removeSelf", removeSelf},
+    {"addEventListener", addEventListener},
+    {"removeEventListener", removeEventListener},
     {NULL, NULL}
 };
 
@@ -349,7 +385,6 @@ int luaopen_spritelib (lua_State *L){
     
     luaL_setfuncs(L, spriteSheet_m, 0);
 
-    
     // sprite sets
     luaL_newmetatable(L, GEMINI_SPRITE_SET_LUA_KEY);
     lua_pushvalue(L, -1); // duplicates the metatable
@@ -366,6 +401,11 @@ int luaopen_spritelib (lua_State *L){
     lua_pushvalue(L, -1);
     
     luaL_setfuncs(L, sprite_m, 0);
+    
+    // images
+    luaL_newmetatable(L, GEMINI_IMAGE_LUA_KEY);
+    lua_pushvalue(L, -1);
+    luaL_setfuncs(L, image_m, 0);
     
     /////// finished with metatables ///////////
     

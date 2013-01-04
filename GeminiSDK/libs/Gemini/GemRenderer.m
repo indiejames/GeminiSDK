@@ -229,7 +229,7 @@ BOOL firstPass = YES;
                     // TODO - sort all lines by line properties so they can be batched
                     [lines addObject:gemObj];
                     
-                } else if(gemObj.class == GemSprite.class){
+                } else if([gemObj.class isSubclassOfClass:GemSprite.class]){
                     [self renderSprite:(GemSprite *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
                     
                 } else if(gemObj.class == GemParticleSystem.class){

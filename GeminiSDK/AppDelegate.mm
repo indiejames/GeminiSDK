@@ -68,7 +68,8 @@
     [gemini execute:@"main"];
 #endif // CUKE
     
-    [gemini.viewController becomeFirstResponder];
+    // TEST
+    //[gemini.viewController becomeFirstResponder];
     
     return YES;
 }

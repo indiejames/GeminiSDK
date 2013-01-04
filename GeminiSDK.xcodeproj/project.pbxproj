@@ -105,9 +105,24 @@
 		735bade4bab29de7a76c2da7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76D56EA415F1943300615891 /* AVFoundation.framework */; };
 		743ca93c7a2e535852c2a371 /* GemEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D221711603964F00832178 /* GemEventManager.m */; };
 		7496ea95743f89fd5d473ee0 /* GemRectangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D56F3915F1943400615891 /* GemRectangle.m */; };
+		760DA452169667E300B020F7 /* GemCharSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA451169667E300B020F7 /* GemCharSet.m */; };
+		760DA453169667E300B020F7 /* GemCharSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA451169667E300B020F7 /* GemCharSet.m */; };
+		760DA4571696685200B020F7 /* GemText.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA4561696685200B020F7 /* GemText.m */; };
+		760DA4581696685200B020F7 /* GemText.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA4561696685200B020F7 /* GemText.m */; };
+		760DA45B169668F100B020F7 /* GemTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA45A169668F100B020F7 /* GemTextField.m */; };
+		760DA45C169668F100B020F7 /* GemTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA45A169668F100B020F7 /* GemTextField.m */; };
+		760DA45F16966A1900B020F7 /* GemImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA45E16966A1900B020F7 /* GemImage.m */; };
+		760DA46016966A1900B020F7 /* GemImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA45E16966A1900B020F7 /* GemImage.m */; };
+		760DA4631696799B00B020F7 /* cannon.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA4611696799A00B020F7 /* cannon.lua */; };
+		760DA4641696799B00B020F7 /* cannon.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA4611696799A00B020F7 /* cannon.lua */; };
+		760DA4651696799B00B020F7 /* cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA4621696799A00B020F7 /* cannon.png */; };
+		760DA4661696799B00B020F7 /* cannon.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA4621696799A00B020F7 /* cannon.png */; };
+		760DA46916968FD400B020F7 /* walker.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA46716968FD300B020F7 /* walker.lua */; };
+		760DA46A16968FD400B020F7 /* walker.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA46716968FD300B020F7 /* walker.lua */; };
+		760DA46B16968FD400B020F7 /* walker.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA46816968FD400B020F7 /* walker.png */; };
+		760DA46C16968FD400B020F7 /* walker.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA46816968FD400B020F7 /* walker.png */; };
 		76114C1116682B03004A4C8A /* GemCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76114C1016682B03004A4C8A /* GemCollisionEvent.m */; };
 		76114C14166D2B3D004A4C8A /* LICENSE_Gemini.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */; };
-		76114C24166D2C1F004A4C8A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C17166D2C1F004A4C8A /* Default.png */; };
 		76114C31166D2C9E004A4C8A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C30166D2C9E004A4C8A /* Default-568h@2x.png */; };
 		76324FDA16069F2600970D03 /* GemFileNameResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76324FD916069F2600970D03 /* GemFileNameResolver.m */; };
 		765A759B161131090077A719 /* GemOpenGLState.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A759A161131090077A719 /* GemOpenGLState.m */; };
@@ -367,7 +382,6 @@
 		a9a0fbc982c942faf88af577 /* IOSVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D5706B15F1943600615891 /* IOSVersion.m */; };
 		a9fa40711536c3baf0893470 /* b2EdgeShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 76D56F9615F1943400615891 /* b2EdgeShape.cpp */; };
 		aa1c78d7e6f31e048283f9c4 /* lobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 76D56EF615F1943400615891 /* lobject.c */; };
-		aa3554cf3db7ad16f04619c0 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C17166D2C1F004A4C8A /* Default.png */; };
 		abdf58ec3501e05f96be8033 /* LICENSE_Box2D.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76D5701C15F1943500615891 /* LICENSE_Box2D.txt */; };
 		abe704cf2e46b11f2aefc815 /* b2ContactManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 76D5700815F1943500615891 /* b2ContactManager.cpp */; };
 		abeea874418b73d3bfad28ab /* ldebug.c in Sources */ = {isa = PBXBuildFile; fileRef = 76D56ED915F1943300615891 /* ldebug.c */; };
@@ -448,23 +462,23 @@
 
 /* Begin PBXFileReference section */
 		1d287838cbd42e3de4207b1d /* calabash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = calabash.framework; sourceTree = "<group>"; };
+		760DA450169667E300B020F7 /* GemCharSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemCharSet.h; path = libs/Gemini/GemCharSet.h; sourceTree = "<group>"; };
+		760DA451169667E300B020F7 /* GemCharSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemCharSet.m; path = libs/Gemini/GemCharSet.m; sourceTree = "<group>"; };
+		760DA4551696685200B020F7 /* GemText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemText.h; path = libs/Gemini/GemText.h; sourceTree = "<group>"; };
+		760DA4561696685200B020F7 /* GemText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemText.m; path = libs/Gemini/GemText.m; sourceTree = "<group>"; };
+		760DA459169668F100B020F7 /* GemTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemTextField.h; path = libs/Gemini/GemTextField.h; sourceTree = "<group>"; };
+		760DA45A169668F100B020F7 /* GemTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemTextField.m; path = libs/Gemini/GemTextField.m; sourceTree = "<group>"; };
+		760DA45D16966A1900B020F7 /* GemImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemImage.h; path = libs/Gemini/GemImage.h; sourceTree = "<group>"; };
+		760DA45E16966A1900B020F7 /* GemImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemImage.m; path = libs/Gemini/GemImage.m; sourceTree = "<group>"; };
+		760DA4611696799A00B020F7 /* cannon.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cannon.lua; sourceTree = "<group>"; };
+		760DA4621696799A00B020F7 /* cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cannon.png; sourceTree = "<group>"; };
+		760DA46716968FD300B020F7 /* walker.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = walker.lua; sourceTree = "<group>"; };
+		760DA46816968FD400B020F7 /* walker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walker.png; sourceTree = "<group>"; };
 		76114C0F16682B03004A4C8A /* GemCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemCollisionEvent.h; path = libs/Gemini/GemCollisionEvent.h; sourceTree = "<group>"; };
 		76114C1016682B03004A4C8A /* GemCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemCollisionEvent.m; path = libs/Gemini/GemCollisionEvent.m; sourceTree = "<group>"; };
 		76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE_Gemini.txt; path = libs/LICENSE_Gemini.txt; sourceTree = "<group>"; };
-		76114C16166D2C1F004A4C8A /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
-		76114C17166D2C1F004A4C8A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		76114C18166D2C1F004A4C8A /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		76114C19166D2C1F004A4C8A /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
-		76114C1A166D2C1F004A4C8A /* gemini.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gemini.plist; sourceTree = "<group>"; };
-		76114C1B166D2C1F004A4C8A /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		76114C1C166D2C1F004A4C8A /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
-		76114C1D166D2C1F004A4C8A /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
-		76114C1E166D2C1F004A4C8A /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		76114C1F166D2C1F004A4C8A /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		76114C20166D2C1F004A4C8A /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		76114C21166D2C1F004A4C8A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		76114C22166D2C1F004A4C8A /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
-		76114C30166D2C9E004A4C8A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		76114C1A166D2C1F004A4C8A /* gemini.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = gemini.plist; path = Resources/gemini.plist; sourceTree = "<group>"; };
+		76114C30166D2C9E004A4C8A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		76324FD816069F2600970D03 /* GemFileNameResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFileNameResolver.h; path = libs/Gemini/GemFileNameResolver.h; sourceTree = "<group>"; };
 		76324FD916069F2600970D03 /* GemFileNameResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFileNameResolver.m; path = libs/Gemini/GemFileNameResolver.m; sourceTree = "<group>"; };
 		765A7599161131090077A719 /* GemOpenGLState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemOpenGLState.h; path = libs/Gemini/GemOpenGLState.h; sourceTree = "<group>"; };
@@ -896,27 +910,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		76114C15166D2C1F004A4C8A /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				76114C30166D2C9E004A4C8A /* Default-568h@2x.png */,
-				76114C16166D2C1F004A4C8A /* Default-Portrait~ipad.png */,
-				76114C17166D2C1F004A4C8A /* Default.png */,
-				76114C18166D2C1F004A4C8A /* Default@2x.png */,
-				76114C19166D2C1F004A4C8A /* fps_images.png */,
-				76114C1A166D2C1F004A4C8A /* gemini.plist */,
-				76114C1B166D2C1F004A4C8A /* Icon-72.png */,
-				76114C1C166D2C1F004A4C8A /* Icon-Small-50.png */,
-				76114C1D166D2C1F004A4C8A /* Icon-Small.png */,
-				76114C1E166D2C1F004A4C8A /* Icon-Small@2x.png */,
-				76114C1F166D2C1F004A4C8A /* Icon.png */,
-				76114C20166D2C1F004A4C8A /* Icon@2x.png */,
-				76114C21166D2C1F004A4C8A /* Info.plist */,
-				76114C22166D2C1F004A4C8A /* iTunesArtwork */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		769A1B96168F5E2900B3CD2E /* Lua */ = {
 			isa = PBXGroup;
 			children = (
@@ -977,6 +970,10 @@
 		76D56EAC15F1943300615891 /* GeminiSDK */ = {
 			isa = PBXGroup;
 			children = (
+				760DA46716968FD300B020F7 /* walker.lua */,
+				760DA46816968FD400B020F7 /* walker.png */,
+				760DA4611696799A00B020F7 /* cannon.lua */,
+				760DA4621696799A00B020F7 /* cannon.png */,
 				769A1B96168F5E2900B3CD2E /* Lua */,
 				765A75B0161695770077A719 /* paper.png */,
 				76D5708115F1943600615891 /* AppDelegate.h */,
@@ -992,7 +989,8 @@
 		76D56EAD15F1943300615891 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				76114C15166D2C1F004A4C8A /* Resources */,
+				76114C1A166D2C1F004A4C8A /* gemini.plist */,
+				76114C30166D2C9E004A4C8A /* Default-568h@2x.png */,
 				76D2216916036FF100832178 /* Default@2x.png */,
 				76D2216516036E2C00832178 /* Default-Portrait~ipad.png */,
 				76D56EAE15F1943300615891 /* Default.png */,
@@ -1231,6 +1229,14 @@
 				76114C1016682B03004A4C8A /* GemCollisionEvent.m */,
 				769A1B8F168E7A5200B3CD2E /* QSStrings.h */,
 				769A1B90168E7A5200B3CD2E /* QSStrings.m */,
+				760DA450169667E300B020F7 /* GemCharSet.h */,
+				760DA451169667E300B020F7 /* GemCharSet.m */,
+				760DA4551696685200B020F7 /* GemText.h */,
+				760DA4561696685200B020F7 /* GemText.m */,
+				760DA459169668F100B020F7 /* GemTextField.h */,
+				760DA45A169668F100B020F7 /* GemTextField.m */,
+				760DA45D16966A1900B020F7 /* GemImage.h */,
+				760DA45E16966A1900B020F7 /* GemImage.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1626,10 +1632,13 @@
 				54e4c4e3a47ee8e8cd5c0cbf /* gemini.plist in Resources */,
 				2736acf10b1f96ab05dc4878 /* paper.png in Resources */,
 				d61a229e10b4931066634e73 /* LICENSE_Gemini.txt in Resources */,
-				aa3554cf3db7ad16f04619c0 /* Default.png in Resources */,
 				57c8698e32ea175a2e296f6c /* Default-568h@2x.png in Resources */,
 				8e8a6534b7cb89556856d6bf /* scene1.lua in Resources */,
 				769A1B9D168F873500B3CD2E /* scene_circle_test.lua in Resources */,
+				760DA4641696799B00B020F7 /* cannon.lua in Resources */,
+				760DA4661696799B00B020F7 /* cannon.png in Resources */,
+				760DA46A16968FD400B020F7 /* walker.lua in Resources */,
+				760DA46C16968FD400B020F7 /* walker.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1666,12 +1675,15 @@
 				76D221741603967F00832178 /* gemini.plist in Resources */,
 				765A75B1161695770077A719 /* paper.png in Resources */,
 				76114C14166D2B3D004A4C8A /* LICENSE_Gemini.txt in Resources */,
-				76114C24166D2C1F004A4C8A /* Default.png in Resources */,
 				76114C31166D2C9E004A4C8A /* Default-568h@2x.png in Resources */,
 				769498BA166FCB9A007BDF73 /* scene1.lua in Resources */,
 				769A1B7F168E700B00B3CD2E /* LICENSE_QSUtils.txt in Resources */,
 				769A1B95168F5D5400B3CD2E /* main_cuke.lua in Resources */,
 				769A1B99168F5E9200B3CD2E /* scene_rectangle_test.lua in Resources */,
+				760DA4631696799B00B020F7 /* cannon.lua in Resources */,
+				760DA4651696799B00B020F7 /* cannon.png in Resources */,
+				760DA46916968FD400B020F7 /* walker.lua in Resources */,
+				760DA46B16968FD400B020F7 /* walker.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1855,6 +1867,10 @@
 				76CBD8E4168B7CF1005D8680 /* XMLDictionary.m in Sources */,
 				76CBD8F0168B8DF2005D8680 /* GemBezier.m in Sources */,
 				769A1B91168E7A5200B3CD2E /* QSStrings.m in Sources */,
+				760DA452169667E300B020F7 /* GemCharSet.m in Sources */,
+				760DA4571696685200B020F7 /* GemText.m in Sources */,
+				760DA45B169668F100B020F7 /* GemTextField.m in Sources */,
+				760DA45F16966A1900B020F7 /* GemImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2036,6 +2052,10 @@
 				fc5811975c4bc8ece55988c7 /* LGeminiParticleSystem.m in Sources */,
 				2e8582e20908cd3e815d519c /* XMLDictionary.m in Sources */,
 				fdd880934a95b946b1139aad /* GemBezier.m in Sources */,
+				760DA453169667E300B020F7 /* GemCharSet.m in Sources */,
+				760DA4581696685200B020F7 /* GemText.m in Sources */,
+				760DA45C169668F100B020F7 /* GemTextField.m in Sources */,
+				760DA46016966A1900B020F7 /* GemImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,8 +26,8 @@ function scene:createScene(event)
     local layer1 = display.newLayer(1)
     redRectangle = display.newRect(100, 100, 50, 50)
     redRectangle:setFillColor(1, 0, 0, 1)
-    redRectangle:setBorderColor(1, 1, 1, 1)
-    redRectangle:setBorderWidth(2.0)
+    redRectangle:setStrokeColor(1, 1, 1, 1)
+    redRectangle:setStrokeWidth(2.0)
     
     layer1:insert(redRectangle)
 

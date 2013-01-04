@@ -45,11 +45,13 @@
 
 -(GLKVector4)textureCoord {
     unsigned int sequenceFrame = currentAnimation.startFrame + currentFrame - 1;
+    //unsigned int sequenceFrame = currentAnimation.startFrame + currentFrame;
     return [spriteSheet texCoordsForFrame:sequenceFrame];
 }
 
 -(GLfloat *)frameCoords {
     unsigned int sequenceFrame = currentAnimation.startFrame + currentFrame - 1;
+    //unsigned int sequenceFrame = currentAnimation.startFrame + currentFrame;
     return frameCoords + sequenceFrame * 12;
 }
 

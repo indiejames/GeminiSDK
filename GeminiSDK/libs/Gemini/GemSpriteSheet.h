@@ -40,6 +40,7 @@
 -(GLKVector4)texCoordsForFrame:(unsigned int)frame;
 -(GLfloat)frameWidth:(unsigned int)frameNum;
 -(GLfloat)frameHeight:(unsigned int)frameNum;
+-(GLuint)indexForFilename:(NSString *)fileName;
 -(GLKVector4)texCoordsForFilename:(NSString *)fileName;
 
 -(int) frameCount;

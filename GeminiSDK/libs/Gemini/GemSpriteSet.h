@@ -24,6 +24,7 @@
 
 -(id) initWithSpriteSheet:(GemSpriteSheet *)sheet StartFrame:(int)start NumFrames:(int)nFrames;
 
+// Note - frames are numbered starting with 1, not 0, as per Lua convention
 -(void) addAnimation:(NSString *)name WithStartFrame:(int)start NumFrames:(int)nFrames FrameDuration:(float)duration LoopCount:(int)loopCount;
 
 -(GemSpriteAnimation *)getAnimation:(NSString *)animation;
