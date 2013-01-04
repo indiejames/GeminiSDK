@@ -26,7 +26,7 @@ typedef enum {
 } GemDisplayType;
 
 
-@interface GemGLKViewController : GLKViewController {
+@interface GemGLKViewController : GLKViewController <UIKeyInput> {
     EAGLContext *context;
     SEL preRenderCallback;
     SEL postRenderCallback;

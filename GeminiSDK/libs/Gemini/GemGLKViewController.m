@@ -300,5 +300,8 @@ enum {
     [eventManager touchesCancelled:touches withEvent:event];
 }
 
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
 
 @end
