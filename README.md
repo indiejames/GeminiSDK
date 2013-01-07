@@ -8,9 +8,9 @@ Gemini is an open source framework for building 2D games on iOS using the [Lua](
 4. **Gemini provides physics**.  Bindings to the [Box2D](http://box2d.org) physics library allow you to add physics properties to any graphics object, including support for collision detection.
 5. **Gemini does sound**.  Bindings to the [Object AL](http://kstenerud.github.com/ObjectAL-for-iPhone/) sound API provide easy sound effects and background music.
 6. **Gemini provides an event API**.  Register objects for touch events, collision events, or other events.  Set up timer events (one-shot or recurring) to call your Lua code periodically.  Regiser Lua code as callbacks for events like the beginning of the render loop.
-7. **Gemini supports popular third party tools.** Import sprites sheets created in [Sprite Helper](http://www.spritehelper.org) or [Texture Packer](http://www.codeandweb.com/texturepacker).  Use [Text Candy](http://www.x-pressive.com/TextCandy_Corona/)<sup>1</sup> to render font files created with [Glyph Designer](http://glyphdesigner.71squared.com).
+7. **Gemini supports popular third party tools.** Import sprites sheets created in [Sprite Helper](http://www.spritehelper.org) or [Texture Packer](http://www.codeandweb.com/texturepacker).  Render text using font files created with [Glyph Designer](http://glyphdesigner.71squared.com).
 8. **Gemini supports callbacks to custom Objective C/C++ code**.  Use render callbacks to render layers with your own custom Objective C/C++ code.
-9. **It's easy to get started.** Just drop the Xcode 4 project templates in your template folder and your ready to go.
+9. **It's easy to get started.** Just drop the Xcode 4 project templates in your template folder and you're ready to go.
 
 ## Documentation
 
@@ -36,5 +36,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #### If you want to be awesome.
 - Credit Gemini in any apps you build with it.
 - Add your app to the [app list](https://github.com/indiejames/GeminiSDK/wiki/List-of-Apps-Using-Gemini) in the Wiki so we can watch the community grow.
-
-<sub>1 - Text Candy is a licensed Lua library that requires a license to be purchased.  Also, slight modifications must be made to the Text Candy Lua file to support working with Gemini.</sub>
