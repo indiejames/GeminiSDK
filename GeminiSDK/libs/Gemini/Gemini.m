@@ -31,6 +31,7 @@ Gemini *singleton = nil;
     GemObject *runtime;
     GemPhysics *physics;
     GemSoundManager *soundManager;
+    GemFontManager *fontManager;
 }
 @end
 
@@ -45,6 +46,7 @@ Gemini *singleton = nil;
 @synthesize fileNameResolver;
 @synthesize settings;
 @synthesize soundManager;
+@synthesize fontManager;
 
 int setLuaPath(lua_State *L, NSString* path );
 
@@ -147,6 +149,8 @@ int setLuaPath(lua_State *L, NSString* path );
         [physics setScale:physScale];
         
         soundManager = [[GemSoundManager alloc] init];
+        
+        fontManager = [[GemFontManager alloc] init];
         
     }
     

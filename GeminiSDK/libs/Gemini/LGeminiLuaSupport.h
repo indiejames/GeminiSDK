@@ -30,6 +30,7 @@ int genericGC(lua_State *L);
 int isObjectTouching(lua_State *L);
 void setDefaultValues(lua_State *L);
 void setupObject(lua_State *L, const char *luaKey, GemObject *obj);
+NSDictionary *tableToDictionary(lua_State *L, int stackIndex);
 
 void lockLuaLock();
 void unlockLuaLock();

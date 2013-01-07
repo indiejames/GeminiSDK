@@ -14,6 +14,7 @@
 #import "GemPhysics.h"
 #import "GemFileNameResolver.h"
 #import "GemSoundManager.h"
+#import "GemFontManager.h"
 
 
 @interface Gemini : NSObject
@@ -27,6 +28,7 @@
 @property (readonly) GemFileNameResolver *fileNameResolver;
 @property (readonly) NSDictionary *settings;
 @property (readonly) GemSoundManager *soundManager;
+@property (readonly) GemFontManager *fontManager;
 
 -(void)execute:(NSString *)filename;
 //-(BOOL)handleEvent:(NSString *)event;

@@ -13,6 +13,7 @@
 #import "GemCircle.h"
 #import "GemConvexShape.h"
 #import "GemSprite.h"
+#import "GemText.h"
 #import "GemLayer.h"
 #import "LGeminiDisplay.h"
 #import "GemSpriteBatch.h"
@@ -232,6 +233,10 @@ BOOL firstPass = YES;
                 } else if([gemObj.class isSubclassOfClass:GemSprite.class]){
                     [self renderSprite:(GemSprite *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
                     
+                } else if(gemObj.class == GemText.class){
+                
+                    [self renderText:(GemText *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
+                
                 } else if(gemObj.class == GemParticleSystem.class){
                     
                     [self renderParticleEmitter:(GemParticleSystem *)gemObj withLayer:layer alpha:cumulAlpha transform:cumulTransform];
@@ -449,6 +454,46 @@ BOOL firstPass = YES;
     }
     
     
+}
+
+-(void)renderText:(GemText *)text withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform {
+    
+    GLKMatrix3 finalTransform = GLKMatrix3Multiply(transform, text.transform);
+    
+    GLfloat z = ((GLfloat)(layerIndex)) / 256.0 - 0.5;
+    
+    GLfloat *tranVerts = (GLfloat *)malloc(12*[text.text length]*sizeof(GLfloat));
+    
+    transformVertices(tranVerts, text.verts, 4*[text.text length], finalTransform);
+    
+    GLKTextureInfo *texInfo = text.charSet.textureInfo;
+    
+    GemSpriteBatch *sprites = (GemSpriteBatch *)[spriteBatches objectForKey:texInfo];
+    if (sprites == nil) {
+        sprites = [[GemSpriteBatch alloc] initWithCapacity:SPRITE_BATCH_CHUNK_SIZE];
+        [spriteBatches setObject:sprites forKey:texInfo];
+        
+    }
+    
+    GemTexturedVertex *spriteVerts = [sprites getPointerForInsertion:[text.text length]];
+    
+    for (int i=0; i<[text.text length]; i++) {
+        for (int j=0; j<4; j++) {
+            spriteVerts[i*4+j].texCoord[0] = text.texCoord[i*4+j].x;
+            spriteVerts[i*4+j].texCoord[1] = text.texCoord[i*4+j].y;
+            //GemLog(@"texCoord = (%f, %f)", text.texCoord[i*4+j].x, text.texCoord[i*4+j].y);
+            spriteVerts[i*4+j].position[0] = tranVerts[(i*4+j)*3];
+            spriteVerts[i*4+j].position[1] = tranVerts[(i*4+j)*3+1];
+            spriteVerts[i*4+j].position[2] = z;
+            spriteVerts[i*4+j].color[0] = 1.0; // TODO - allow use of color here
+            spriteVerts[i*4+j].color[1] = 1.0;
+            spriteVerts[i*4+j].color[2] = 1.0;
+            spriteVerts[i*4+j].color[3] = text.alpha;
+        }
+        
+    }
+    
+    free(tranVerts);
 }
 
 -(void)renderParticleEmitter:(GemParticleSystem *)emitter withLayer:(int)layerIndex alpha:(GLfloat)alpha transform:(GLKMatrix3)transform  {

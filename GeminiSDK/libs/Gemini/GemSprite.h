@@ -9,7 +9,7 @@
 #import "GemDisplayObject.h"
 #import "GemSpriteSet.h"
 
-#define GEMINI_SPRITE_LUA_KEY "GeminiLib.GEMINIT_SPRITE_KEY"
+#define GEMINI_SPRITE_LUA_KEY "GeminiLib.GEMINI_SPRITE_KEY"
 
 @interface GemSprite : GemDisplayObject {
     GemSpriteSet *spriteSet;

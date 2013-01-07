@@ -69,4 +69,11 @@ int gem_suffix_count;
     return fileName;
 }
 
+// choose a file with suffix based on resolution of current device
+-(NSString *)resolveNameForFile:(NSString *)fileName {
+    NSString *suffix = [fileName stringByDeletingPathExtension];
+    NSString *ext = [fileName pathExtension];
+    return [self resolveNameForFile:suffix ofType:ext];
+}
+
 @end

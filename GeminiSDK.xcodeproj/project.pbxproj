@@ -121,6 +121,14 @@
 		760DA46A16968FD400B020F7 /* walker.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA46716968FD300B020F7 /* walker.lua */; };
 		760DA46B16968FD400B020F7 /* walker.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA46816968FD400B020F7 /* walker.png */; };
 		760DA46C16968FD400B020F7 /* walker.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA46816968FD400B020F7 /* walker.png */; };
+		760DA46F169772F400B020F7 /* LGeminiText.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA46E169772F300B020F7 /* LGeminiText.m */; };
+		760DA470169772F400B020F7 /* LGeminiText.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA46E169772F300B020F7 /* LGeminiText.m */; };
+		760DA47316977D0E00B020F7 /* GemFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA47216977D0B00B020F7 /* GemFontManager.m */; };
+		760DA47416977D0E00B020F7 /* GemFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA47216977D0B00B020F7 /* GemFontManager.m */; };
+		760DA477169782EC00B020F7 /* chilopod_gd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA475169782E900B020F7 /* chilopod_gd.lua */; };
+		760DA478169782EC00B020F7 /* chilopod_gd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA475169782E900B020F7 /* chilopod_gd.lua */; };
+		760DA479169782EC00B020F7 /* chilopod_gd.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA476169782EB00B020F7 /* chilopod_gd.png */; };
+		760DA47A169782EC00B020F7 /* chilopod_gd.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA476169782EB00B020F7 /* chilopod_gd.png */; };
 		76114C1116682B03004A4C8A /* GemCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76114C1016682B03004A4C8A /* GemCollisionEvent.m */; };
 		76114C14166D2B3D004A4C8A /* LICENSE_Gemini.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */; };
 		76114C31166D2C9E004A4C8A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C30166D2C9E004A4C8A /* Default-568h@2x.png */; };
@@ -474,6 +482,12 @@
 		760DA4621696799A00B020F7 /* cannon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cannon.png; sourceTree = "<group>"; };
 		760DA46716968FD300B020F7 /* walker.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = walker.lua; sourceTree = "<group>"; };
 		760DA46816968FD400B020F7 /* walker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = walker.png; sourceTree = "<group>"; };
+		760DA46D169772F200B020F7 /* LGeminiText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGeminiText.h; path = libs/Gemini/LGeminiText.h; sourceTree = "<group>"; };
+		760DA46E169772F300B020F7 /* LGeminiText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiText.m; path = libs/Gemini/LGeminiText.m; sourceTree = "<group>"; };
+		760DA47116977D0A00B020F7 /* GemFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFontManager.h; path = libs/Gemini/GemFontManager.h; sourceTree = "<group>"; };
+		760DA47216977D0B00B020F7 /* GemFontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFontManager.m; path = libs/Gemini/GemFontManager.m; sourceTree = "<group>"; };
+		760DA475169782E900B020F7 /* chilopod_gd.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chilopod_gd.lua; sourceTree = "<group>"; };
+		760DA476169782EB00B020F7 /* chilopod_gd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chilopod_gd.png; sourceTree = "<group>"; };
 		76114C0F16682B03004A4C8A /* GemCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemCollisionEvent.h; path = libs/Gemini/GemCollisionEvent.h; sourceTree = "<group>"; };
 		76114C1016682B03004A4C8A /* GemCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemCollisionEvent.m; path = libs/Gemini/GemCollisionEvent.m; sourceTree = "<group>"; };
 		76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE_Gemini.txt; path = libs/LICENSE_Gemini.txt; sourceTree = "<group>"; };
@@ -970,6 +984,8 @@
 		76D56EAC15F1943300615891 /* GeminiSDK */ = {
 			isa = PBXGroup;
 			children = (
+				760DA475169782E900B020F7 /* chilopod_gd.lua */,
+				760DA476169782EB00B020F7 /* chilopod_gd.png */,
 				760DA46716968FD300B020F7 /* walker.lua */,
 				760DA46816968FD400B020F7 /* walker.png */,
 				760DA4611696799A00B020F7 /* cannon.lua */,
@@ -1237,6 +1253,10 @@
 				760DA45A169668F100B020F7 /* GemTextField.m */,
 				760DA45D16966A1900B020F7 /* GemImage.h */,
 				760DA45E16966A1900B020F7 /* GemImage.m */,
+				760DA46D169772F200B020F7 /* LGeminiText.h */,
+				760DA46E169772F300B020F7 /* LGeminiText.m */,
+				760DA47116977D0A00B020F7 /* GemFontManager.h */,
+				760DA47216977D0B00B020F7 /* GemFontManager.m */,
 			);
 			name = Gemini;
 			sourceTree = "<group>";
@@ -1639,6 +1659,8 @@
 				760DA4661696799B00B020F7 /* cannon.png in Resources */,
 				760DA46A16968FD400B020F7 /* walker.lua in Resources */,
 				760DA46C16968FD400B020F7 /* walker.png in Resources */,
+				760DA478169782EC00B020F7 /* chilopod_gd.lua in Resources */,
+				760DA47A169782EC00B020F7 /* chilopod_gd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1684,6 +1706,8 @@
 				760DA4651696799B00B020F7 /* cannon.png in Resources */,
 				760DA46916968FD400B020F7 /* walker.lua in Resources */,
 				760DA46B16968FD400B020F7 /* walker.png in Resources */,
+				760DA477169782EC00B020F7 /* chilopod_gd.lua in Resources */,
+				760DA479169782EC00B020F7 /* chilopod_gd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1871,6 +1895,8 @@
 				760DA4571696685200B020F7 /* GemText.m in Sources */,
 				760DA45B169668F100B020F7 /* GemTextField.m in Sources */,
 				760DA45F16966A1900B020F7 /* GemImage.m in Sources */,
+				760DA46F169772F400B020F7 /* LGeminiText.m in Sources */,
+				760DA47316977D0E00B020F7 /* GemFontManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2056,6 +2082,8 @@
 				760DA4581696685200B020F7 /* GemText.m in Sources */,
 				760DA45C169668F100B020F7 /* GemTextField.m in Sources */,
 				760DA46016966A1900B020F7 /* GemImage.m in Sources */,
+				760DA470169772F400B020F7 /* LGeminiText.m in Sources */,
+				760DA47416977D0E00B020F7 /* GemFontManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

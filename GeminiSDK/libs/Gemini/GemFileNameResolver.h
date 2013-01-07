@@ -12,5 +12,6 @@
 
 -(id)initForWidth:(float)w Height:(float)h ContentScale:(float)scale Settings:(NSDictionary *)settings;
 -(NSString *)resolveNameForFile:(NSString *)fileName ofType:(NSString *)type;
+-(NSString *)resolveNameForFile:(NSString *)fileName;
 
 @end

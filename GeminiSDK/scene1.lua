@@ -9,6 +9,7 @@ local director = require("director")
 local scene = director.newScene()
 local sprite = require("sprite")
 local system = require("system")
+local text = require("text")
 local cannon = require("cannon")
 local walker = require("walker")
 
@@ -43,6 +44,10 @@ function scene:createScene(event)
     box.y = 200
     layer1:insert(box)
     
+    --[[local line = display.newRect(240,160,480,5)
+    line:setFillColor(1,1,1,1)
+    layer1:insert(line)--]]
+    
     local walkerSpriteSheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
     print("Lua: A")
     local runnerSpriteSet = sprite.newSpriteSet(walkerSpriteSheet, 1, 10)
@@ -54,6 +59,14 @@ function scene:createScene(event)
     runner.x = 300
     runner.y = 300
     layer1:insert(runner)
+    
+    text.newCharset("FONT1", "chilopod_gd")
+    local label = text.newText("FONT1", "Hello, world")
+    label.x = 240
+    label.y = 160
+    layer1:insert(label)
+
+    print("Lua: E")
 
 end
 

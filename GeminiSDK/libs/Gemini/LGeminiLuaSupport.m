@@ -384,6 +384,66 @@ void setupObject(lua_State *L, const char *luaKey, GemObject *obj){
     obj.selfRef = luaL_ref(L, LUA_REGISTRYINDEX);
 }
 
+NSDictionary *tableToDictionary(lua_State *L, int stackIndex){
+    NSMutableDictionary *rval = [NSMutableDictionary dictionaryWithCapacity:1];
+    
+    // handle negative indices correctly since pushing nil as the first key will
+    // invalidate them
+    if (stackIndex < 1) {
+        stackIndex = lua_gettop(L) + stackIndex + 1;
+    }
+    
+    if (lua_istable(L, stackIndex)) {
+        lua_pushnil(L);  /* first key */
+        while (lua_next(L, stackIndex) != 0) {
+            /* uses 'key' (at index -2) and 'value' (at index -1) */
+            id key;
+            id value;
+            switch (lua_type(L, -2)) {
+                case LUA_TNUMBER:
+                    key = [NSNumber numberWithDouble:lua_tonumber(L, -2)];
+                    break;
+                case LUA_TSTRING:
+                    key = [NSString stringWithUTF8String:lua_tostring(L, -2)];
+                    break;
+                default:
+                    break;
+            }
+            
+            //GemLog(@"table key = %@", key);
+            
+            switch (lua_type(L, -1)) {
+                case LUA_TNUMBER:
+                    value = [NSNumber numberWithDouble:lua_tonumber(L, -1)];
+                    break;
+                case LUA_TSTRING:
+                    value = [NSString stringWithUTF8String:lua_tostring(L, -1)];
+                    break;
+                case LUA_TBOOLEAN:
+                    value = [NSNumber numberWithBool:lua_toboolean(L, -1)];
+                    break;
+                case LUA_TTABLE:
+                    value = tableToDictionary(L, -1);
+                    break;
+                default:
+                    break;
+            }
+            
+            //GemLog(@"table value = %@", value);
+            
+            if (key != nil) {
+                [rval setObject:value forKey:key];
+            }
+            
+            /* removes 'value'; keeps 'key' for next iteration */
+            lua_pop(L, 1);
+        }
+    }
+    
+    return rval;
+
+}
+
 // mutex for Lua
 void lockLuaLock(){
     if (globalLuaLock == nil){
