@@ -29,5 +29,6 @@ typedef struct {
 -(id) initWithLuaState:(lua_State *)luaState fontInfo:(NSDictionary *)fontInfo;
 -(GLKTextureInfo *)textureInfo;
 -(GemCharRenderInfo)renderInfoForChar:(unichar)c;
+-(NSNumber *)kerningForFirst:(unichar)first second:(unichar)second;
 
 @end

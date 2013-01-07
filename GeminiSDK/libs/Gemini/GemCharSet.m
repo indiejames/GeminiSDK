@@ -39,10 +39,11 @@
         base = [[[fontInfo objectForKey:@"common"] objectForKey:@"base"] floatValue];
         
         scale = 1.0;
+        int kerningCounts = [[[fontInfo objectForKey:@"info"] objectForKey:@"kerningCounts"] intValue];
         
         dataByCode = [NSMutableDictionary dictionaryWithCapacity:1];
         dataByCharacter = [NSMutableDictionary dictionaryWithCapacity:1];
-        kerningPairs = [NSMutableDictionary dictionaryWithCapacity:1];
+        kerningPairs = [NSMutableDictionary dictionaryWithCapacity:kerningCounts];
         
         // process char data
         GLfloat imgWidth = textureInfo.width;
@@ -53,7 +54,7 @@
         while ((index = [kenum nextObject])) {
             NSDictionary *cdata = [charData objectForKey:index];
             NSNumber *code = [cdata objectForKey:@"id"];
-            GemLog(@"code = %d", [code intValue]);
+            //GemLog(@"code = %d", [code intValue]);
             NSString *character = [cdata objectForKey:@"letter"];
             GLfloat x = [[cdata objectForKey:@"x"] floatValue];
             GLfloat y = imgHeight - [[cdata objectForKey:@"y"] floatValue];
@@ -87,7 +88,18 @@
             
         }
         
-        // TODO - handle kerning pairs
+        // kerning pairs
+        charData = [fontInfo objectForKey:@"kerning"];
+        kenum = [charData keyEnumerator];
+        while ((index = [kenum nextObject])) {
+            NSDictionary *cdata = [charData objectForKey:index];
+            NSNumber *first = [cdata objectForKey:@"first"];
+            NSNumber *second = [cdata objectForKey:@"second"];
+            NSNumber *amount = [cdata objectForKey:@"amount"];
+            
+            NSString *key = [NSString stringWithFormat:@"%@:%@", first, second];
+            [kerningPairs setValue:amount forKey:key];
+        }
         
     }
     
@@ -108,6 +120,11 @@
     memcpy(&rval, [data bytes], sizeof(GemCharRenderInfo));
     
     return rval;
+}
+
+-(NSNumber *)kerningForFirst:(unichar)first second:(unichar)second {
+    NSString *key = [NSString stringWithFormat:@"%d:%d",first,second];
+    return [kerningPairs objectForKey:key];
 }
 
 @end

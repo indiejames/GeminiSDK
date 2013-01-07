@@ -61,7 +61,7 @@ function scene:createScene(event)
     layer1:insert(runner)
     
     text.newCharset("FONT1", "chilopod_gd")
-    local label = text.newText("FONT1", "Hello, world")
+    local label = text.newText("FONT1", "Hello, ATT")
     label.x = 240
     label.y = 160
     layer1:insert(label)
