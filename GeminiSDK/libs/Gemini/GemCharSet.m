@@ -21,8 +21,6 @@
 }
 
 @synthesize scale;
-@synthesize lineHeight;
-@synthesize base;
 
 -(id)initWithLuaState:(lua_State *)luaState fontInfo:(NSDictionary *)fontInfo {
     self = [super initWithLuaState:luaState LuaKey:GEMINI_CHARSET_LUA_KEY];
@@ -38,7 +36,8 @@
         lineHeight = [[[fontInfo objectForKey:@"common"] objectForKey:@"lineHeight"] floatValue];
         base = [[[fontInfo objectForKey:@"common"] objectForKey:@"base"] floatValue];
         
-        scale = 1.0;
+        filename = [[Gemini shared].fileNameResolver resolveNameForFile:filename];
+        scale = 1.0 / [[Gemini shared].fileNameResolver renderScaleForFile:filename];
         int kerningCounts = [[[fontInfo objectForKey:@"info"] objectForKey:@"kerningCounts"] intValue];
         
         dataByCode = [NSMutableDictionary dictionaryWithCapacity:1];
@@ -114,10 +113,27 @@
     return rval;
 }
 
+-(GLfloat)lineHeight {
+    return  lineHeight * scale;
+}
+
+-(GLfloat)base {
+    return base * scale;
+}
+
 -(GemCharRenderInfo)renderInfoForChar:(unichar)c {
     NSData *data = [dataByCode objectForKey:[NSNumber numberWithUnsignedShort:c]];
     GemCharRenderInfo rval;
     memcpy(&rval, [data bytes], sizeof(GemCharRenderInfo));
+    
+    // apply scaling if necessary
+    if (scale != 1.0) {
+        rval.dimensions.x = rval.dimensions.x * scale;
+        rval.dimensions.y = rval.dimensions.y * scale;
+        rval.offsets.x = rval.offsets.x * scale;
+        rval.offsets.y = rval.offsets.y * scale;
+        rval.xAdvance = rval.xAdvance * scale;
+    }
     
     return rval;
 }

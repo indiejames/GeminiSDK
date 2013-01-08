@@ -56,6 +56,33 @@ static int newCharSet(lua_State *L){
     return 1;
 }
 
+static int charSetNewIndex(lua_State *L){
+    
+    int rval = 0;
+    
+    __unsafe_unretained GemCharSet **charSet = (__unsafe_unretained GemCharSet **)luaL_checkudata(L, 1, GEMINI_CHARSET_LUA_KEY);
+    
+    if (charSet != NULL) {
+        if (lua_isstring(L, 2)) {
+            
+            const char *key = lua_tostring(L, 2);
+            if (strcmp("scale", key) == 0) {
+                GLfloat scale = luaL_checknumber(L, 3);
+                (*charSet).scale = scale;
+                rval = 0;
+            } else {
+                
+                rval = genericNewIndex(L);
+            }
+            
+        }
+        
+        
+    }
+    
+    return rval;
+}
+
 
 ///// text objects
 
@@ -130,7 +157,7 @@ static const struct luaL_Reg textLib_f [] = {
 static const struct luaL_Reg charset_m [] = {
     {"__gc", genericGC},
     {"__index", genericIndex},
-    {"__newindex", genericNewIndex},
+    {"__newindex", charSetNewIndex},
     {"removeSelf", removeSelf},
     {"delete", genericDelete},
     {"addEventListener", addEventListener},

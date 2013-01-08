@@ -29,38 +29,8 @@ function scene:createScene(event)
 	-----------------------------------------------------------------------------
     
     local layer1 = display.newLayer(1)
-    --[[redRectangle = display.newRect(100, 100, 50, 50)
-    redRectangle:setFillColor(1, 0, 0, 1)
-    
-    redRectangle:setStrokeColor(1, 1, 1, 1)
-    redRectangle:setStrokeWidth(2.0)
-    
-    layer1:insert(redRectangle)
-    
-    local cannonSpriteSheet = sprite.newSpriteSheetFromData("cannon.png", cannon.getSpriteSheetData())
-    
-    local box = sprite.newImage(cannonSpriteSheet, "box.png")
-    box.x = 200
-    box.y = 200
-    layer1:insert(box)
-    
-    local line = display.newRect(240,160,480,5)
-    line:setFillColor(1,1,1,1)
-    layer1:insert(line)
-    
-    local walkerSpriteSheet = sprite.newSpriteSheetFromData("walker.png", walker.getSpriteSheetData())
-    print("Lua: A")
-    local runnerSpriteSet = sprite.newSpriteSet(walkerSpriteSheet, 1, 10)
-    print("Lua: B")
-    runner = sprite.newSprite(runnerSpriteSet)
-    print("Lua: C")
-    print("Lua: D")
-    runner:prepare("default")
-    runner.x = 300
-    runner.y = 300
-    layer1:insert(runner)
-    --]]
-    text.newCharset("FONT1", "chilopod_gd")
+    charSet = text.newCharset("FONT1", "chilopod_gd")
+ --charSet.scale = 0.5
     local label = text.newText("FONT1", "Hello, World")
     label.x = 240
     label.y = 160
@@ -77,15 +47,7 @@ function scene:enterScene(event)
 	--	Start timers, set up event listeners, etc.  
 	-----------------------------------------------------------------------------
 
-    --[[function screenshot()
-        system.screenshot()
-    end
-    
-    timer.performWithDelay(3000, screenshot)
-    runner:play()
-    
-    --]]
-end
+   end
 
 
 -- Called when scene is about to move offscreen

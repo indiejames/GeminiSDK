@@ -12,6 +12,12 @@
 			<string>@ipad</string>
 			<string>@2x</string>
 		</array>
+		<key>image scales</key>
+		<array>
+			<string>2</string>
+			<string>1</string>
+			<string>1</string>
+		</array>
 	</dict>
 	<key>640x960</key>
 	<dict>
@@ -20,6 +26,10 @@
 		<key>suffixes</key>
 		<array>
 			<string>@2x</string>
+		</array>
+		<key>image scales</key>
+		<array>
+			<string>2</string>
 		</array>
 	</dict>
 	<key>640x1136</key>
@@ -31,6 +41,11 @@
 			<string>@568</string>
 			<string>@2x</string>
 		</array>
+		<key>image scales</key>
+		<array>
+			<string>2</string>
+			<string>2</string>
+		</array>
 	</dict>
 	<key>768x1024</key>
 	<dict>
@@ -40,6 +55,11 @@
 		<array>
 			<string>@ipad</string>
 			<string>@2x</string>
+		</array>
+		<key>image scales</key>
+		<array>
+			<string>1</string>
+			<string>1</string>
 		</array>
 	</dict>
 </dict>

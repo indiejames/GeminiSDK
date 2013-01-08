@@ -16,6 +16,7 @@ int gem_suffix_count;
 
 @interface GemFileNameResolver () {
     NSMutableArray *suffixes;
+    NSMutableArray *imageScales;
 }
 @end
 
@@ -28,6 +29,7 @@ int gem_suffix_count;
         w = w * scale;
         h = h * scale;
         suffixes = [[NSMutableArray alloc] initWithCapacity:1];
+        imageScales = [[NSMutableArray alloc] initWithCapacity:1];
         
         NSDictionary *resSettings = [settings objectForKey:[NSString stringWithFormat:@"%dx%d",(int)w,(int)h]];
         
@@ -35,6 +37,8 @@ int gem_suffix_count;
             
             NSArray *tmpSuffixes = [resSettings objectForKey:@"suffixes"];
             [suffixes addObjectsFromArray:tmpSuffixes];
+            NSArray *tmpScales = [resSettings objectForKey:@"image scales"];
+            [imageScales addObjectsFromArray:tmpScales];
         }
         
         gem_suffix_count = [suffixes count] + 1;
@@ -71,9 +75,32 @@ int gem_suffix_count;
 
 // choose a file with suffix based on resolution of current device
 -(NSString *)resolveNameForFile:(NSString *)fileName {
-    NSString *suffix = [fileName stringByDeletingPathExtension];
+    NSString *base = [fileName stringByDeletingPathExtension];
     NSString *ext = [fileName pathExtension];
-    return [self resolveNameForFile:suffix ofType:ext];
+    return [self resolveNameForFile:base ofType:ext];
+}
+
+-(GLfloat)renderScaleForFile:(NSString *)fileName {
+    GLfloat rval = 1.0;
+    
+    int suffixIndex = -1;
+    if ([suffixes count] > 0) {
+        for (int i=0; i<[suffixes count]; i++) {
+            NSString *suffix = [suffixes objectAtIndex:i];
+            if ([fileName rangeOfString:suffix].location != NSNotFound) {
+                suffixIndex = i;
+                break;
+            }
+        }
+        
+        if (suffixIndex != -1) {
+            NSNumber *scaleNum = [imageScales objectAtIndex:suffixIndex];
+            rval = [scaleNum floatValue];
+        }
+    }
+    
+    
+    return rval;
 }
 
 @end

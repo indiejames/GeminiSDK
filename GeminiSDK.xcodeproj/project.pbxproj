@@ -125,10 +125,12 @@
 		760DA470169772F400B020F7 /* LGeminiText.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA46E169772F300B020F7 /* LGeminiText.m */; };
 		760DA47316977D0E00B020F7 /* GemFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA47216977D0B00B020F7 /* GemFontManager.m */; };
 		760DA47416977D0E00B020F7 /* GemFontManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760DA47216977D0B00B020F7 /* GemFontManager.m */; };
-		760DA477169782EC00B020F7 /* chilopod_gd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA475169782E900B020F7 /* chilopod_gd.lua */; };
-		760DA478169782EC00B020F7 /* chilopod_gd.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA475169782E900B020F7 /* chilopod_gd.lua */; };
-		760DA479169782EC00B020F7 /* chilopod_gd.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA476169782EB00B020F7 /* chilopod_gd.png */; };
-		760DA47A169782EC00B020F7 /* chilopod_gd.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA476169782EB00B020F7 /* chilopod_gd.png */; };
+		760DA477169782EC00B020F7 /* chilopod_gd@2x.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA475169782E900B020F7 /* chilopod_gd@2x.lua */; };
+		760DA478169782EC00B020F7 /* chilopod_gd@2x.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA475169782E900B020F7 /* chilopod_gd@2x.lua */; };
+		760DA479169782EC00B020F7 /* chilopod_gd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA476169782EB00B020F7 /* chilopod_gd@2x.png */; };
+		760DA47A169782EC00B020F7 /* chilopod_gd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 760DA476169782EB00B020F7 /* chilopod_gd@2x.png */; };
+		760DA47C169B521D00B020F7 /* scene_font_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA47B169B521D00B020F7 /* scene_font_test.lua */; };
+		760DA47D169B521D00B020F7 /* scene_font_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 760DA47B169B521D00B020F7 /* scene_font_test.lua */; };
 		76114C1116682B03004A4C8A /* GemCollisionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 76114C1016682B03004A4C8A /* GemCollisionEvent.m */; };
 		76114C14166D2B3D004A4C8A /* LICENSE_Gemini.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */; };
 		76114C31166D2C9E004A4C8A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C30166D2C9E004A4C8A /* Default-568h@2x.png */; };
@@ -486,12 +488,12 @@
 		760DA46E169772F300B020F7 /* LGeminiText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiText.m; path = libs/Gemini/LGeminiText.m; sourceTree = "<group>"; };
 		760DA47116977D0A00B020F7 /* GemFontManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFontManager.h; path = libs/Gemini/GemFontManager.h; sourceTree = "<group>"; };
 		760DA47216977D0B00B020F7 /* GemFontManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFontManager.m; path = libs/Gemini/GemFontManager.m; sourceTree = "<group>"; };
-		760DA475169782E900B020F7 /* chilopod_gd.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chilopod_gd.lua; sourceTree = "<group>"; };
-		760DA476169782EB00B020F7 /* chilopod_gd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chilopod_gd.png; sourceTree = "<group>"; };
+		760DA475169782E900B020F7 /* chilopod_gd@2x.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "chilopod_gd@2x.lua"; sourceTree = "<group>"; };
+		760DA476169782EB00B020F7 /* chilopod_gd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chilopod_gd@2x.png"; sourceTree = "<group>"; };
+		760DA47B169B521D00B020F7 /* scene_font_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene_font_test.lua; sourceTree = "<group>"; };
 		76114C0F16682B03004A4C8A /* GemCollisionEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemCollisionEvent.h; path = libs/Gemini/GemCollisionEvent.h; sourceTree = "<group>"; };
 		76114C1016682B03004A4C8A /* GemCollisionEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemCollisionEvent.m; path = libs/Gemini/GemCollisionEvent.m; sourceTree = "<group>"; };
 		76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE_Gemini.txt; path = libs/LICENSE_Gemini.txt; sourceTree = "<group>"; };
-		76114C1A166D2C1F004A4C8A /* gemini.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = gemini.plist; path = Resources/gemini.plist; sourceTree = "<group>"; };
 		76114C30166D2C9E004A4C8A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		76324FD816069F2600970D03 /* GemFileNameResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFileNameResolver.h; path = libs/Gemini/GemFileNameResolver.h; sourceTree = "<group>"; };
 		76324FD916069F2600970D03 /* GemFileNameResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFileNameResolver.m; path = libs/Gemini/GemFileNameResolver.m; sourceTree = "<group>"; };
@@ -941,6 +943,7 @@
 				769A1B98168F5E9200B3CD2E /* scene_rectangle_test.lua */,
 				769A1B94168F5D5400B3CD2E /* main_cuke.lua */,
 				769A1B9C168F873500B3CD2E /* scene_circle_test.lua */,
+				760DA47B169B521D00B020F7 /* scene_font_test.lua */,
 			);
 			name = Test;
 			sourceTree = "<group>";
@@ -984,8 +987,8 @@
 		76D56EAC15F1943300615891 /* GeminiSDK */ = {
 			isa = PBXGroup;
 			children = (
-				760DA475169782E900B020F7 /* chilopod_gd.lua */,
-				760DA476169782EB00B020F7 /* chilopod_gd.png */,
+				760DA475169782E900B020F7 /* chilopod_gd@2x.lua */,
+				760DA476169782EB00B020F7 /* chilopod_gd@2x.png */,
 				760DA46716968FD300B020F7 /* walker.lua */,
 				760DA46816968FD400B020F7 /* walker.png */,
 				760DA4611696799A00B020F7 /* cannon.lua */,
@@ -1005,7 +1008,6 @@
 		76D56EAD15F1943300615891 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				76114C1A166D2C1F004A4C8A /* gemini.plist */,
 				76114C30166D2C9E004A4C8A /* Default-568h@2x.png */,
 				76D2216916036FF100832178 /* Default@2x.png */,
 				76D2216516036E2C00832178 /* Default-Portrait~ipad.png */,
@@ -1659,8 +1661,9 @@
 				760DA4661696799B00B020F7 /* cannon.png in Resources */,
 				760DA46A16968FD400B020F7 /* walker.lua in Resources */,
 				760DA46C16968FD400B020F7 /* walker.png in Resources */,
-				760DA478169782EC00B020F7 /* chilopod_gd.lua in Resources */,
-				760DA47A169782EC00B020F7 /* chilopod_gd.png in Resources */,
+				760DA478169782EC00B020F7 /* chilopod_gd@2x.lua in Resources */,
+				760DA47A169782EC00B020F7 /* chilopod_gd@2x.png in Resources */,
+				760DA47D169B521D00B020F7 /* scene_font_test.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1706,8 +1709,9 @@
 				760DA4651696799B00B020F7 /* cannon.png in Resources */,
 				760DA46916968FD400B020F7 /* walker.lua in Resources */,
 				760DA46B16968FD400B020F7 /* walker.png in Resources */,
-				760DA477169782EC00B020F7 /* chilopod_gd.lua in Resources */,
-				760DA479169782EC00B020F7 /* chilopod_gd.png in Resources */,
+				760DA477169782EC00B020F7 /* chilopod_gd@2x.lua in Resources */,
+				760DA479169782EC00B020F7 /* chilopod_gd@2x.png in Resources */,
+				760DA47C169B521D00B020F7 /* scene_font_test.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
