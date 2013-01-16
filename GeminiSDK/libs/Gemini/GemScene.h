@@ -13,13 +13,10 @@
 // event names
 #define GEM_ENTER_SCENE_EVENT @"enterScene"
 #define GEM_EXIT_SCENE_EVENT @"exitScene"
+#define GEM_DESTROY_SCENE_EVENT @"destroyScene"
+#define GEM_CREATE_SCENE_EVENT @"createScene"
 
-@interface GemScene : GemDisplayObject {
-    NSMutableDictionary *layers;
-    NSNumber *defaultLayerIndex;
-    GLfloat zoom;
-}
-
+@interface GemScene : GemDisplayObject 
 @property (readonly) NSMutableDictionary *layers;
 @property (nonatomic) GLfloat zoom;
 

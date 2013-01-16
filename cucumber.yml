@@ -1,1 +1,3 @@
-default: --format json --out result.json
+default: --tags @ci --format json --out result.json
+simple: --tags @ci
+

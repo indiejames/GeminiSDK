@@ -6,13 +6,14 @@
 //
 //
 
-#import "GemDisplayObject.h"
+#import "GemDisplayGroup.h"
 #import "GemCharSet.h"
 
-@interface GemTextField : GemDisplayObject
+@interface GemTextField : GemDisplayGroup
 
 @property GLKVector4 padding;
-@property GemCharSet *charSet;
+@property NSString *text;
+@property unsigned int maxChars;
 
 
 @end

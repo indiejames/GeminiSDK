@@ -33,6 +33,7 @@ extern int luaopen_director_lib(lua_State *L);
 extern int luaopen_physics_lib(lua_State *L);
 extern int luaopen_particle_system_lib(lua_State *L);
 extern int luaopen_text_lib(lua_State *L);
+extern int luaopen_UI_lib (lua_State *L);
 
 /*
 ** these libs are loaded by lua.c and are readily available to any Lua
@@ -56,6 +57,7 @@ static const luaL_Reg loadedlibs[] = {
     {"display", luaopen_display_lib},
     {"transition", luaopen_transition_lib},
     {"text", luaopen_text_lib},
+    {"UI", luaopen_UI_lib},
     {NULL, NULL}
 };
 

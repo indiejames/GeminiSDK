@@ -77,6 +77,7 @@
             eventListenerTableRef = -1;
             selfRef = -1;
         }
+        
     }
     
     return self;

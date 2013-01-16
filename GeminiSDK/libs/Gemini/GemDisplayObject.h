@@ -41,7 +41,9 @@
     BOOL fixedRotation;
     BOOL isVisible;
     void *physicsBody;
+    
 }
+
 
 @property (nonatomic) GLfloat alpha;
 @property (nonatomic) GLfloat height;
@@ -77,10 +79,13 @@
 
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
 -(GLKMatrix3) transform;
+-(GLKMatrix3) cumulativeTransform;
 -(void) setPhysicsTransform:(GLKVector3)trans;
+-(GLKVector2) getTouchPoint;
 -(BOOL)doesContainPoint:(GLKVector2)point;
 -(void)setIsActive:(bool)active;
 -(bool)isActive;
 -(NSArray *)getTouchingObjects;
+//-(void)remove;
 
 @end

@@ -6,15 +6,12 @@
 
 local timer = require("timer")
 local director = require("director")
-local scene = director.newScene()
-local sprite = require("sprite")
 local system = require("system")
 local text = require("text")
-local cannon = require("cannon")
-local walker = require("walker")
+local ui = require("UI")
 
-local redRectangle
-local runner
+local scene = director.newScene()
+local text_input
 
 
 ---------------------------------------------------------------------------------
@@ -28,17 +25,9 @@ function scene:createScene(event)
 	--	CREATE display objects here (layers, groups, sprites, etc.)
 	-----------------------------------------------------------------------------
     
-    local layer1 = display.newLayer(1)
-    self:addLayer(layer1)
-    charSet = text.newCharset("FONT1", "chilopod_gd")
- --charSet.scale = 0.5
-    local label = text.newText("FONT1", "Hello, World")
-    label.x = 240
-    label.y = 160
-    layer1:insert(label)
-
-    print("Lua: E")
-
+    text_input = ui.newTextField(100,100,250,50)
+    self:addNativeObject(text_input)
+    
 end
 
 -- Called immediately after scene has moved onscreen

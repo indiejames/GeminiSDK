@@ -24,6 +24,7 @@ function scene:createScene(event)
 	-----------------------------------------------------------------------------
     
     local layer1 = display.newLayer(1)
+    self:addLayer(layer1)
     redCircle = display.newCircle(100, 100, 100)
     redCircle:setFillColor(1, 0, 1, 1)
     redCircle:setBorderColor(1, 1, 1, 1)

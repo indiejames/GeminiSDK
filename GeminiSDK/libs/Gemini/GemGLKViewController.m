@@ -66,6 +66,7 @@ enum {
 @synthesize timerManager;
 @synthesize eventManager;
 @synthesize particleSystemManager;
+@synthesize displayObjectManager;
 @synthesize director;
 @synthesize displayType;
 @synthesize updateTime;
@@ -157,8 +158,14 @@ enum {
     eventManager.parentGLKViewController = self;
     particleSystemManager = [[GemParticleSystemManager alloc] init];
     timerManager = [[GemTimerManager alloc] init];
+    displayObjectManager = [[GemDisplayObjectManager alloc] init];
     
     view.multipleTouchEnabled = YES;
+    
+    // TEST
+    /*UITextField *field = [[UITextField alloc] initWithFrame:CGRectMake(100, 100, 250, 50)];
+    field.backgroundColor = [UIColor redColor];
+    [self.view addSubview:field];*/
     
 }
 
@@ -303,5 +310,19 @@ enum {
 /*-(BOOL)canBecomeFirstResponder {
     return YES;
 }*/
+
+# pragma mark text input
+-(BOOL)hasText {
+    // TODO - implement this
+    return NO;
+}
+
+-(void)insertText:(NSString *)text {
+    // insert text at the current cursor position
+}
+
+-(void)deleteBackward {
+    // delete a character from the displayed text
+}
 
 @end

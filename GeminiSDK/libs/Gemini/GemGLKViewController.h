@@ -14,6 +14,7 @@
 #import "GemDirector.h"
 #import "GemEventManager.h"
 #import "GemParticleSystemManager.h"
+#import "GemDisplayObjectManager.h"
 
 
 typedef enum {
@@ -36,6 +37,7 @@ typedef enum {
     GemDirector *director;
     GemEventManager *eventManager;
     GemParticleSystemManager *particleSystemManager;
+    GemDisplayObjectManager *displayObjectManager;
     double updateTime;
 }
 
@@ -46,6 +48,7 @@ typedef enum {
 @property (readonly) double updateTime;
 @property (nonatomic) GemDisplayType displayType;
 @property (readonly) GemParticleSystemManager *particleSystemManager;
+@property (readonly) GemDisplayObjectManager *displayObjectManager;
 
 -(void)setPreRenderCallback:(SEL)callback;
 -(void)setPostRenderCallback:(SEL)callback;

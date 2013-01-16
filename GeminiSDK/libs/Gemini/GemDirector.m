@@ -76,7 +76,7 @@ static GemScene * createDefaultScene(lua_State *L){
     
     GemScene *cScene = [scenes objectForKey:currentScene];
     
-    if (cScene != nil && ![cScene.name isEqualToString:GEM_DEFAULT_SCENE]) {
+    if (options != nil && cScene != nil && ![cScene.name isEqualToString:GEM_DEFAULT_SCENE]) {
         GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Target:cScene];
         exitEvent.name = GEM_EXIT_SCENE_EVENT;
         [cScene handleEvent:exitEvent];
@@ -265,7 +265,14 @@ GemScene * (^sceneLoader)(NSString *sceneName, lua_State *L) = ^GemScene *(NSStr
 
 -(void)destroyScene:(NSString *)sceneName {
     GemScene *scene = [scenes objectForKey:sceneName];
+    
+    GemEvent *event = [[GemEvent alloc] initWithLuaState:L Target:scene];
+    event.name = GEM_DESTROY_SCENE_EVENT;
+    
+    [scene handleEvent:event];
+    
     [allScenes removeObject:scene];
+    [scenes removeObjectForKey:sceneName];
     
 }
 

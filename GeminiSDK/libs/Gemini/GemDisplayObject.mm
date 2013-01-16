@@ -11,10 +11,11 @@
 #include "Box2D.h"
 #import "GemPhysics.h"
 #import "Gemini.h"
+#import "GLUtils.h"
+#import "GemGLKViewController.h"
 
 
-@implementation GemDisplayObject
-
+@implementation GemDisplayObject 
 
 @synthesize parent;
 @synthesize layer;
@@ -57,6 +58,9 @@
         needsUpdate = YES;
         needsTransformUpdate = YES;
         isVisible = YES;
+        
+        [((GemGLKViewController *)[Gemini shared].viewController).displayObjectManager addObject:self ];
+
     }
     
     return self;
@@ -305,6 +309,28 @@
     return transform;
 }
 
+-(GLKMatrix3)cumulativeTransform {
+    if (self.parent != nil) {
+        return GLKMatrix3Multiply([self.parent cumulativeTransform], [self transform]);
+    } else {
+        return [self transform];
+    }
+}
+
+
+// get the center point of the object in screen coordinates
+-(GLKVector2) getTouchPoint {
+    // get the cumulative transform of this object an its parent chain
+    cumulativeTransform = [self cumulativeTransform];
+    
+    GLKVector3 center = GLKVector3Make(0, 0, 1);
+    center = GLKMatrix3MultiplyVector3(cumulativeTransform, center);
+    
+    GLKVector2 vec = GLKVector2Make(center.x, center.y);
+    return pointToScreenCoordinates(vec);
+
+}
+
 // NOTE - this method must be overriden by subclasses if they are to support touch events and
 // don't want to depend on an attached physics body
 -(BOOL)doesContainPoint:(GLKVector2) point {
@@ -319,13 +345,8 @@
 }
 
 // remove this display object and any child objects it may have
-/*-(void)deleteObject {
-    GemDisplayObject  **obj = (GemDisplayObject **)lua_touserdata(L, -1);
-    NSLog(@"LGeminiSupport: deleting display object %@", (*obj).name);
-    [(*obj).parent remove:*obj];
-    [*obj release];
-    
-    return 0;
+/*-(void)remove {
+    [((GemGLKViewController *)[Gemini shared].viewController).
 }*/
 
 

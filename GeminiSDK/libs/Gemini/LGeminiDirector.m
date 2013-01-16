@@ -10,6 +10,7 @@
 #import "Gemini.h"
 #import "GemGLKViewController.h"
 #import "GemScene.h"
+#import "GemNativeObject.h"
 #import "LGeminiLuaSupport.h"
 #import "LGeminiDisplay.h"
 #import "LGeminiObject.h"
@@ -101,6 +102,15 @@ static int addLayerToScene(lua_State *L){
     return 0;
 }
 
+static int addNativeObjectToScene(lua_State *L){
+    
+    __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
+     __unsafe_unretained GemNativeObject **gno = (__unsafe_unretained GemNativeObject **)lua_touserdata(L, 2);
+    [*scene addObject:*gno];
+    
+    return 0;
+}
+
 static int setSceneZoom(lua_State *L){
     __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     GLfloat zoom = luaL_checknumber(L, -1);
@@ -177,6 +187,7 @@ static const struct luaL_Reg scene_m [] = {
     {"__index", sceneIndex},
     {"__newindex", sceneNewIndex},
     {"addLayer", addLayerToScene},
+    {"addNativeObject", addNativeObjectToScene},
     {"addEventListener", addEventListener},
     {"setZoom", setSceneZoom},
     {NULL, NULL}

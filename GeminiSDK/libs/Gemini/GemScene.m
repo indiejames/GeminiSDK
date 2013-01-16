@@ -7,10 +7,21 @@
 //
 
 #import "GemScene.h"
+#import "GemEvent.h" 
 #import "LGeminiDirector.h"
 #import "GLUtils.h"
+#import "GemNativeTextField.h"
+#import "GemNativeObject.h"
+#import "Gemini.h"
+#import "GemGLKViewController.h"
 
-@implementation GemScene
+@implementation GemScene { 
+    NSMutableDictionary *layers;
+    NSNumber *defaultLayerIndex;
+    GLfloat zoom;
+    NSMutableArray *nativeObjects;
+}
+
 @synthesize layers;
 @synthesize zoom;
 
@@ -21,6 +32,7 @@
         // preseve the stack
         int top = lua_gettop(L);
         layers = [[NSMutableDictionary alloc] initWithCapacity:1];
+        nativeObjects = [[NSMutableArray alloc] initWithCapacity:1];
         int pop = lua_gettop(L) - top;
         lua_pop(L, pop);
         
@@ -52,6 +64,7 @@
         int top = lua_gettop(L);
         
         layers = [[NSMutableDictionary alloc] initWithCapacity:1];
+        nativeObjects = [[NSMutableArray alloc] initWithCapacity:1];
         
         // create a default layer
         defaultLayerIndex = [NSNumber numberWithInt:index];
@@ -80,6 +93,10 @@
     return self;
 }
 
+-(void)dealloc {
+    GemLog(@"Deallocing scene %@", self.name);
+}
+
 // add a new layer
 -(void)addLayer:(GemLayer *)newLayer {
     NSLog(@"GemScene %@ adding layer with index %d", self.name, newLayer.index);
@@ -93,38 +110,51 @@
 }
 
 
-// add a display object to the default layer (layer 0)
+// add a display object to the default layer (layer 0) or to the list of native objects
 -(void)addObject:(GemDisplayObject *)obj {
-    NSLog(@"GemScene adding object to scene %@", self.name);
+    GemLog(@"GemScene adding object to scene %@", self.name);
     
-    // get the default layer on the stage
-    GemLayer *layerGroup = (GemLayer *)[layers objectForKey:defaultLayerIndex];
-    // remove from previous layer (if any) first
-    [obj.layer remove:obj];
-    obj.layer = layerGroup;
-    [layerGroup insert:obj];
+    if ([obj.class isSubclassOfClass:GemNativeObject.class]) {
+        // native objects don't get added to a layer since they are always on top
+        [nativeObjects addObject:obj];
+    } else {
+        // get the default layer on the stage
+        GemLayer *layerGroup = (GemLayer *)[layers objectForKey:defaultLayerIndex];
+        // remove from previous layer (if any) first
+        [obj.layer remove:obj];
+        obj.layer = layerGroup;
+        [layerGroup insert:obj];
+
+    }
     
+        
 }
 
 
-// add a display object to a given layer.  create the layer
+// add a display object to a given layer or to the list of native objects.  create the layer
 // if it does not already exist
 -(void)addObject:(GemDisplayObject *)obj toLayer:(int)destLayer {
-    NSLog(@"GemScene adding object");
-    // get the layer
-    GemLayer *layerGroup = (GemLayer *)[layers objectForKey:[NSNumber numberWithInt:destLayer]];
-    if (layerGroup == nil) {
-        NSLog(@"GeminiRenderer layer is nil");
-        layerGroup = [[GemLayer alloc] initWithLuaState:((GemDisplayObject *)obj).L];
-        layerGroup.index = destLayer;
-        NSLog(@"GeminiRenderer created new layer");
-        [layers setObject:layerGroup forKey:[NSNumber numberWithInt:destLayer]];
+    GemLog(@"GemScene adding object");
+    
+    if ([obj.class isSubclassOfClass:GemNativeObject.class]) {
+        // native objects don't get added to a layer since they are always on top
+        [nativeObjects addObject:obj];
+    } else {
+        // get the layer
+        GemLayer *layerGroup = (GemLayer *)[layers objectForKey:[NSNumber numberWithInt:destLayer]];
+        if (layerGroup == nil) {
+            NSLog(@"GeminiRenderer layer is nil");
+            layerGroup = [[GemLayer alloc] initWithLuaState:((GemDisplayObject *)obj).L];
+            layerGroup.index = destLayer;
+            NSLog(@"GeminiRenderer created new layer");
+            [layers setObject:layerGroup forKey:[NSNumber numberWithInt:destLayer]];
+        }
+        NSLog(@"Inserting object into layer %d", destLayer);
+        // remove from previous layer (if any) first
+        [obj.layer remove:obj];
+        obj.layer = layerGroup;
+        [layerGroup insert:obj];
     }
-    NSLog(@"Inserting object into layer %d", destLayer);
-    // remove from previous layer (if any) first
-    [obj.layer remove:obj];
-    obj.layer = layerGroup;
-    [layerGroup insert:obj];
     
 }
 
@@ -166,6 +196,31 @@
         
     }     
     
+}
+
+-(BOOL)handleEvent:(GemEvent *)event {
+    if ([event.name isEqualToString:GEM_DESTROY_SCENE_EVENT]) {
+        /*// free all the objects in this scene
+        NSArray *keys = [layers allKeys];
+        for (int i=-0; i<[keys count]; i++) {
+            NSNumber *key = [keys objectAtIndex:i];
+            GemLayer *layer = [layers objectForKey:key];
+            [layer.objects enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                GemDisplayObject *gemObj = (GemDisplayObject *)obj;
+                if ([gemObj.class isSubclassOfClass:GemDisplayGroup.class]) {
+                    
+                }
+            }];
+        }*/
+        
+        // free any native objects in this scene
+        [nativeObjects enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
+            GemNativeObject *gemObj = (GemNativeObject *)obj;
+            [gemObj.nativeObject removeFromSuperview];
+        }];
+    }
+
+    return [super handleEvent:event];
 }
 
 @end

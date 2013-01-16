@@ -6,15 +6,12 @@
 
 local timer = require("timer")
 local director = require("director")
-local scene = director.newScene()
-local sprite = require("sprite")
 local system = require("system")
 local text = require("text")
-local cannon = require("cannon")
-local walker = require("walker")
+local ui = require("UI")
 
-local redRectangle
-local runner
+local scene = director.newScene()
+
 
 
 ---------------------------------------------------------------------------------
@@ -29,16 +26,14 @@ function scene:createScene(event)
 	-----------------------------------------------------------------------------
     
     local layer1 = display.newLayer(1)
-    self:addLayer(layer1)
+ self:addLayer(layer1)
     charSet = text.newCharset("FONT1", "chilopod_gd")
- --charSet.scale = 0.5
     local label = text.newText("FONT1", "Hello, World")
     label.x = 240
     label.y = 160
     layer1:insert(label)
-
-    print("Lua: E")
-
+    
+    
 end
 
 -- Called immediately after scene has moved onscreen
@@ -47,7 +42,12 @@ function scene:enterScene(event)
 	-----------------------------------------------------------------------------
 	--	Start timers, set up event listeners, etc.  
 	-----------------------------------------------------------------------------
+    print ("Lua: enterStart")
 
+    director.destroyScene("scene_text_input_test")
+    
+    print ("Lua: enterEnd")
+    
    end
 
 

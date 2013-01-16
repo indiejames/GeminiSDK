@@ -110,7 +110,7 @@
             }
             //GemLog(@"currentFrame = %d", currentFrame);
         } else if(currentAnimation.loopCount == -1) {
-            // see-saw back and forth between first and last frame exacly once
+            // see-saw back and forth between first and last frame exactly once
             if (rawFrameNum >= 2*(currentAnimation.frameCount - 1)) {
                 currentFrame = 0;
                 paused = YES;

@@ -44,6 +44,8 @@ void transformVertices(GLfloat *outVerts, GLfloat *inVerts, GLuint vertCount, GL
     
 }
 
+
+
 GLKVector2 getDimensionsFromSettings(BOOL adjustForLayout){
     NSDictionary *settings = [Gemini shared].settings;
     NSString *resolution = [settings objectForKey:@"resolution"];
@@ -76,7 +78,7 @@ GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout){
     GLfloat height = dim.y;
     
        
-    GemLog(@"View dimensions:(%f,%f)",width,height);
+    //GemLog(@"View dimensions:(%f,%f)",width,height);
     
     GLfloat left = 0;
     GLfloat right = width;
@@ -84,6 +86,30 @@ GLKMatrix4 computeModelViewProjectionMatrix(BOOL adjustForLayout){
     GLfloat top = height;
     
     return GLKMatrix4Make(2.0/(right-left),0,0,0,0,2.0/(top-bottom),0,0,0,0,-1.0,0,-1.0,-1.0,-1.0,1.0);
+}
+
+GLKVector2 pointToScreenCoordinates(GLKVector2 point){
+    GLKMatrix4 modelViewProj = computeModelViewProjectionMatrix(YES);
+    GLKVector4 vec = GLKVector4Make(point.x, point.y, 0, 1);
+    vec = GLKMatrix4MultiplyVector4(modelViewProj, vec);
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenRect.size.width;
+    CGFloat height = screenRect.size.height;
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    BOOL isLandscape = UIDeviceOrientationIsLandscape([Gemini shared].viewController.interfaceOrientation);
+    
+    if (isLandscape || orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+        GLfloat tmp = width;
+        width = height;
+        height = tmp;
+    }
+
+    GLfloat x = 0.5 * (vec.x + 1.0) * width;
+    GLfloat y = 0.5 * (vec.y + 1.0) * height;
+    
+    return GLKVector2Make(x, y);
 }
 
 GLKTextureInfo *createTexture(NSString * imgFileName){

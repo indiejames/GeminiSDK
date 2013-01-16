@@ -123,7 +123,6 @@ int removeEventListener(lua_State *L){
     // stack: 1 - object, 2 - event name, 3 - listener
     __unsafe_unretained GemObject **go = (__unsafe_unretained GemObject **)lua_touserdata(L, 1);
     const char *eventName = luaL_checkstring(L, 2);
-    NSString *name = [NSString stringWithFormat:@"%s", eventName];
     
     // get the event handler table
     lua_rawgeti(L, LUA_REGISTRYINDEX, (*go).eventListenerTableRef);

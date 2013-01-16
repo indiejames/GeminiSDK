@@ -38,7 +38,21 @@
         NSTextCheckingResult *match = [regex firstMatchInString:command options:0 range:NSMakeRange(0, [command length])];
         NSString *sceneName = [command substringWithRange:[match rangeAtIndex:1]];
         
-        [((GemGLKViewController *)[Gemini shared].viewController).director loadScene:sceneName];
+        [((GemGLKViewController *)[Gemini shared].viewController).director gotoScene:sceneName withOptions:nil];
+        
+    } else if([command hasPrefix:@"get_touch_point_of_object_"]){
+        // get the (touch) coordinates for a display object
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"get_touch_point_of_object_(.*)" options:0 error:NULL];
+        NSTextCheckingResult *match = [regex firstMatchInString:command options:0 range:NSMakeRange(0, [command length])];
+        NSString *object_name = [command substringWithRange:[match rangeAtIndex:1]];
+        GemDisplayObject *obj = [((GemGLKViewController *)[Gemini shared].viewController).displayObjectManager objectWithName:object_name];
+        if (obj != nil) {
+            GLKVector2 center = [obj getTouchPoint];
+            NSString *centerStr = [NSString stringWithFormat:@"%f,%f",center.x, center.y];
+            return centerStr;
+        } else {
+            return @"NO SUCH OBJECT";
+        }
         
     }
     

@@ -26,7 +26,7 @@
 @property (nonatomic) int propertyTableRef;
 @property (nonatomic) int eventListenerTableRef;
 @property (readonly) lua_State *L;
-@property (nonatomic, retain) NSString *name;
+@property (strong) NSString *name;
 
 -(id)initWithLuaState:(lua_State *)luaState;
 -(id) initWithLuaState:(lua_State *)luaState LuaKey:(const char *)luaKey;
