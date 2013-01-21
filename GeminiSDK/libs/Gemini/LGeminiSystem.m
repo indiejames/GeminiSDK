@@ -72,10 +72,42 @@ static int screenshot(lua_State *L){
     return 0;
 }
 
+static int listSystemFonts(lua_State *L){
+    NSArray *familyNames = [UIFont familyNames];
+    
+    // create a table to hold the output
+    // the list of familty names are the keys and the font names for each
+    // family name will be the values (sub tables)
+    lua_newtable(L);
+    
+    for (int i=0; i<[familyNames count]; i++) {
+        NSString *familyName = [familyNames objectAtIndex:i];
+        
+        // this will be the key for the main table
+        lua_pushstring(L, [familyName UTF8String]);
+        
+        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];
+        lua_newtable(L);
+        for (int j=0; j<[fontNames count]; j++) {
+            NSString *fontName = [fontNames objectAtIndex:j];
+            // add the font name as a value in the table
+            lua_pushstring(L, [fontName UTF8String]);
+            lua_rawseti(L, -2, j+1);
+        }
+        
+        // add the sub table to the main table
+        lua_rawset(L, -3);
+
+    }
+    
+    return 1;
+}
+
 static const struct luaL_Reg system_f [] = {
     {"getTimer", getTimer},
     {"pathForFile", getPathForFile},
     {"screenshot", screenshot},
+    {"listSystemFonts", listSystemFonts},
     {"__index", systemIndex},
     {NULL, NULL}
 };

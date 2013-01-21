@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "QSStrings.h"
 #import "GemGLKViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation AppDelegate
 
@@ -26,8 +27,26 @@
         GLKView *view = (GLKView *)viewController.view;
         
         UIImage *image = [view snapshot];
+        
         NSData *data = UIImagePNGRepresentation(image);
         
+        NSString *base64 = [QSStrings encodeBase64WithData:data];
+        
+        return base64;
+        
+    } else if([command isEqualToString:@"nativeScreenshot"]) {
+        if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+            UIGraphicsBeginImageContextWithOptions(self.window.bounds.size, NO, [UIScreen mainScreen].scale);
+        else
+            UIGraphicsBeginImageContext(self.window.bounds.size);
+        GLKViewController *viewController = [Gemini shared].viewController;
+        GLKView *view = (GLKView *)viewController.view;
+        CALayer *layer = view.layer;
+
+        [layer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        NSData * data = UIImagePNGRepresentation(image);
         NSString *base64 = [QSStrings encodeBase64WithData:data];
         
         return base64;
@@ -46,6 +65,11 @@
         NSTextCheckingResult *match = [regex firstMatchInString:command options:0 range:NSMakeRange(0, [command length])];
         NSString *object_name = [command substringWithRange:[match rangeAtIndex:1]];
         GemDisplayObject *obj = [((GemGLKViewController *)[Gemini shared].viewController).displayObjectManager objectWithName:object_name];
+        
+        if (obj == nil) {
+            // check to see if it is a native object
+        }
+        
         if (obj != nil) {
             GLKVector2 center = [obj getTouchPoint];
             NSString *centerStr = [NSString stringWithFormat:@"%f,%f",center.x, center.y];

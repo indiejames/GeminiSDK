@@ -55,9 +55,22 @@ Then /^screen_compare\("(.*?)"\)$/ do |filename|
   assert dist < 0.01, "Screenshot differs from reference image #{filename}"
 end
 
+Then /^native_screen_compare\("(.*?)"\)$/ do |filename|
+  base64 = backdoor("calabashBackdoor:", "nativeScreenshot")
+  ref_img = reference_image(filename)
+  img = Image.read_inline(base64).first
+  diff, dist = img.compare_channel(ref_img, RootMeanSquaredErrorMetric)
+  assert dist < 0.01, "Screenshot differs from reference image #{filename}"
+end
+
 Then /^I touch the object named "(.*?)"$/ do |object_name|
   point_str = backdoor("calabashBackdoor:", "get_touch_point_of_object_#{object_name}")
   assert(point_str != "NO SUCH OBJECT", "Object \"#{object_name}\" does not exist")
   x,y = point_str.split(",")
+  print("x = #{x}  y = #{y}")
   touch(nil, :offset=>{:x => x.to_f, :y => y.to_f})
+end
+
+Then /^I type Hello world$/ do
+  playback "type_hello_world"
 end

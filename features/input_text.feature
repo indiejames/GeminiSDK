@@ -6,5 +6,8 @@ Feature: Input Text
 
 Scenario: Text Input Focus
   Given I am at the "scene_text_input_test" scene
-  Then I touch the object named "test_text"
-  And screen_compare("text_input_focus_test.png")
+  Then I touch the "type something" input field
+  # do this twice to make sure the simulator gets input focus
+  Then I touch the "type something" input field
+  Then I type Hello world
+  Then I should see text containing "Hello world"

@@ -107,9 +107,71 @@ GLKVector2 pointToScreenCoordinates(GLKVector2 point){
     }
 
     GLfloat x = 0.5 * (vec.x + 1.0) * width;
-    GLfloat y = 0.5 * (vec.y + 1.0) * height;
+    GLfloat y = 0.5 * (-vec.y + 1.0) * height;
     
     return GLKVector2Make(x, y);
+}
+
+GLKVector2 screenCoordToPoint(GLKVector2 coord) {
+    GLKVector2 dim = getDimensionsFromSettings(YES);
+    GLfloat glWidth = dim.x;
+    GLfloat glHeight = dim.y;
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenRect.size.width;
+    CGFloat height = screenRect.size.height;
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    BOOL isLandscape = UIDeviceOrientationIsLandscape([Gemini shared].viewController.interfaceOrientation);
+    
+    if (isLandscape || orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+        GLfloat tmp = width;
+        width = height;
+        height = tmp;
+    }
+
+    GLfloat x = (coord.x / width) * glWidth;
+    GLfloat y = ((height - coord.y) / height) * glHeight;
+
+    return GLKVector2Make(x, y);
+}
+
+GLfloat widthToDeviceWidth(GLfloat w) {
+    
+    GLKVector2 dim = getDimensionsFromSettings(YES);
+    GLfloat glWidth = dim.x;
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenRect.size.width;
+    CGFloat height = screenRect.size.height;
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    BOOL isLandscape = UIDeviceOrientationIsLandscape([Gemini shared].viewController.interfaceOrientation);
+    
+    if (isLandscape || orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+        width = height;
+    }
+    
+    return (w / glWidth) * width;
+
+}
+
+GLfloat heightToDeviceHeight(GLfloat h){
+    GLKVector2 dim = getDimensionsFromSettings(YES);
+    GLfloat glHeight = dim.y;
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat width = screenRect.size.width;
+    CGFloat height = screenRect.size.height;
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    BOOL isLandscape = UIDeviceOrientationIsLandscape([Gemini shared].viewController.interfaceOrientation);
+    
+    if (isLandscape || orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+        height = width;
+    }
+    
+    return (h / glHeight) * height;
 }
 
 GLKTextureInfo *createTexture(NSString * imgFileName){
@@ -133,6 +195,23 @@ GLKTextureInfo *createTexture(NSString * imgFileName){
     assert(textId != nil);
     
     return textId;
+}
+
+CGRect frameToDeviceFrame(CGRect frame){
+    GLKVector2 coords = GLKVector2Make(frame.origin.x, frame.origin.y);
+
+    coords = pointToScreenCoordinates(coords);
+    
+    frame.origin.x = coords.x;
+    frame.origin.y = coords.y;
+    
+    frame.size.width = widthToDeviceWidth(frame.size.width);
+    frame.size.height = heightToDeviceHeight(frame.size.height);
+    
+    frame.origin.x = frame.origin.x - frame.size.width / 2.0;
+    frame.origin.y = frame.origin.y - frame.size.height / 2.0;
+    
+    return frame;
 }
 
 void GemCheckGLError(void){

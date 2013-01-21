@@ -149,7 +149,7 @@ int removeEventListener(lua_State *L){
     }
 
     
-    GemLog(@"LGeminiObject: Removed event listener for %@ event for %@", name, (*go).name);
+    GemLog(@"LGeminiObject: Removed event listener for %s event for %@", eventName, (*go).name);
     
     
     return 0;

@@ -94,7 +94,7 @@
 }
 
 -(void)dealloc {
-    GemLog(@"Deallocing scene %@", self.name);
+//    GemLog(@"Deallocing scene %@", self.name);
 }
 
 // add a new layer

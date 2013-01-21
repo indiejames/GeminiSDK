@@ -102,6 +102,25 @@ int setLuaPath(lua_State *L, NSString* path );
     lua_setglobal(L, "RENDER_NORMAL");
     lua_pushinteger(L, GEM_PHYSICS_HYBRID);
     lua_setglobal(L, "RENDER_HYBRID");
+    
+    // keyboard types
+    lua_pushinteger(L, UIKeyboardTypeDefault); // Default type for the current input method.
+    lua_setglobal(L,"UIKeyboardTypeDefault");
+    lua_pushinteger(L, UIKeyboardTypeASCIICapable); // Displays a keyboard which can enter ASCII characters, non-ASCII keyboards remain active
+    lua_setglobal(L,"UIKeyboardTypeASCIICapable");
+    lua_pushinteger(L, UIKeyboardTypeNumbersAndPunctuation);  // Numbers and assorted punctuation.
+    lua_setglobal(L,"UIKeyboardTypeNumbersAndPunctuation");
+    lua_pushinteger(L, UIKeyboardTypeURL); // A type optimized for URL entry (shows . / .com prominently).
+    lua_setglobal(L, "UIKeyboardTypeURL");
+    lua_pushinteger(L, UIKeyboardTypeNumberPad); // A number pad (0-9). Suitable for PIN entry.
+    lua_setglobal(L, "UIKeyboardTypeNumberPad");
+    lua_pushinteger(L, UIKeyboardTypePhonePad); // A phone pad (1-9, *, 0, #, with letters under the numbers).
+    lua_setglobal(L, "UIKeyboardTypePhonePad");
+    lua_pushinteger(L, UIKeyboardTypeNamePhonePad); // A type optimized for entering a person's name or phone number.
+    lua_setglobal(L, "UIKeyboardTypeNamePhonePad");
+    lua_pushinteger(L, UIKeyboardTypeEmailAddress); // A type optimized for multiple email address entry (shows space @ . prominently).
+    lua_setglobal(L, "UIKeyboardTypeEmailAddress");
+    
     lua_settop(L, 0);
 }
 

@@ -13,5 +13,10 @@
 @property (readonly) UITextField *textField;
 
 -(id)initWithLuaState:(lua_State *)luaState Frame:(CGRect)frame;
+-(void)setFont:(NSString *)fontName;
+-(void)setFontSize:(CGFloat)size;
+-(void)setKeyboardType:(int)type;
+-(void)setFontColor:(GLKVector4)color;
+-(void)setBackgroundColor:(GLKVector4)color;
 
 @end

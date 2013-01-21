@@ -2236,6 +2236,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = GeminiSDK/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
@@ -2264,7 +2265,10 @@
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "CUKE=1";
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					"CUKE=1",
+					"GEMINI_DEBUG=1",
+				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = GeminiSDK/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;

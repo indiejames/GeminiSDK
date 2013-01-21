@@ -32,8 +32,7 @@ static int eventIndex(lua_State *L){
                 rval = 1;
             } else if(strcmp("target", key) == 0) {
                 GemObject *target = (*event).target;
-                
-                luaL_ref(L, target.selfRef);
+                lua_rawgeti(L, LUA_REGISTRYINDEX, target.selfRef);
                 
                 rval = 1;
             } else {
@@ -44,6 +43,8 @@ static int eventIndex(lua_State *L){
         }
         
         
+    } else {
+        GemLog(@"Event is null");
     }
     
     return rval;

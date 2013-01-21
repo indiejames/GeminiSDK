@@ -274,6 +274,8 @@ GemScene * (^sceneLoader)(NSString *sceneName, lua_State *L) = ^GemScene *(NSStr
     [allScenes removeObject:scene];
     [scenes removeObjectForKey:sceneName];
     
+    [((GemGLKViewController *)([Gemini shared].viewController)).displayObjectManager removeObject:scene];
+    
 }
 
 -(void)setCurrentScene:(NSString *)scene {
@@ -332,6 +334,8 @@ GemScene * (^sceneLoader)(NSString *sceneName, lua_State *L) = ^GemScene *(NSStr
             tempScene.zoom = currScene.zoom;
         }
         [renderer renderScene:tempScene];
+        
+         [((GemGLKViewController *)([Gemini shared].viewController)).displayObjectManager removeObject:tempScene];
         
     }
 }
