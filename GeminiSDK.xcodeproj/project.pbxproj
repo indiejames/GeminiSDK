@@ -135,6 +135,7 @@
 		76114C14166D2B3D004A4C8A /* LICENSE_Gemini.txt in Resources */ = {isa = PBXBuildFile; fileRef = 76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */; };
 		76114C31166D2C9E004A4C8A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 76114C30166D2C9E004A4C8A /* Default-568h@2x.png */; };
 		76324FDA16069F2600970D03 /* GemFileNameResolver.m in Sources */ = {isa = PBXBuildFile; fileRef = 76324FD916069F2600970D03 /* GemFileNameResolver.m */; };
+		76413BCD16AE4A5000D7C2CF /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C91DD16ADB29D0006E7A2 /* libsqlite3.0.dylib */; };
 		765A759B161131090077A719 /* GemOpenGLState.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A759A161131090077A719 /* GemOpenGLState.m */; };
 		765A759F1613E4270077A719 /* GemTextureBasedSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A759E1613E4270077A719 /* GemTextureBasedSceneTransition.m */; };
 		765A75A21614FE170077A719 /* GemPageTurnSceneTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 765A75A11614FE170077A719 /* GemPageTurnSceneTransition.m */; };
@@ -153,7 +154,6 @@
 		768B8FCB16A3AB8100070281 /* GemNativeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 768B8FC916A3AB8100070281 /* GemNativeObject.m */; };
 		768B8FCE16A3B45200070281 /* scene_text_input_remove_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 768B8FCD16A3B45200070281 /* scene_text_input_remove_test.lua */; };
 		768B8FCF16A3B45200070281 /* scene_text_input_remove_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 768B8FCD16A3B45200070281 /* scene_text_input_remove_test.lua */; };
-		768C91DE16ADB29D0006E7A2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C91DD16ADB29D0006E7A2 /* libsqlite3.0.dylib */; };
 		768C91E016ADB2A80006E7A2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C91DD16ADB29D0006E7A2 /* libsqlite3.0.dylib */; };
 		768C91EF16AE1EC60006E7A2 /* lsqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 768C91EE16AE1EC60006E7A2 /* lsqlite3.c */; };
 		768C91F016AE1EC60006E7A2 /* lsqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 768C91EE16AE1EC60006E7A2 /* lsqlite3.c */; };
@@ -516,6 +516,7 @@
 		76114C30166D2C9E004A4C8A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		76324FD816069F2600970D03 /* GemFileNameResolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemFileNameResolver.h; path = libs/Gemini/GemFileNameResolver.h; sourceTree = "<group>"; };
 		76324FD916069F2600970D03 /* GemFileNameResolver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemFileNameResolver.m; path = libs/Gemini/GemFileNameResolver.m; sourceTree = "<group>"; };
+		76413BCB16AE4A2200D7C2CF /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		765A7599161131090077A719 /* GemOpenGLState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemOpenGLState.h; path = libs/Gemini/GemOpenGLState.h; sourceTree = "<group>"; };
 		765A759A161131090077A719 /* GemOpenGLState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemOpenGLState.m; path = libs/Gemini/GemOpenGLState.m; sourceTree = "<group>"; };
 		765A759D1613E4270077A719 /* GemTextureBasedSceneTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemTextureBasedSceneTransition.h; path = libs/Gemini/GemTextureBasedSceneTransition.h; sourceTree = "<group>"; };
@@ -943,7 +944,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				768C91DE16ADB29D0006E7A2 /* libsqlite3.0.dylib in Frameworks */,
+				76413BCD16AE4A5000D7C2CF /* libsqlite3.0.dylib in Frameworks */,
 				234bae4dddec68a0ff3961a9 /* QuartzCore.framework in Frameworks */,
 				c0e0fb093cd6fc866b44ff52 /* OpenGLES.framework in Frameworks */,
 				19973400ae52214db071dcc2 /* GLKit.framework in Frameworks */,
@@ -998,6 +999,7 @@
 		76D56E8B15F1943300615891 = {
 			isa = PBXGroup;
 			children = (
+				76413BCB16AE4A2200D7C2CF /* CoreData.framework */,
 				768C91DD16ADB29D0006E7A2 /* libsqlite3.0.dylib */,
 				76D56EAC15F1943300615891 /* GeminiSDK */,
 				76D56E9915F1943300615891 /* Frameworks */,

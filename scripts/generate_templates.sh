@@ -6,3 +6,4 @@
 ./scripts/generate_lib_template.rb -o /tmp/template_build -s ./GeminiSDK ./templates/lib/TemplateInfo.plist.lib_Gemini
 ./scripts/generate_lib_template.rb -o /tmp/template_build -s ./GeminiSDK ./templates/lib/TemplateInfo.plist.lib_Box2D
 ./scripts/generate_lib_template.rb -o /tmp/template_build -s ./GeminiSDK ./templates/lib/TemplateInfo.plist.lib_ObjectAL
+./scripts/generate_lib_template.rb -o /tmp/template_build -s ./GeminiSDK ./templates/lib/TemplateInfo.plist.lib_LuaSQLite3

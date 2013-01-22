@@ -9,6 +9,7 @@
 		<string>com.stokedsoftware.geminilib</string>
 		<string>com.stokedsoftware.box2dlib</string>
 		<string>com.stokedsoftware.objectallib</string>
+		<string>com.stokedsoftware.luasqlite3lib</string>
 	</array>
 	<key>Description</key>
 	<string>This template provides a starting point for an application that uses Gemini for iOS. It includes Gemini, Lua, Box2D, and ObjectAL.</string>
@@ -39,7 +40,7 @@
 			<key>GCC_THUMB_SUPPORT[arch=armv6]</key>
 			<string></string>
 			<key>OTHER_LDFLAGS</key>
-			<string>-lz</string>
+			<string>-lz -lsqlite3.0</string>
 			<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
 			<string>YES</string>
 			<key>GCC_PREFIX_HEADER</key>
@@ -205,7 +206,7 @@
 				<key>GCC_THUMB_SUPPORT[arch=armv6]</key>
 				<string></string>
 				<key>OTHER_LDFLAGS</key>
-				<string>-lz</string>
+				<string>-lz -lsqlite3.0</string>
 			</dict>
 			<key>Frameworks</key>
 			<array>
