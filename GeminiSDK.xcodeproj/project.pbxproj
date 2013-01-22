@@ -153,6 +153,13 @@
 		768B8FCB16A3AB8100070281 /* GemNativeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 768B8FC916A3AB8100070281 /* GemNativeObject.m */; };
 		768B8FCE16A3B45200070281 /* scene_text_input_remove_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 768B8FCD16A3B45200070281 /* scene_text_input_remove_test.lua */; };
 		768B8FCF16A3B45200070281 /* scene_text_input_remove_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 768B8FCD16A3B45200070281 /* scene_text_input_remove_test.lua */; };
+		768C91DE16ADB29D0006E7A2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C91DD16ADB29D0006E7A2 /* libsqlite3.0.dylib */; };
+		768C91E016ADB2A80006E7A2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 768C91DD16ADB29D0006E7A2 /* libsqlite3.0.dylib */; };
+		768C91EF16AE1EC60006E7A2 /* lsqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 768C91EE16AE1EC60006E7A2 /* lsqlite3.c */; };
+		768C91F016AE1EC60006E7A2 /* lsqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 768C91EE16AE1EC60006E7A2 /* lsqlite3.c */; };
+		768C91F216AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 768C91F116AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt */; };
+		768C91F316AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt in Resources */ = {isa = PBXBuildFile; fileRef = 768C91F116AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt */; };
+		768C91F516AE28340006E7A2 /* scene_sqlite3_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 768C91F416AE28340006E7A2 /* scene_sqlite3_test.lua */; };
 		769498BA166FCB9A007BDF73 /* scene1.lua in Resources */ = {isa = PBXBuildFile; fileRef = 769498B9166FCB9A007BDF73 /* scene1.lua */; };
 		769A1B7F168E700B00B3CD2E /* LICENSE_QSUtils.txt in Resources */ = {isa = PBXBuildFile; fileRef = 769A1B7E168E700B00B3CD2E /* LICENSE_QSUtils.txt */; };
 		769A1B91168E7A5200B3CD2E /* QSStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 769A1B90168E7A5200B3CD2E /* QSStrings.m */; };
@@ -531,6 +538,10 @@
 		768B8FC816A3AB8100070281 /* GemNativeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemNativeObject.h; path = libs/Gemini/GemNativeObject.h; sourceTree = "<group>"; };
 		768B8FC916A3AB8100070281 /* GemNativeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemNativeObject.m; path = libs/Gemini/GemNativeObject.m; sourceTree = "<group>"; };
 		768B8FCD16A3B45200070281 /* scene_text_input_remove_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene_text_input_remove_test.lua; sourceTree = "<group>"; };
+		768C91DD16ADB29D0006E7A2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		768C91EE16AE1EC60006E7A2 /* lsqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lsqlite3.c; sourceTree = "<group>"; };
+		768C91F116AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE_LuaSQLite3.txt; path = libs/LICENSE_LuaSQLite3.txt; sourceTree = "<group>"; };
+		768C91F416AE28340006E7A2 /* scene_sqlite3_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene_sqlite3_test.lua; sourceTree = "<group>"; };
 		769498B9166FCB9A007BDF73 /* scene1.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene1.lua; sourceTree = "<group>"; };
 		769A1B60168CAAA500B3CD2E /* GeminiSDK-cal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GeminiSDK-cal.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		769A1B7E168E700B00B3CD2E /* LICENSE_QSUtils.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE_QSUtils.txt; path = libs/LICENSE_QSUtils.txt; sourceTree = "<group>"; };
@@ -915,6 +926,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				768C91E016ADB2A80006E7A2 /* libsqlite3.0.dylib in Frameworks */,
 				76D56E9B15F1943300615891 /* QuartzCore.framework in Frameworks */,
 				76D56E9D15F1943300615891 /* OpenGLES.framework in Frameworks */,
 				76D56E9F15F1943300615891 /* GLKit.framework in Frameworks */,
@@ -931,6 +943,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				768C91DE16ADB29D0006E7A2 /* libsqlite3.0.dylib in Frameworks */,
 				234bae4dddec68a0ff3961a9 /* QuartzCore.framework in Frameworks */,
 				c0e0fb093cd6fc866b44ff52 /* OpenGLES.framework in Frameworks */,
 				19973400ae52214db071dcc2 /* GLKit.framework in Frameworks */,
@@ -948,6 +961,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		768C91ED16AE1EC60006E7A2 /* LuaSQLite3 */ = {
+			isa = PBXGroup;
+			children = (
+				768C91EE16AE1EC60006E7A2 /* lsqlite3.c */,
+			);
+			name = LuaSQLite3;
+			path = libs/LuaSQLite3;
+			sourceTree = "<group>";
+		};
 		769A1B96168F5E2900B3CD2E /* Lua */ = {
 			isa = PBXGroup;
 			children = (
@@ -968,6 +990,7 @@
 				760DA47B169B521D00B020F7 /* scene_font_test.lua */,
 				76F50056169E0B760049785E /* scene_text_input_test.lua */,
 				768B8FCD16A3B45200070281 /* scene_text_input_remove_test.lua */,
+				768C91F416AE28340006E7A2 /* scene_sqlite3_test.lua */,
 			);
 			name = Test;
 			sourceTree = "<group>";
@@ -975,6 +998,7 @@
 		76D56E8B15F1943300615891 = {
 			isa = PBXGroup;
 			children = (
+				768C91DD16ADB29D0006E7A2 /* libsqlite3.0.dylib */,
 				76D56EAC15F1943300615891 /* GeminiSDK */,
 				76D56E9915F1943300615891 /* Frameworks */,
 				76D56E9715F1943300615891 /* Products */,
@@ -1053,6 +1077,8 @@
 		76D56EC115F1943300615891 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				768C91F116AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt */,
+				768C91ED16AE1EC60006E7A2 /* LuaSQLite3 */,
 				769A1B7E168E700B00B3CD2E /* LICENSE_QSUtils.txt */,
 				76114C13166D2B3C004A4C8A /* LICENSE_Gemini.txt */,
 				76D56EC215F1943300615891 /* LICENSE_Lua.txt */,
@@ -1698,6 +1724,8 @@
 				760DA47D169B521D00B020F7 /* scene_font_test.lua in Resources */,
 				76F50058169E0B760049785E /* scene_text_input_test.lua in Resources */,
 				768B8FCF16A3B45200070281 /* scene_text_input_remove_test.lua in Resources */,
+				768C91F316AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt in Resources */,
+				768C91F516AE28340006E7A2 /* scene_sqlite3_test.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1748,6 +1776,7 @@
 				760DA47C169B521D00B020F7 /* scene_font_test.lua in Resources */,
 				76F50057169E0B760049785E /* scene_text_input_test.lua in Resources */,
 				768B8FCE16A3B45200070281 /* scene_text_input_remove_test.lua in Resources */,
+				768C91F216AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1941,6 +1970,7 @@
 				767C22BD169F582500C844AC /* GemNativeTextField.m in Sources */,
 				767C22C5169F5C8700C844AC /* LGeminiUI.m in Sources */,
 				768B8FCA16A3AB8100070281 /* GemNativeObject.m in Sources */,
+				768C91EF16AE1EC60006E7A2 /* lsqlite3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2132,6 +2162,7 @@
 				767C22BE169F582500C844AC /* GemNativeTextField.m in Sources */,
 				767C22C6169F5C8700C844AC /* LGeminiUI.m in Sources */,
 				768B8FCB16A3AB8100070281 /* GemNativeObject.m in Sources */,
+				768C91F016AE1EC60006E7A2 /* lsqlite3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2198,6 +2229,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: James Norton (6HL2NY2ELJ)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
+				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
+					DEBUG,
+					"GEMINI_DEBUG=1",
+				);
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = GeminiSDK/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
