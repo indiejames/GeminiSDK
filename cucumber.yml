@@ -1,3 +1,3 @@
 default: --tags @ci --format json --out result.json
-simple: --tags @ci
+simple: --tags @ci --format Slowhandcuke::Formatter
 

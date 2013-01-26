@@ -26,6 +26,14 @@ static int getResourceDirectory(lua_State *L){
     return 1;
 }
 
+static int getDocumentsDirectory(lua_State *L){
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    lua_pushstring(L, [basePath UTF8String]);
+    
+    return 1;
+}
+
 static int systemIndex(lua_State *L){
     int rval = 0;
     if (lua_isstring(L, -1)) {
@@ -34,7 +42,9 @@ static int systemIndex(lua_State *L){
         if (strcmp("ResourceDirectory", key) == 0) {
                 
             rval = getResourceDirectory(L);
-        } 
+        } else if (strcmp("DocumentsDirectory", key) == 0) {
+            rval = getDocumentsDirectory(L);
+        }
     }
     
     return rval;
@@ -45,16 +55,20 @@ static int getPathForFile(lua_State *L){
     const char *dirCStr = lua_tostring(L, 2);
     
     NSString *fileNameStr = [NSString stringWithUTF8String:fileNameCStr];
-    NSString *dirStr = [[NSBundle mainBundle] resourcePath];
+    
+    NSString *filePath;
+    
     if (dirCStr) {
-        dirStr = [NSString stringWithUTF8String:dirCStr];
+        NSString *dirStr = [NSString stringWithUTF8String:dirCStr];
+        NSArray *components = [NSArray arrayWithObjects:dirStr, fileNameStr, nil];
+        filePath = [NSString pathWithComponents:components];
         
-    } 
-    
-    NSString *baseName = [fileNameStr stringByDeletingPathExtension];
-    NSString *extension = [fileNameStr pathExtension];
-    
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:baseName ofType:extension];
+    } else {
+        NSString *baseName = [fileNameStr stringByDeletingPathExtension];
+        NSString *extension = [fileNameStr pathExtension];
+        
+        filePath = [[NSBundle mainBundle] pathForResource:baseName ofType:extension];
+    }
     
     lua_pushstring(L, [filePath UTF8String]);
     
@@ -107,13 +121,16 @@ static const struct luaL_Reg system_f [] = {
     {"getTimer", getTimer},
     {"pathForFile", getPathForFile},
     {"screenshot", screenshot},
+    //{"ResourceDirectory", getResourceDirectory},
+    //{"DocumentsDirectory", getDocumentsDirectory},
     {"listSystemFonts", listSystemFonts},
-    {"__index", systemIndex},
+    //{"__index", systemIndex},
     {NULL, NULL}
 };
 
 
 static const struct luaL_Reg system_m [] = {
+    {"__index", systemIndex},
     {NULL, NULL}
 };
 
@@ -132,6 +149,9 @@ int luaopen_system_lib (lua_State *L){
     
     // create the table for this library
     luaL_newlib(L, system_f);
+    
+    // set a metatable for this library table
+    luaL_setmetatable(L, GEMINI_SYSTEM_LUA_KEY);
     
     return 1;
 }
