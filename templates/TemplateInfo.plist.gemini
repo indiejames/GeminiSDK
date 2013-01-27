@@ -153,6 +153,16 @@
 			<key>Path</key>
 			<string>main.lua</string>
 		</dict>
+		<key>json.lua</key>
+		<dict>
+			<key>Path</key>
+			<string>json.lua</string>
+		</dict>
+		<key>ice.lua</key>
+		<dict>
+			<key>Path</key>
+			<string>ice.lua</string>
+		</dict>
 		<key>scene1.lua</key>
 		<dict>
 			<key>Path</key>
@@ -171,6 +181,8 @@
 		<string>AppDelegate.h</string>
 		<string>AppDelegate.mm</string>
 		<string>main.lua</string>
+		<string>json.lua</string>
+		<string>ice.lua</string>
 		<string>scene1.lua</string>
 		<string>paper.png</string>
 		<string>sprite_shader.fsh</string>
