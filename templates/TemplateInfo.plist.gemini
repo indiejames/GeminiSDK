@@ -27,6 +27,7 @@
 		<dict>
 			<key>ARCHS</key>
 			<string>armv7</string>
+			<!-- CHANGE THIS BACK WHEN APPLE FIXES armv7s ISSUE string>$(ARCHS_STANDARD_32_BIT)</string-->
 			<key>GCC_VERSION</key>
 			<string>com.apple.compilers.llvm.clang.1_0</string>
 			<key>IPHONEOS_DEPLOYMENT_TARGET</key>
