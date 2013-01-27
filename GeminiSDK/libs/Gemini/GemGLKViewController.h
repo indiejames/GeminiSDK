@@ -27,7 +27,7 @@ typedef enum {
 } GemDisplayType;
 
 
-@interface GemGLKViewController : GLKViewController <UIKeyInput> {
+@interface GemGLKViewController : GLKViewController <GLKViewControllerDelegate,UIKeyInput> {
     EAGLContext *context;
     SEL preRenderCallback;
     SEL postRenderCallback;
@@ -38,7 +38,7 @@ typedef enum {
     GemEventManager *eventManager;
     GemParticleSystemManager *particleSystemManager;
     GemDisplayObjectManager *displayObjectManager;
-    double updateTime;
+    
 }
 
 @property (readonly) GemSpriteManager *spriteManager;

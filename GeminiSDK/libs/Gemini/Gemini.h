@@ -34,6 +34,11 @@
 //-(BOOL)handleEvent:(NSString *)event;
 -(void)handleEvent:(GemEvent *)event;
 -(void)update:(double)deltaT;
+-(void)applicationWillExit;
+-(void)applicationWillResignActive;
+- (void)applicationDidBecomeActive;
+-(void)applicationDidEnterBackground;
+-(void)applicationWillEnterForeground;
 +(Gemini *)shared;
 
 

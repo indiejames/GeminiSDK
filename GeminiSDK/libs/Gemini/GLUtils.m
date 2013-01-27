@@ -254,6 +254,6 @@ void GemCheckGLError(void){
     }
     
     if (isError) {
-        [NSException raise:@"glGetError() returned error" format:@"Error code %d", err];
+        //[NSException raise:@"glGetError() returned error" format:@"Error code %d", err];
     }
 }

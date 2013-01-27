@@ -19,7 +19,7 @@
 #import "GemTransitionManager.h"
 #import "GemPhysics.h"
 
-Gemini *singleton = nil;
+
 
 @interface Gemini () {
 @private
@@ -177,14 +177,14 @@ int setLuaPath(lua_State *L, NSString* path );
 }
 
 +(Gemini *)shared {
-    
-    if (singleton == nil) {
+    static Gemini *singleton = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         singleton = [[Gemini alloc] init];
         [singleton addRuntimeObject];
         [singleton setupGlobalConstants];
-        //[singleton registerErrorFunc];
-    }
-    
+    });
+        
     return singleton;
 }
 
@@ -247,6 +247,37 @@ int setLuaPath(lua_State *L, NSString* path );
 
 -(void)handleEvent:(GemEvent *)event {
     [runtime handleEvent:event];
+}
+
+-(void)applicationWillExit {
+    GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Target:runtime];
+    exitEvent.name = @"applicationWillExit";
+    [runtime handleEvent:exitEvent];
+}
+
+-(void)applicationWillResignActive {
+    
+    GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Target:runtime];
+    exitEvent.name = @"applicationWillResignActive";
+    [runtime handleEvent:exitEvent];
+}
+
+- (void)applicationDidBecomeActive {
+    GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Target:runtime];
+    exitEvent.name = @"applicationDidBecomeActive";
+    [runtime handleEvent:exitEvent];
+}
+
+-(void)applicationDidEnterBackground {
+    GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Target:runtime];
+    exitEvent.name = @"applicationDidEnterBackground";
+    [runtime handleEvent:exitEvent];
+}
+
+-(void)applicationWillEnterForeground {
+    GemEvent *exitEvent = [[GemEvent alloc] initWithLuaState:L Target:runtime];
+    exitEvent.name = @"applicationWillEnterForeground";
+    [runtime handleEvent:exitEvent];
 }
 
 // the global update method - called from the GeminiGLKViewController update method

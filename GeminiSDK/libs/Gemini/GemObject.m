@@ -203,6 +203,11 @@
         
     }*/
     
+    if ([event.name isEqualToString:@"applicationWillEXit"]) {
+        GemLog(@"GemObject: handling event %@", event.name);
+        
+    }
+    
     BOOL rval = NO;
 
        

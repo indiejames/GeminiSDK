@@ -51,6 +51,10 @@ enum {
     double frameRenderTime;
     double frameCount;
     
+    double updateTime;
+    BOOL didResume;
+    double pauseTime;
+    
 }
 @property (strong, nonatomic) EAGLContext *context;
 @property (nonatomic) lua_State *L;
@@ -83,6 +87,7 @@ enum {
         frameCount = 0;
         frameRenderTime = 0;
         updateTime = 0;
+        didResume = NO;
         displayType = GEM_IPHONE;
     }
     
@@ -131,6 +136,8 @@ enum {
             displayType = GEM_IPAD;
         }
     }
+    
+    self.delegate = self;
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
     
@@ -215,6 +222,11 @@ enum {
     //double scale = [UIScreen mainScreen].scale;
     double timeDelta = self.timeSinceLastUpdate;
     
+    if (didResume) {
+        didResume = NO;
+        timeDelta = pauseTime;
+    }
+    
     GLint width;
     GLint height;
     glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &width);
@@ -237,7 +249,13 @@ enum {
 }
 
 - (void)glkViewController:(GLKViewController *)controller willPause:(BOOL)pause {
-    
+    if (pause) {
+        pauseTime = self.timeSinceLastUpdate;
+    } else {
+        // resuming
+        didResume = YES;
+        
+    }
 }
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
