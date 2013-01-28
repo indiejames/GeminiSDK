@@ -20,6 +20,7 @@
     NSNumber *defaultLayerIndex;
     GLfloat zoom;
     NSMutableArray *nativeObjects;
+    GLKMatrix3 storedTransform;
 }
 
 @synthesize layers;
@@ -35,6 +36,8 @@
         nativeObjects = [[NSMutableArray alloc] initWithCapacity:1];
         int pop = lua_gettop(L) - top;
         lua_pop(L, pop);
+        
+        storedTransform = GLKMatrix3Identity;
         
         zoom = 1.0;
     }
@@ -78,6 +81,8 @@
         [layers setObject:defaultLayer forKey:defaultLayerIndex];
         
         zoom = 1.0;
+        
+        storedTransform = GLKMatrix3Identity;
         
     }
     
@@ -178,7 +183,7 @@
 
 -(void) setZoom:(GLfloat)z {
     
-    if (z > 0) {
+   /* if (z > 0) {
         
         // scale
         GLfloat scale = sqrtf(z);
@@ -194,8 +199,55 @@
         
         zoom = z;
         
-    }     
+    }  */   
     
+}
+
+-(void) zoom:(GLfloat)z {
+    if (z > 0) {
+        
+        GLfloat scale = sqrtf(z);
+        
+        // scale
+        
+        
+        //[self setXScale:scale];
+        //[self setYScale:scale];
+        
+        GLKMatrix3 scaleMat = GLKMatrix3MakeScale(scale, scale, 1.0);
+        storedTransform = GLKMatrix3Multiply(scaleMat, storedTransform);
+
+        
+        // translate
+        GLKVector2 dim = getDimensionsFromSettings(YES);
+        
+        //self.x = self.x + 0.5 * dim.x * (1.0 - scale);
+        //self.y = self.y + 0.5 * dim.y * (1.0 - scale);
+        
+        GLfloat transX = 0.5 * dim.x * (1.0 - scale);
+        GLfloat transY = 0.5 * dim.y * (1.0 - scale);
+        
+        GLKMatrix3 transMat = GLKMatrix3Make(1.0, 0, 0, 0, 1, 0, transX, transY, 1);
+        
+        storedTransform = GLKMatrix3Multiply(transMat, storedTransform);
+        
+                
+       
+        
+        zoom = z;
+        
+    }
+}
+
+-(void) pan:(GLKVector2)p {
+    /*self.x = self.x - p.x;
+    self.y = self.y - p.y;*/
+    
+    
+    // translate
+    GLKMatrix3 transMat = GLKMatrix3Make(1.0, 0, 0, 0, 1, 0, -p.x, -p.y, 1);
+    
+    storedTransform = GLKMatrix3Multiply(transMat, storedTransform);
 }
 
 -(BOOL)handleEvent:(GemEvent *)event {
@@ -221,6 +273,14 @@
     }
 
     return [super handleEvent:event];
+}
+
+-(GLKMatrix3) transform {
+    return storedTransform;
+}
+
+-(void)setTransform:(GLKMatrix3)tform {
+    storedTransform = tform;
 }
 
 @end

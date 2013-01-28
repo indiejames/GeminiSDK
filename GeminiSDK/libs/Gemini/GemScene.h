@@ -28,5 +28,8 @@
 -(void)addCallback:(void (*)(void))callback forLayer:(int)layer;
 -(void)addScene:(GemScene *)scene;
 -(int)numLayers;
+-(void) zoom:(GLfloat)z;
+-(void) pan:(GLKVector2)p;
+-(void)setTransform:(GLKMatrix3)tform;
 
 @end

@@ -355,6 +355,8 @@
 		76D570AD15F1A16B00615891 /* LGeminiDirector.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D570A715F1A16B00615891 /* LGeminiDirector.m */; };
 		76D570AE15F1A16B00615891 /* LGeminiScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D570A915F1A16B00615891 /* LGeminiScene.m */; };
 		76D570BC15F1A1AD00615891 /* scene_template.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D570B715F1A1AD00615891 /* scene_template.lua */; };
+		76D6BA4016B6147000D2D98A /* scene_pan_and_zoom_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D6BA3F16B6147000D2D98A /* scene_pan_and_zoom_test.lua */; };
+		76D6BA4216B6154000D2D98A /* scene_pan_and_zoom_test.lua in Resources */ = {isa = PBXBuildFile; fileRef = 76D6BA3F16B6147000D2D98A /* scene_pan_and_zoom_test.lua */; };
 		76D7877D1646EE8000F10BE4 /* GemMask.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D7877C1646EE8000F10BE4 /* GemMask.m */; };
 		76D78781164B4C5200F10BE4 /* GemConvexShape.m in Sources */ = {isa = PBXBuildFile; fileRef = 76D78780164B4C5100F10BE4 /* GemConvexShape.m */; };
 		76D78784164EC74200F10BE4 /* GemPhysicsUtil.mm in Sources */ = {isa = PBXBuildFile; fileRef = 76D78783164EC74100F10BE4 /* GemPhysicsUtil.mm */; };
@@ -897,6 +899,7 @@
 		76D570A815F1A16B00615891 /* LGeminiScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LGeminiScene.h; path = libs/Gemini/LGeminiScene.h; sourceTree = "<group>"; };
 		76D570A915F1A16B00615891 /* LGeminiScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LGeminiScene.m; path = libs/Gemini/LGeminiScene.m; sourceTree = "<group>"; };
 		76D570B715F1A1AD00615891 /* scene_template.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene_template.lua; sourceTree = "<group>"; };
+		76D6BA3F16B6147000D2D98A /* scene_pan_and_zoom_test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scene_pan_and_zoom_test.lua; sourceTree = "<group>"; };
 		76D7877B1646EE8000F10BE4 /* GemMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemMask.h; path = libs/Gemini/GemMask.h; sourceTree = "<group>"; };
 		76D7877C1646EE8000F10BE4 /* GemMask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GemMask.m; path = libs/Gemini/GemMask.m; sourceTree = "<group>"; };
 		76D7877F164B4C5000F10BE4 /* GemConvexShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GemConvexShape.h; path = libs/Gemini/GemConvexShape.h; sourceTree = "<group>"; };
@@ -1002,6 +1005,7 @@
 				768B8FCD16A3B45200070281 /* scene_text_input_remove_test.lua */,
 				768C91F416AE28340006E7A2 /* scene_sqlite3_test.lua */,
 				76DD9B6F16B3766F00D32390 /* scene_ice_test.lua */,
+				76D6BA3F16B6147000D2D98A /* scene_pan_and_zoom_test.lua */,
 			);
 			name = Test;
 			sourceTree = "<group>";
@@ -1692,6 +1696,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76D6BA4216B6154000D2D98A /* scene_pan_and_zoom_test.lua in Resources */,
 				769A1B9A168F609A00B3CD2E /* scene_rectangle_test.lua in Resources */,
 				769A1B9B168F609A00B3CD2E /* main_cuke.lua in Resources */,
 				c94c178efd580c63a88a1f16 /* scene_transition_shader.fsh in Resources */,
@@ -1793,6 +1798,7 @@
 				768C91F216AE1EDF0006E7A2 /* LICENSE_LuaSQLite3.txt in Resources */,
 				76DD9B6816B3751700D32390 /* ice.lua in Resources */,
 				76DD9B6A16B3751700D32390 /* json.lua in Resources */,
+				76D6BA4016B6147000D2D98A /* scene_pan_and_zoom_test.lua in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

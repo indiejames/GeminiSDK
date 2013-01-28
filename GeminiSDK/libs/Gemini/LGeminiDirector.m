@@ -44,21 +44,7 @@ static int sceneIndex(lua_State *L){
     int rval = 0;
     __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     if (scene != NULL) {
-        if (lua_isstring(L, 2)) {
-            
-            const char *key = lua_tostring(L, 2);
-            if (strcmp("zoom", key) == 0) {
-                lua_pushnumber(L, (*scene).zoom);
-                rval = 1;
-            } else {
-                rval = genericGeminiDisplayObjectIndex(L, *scene);
-            }
-            
-        } else {
-            rval = genericGeminiDisplayObjectIndex(L, *scene);
-        }
-        
-        
+        rval = genericGeminiDisplayObjectIndex(L, *scene);
     }
     
     return rval;
@@ -68,26 +54,7 @@ static int sceneNewIndex (lua_State *L){
     int rval = 0;
     __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     if (scene != NULL) {
-        if (lua_isstring(L, 2)) {
-            
-            const char *key = lua_tostring(L, 2);
-            if (strcmp("zoom", key) == 0) {
-                GLfloat zoom = luaL_checknumber(L, 3);
-                if (zoom <= 0) {
-                    luaL_error(L, "Lua: ERROR - zoom must be greater than zero");
-                } else {
-                    (*scene).zoom = zoom;
-                }
-                rval = 0;
-            } else {
-                rval = genericGemDisplayObjecNewIndex(L, scene);
-            }
-            
-        } else {
-            rval = genericGemDisplayObjecNewIndex(L, scene);
-        }
-
-
+        rval = genericGemDisplayObjecNewIndex(L, scene);
     }
     
     return rval;
@@ -111,17 +78,35 @@ static int addNativeObjectToScene(lua_State *L){
     return 0;
 }
 
-static int setSceneZoom(lua_State *L){
+static int zoomScene(lua_State *L){
     __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     GLfloat zoom = luaL_checknumber(L, -1);
     if (zoom <= 0) {
         luaL_error(L, "Lua: ERROR - zoom must be greater than zero");
     } else {
-        (*scene).zoom = zoom;
+        [*scene zoom:zoom];
     }
     
     return 0;
+}
+
+static int panScene(lua_State *L){
+    __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
     
+    GLfloat xOffset = luaL_checknumber(L, -2);
+    GLfloat yOffset = luaL_checknumber(L, -1);
+    
+    [*scene pan:GLKVector2Make(xOffset, yOffset)];
+    
+    return 0;
+
+}
+
+static int resetSceneCamera(lua_State *L){
+    __unsafe_unretained GemScene  **scene = (__unsafe_unretained GemScene **)luaL_checkudata(L, 1, GEMINI_SCENE_LUA_KEY);
+    [*scene setTransform:GLKMatrix3Identity];
+    
+    return 0;
 }
 
 static int directorLoadScene(lua_State *L){
@@ -189,7 +174,9 @@ static const struct luaL_Reg scene_m [] = {
     {"addLayer", addLayerToScene},
     {"addNativeObject", addNativeObjectToScene},
     {"addEventListener", addEventListener},
-    {"setZoom", setSceneZoom},
+    {"zoom", zoomScene},
+    {"pan", panScene},
+    {"resetCamera", resetSceneCamera},
     {NULL, NULL}
 };
 

@@ -67,6 +67,10 @@ function scene:createScene( event )
     group1.x = 240
     group1.y = 160
     
+    local greenCircle = display.newCircle(300, 170, 30)
+    greenCircle:setFillColor(0,1.0,0,1.0)
+    layer1:insert(greenCircle)
+    
     -- draw a red circle with a white border
     redCircle = display.newCircle(200,200,30)
     redCircle.name = "RED CIRCLE"
@@ -163,14 +167,31 @@ function scene:enterScene( event )
     rectangle4.isActive = true
     redCircle.isActive = true
     
+    local zoom = 3.0
+    local currentZoom = 1.0
+    
      -- add an event listener that will fire every frame
     scene.starListener = function(event)
       -- rotate our star
-      star.rotation = star.rotation + 0.2
+      --star.rotation = star.rotation + 0.2
+      if currentZoom < zoom then
+        self:zoom(1.0 + 1.0/60.0)
+        currentZoom = currentZoom + 1.0 / 60.0
+      end
 
+      
     end 
     -- the "enterFrame" event fires at the beginning of each render loop
     Runtime:addEventListener("enterFrame", scene.starListener)
+    
+    self:pan(60.0, 10)
+    
+    
+    --self:zoom(0.5)
+    
+    self:zoom(2.0)
+    
+    --self:pan(-100.0, 0)
    
 end
 
