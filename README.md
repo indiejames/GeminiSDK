@@ -19,7 +19,7 @@ Check out the [Wiki](https://github.com/indiejames/GeminiSDK/wiki/Documentation)
 
 ## Contributing
 
-I would love to see people contributing to Gemini, whether it's a bug report, feature suggestion, or a pull request.  Gemini is very much a work in progress and I am focusing on core features first to get it production ready as soon as possible.
+Contributions to Gemini are welcome, whether it's a bug report, feature suggestion, or a pull request.  Gemini is very much a work in progress and I am focusing on core features first to get it production ready as soon as possible.
 
 ## License
 (The MIT License)
