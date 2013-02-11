@@ -1,0 +1,30 @@
+#!lua
+
+--[[
+	Title: Native UI Types
+]]
+
+--[[
+	Type: text_field
+	A text input object.
+
+	Inherits from: <displayobject>
+
+	Property: text
+	The text stored in the input
+]]
+	
+--[[	
+	Method: text_field:setBorderWidth
+	Set the width of the border
+
+	Parameters:
+		width - the width of the border, zero for no border.
+
+	
+]]
+method text_field:setBorderWidth(width)
+end
+
+
+

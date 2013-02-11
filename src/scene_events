@@ -1,0 +1,26 @@
+#!lua
+
+--[[
+	Type: createScene
+	Event generated when a scene is first loaded.
+
+	Inherits from: <event>
+]]
+	
+
+--[[
+	Type: enterScene
+	Event generated when a scene has just been transitioned.
+
+	Inherits from: <event>
+]]
+	
+
+--[[
+	Type: event
+	An object passed to an event handler that contains information about the event that has occurred.
+
+	Property: event.name
+	The name of the event.  Listeners use this to register for specific event types.
+
+]]

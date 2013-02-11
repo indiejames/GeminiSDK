@@ -1,0 +1,17 @@
+Crash Message:
+
+   Can't locate object method "PrettifyLuaFile" via package "NaturalDocs::Builder::HTML" at /Users/jnorton/NaturalDocs/Modules/NaturalDocs/Builder/HTMLBase.pm line 561.
+
+Natural Docs version 1.52
+Perl version 5.12.3 on darwin
+
+Command Line:
+
+   -i /Users/jnorton/Documents/GeminiSDKDocs/src/ -o HTML /Users/jnorton/Documents/GeminiSDKDocs/build/ -p /Users/jnorton/Documents/GeminiSDKDocs/nd_project/ -s 12pt
+
+Stack Trace:
+
+   NaturalDocs::Error::CatchDeath, called from
+   NaturalDocs::Builder::HTMLBase::EndBuild, line 561, called from
+   NaturalDocs::Builder::Run, line 273, called from
+   (eval), line 340 of /Users/jnorton/NaturalDocs/NaturalDocs

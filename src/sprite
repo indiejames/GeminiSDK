@@ -1,0 +1,71 @@
+#!lua
+
+--[[
+Title: sprite library
+
+The sprite library is used to create <sprites>.
+]]
+
+--[[
+  	Function: sprite.newSpriteSheetFromData
+  	Loads a sprite sheet from a data file and creates a texture from the associated image file.
+  
+  	Parameters:
+		file - The name of the file to load.
+
+  	Returns:
+		The created sprite sheet.
+  
+]]
+function sprite.newSpriteSheetFromData( file)
+end
+
+--[[
+	Function: sprite.newSpriteSet
+	Creates a new sprite set.  A sprite set is a collection of frame sequences for a particular sprite within
+	a sprite sheet.
+	
+	Parameters:
+		sprite_sheet - the sprite sheet object containing the sprite set
+		start_frame - the first frame of the sprite set
+		frame_count - the number of frames in the sprite set
+
+	See Also:
+		<sprite.newSpriteSheetFromData> 
+]]
+function sprite.newSpriteSet( sprite_sheet, start_frame, frame_count )
+end
+
+--[[
+	Function: sprite.newSprite
+	Creates a new sprite.  A sprite sprite is the actual on-screen object representing on or more frames
+	in a sprite set.
+	
+	Parameters:
+		sprite_set - the sprite set object containing the sprite
+
+	See Also:
+		<sprite.newSpriteSet> 
+]]
+function sprite.newSprite( sprite_set )
+end
+
+--[[
+	Function: sprite.add(sprite_set, animation_name, start_frame, frame_count, duration, loop_count )
+	Defines an animation for a given sprite set.  Sprite sets can contain many animations.
+	
+	Parameters:
+		sprite_set - the sprite set object containing the sprite
+		animation_name - the name of the animation.
+		start_frame - the first frame of the animation
+		frame_count - the number of frames in the animation
+		frame_duration - the duration of on frame in the animation, e.g., 0.1 for 10 fps
+		loop_count - the number of times the animation should loop.							
+									- loop_count = 0, loop forever.
+									- loop_count >= 1, loop loop_count times.
+									- loop_count = -1, see-saw back and forth once.
+									- loop_count < -1, see-saw back and forth forever.
+									
+]]
+function sprite.add( sprite_set, animation_name, start_frame, frame_duration, loop_count )
+end

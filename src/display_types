@@ -1,0 +1,182 @@
+#!lua
+
+--[[
+	Title: Display Types
+]]
+
+--[[
+	Type: circle
+	A circle object.
+
+	Inherits from: <displayobject>
+]]
+	
+--[[	
+	Method: circle:setBorderWidth
+	Set the width of the border
+
+	Parameters:
+		width - the width of the border, zero for no border.
+
+	
+]]
+method circle:setBorderWidth(width)
+end
+
+--[[
+	Method: circle:setFillColor
+	Set the fill color for the circle
+
+	Parameters:
+		r - The red component (0 to 1.0) of the color
+		g - The green component (0 to 1.0) of the color
+		b - The blue component (0 to 1.0) of the color
+		a - The alpha component (0 to 1.0) of the color
+]]
+method circle:setFillColor(r, g, b, a)
+end
+
+--[[
+	Type: rectangle
+	A rectangle object.
+
+	Inherits from: <displayobject>
+]]
+	
+--[[	
+	Method: rectangle:setBorderWidth
+	Set the width of the border
+
+	Parameters:
+		width - the width of the border, zero for no border.
+
+	
+]]
+method rectangle:setBorderWidth(width)
+end
+
+--[[
+	Method: rectangle:setFillColor
+	Set the fill color for the rectangle
+
+	Parameters:
+		r - The red component (0 to 1.0) of the color
+		g - The green component (0 to 1.0) of the color
+		b - The blue component (0 to 1.0) of the color
+		a - The alpha component (0 to 1.0) of the color
+]]
+method rectangle:setFillColor(r, g, b, a)
+end
+
+--[[
+	Type: sprite
+	A sprite object.
+
+	Inherits from: <displayobject>
+]]
+
+--[[	
+	Method: sprite:prepare(animation_name)
+	Load an animation for the sprite
+
+	Parameters:
+		animation - The (optional) name of the animation to use from the sprite set.
+		The default animation is used if this parameter is not present.
+
+	
+]]
+method sprite:prepare(animation_name)
+end
+	
+--[[	
+	Method: sprite:play
+	Start the sprite animation.
+]]
+method sprite:play()
+end
+
+--[[
+	Method: sprite:pause
+	Pause the sprite animation.
+]]
+method sprite:pause()
+end
+
+--[[
+	Type: layer
+	A group of display objects possessing the same depth and blending characteristics.
+
+	Inherits from: <displayGroup>
+]]
+
+--[[	
+	Method: layer:insert(display_object)
+	Add a display object to this layer.
+
+	Parameters:
+		display_object - The object to be added to the layer.
+
+	
+]]
+method layer:insert(display_object)
+end
+	
+--[[	
+	Method: layer:setBlendFunc(src_blend, dest_blend)
+	Set the blend function for this layer.
+
+	Parameters:
+		src_blend - blend function for the source component
+		dest_blend - blend function for the destination component
+
+		Possible blend functions are GL_ONE, GL_DST_ALPHA, GL_SRC_ALPHA, GL_ZERO
+]]
+method sprite:play()
+end
+
+--[[
+	Type: displayobject
+	An object that can be displayed on the screen
+
+	Inherits from: <geminiObject>
+
+	Property: x
+	The x coordinate
+
+	Property: y
+	The y coordinate
+
+]]
+
+
+--[[
+	Type: geminiObject
+	The base object type for all objects in Gemini.
+
+]]
+
+--[[	
+	Method: geminiObject:addEventListener(name, listener)
+	Add an event listener for the named type of event.
+
+	Parameters:
+		name - the name of the event type
+		listener - a function or table containing a function with the same name as the event that will be called when the object
+		receives the event.
+
+		The listener function should accecpt the <event> object as a parameter.  See the <Scene Template> file for examples.
+]]
+method geminiObject:addEventListener(name, listener)
+end
+
+--[[	
+	Method: geminiObject:removeEventListener(name, listener)
+	Remove an event listener for the named type of event.
+
+	Parameters:
+		name - the name of the event type
+		listener - a function or table that is the event handler
+
+]]
+method geminiObject:removeEventListener(name, listener)
+end

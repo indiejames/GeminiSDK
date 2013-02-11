@@ -1,0 +1,38 @@
+#!lua
+local director = {}
+
+--[[
+  	Function: director.loadScene
+  	Loads a scene but doesn't display it yet.  The created scene will receive
+  	the createScene event.
+  
+  	Parameters:
+		file - The name of the file to load.
+
+  	Returns:
+		The created scene.
+  
+  	See Also:
+		<director.gotoScene>
+]]
+function director.loadScene( file, param1, param2 )
+end
+
+--[[
+	Function: director.gotoScene
+	Transitions to a scene.  The scene is loaded if it has not already
+	been.
+	
+	Parameters:
+		scene - the name of the scene
+		params - an optional table specifying the transition to use and the parameters of that transition
+
+	See Also:
+		<director.loadScene> 
+]]
+function director.gotoScene( sceneName, params )
+end
+
+
+
+return director
