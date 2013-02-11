@@ -32,9 +32,23 @@ end
 	See Also:
 		<circle> 
 ]]
-function display.newCircle( x, y, radius )
+function display.newCircle( x1, y1, x2, y2 )
 end
 
+--[[
+	Function: display.newLine
+	Create a polyline.
+	
+	Parameters:
+		x1 - The x coordinate of the start of the line
+		y1 - The y coordinate of the start of the line
+		x2 - The x coordinage of the end of the line
+		y2 - The y coordinate of the end of the line
 
+	See Also:
+		<line> 
+]]
+function display.newLine( x1, y1, x2, y2 )
+end
 
 return display

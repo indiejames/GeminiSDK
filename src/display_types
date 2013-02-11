@@ -69,6 +69,24 @@ method rectangle:setFillColor(r, g, b, a)
 end
 
 --[[
+	Type: line
+	A polyline object
+
+	Inherits from: <displayobject>
+]]
+
+--[[
+	Method: line:setColor
+	Set the color of the line
+
+	Parameters:
+		r - The red component (0 to 1.0) of the color
+		g - The green component (0 to 1.0) of the color
+		b - The blue component (0 to 1.0) of the color
+		a - The alpha component (0 to 1.0) of the color
+]]
+
+--[[
 	Type: sprite
 	A sprite object.
 
