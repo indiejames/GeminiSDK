@@ -12,6 +12,10 @@ Gemini is an open source framework for building 2D games on iOS using the [Lua](
 8. **Gemini supports callbacks to custom Objective C/C++ code**.  Use render callbacks to render layers with your own custom Objective C/C++ code.
 9. **It's easy to get started.** Just drop the Xcode 4 project templates in your template folder and you're ready to go.
 
+## Installation
+
+The zip file containing the templates can be found [here](https://s3.amazonaws.com/GeminiSDK_Templates/xcode4_templates.zip).  This file has been signed with OpenPGP and the signature file is [here](https://s3.amazonaws.com/GeminiSDK_Templates/xcode4_templates.zip.sig).  After validating the zip file, uncompress it and copy the contents into ~/Library/Developer/Xcode/Templates/Gemini/ then restart Xcode.  You should now be able to choose a Gemini project when you choose File->New->Project in Xcode.
+
 ## Documentation
 
 Check out the [Wiki](https://github.com/indiejames/GeminiSDK/wiki/Documentation) for guides and documentation.
