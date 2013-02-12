@@ -2,7 +2,7 @@
 
 Gemini is an open source framework for building 2D games on iOS using the [Lua](http://www.lua.org) scripting language.
 
-1. **Gemini uses a layer based** rendering system.  Each layer can have any blending mode (including no blending) supported by OpenGL, additive blending, alpha blending, you name it.
+1. **Gemini uses a layer based** rendering system.  Each layer can have any blending mode (including no blending) supported by OpenGL:  additive blending, alpha blending, you name it.
 2. **Gemini provides high level graphics objects** including sprites, sprite sheets, and geometric primitives like poly-lines and rectangles.  All rendering is done in high performance OpenGL ES 2.0 code using sprite batching and other optimizations for maximum efficiency.
 3. **Gemini provides scene management**.  Script each level of your game as  a separate Lua module and control the order in which they get loaded directly in your Lua code via the _Director_ API.  Use built in scene transitions or code your own.
 4. **Gemini provides physics**.  Bindings to the [Box2D](http://box2d.org) physics library allow you to add physics properties to any graphics object, including support for collision detection.
@@ -18,7 +18,7 @@ The zip file containing the templates can be found [here](https://s3.amazonaws.c
 
 ## Documentation
 
-Check out the [Wiki](https://github.com/indiejames/GeminiSDK/wiki/Documentation) for guides and documentation.
+Check out the [project page](http://indiejames.github.com/GeminiSDK) or go directly to the [Lua API docs](http://indiejames.github.com/GeminiSDK/documentation/index.html).  Also check out the [Wiki](https://github.com/indiejames/GeminiSDK/wiki/Documentation) for guides and examples.
 
 
 ## Contributing
