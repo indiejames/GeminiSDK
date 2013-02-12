@@ -1,0 +1,4 @@
+Title: Introduction
+
+
+The Gemini SDK is a framework for building sophisticated 2D iOS games in Lua.

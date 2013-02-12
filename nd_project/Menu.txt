@@ -40,6 +40,8 @@ Timestamp: Generated on month day, year
 
 Group: Lua API  {
 
+   File: Introduction  (usage.txt)
+
    Group: Libraries  {
 
       File: director  (director)

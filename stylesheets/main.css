@@ -22,7 +22,8 @@
 body {
     font: 12pt Verdana, Arial, sans-serif;
     color: #000000;
-    margin: 0; padding: 0;
+    margin: 100px 0px 0px 0px; 
+    padding: 0;
     }
 
 .ContentPage,
