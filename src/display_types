@@ -166,6 +166,11 @@ end
 
 ]]
 
+--[[	
+	Method: displayobject:delete()
+	Remove this object from the display and allow it to be garbage collected
+]]
+
 
 --[[
 	Type: geminiObject
